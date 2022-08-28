@@ -1,0 +1,233 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+/*--------------------------------------------------------통합적*/
+* {
+	margin: 0; padding: 0;
+	border: 0;
+	font: inherit;
+	font-family: 'Poor Story', cursive;
+	vertical-align: baseline;	
+	font-size: 100%;
+}
+
+.myPage{
+	margin:20px auto;
+	background-color:rgb(247, 247, 247);
+	width: 1200px;
+	height: 450px;
+	border-radius: 10px;
+	box-shadow: inset 0px -30px 20px 0px gray;
+	font-size: 200%;
+}
+
+.main {
+	margin:20px auto;
+	width: 1200px;
+	font-size: 150%;
+} 
+
+
+
+
+
+/*--------------------------------------------------------프로필사진 부분*/
+.profile-user-img {
+	margin: 0 15px 0 0;
+    width: 200px;
+    height: 200px; 
+    border-radius: 70%;
+    overflow: hidden;
+    float:left;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.imgSelect-box{
+	font-size: 55%;
+	height: 100px;
+}
+
+.imgSelect-box>button{
+	position: absolute;
+	top: -20px;	
+}
+
+.profile-user-img>a:hover img {
+	 filter: brightness(80%);
+}
+
+.imgSelect-box>a:hover i {
+	 filter: brightness(80%);
+}
+
+
+
+
+
+/*--------------------------------------------------------아이콘 부분*/
+span{
+	position: relative;
+	top:40px;
+}
+
+i{
+	position: relative;
+	top: -60px;
+	left: 120px;
+	height: 50px;
+	z-index: 2;
+}
+
+
+
+
+
+/*--------------------------------------------------------심플정보*/
+.simple-info-box {
+	 display: flex;
+	 position: relative;
+     top: 210px;
+     height: 200px;
+     width: 1000px;
+}
+
+.simple-info>input {
+	border: none;
+	background: rgb(247, 247, 247);
+	position: relative;
+	top: 35px;
+}
+
+.simple-info>.name {
+	width: 120px;
+	font-size: 150%;
+}
+
+.simple-info>.birth,.location {
+	width: 130px;
+	font-size: 90%;
+}
+
+
+
+
+
+/*--------------------------------------------------------카테고리*/
+.category-box{
+	display: flex;
+	position: absolute;
+	top: 145px;
+	left: 215px;
+}
+
+.category-img{
+    width: 60px;
+    height: 60px; 
+    border-radius: 60%;
+    overflow: hidden;
+    margin: 0 20px 0 0;
+}
+
+.category{
+	width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imgSelect-box{
+	display: flex;
+	position: relative;
+	top: 225px;
+	left: 10px;
+}
+.modify{
+	position: absolute ;
+	width: 200px;
+	height: 80px;
+	right: 40px;
+	bottom: 10px;
+}
+
+div>button:hover{
+	filter: brightness(80%);
+}
+
+
+
+
+
+/*--------------------------------------------------------내모임, 내가 작성한글, 내가 작성한 댓글*/
+
+.card-body {
+   height: 1500px;
+}
+
+li>div>.a-list a:hover{
+   color:#ffc045;
+}
+
+.moim-box{
+   display: flex;
+   margin:0 0 35px 0;
+}
+
+.moim-box>.img-list{
+   border-radius: 10%;
+   overflow: hidden;
+   margin: 0 10px 0 0;
+   width: 85px;
+}
+
+.moim-img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   width: 80px;
+   height: 80px;
+}
+  
+.moim-box>.a-list {
+   line-height: 160%;
+   font-weight: bolder;
+   text-align: left;
+}
+
+.moim-name{
+   text-decoration-line: none;
+   color: black;
+}
+
+.comment-box{
+	position: relative;
+	top: -40px;
+}
+
+.comment-info{
+	text-align: left;
+}
+
+.comment{
+	
+}
+
+
+/*--------------------------------------------------------스크롤바*/
+.scroll::-webkit-scrollbar {
+	width: 8px !important; /* 스크롤바의 너비 */
+}
+
+.scroll::-webkit-scrollbar-thumb {
+	height: 30%; /* 스크롤바의 길이 */
+	background: green; /* 스크롤바의 색상 */
+	
+	border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+	background: rgba(33, 122, 244, .1); /*스크롤바 뒷 배경 색상 */
+}
