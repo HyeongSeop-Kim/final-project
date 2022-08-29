@@ -1,28 +1,47 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /*--------------------------------------------------------통합적*/
 * {
 	margin: 0; padding: 0;
 	border: 0;
 	font: inherit;
-	font-family: 'Poor Story', cursive;
+	font-family: 'GmarketSansMedium';
 	vertical-align: baseline;	
 	font-size: 100%;
 }
+html,
+body {
+        width: 100%;
+        height: 100%;
+        }
 
 .myPage{
 	margin:20px auto;
+	box-shadow:10px 10px 20 -5 #gray;
 	background-color:rgb(247, 247, 247);
-	width: 1200px;
+	width: 1500px;
 	height: 450px;
 	border-radius: 10px;
-	box-shadow: inset 0px -30px 20px 0px gray;
-	font-size: 200%;
+	font-size: 170%;
 }
+        
+.main-container{
+	padding: 10px 0 0 0;
+	background-color: rgb(240, 242, 245);
+	width: 100%;
+    height: 100%;
+}
+
 
 .main {
 	margin:20px auto;
-	width: 1200px;
+	width: 1400px;
 	font-size: 150%;
 } 
 
@@ -32,9 +51,9 @@
 
 /*--------------------------------------------------------프로필사진 부분*/
 .profile-user-img {
-	margin: 0 15px 0 0;
-    width: 200px;
-    height: 200px; 
+	margin: 0 15px 0 10px;
+    width: 160px;
+    height: 160px; 
     border-radius: 70%;
     overflow: hidden;
     float:left;
@@ -72,7 +91,7 @@
 /*--------------------------------------------------------아이콘 부분*/
 span{
 	position: relative;
-	top:40px;
+	top:55px;
 }
 
 i{
@@ -91,7 +110,7 @@ i{
 .simple-info-box {
 	 display: flex;
 	 position: relative;
-     top: 210px;
+     top: 230px;
      height: 200px;
      width: 1000px;
 }
@@ -100,16 +119,16 @@ i{
 	border: none;
 	background: rgb(247, 247, 247);
 	position: relative;
-	top: 35px;
+	top: 45px;
 }
 
 .simple-info>.name {
-	width: 120px;
+	width: 130px;
 	font-size: 150%;
 }
 
 .simple-info>.birth,.location {
-	width: 130px;
+	width: 150px;
 	font-size: 90%;
 }
 
@@ -121,13 +140,13 @@ i{
 .category-box{
 	display: flex;
 	position: absolute;
-	top: 145px;
+	top: 130px;
 	left: 215px;
 }
 
 .category-img{
-    width: 60px;
-    height: 60px; 
+    width: 50px;
+    height: 50px; 
     border-radius: 60%;
     overflow: hidden;
     margin: 0 20px 0 0;
@@ -145,12 +164,15 @@ i{
 	top: 225px;
 	left: 10px;
 }
-.modify{
+.imgSelect-box>.modify{
 	position: absolute ;
-	width: 200px;
-	height: 80px;
+	padding: 5px 0 0 0;
+	width: 180px;
+	height: 55px;
 	right: 40px;
-	bottom: 10px;
+	background-color: rgb(98, 161, 254);
+	top: -5px;
+	text-align: center;
 }
 
 div>button:hover{
@@ -163,8 +185,16 @@ div>button:hover{
 
 /*--------------------------------------------------------내모임, 내가 작성한글, 내가 작성한 댓글*/
 
+div>.card{
+	box-shadow:3px 3px 20 -5 #000000;
+}
+
+div>.card-header{
+	background-color: rgb(231,241,255);
+}
+
 .card-body {
-   height: 1500px;
+   height: 1000px;
 }
 
 li>div>.a-list a:hover{
@@ -195,6 +225,7 @@ li>div>.a-list a:hover{
    line-height: 160%;
    font-weight: bolder;
    text-align: left;
+   font-size: 80%;
 }
 
 .moim-name{
@@ -203,17 +234,15 @@ li>div>.a-list a:hover{
 }
 
 .comment-box{
-	position: relative;
-	top: -40px;
+   position: relative;
+   top: -50px;
 }
 
 .comment-info{
-	text-align: left;
+   text-align: left;
 }
 
-.comment{
-	
-}
+
 
 
 /*--------------------------------------------------------스크롤바*/

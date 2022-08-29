@@ -18,6 +18,7 @@
 		
 		</nav>
 	</header>
+	
 	<section class="myPage">	
 		<c:url var="myInfoUpdateUrl" value="/info" />
 		<form class="large-form" action="${myInfoUpdateUrl}" method="post" enctype="multipart/form-data">
@@ -51,14 +52,14 @@
 			<div class="imgSelect-box">
 				<!-- 아이콘 누르면 파일선택창 열리게 하고싶음-->
 			  <a href="#" style="color: gray;">
-				<i class="material-icons" style="font-size:50px;">camera_alt</i>
+				<i class="material-icons" style="font-size:30px;">camera_alt</i>
 			  </a>	
-				<button type="button" class="btn btn-secondary btn-lg modify" style="font-size: 130%;">프로필 편집</button>
+				<button type="button" class="btn btn-secondary btn-lg modify" style="font-size: 150%; background-color: rgb(98, 161, 254);">프로필 편집</button>
 			</div>
 		</form>	
 	</section>
 	<br>	
-	<hr>
+	<div class="main-container">
 	<main class="main">
 		<section>
 			 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
@@ -122,8 +123,8 @@
 		              <li>
 		              	<div class="comment-box">
 			              	<div class="comment-info">
-			           			<span><small>홍길동</small></span>
-			           			<span><small>2022.08.28</small></span>
+			           			<span class="comment-name"><small>홍길동</small></span>
+			           			<span class="comment-date"><small>2022.08.28</small></span>
 			              	</div>
 			              	<div class="comment">
 			              		<span>댓글 내용</span>
@@ -137,6 +138,7 @@
 		    </div>
 		</section>    
 	</main>
+	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		const imgSelect = document.querySelector('.imgSelect');
