@@ -29,17 +29,10 @@
 	
 	<!-- 데이터베이스 설정 -->
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-<<<<<<< HEAD
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521/XEPDB1"></beans:property>
 		<beans:property name="username" value="USER_01"></beans:property>
 		<beans:property name="password" value="user_01"></beans:property>
-=======
-		<beans:property name="driverClassName" value="oracle.jdbc.OracleDriver"></beans:property>
-		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521/XE"></beans:property>
-		<beans:property name="username" value="puser1"></beans:property>
-		<beans:property name="password" value="puser1"></beans:property>
->>>>>>> refs/remotes/origin/이도엽
 	</beans:bean>
 	<beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
