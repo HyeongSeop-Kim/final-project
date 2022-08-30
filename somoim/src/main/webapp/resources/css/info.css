@@ -1,0 +1,262 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+/*--------------------------------------------------------통합적*/
+
+html,
+body {
+        width: 100%;
+        height: 100%;
+        }
+
+.myPage{
+	margin:20px auto 200px auto;
+	box-shadow:10px 10px 20 -5 gray;
+	background-color: rgb(240, 242, 245);
+	width: 1500px;
+	height: 450px;
+	border-radius: 10px;
+	font-size: 170%;
+}
+        
+.main-container{
+	padding: 10px 0 0 0;
+	background-color: rgb(240, 242, 245);
+	width: 100%;
+    height: 100%;
+}
+
+
+.main {
+	margin:20px auto;
+	width: 1400px;
+	font-size: 150%;
+} 
+
+.coverImg{
+	width: 1500px;
+	height: 450px;
+}
+
+section>.coverImg:hover div{
+	filter: brightness(80%);
+}
+
+
+
+
+/*--------------------------------------------------------프로필사진 부분*/
+.profile-user-img {
+	margin: 0 15px 0 10px;
+    width: 160px;
+    height: 160px; 
+    border-radius: 70%;
+    overflow: hidden;
+    float:left;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.imgSelect-box{
+	font-size: 55%;
+	height: 100px;
+}
+
+.imgSelect-box>button{
+	position: absolute;
+	top: -20px;	
+}
+
+.profile-user-img>a:hover img {
+	 filter: brightness(80%);
+}
+
+.imgSelect-box>a:hover i {
+	 filter: brightness(80%);
+}
+
+
+
+
+
+/*--------------------------------------------------------아이콘 부분*/
+
+
+.imgSelect-box i{
+	position: relative;
+	top: 120px;
+	left: -600px;
+	height: 50px;
+	z-index: 2;
+}
+.simple-info span{
+	position: relative;
+	top:55px;
+}
+
+
+
+
+/*--------------------------------------------------------심플정보*/
+.simple-info-box {
+	 display: flex;
+	 position: relative;
+     top: -40px;
+     height: 200px;
+     width: 1500px;
+     border-bottom: solid rgb(240, 242, 245);
+}
+
+.simple-info>input {
+	border: none;
+	position: relative;
+	top: 45px;
+}
+
+.simple-info>.name {
+	width: 130px;
+	font-size: 150%;
+}
+
+.simple-info>.birth,.location {
+	width: 150px;
+	font-size: 90%;
+}
+
+
+
+
+
+/*--------------------------------------------------------카테고리*/
+.category-box{
+	display: flex;
+	position: absolute;
+	top: 110px;
+	left: 215px;
+}
+
+.category-img{
+    width: 50px;
+    height: 50px; 
+    border-radius: 60%;
+    overflow: hidden;
+    margin: 0 20px 0 0;
+}
+
+.category{
+	width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imgSelect-box{
+	display: flex;
+	position: relative;
+	width: 500px;
+	top: 15px;
+	left: 10px;
+}
+.imgSelect-box>.coverImage,.modify{
+	position: absolute ;
+	padding: 5px 0 0 0;
+	width: 180px;
+	height: 55px;
+	right: -210px;
+	background-color: rgb(98, 161, 254);
+	top: -5px;
+	text-align: center;
+}
+
+.imgSelect-box>.modify{
+	top: 90px;
+}
+
+div>button:hover{
+	filter: brightness(80%);
+}
+
+
+
+
+
+/*--------------------------------------------------------내모임, 내가 작성한글, 내가 작성한 댓글*/
+
+div>.card{
+	box-shadow:3px 3px 20 -5 #000000;
+}
+
+div>.card-header{
+	background-color: rgb(231,241,255);
+}
+
+.card-body {
+   height: 1000px;
+}
+
+li>div>.a-list a:hover{
+   color:#ffc045;
+}
+
+.moim-box{
+   display: flex;
+   margin:0 0 35px 0;
+   border-bottom: solid rgb(240, 242, 245);
+}
+
+.moim-box>.img-list{
+   border-radius: 10%;
+   overflow: hidden;
+   margin: 0 10px 0 0;
+   width: 85px;
+}
+
+.moim-img{
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   width: 80px;
+   height: 80px;
+}
+  
+.moim-box>.a-list {
+   line-height: 160%;
+   font-weight: bolder;
+   text-align: left;
+   font-size: 80%;
+}
+
+.moim-name{
+   text-decoration-line: none;
+   color: black;
+}
+
+.comment-box{
+   border-bottom: solid rgb(240, 242, 245);
+}
+
+.comment-info{
+   text-align: left;
+}
+
+
+
+/*--------------------------------------------------------스크롤바*/
+.scroll::-webkit-scrollbar {
+	width: 8px !important; /* 스크롤바의 너비 */
+}
+
+.scroll::-webkit-scrollbar-thumb {
+	height: 30%; /* 스크롤바의 길이 */
+	background: green; /* 스크롤바의 색상 */
+	
+	border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+	background: rgba(33, 122, 244, .1); /*스크롤바 뒷 배경 색상 */
+}
