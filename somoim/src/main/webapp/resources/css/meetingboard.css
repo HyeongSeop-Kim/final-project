@@ -1,0 +1,241 @@
+@charset "UTF-8";
+
+
+
+* {
+	margin: 0; padding: 0;
+	box-sizing: border-box;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-size: 16px;
+}
+
+.container {
+	margin: 1rem 5rem;
+}
+
+.container_1 {
+	margin: 0.2rem 0.5rem;
+}
+
+.image_box {
+	background-color: #dbdbdb;
+	height: 300px;
+    width: 100%;
+    
+    
+}
+
+.meeting_more_box{
+	
+	height: 150px;
+    width: 100%;
+}
+
+.category_box_120{
+	height:120px;
+	width: 120px;
+	border-radius:50%;
+	
+}
+
+.category_box_60{
+	height:60px;
+	width: 60px;
+	border-radius:50%;
+	
+	
+}
+
+.category_box_40{
+    height:40px;
+	width: 40px;
+	border-radius:50%; 
+}
+
+
+
+.box_width_20{
+	width:20%;
+}
+
+.box_width_30{
+	width:30%;
+}
+
+.box_width_50{
+	width:50%;
+	
+}
+
+.border_1{
+	border: 3px solid #dbdbdb;
+}
+
+.border_sh{
+    box-shadow:   0px 15px 20px  rgb(215, 234, 243);
+}
+
+
+.flex_box{
+   display:flex;
+}
+
+
+.center{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.space-between{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+.date_bs{
+    width:70px;
+    height:90px;
+ }
+
+ .h_40{
+    height: 40px;   
+   }
+
+
+/* margin*/
+
+.m_auto{
+    margin: auto; 
+    
+}
+
+.margin_10{
+	margin:10px;
+}
+
+.margin_4{
+	
+	margin-top: 25px;
+    margin-right: 1px;
+    margin-bottom: 25px;
+    margin-left: 1px;
+}
+
+.margin_right_10{
+	
+	margin-right:10px;
+}
+
+
+.margin_right_30{
+	
+	margin-right:30px;
+}
+.margin_right_40{
+	
+	margin-right:40px;
+}
+
+.margin_left_10{
+	
+	margin-left:10px;
+}
+
+
+.margin_bottom_10{
+	
+	margin-bottom:10px;
+}
+.margin_bottom_20{
+	
+	margin-bottom:20px;
+}
+
+
+
+.margin_top_10{
+	
+	margin-top:10px;
+}
+
+
+.margin_top_70{
+    margin-top:70px;
+}
+
+.margin-top_81{
+    margin-top:81px;
+}
+
+
+
+/*font*/
+
+.font_size_design_10{
+	font-size:10px;
+}
+
+.font_color_w{
+	color:white;
+}
+
+
+
+.font_s_50{
+	font-size:50px;
+}
+
+.font_s_20{
+    font-size:20px;	
+}
+
+.font_nanum{
+
+font-size: 1.4em;
+}
+
+.font_Nanum_B{
+/*font-family: 'Nanum Pen Script', cursive;*/
+font-size: 1em;
+}
+
+/*color*/
+
+
+.bc_gr{
+	background-color: green;
+}
+
+.bc_grey{
+	background-color: #dbdbdb;
+}
+
+.bc_sb{
+    background-color: rgb(215, 234, 243);
+}
+
+.c_gr{
+	color:grey;
+}
+
+
+
+.cursor{
+	cursor: pointer;
+}
+
+
+
+.width{
+    width:auto;
+    z-index:2;
+}
+
+.moim-colecter{
+    width:240px;
+    height:150px;
+    z-index:1;
+}
+
