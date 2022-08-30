@@ -29,7 +29,7 @@
 	
 	<!-- 데이터베이스 설정 -->
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<beans:property name="driverClassName" value="oracle.jdbc.OracleDriver"></beans:property>
+		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521/XEPDB1"></beans:property>
 		<beans:property name="username" value="USER_01"></beans:property>
 		<beans:property name="password" value="user_01"></beans:property>

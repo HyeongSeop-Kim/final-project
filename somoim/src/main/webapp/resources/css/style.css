@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+/* header */
+header {
+  height: 200px;
+}
+
+/* main */
+main .service-items {
+  width: 80px;
+  height: 80px;
+  font-size: 38px;
+}
+
+main .service-items:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+/* section */
+section .section-container {
+  border: 1px solid #dfdfdf;
+}
+
+/* footer */
+footer {
+  padding-top: 20px;
+}
+
+footer nav .arrow-icon {
+  font-size: 12px;
+}
+
+footer nav .active > a {
+  background-color: #62a1fe !important;
+}
+
+footer .add-btn {
+  position: absolute;
+  right: 0;
+  top: 20px;
+}
+
+/* user-area */
+.service-sm-items {
+  width: 40px;
+  height: 40px;
+}
+
+/* common */
+
+.btn-blue {
+  background-color: #62a1fe;
+  border-color: #669cec;
+}
+
+.btn-sm {
+  font-size: 12px;
+}
+
+
+.icon-green {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 50%;
+  background-color: #58c464;
+}
+
+
+.go-to-btn {
+  display: block;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+}
+
+
+/* 스크롤바 CSS */
+
+.scroll::-webkit-scrollbar {
+    width: 8px !important;  /* 스크롤바의 너비 */
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: green; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
+
+
