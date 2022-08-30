@@ -10,6 +10,9 @@
 @import "screens/login.css";
 @import "screens/join.css";
 @import "screens/find.css";
+@import "screens/info.css";
+@import "screens/somoim.css";
+@import "screens/meetingboard.css";
 
 /* font */
 @font-face {
