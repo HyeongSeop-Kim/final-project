@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/info.css">
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/reset.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -19,14 +20,16 @@
 		</nav>
 	</header>
 	
-	<section class="myPage">	
+	<section class="myPage" >	
 		<c:url var="myInfoUpdateUrl" value="/info" />
-		<form class="large-form" action="${myInfoUpdateUrl}" method="post" enctype="multipart/form-data">
+		<div class="coverImg" onclick='coverImageSelect();'>
+			<input class="coverImgSelect" type="file" name="uploadImg" value="이미지 선택" style="display: none;">
+		</div>
 				<!--프로필 사진 -->	
 			<div class="simple-info-box">
 				<div class="profile-user-img">
 					<a href="#">
-						<img class="profile"  src="${path}/resources/img/profile.png">
+						<img class="profile"  src="${path}/resources/img/profile.png" onclick='profileSelect();'>
 						<input class="imgSelect" type="file" name="uploadImg" value="이미지 선택" style="display: none;">
 					</a>
 				</div>
@@ -48,15 +51,15 @@
 			  			<img class="category" src="${path}/resources/img/camera.png">
 					</div>
 				</div>	
+				<div class="imgSelect-box">
+					<!-- 아이콘 누르면 파일선택창 열리게 하고싶음-->
+				  <a href="#" style="color: gray;">
+					<i class="material-icons" style="font-size:35px;">camera_alt</i>
+				  </a>	
+					<button type="button" class="btn btn-secondary btn-lg coverImage" style="font-size: 150%; background-color: rgb(98, 161, 254);">커버 사진 추가</button>
+					<button type="button" class="btn btn-secondary btn-lg modify" style="font-size: 150%; background-color: rgb(98, 161, 254);">프로필 편집</button>
+				</div>
 			</div>
-			<div class="imgSelect-box">
-				<!-- 아이콘 누르면 파일선택창 열리게 하고싶음-->
-			  <a href="#" style="color: gray;">
-				<i class="material-icons" style="font-size:30px;">camera_alt</i>
-			  </a>	
-				<button type="button" class="btn btn-secondary btn-lg modify" style="font-size: 150%; background-color: rgb(98, 161, 254);">프로필 편집</button>
-			</div>
-		</form>	
 	</section>
 	<br>	
 	<div class="main-container">
@@ -66,7 +69,7 @@
 		      <div class="col">
 		        <div class="card mb-4 rounded-3 shadow-sm">
 		          <div class="card-header py-3">
-		            <h2 class="my-0 fw-normal">내 모임</h2>
+		            <h2 class="my-0 fw-normal">가입한 모임</h2>
 		          </div>
 		          <div class="card-body scroll" style="overflow-y: scroll">
 		            <ul class="list-unstyled mt-3 mb-4">
@@ -95,7 +98,7 @@
 		      <div class="col">
 		        <div class="card mb-4 rounded-3 shadow-sm">
 		          <div class="card-header py-3">
-		            <h2 class="my-0 fw-normal">내가 작성한 글</h2>
+		            <h2 class="my-0 fw-normal">작성한 글</h2>
 		          </div>
 		          <div class="card-body scroll" style="overflow-y: scroll">
 		            <ul class="list-unstyled mt-3 mb-4">
@@ -116,14 +119,14 @@
 		      <div class="col">
 		        <div class="card mb-4 rounded-3 shadow-sm ">
 		          <div class="card-header py-3" >
-		            <h2 class="my-0 fw-normal">내가 작성한 댓글</h2>
+		            <h2 class="my-0 fw-normal">작성한 댓글</h2>
 		          </div>
 		          <div class="card-body scroll" style="overflow-y: scroll">
 		            <ul class="list-unstyled mt-3 mb-4">
 		              <li>
 		              	<div class="comment-box">
 			              	<div class="comment-info">
-			           			<span class="comment-name"><small>홍길동</small></span>
+			           			<span class="comment-name">홍길동</span>
 			           			<span class="comment-date"><small>2022.08.28</small></span>
 			              	</div>
 			              	<div class="comment">
@@ -141,11 +144,19 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script type="text/javascript">
-		const imgSelect = document.querySelector('.imgSelect');
-		const profile = document.querySelector('.profile');
+		function profileSelect(){	
+			const imgSelect = document.querySelector('.imgSelect');
+			const profile = document.querySelector('.profile');
+			
+			profile.addEventListener('click', () => imgSelect.click());
+		}
 		
-		profile.addEventListener('click', () => imgSelect.click());
-		
+		function coverImageSelect(){
+			const coverImgSelect = document.querySelector('.coverImgSelect');
+			const coverImg = document.querySelector('.coverImg');
+			
+			coverImg.addEventListener('click', () => coverImgSelect.click());
+		}
 	</script>
 </body>
 </html>

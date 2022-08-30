@@ -1,20 +1,8 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
-@font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+
 /*--------------------------------------------------------통합적*/
-* {
-	margin: 0; padding: 0;
-	border: 0;
-	font: inherit;
-	font-family: 'GmarketSansMedium';
-	vertical-align: baseline;	
-	font-size: 100%;
-}
+
 html,
 body {
         width: 100%;
@@ -22,9 +10,9 @@ body {
         }
 
 .myPage{
-	margin:20px auto;
-	box-shadow:10px 10px 20 -5 #gray;
-	background-color:rgb(247, 247, 247);
+	margin:20px auto 200px auto;
+	box-shadow:10px 10px 20 -5 gray;
+	background-color: rgb(240, 242, 245);
 	width: 1500px;
 	height: 450px;
 	border-radius: 10px;
@@ -45,6 +33,14 @@ body {
 	font-size: 150%;
 } 
 
+.coverImg{
+	width: 1500px;
+	height: 450px;
+}
+
+section>.coverImg:hover div{
+	filter: brightness(80%);
+}
 
 
 
@@ -89,19 +85,19 @@ body {
 
 
 /*--------------------------------------------------------아이콘 부분*/
-span{
-	position: relative;
-	top:55px;
-}
 
-i{
+
+.imgSelect-box i{
 	position: relative;
-	top: -60px;
-	left: 120px;
+	top: 120px;
+	left: -600px;
 	height: 50px;
 	z-index: 2;
 }
-
+.simple-info span{
+	position: relative;
+	top:55px;
+}
 
 
 
@@ -110,14 +106,14 @@ i{
 .simple-info-box {
 	 display: flex;
 	 position: relative;
-     top: 230px;
+     top: -40px;
      height: 200px;
-     width: 1000px;
+     width: 1500px;
+     border-bottom: solid rgb(240, 242, 245);
 }
 
 .simple-info>input {
 	border: none;
-	background: rgb(247, 247, 247);
 	position: relative;
 	top: 45px;
 }
@@ -140,7 +136,7 @@ i{
 .category-box{
 	display: flex;
 	position: absolute;
-	top: 130px;
+	top: 110px;
 	left: 215px;
 }
 
@@ -161,18 +157,23 @@ i{
 .imgSelect-box{
 	display: flex;
 	position: relative;
-	top: 225px;
+	width: 500px;
+	top: 15px;
 	left: 10px;
 }
-.imgSelect-box>.modify{
+.imgSelect-box>.coverImage,.modify{
 	position: absolute ;
 	padding: 5px 0 0 0;
 	width: 180px;
 	height: 55px;
-	right: 40px;
+	right: -210px;
 	background-color: rgb(98, 161, 254);
 	top: -5px;
 	text-align: center;
+}
+
+.imgSelect-box>.modify{
+	top: 90px;
 }
 
 div>button:hover{
@@ -204,6 +205,7 @@ li>div>.a-list a:hover{
 .moim-box{
    display: flex;
    margin:0 0 35px 0;
+   border-bottom: solid rgb(240, 242, 245);
 }
 
 .moim-box>.img-list{
@@ -234,14 +236,12 @@ li>div>.a-list a:hover{
 }
 
 .comment-box{
-   position: relative;
-   top: -50px;
+   border-bottom: solid rgb(240, 242, 245);
 }
 
 .comment-info{
    text-align: left;
 }
-
 
 
 
