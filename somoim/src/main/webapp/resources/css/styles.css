@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+@import "reset.css";
+@import "variables.css";
+
+/* Components */
+@import "components/form.css";
+
+/* Screens */
+@import "screens/login.css";
+@import "screens/join.css";
+@import "screens/find.css";
+
+/* font */
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	font-family: GmarketSansMedium;
+  height: 100vh;
+}
+
+.form-section {
+	display: flex;
+	justify-content: center;
+}
+
+.form-container {
+	width: 500px;
+}
