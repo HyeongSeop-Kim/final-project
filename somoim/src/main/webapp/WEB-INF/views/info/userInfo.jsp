@@ -52,9 +52,9 @@
             	</section>
 				<div class="imgSelect-box">
 					<!-- 아이콘 누르면 파일선택창 열리게 하고싶음-->
-					<button type="button" class="btn btn-secondary btn-lg coverImage" style="font-size: 150%; ">커버 사진 변경</button>
+					<button type="button" class="btn btn-secondary coverImage">커버 사진 변경</button>
 					<input  id="coverImgSelect-btn" type="file" name="uploadImg" value="이미지 선택" onclick='onClickUpload();'>
-					<button type="button" class="btn btn-secondary btn-lg modify" style="font-size: 150%; ">프로필 편집</button>
+					<button type="button" class="btn btn-secondary modify">프로필 편집</button>
 				</div>
 			</div>
 	</section>
