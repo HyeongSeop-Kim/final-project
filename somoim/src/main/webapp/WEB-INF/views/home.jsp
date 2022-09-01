@@ -6,7 +6,7 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="ko">
-<c:url var="cs" value="/resources/css"/>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <c:url var="img" value="/resources/img/somoim"/>
 <head>
   <!-- Required meta tags -->
@@ -15,17 +15,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="${cs}/styles.css" />
+  								<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+   								 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  								<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+							    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+							    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="${path}/resources/css/styles.css">
   <title>Demo</title>
 </head>
 
 <body>
-  <div class="wrap p-5">
+  <div class="wrap p-3">
     <!-- header -->
     <header class="container d-flex justify-content-center align-items-center rounded-3 shadow-sm bg-white">
       <h1 class="title">소모임</h1>
@@ -39,7 +39,7 @@
       <div class="row"> 
         <!-- left-menu -->
         <div class="col-md-3" > 
-          <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 720px; overflow-y: scroll"> 
+          <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 738px; overflow-y: scroll"> 
             <div class="row" >
               <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
                 <a href="#" class="service-items icon-green">
@@ -168,7 +168,7 @@
                 </ul>
               </nav>
                <c:url var="moimAddUrl" value="/add" />
-              <button type="button" class="btn btn-primary btn-sm add-btn px-3 btn-blue" onclick="location.href='${moimAddUrl}'">등록</button>
+              <button type="button" class="btn btn-primary btn-sm add-btn px-3 btn-blue" onclick="location.href='${moimAddUrl}'">상세</button>
             </footer>
           </div>
         </div>
@@ -176,7 +176,7 @@
  
         <!-- right-menu -->
         <div class="col-md-3">
-          <div class="p-4 rounded-3 shadow-sm bg-white" style="height: 720px;">
+          <div class="p-4 rounded-3 shadow-sm bg-white" style="height: 738px;">
             <section class="user d-flex justify-content-between align-items-center pb-3">
               <div>
                 <img src="${img}/profile-image.png" class="rounded-circle" width="60" alt="profile-image">
@@ -185,7 +185,7 @@
                 <p class="pb-1">홍길동</p>
                 <p>서울특별시</p>
               </div>
-              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" >수정</button>
+              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info'" >수정</button>
             </section>
             <section class="d-flex justify-content-between align-items-center pb-3">
            		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>

@@ -38,11 +38,17 @@
 				<label class="find-form__label">휴대전화</label>
 				<input class="find-form__input" type="text" placeholder="핸드폰 번호">
 				<div class="find-form-inline div-line">
-						<button class="find-form__btn btn-transparent" type="button">뒤로가기</button>
+						<button class="find-form__btn btn-transparent" type="button" onclick="popClose();">취소</button>
 						<input class="find-form__btn btn-green" type="submit" value="확인"  />
 				</div>
 			</form>
 		</div>
 	</section>
 </body>
+<script type="text/javascript">
+	function popClose() {
+		window.close();
+	}
+</script>
+
 </html>

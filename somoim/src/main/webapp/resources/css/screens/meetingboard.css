@@ -2,16 +2,7 @@
 
 
 
-* {
-	margin: 0; padding: 0;
-	box-sizing: border-box;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-size: 16px;
-}
 
-.container {
-	margin: 1rem 5rem;
-}
 
 .container_1 {
 	margin: 0.2rem 0.5rem;
@@ -171,35 +162,6 @@
 
 
 
-/*font*/
-
-.font_size_design_10{
-	font-size:10px;
-}
-
-.font_color_w{
-	color:white;
-}
-
-
-
-.font_s_50{
-	font-size:50px;
-}
-
-.font_s_20{
-    font-size:20px;	
-}
-
-.font_nanum{
-
-font-size: 1.4em;
-}
-
-.font_Nanum_B{
-/*font-family: 'Nanum Pen Script', cursive;*/
-font-size: 1em;
-}
 
 /*color*/
 
