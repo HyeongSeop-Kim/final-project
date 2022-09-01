@@ -1,7 +1,11 @@
 @charset "UTF-8";
 
-/* header */
+/* header*/
 header {
+  height: 130px;
+}
+
+header >  {
   height: 200px;
 }
 

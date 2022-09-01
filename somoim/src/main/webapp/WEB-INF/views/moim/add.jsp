@@ -6,7 +6,7 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="ko">
-<c:url var="cs" value="/resources/css"/>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <c:url var="img" value="/resources/img/somoim"/>
 <head>
   <!-- Required meta tags -->
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
     integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="${cs}/styles.css" />
+  <link rel="stylesheet" href="${path}/resources/css/styles.css">
   <title>Demo</title>
 </head>
 
@@ -34,6 +34,11 @@
     <!-- // header -->
 
     <!-- main -->
+    <!-- 
+    	 container :  margin: 1rem 5rem;
+		 pt-3 : padding top : 1rem !important
+    	 px-0 : padding-right: 0!important   padding-left: 0!important;
+     -->
     <main class="container pt-3 px-0">
       <div class="row"> 
 	
@@ -161,7 +166,7 @@
                 <p class="pb-1">홍길동</p>
                 <p>서울특별시</p>
               </div>
-              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='add'">등록</button>
+              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info'" >수정</button>
             </section>
             <section class="d-flex justify-content-between align-items-center pb-3">
            		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
