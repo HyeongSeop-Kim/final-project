@@ -8,264 +8,452 @@
 
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<title>모임 페이지</title>
-	<c:url var="css" value="/resources/css"/>
-	<link rel="stylesheet" type="text/css" href="${css}/styles.css">
-	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">	
-	<script type="text/javascript" src="${bs5}/js/bootstrap.min.js"></script>
-<!--  	
-    <c:url var="jQuery" value="/resources/js"/>
-	
-    <link rel="stylesheet" type="text/css" href="${css}/meetingboard.css">
-	<script type="text/javascript" src="${bs5}/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${jQuery}/jquery-3.6.0.min.js"></script>  -->  
+  <head>
+    <meta charset="UTF-8" />
+    <title>모임 페이지</title>
+    <c:url var="cs" value="/resources/css"/>
+    <c:url var="img" value="/resources/img/somoim"/>
 
-</head>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-<body>
-  <body>
-    <header class="container">
-      <div class="image_box flex_box">
-        <div class="m_auto">
-          <i class="bi bi-plus-lg margin_right_10 cursor c_gr font_s_50"></i>
-          <span class="c_gr font_s_50">이미지</span>
-        </div>
-      </div>
+    <link rel="stylesheet" href="${cs}/styles.css" />
+  </head>
+
+
+   <body>
+    <!--이미지 사진박스-->
+    <header
+      class="container d-flex justify-content-center align-items-center rounded-3 shadow-sm bg-white"
+    >
+      <h1 class="font-s-50">이미지</h1>
+      <i class="bi bi-plus-lg margin-right-10 font-s-50"></i>
     </header>
+    <!--헤더 밑에 전부 메인박스-->
+    <main class="mainbox">
+      <!--모임 아이콘,이름,버튼박스 -->
+      <div>
+        <div class="meeting-more-box flex-box margin-bottom-10">
+          <a href="#" class="margin-10 category-box-120 icon-green">
+            <i class="fa-solid fa-suitcase fa-3x"></i>
+          </a>
 
-    <div class="container">
-      <div class="meeting_more_box flex_box">
-        <div class="margin_10 category_box_120 flex_box bc_gr">
-          <i
-            class="bi bi-music-note-beamed m_auto"
-            style="font-size: 50px; color: white"
-          ></i>
-        </div>
-        <div class="margin_10 mb-1 bc_grey flex_box">
-          <div class="margin_10 flex_box font_s_50">TEST ___모임</div>
-          <div class="margin_10 margin_top_70">
-            <button type="button" class="btn btn-primary">편집</button>
+          <div class="margin-10 mb-1 shadow-sm bc-wh flex-box">
+            <div class="margin-10 flex-box font-s-30 center">TEST ___모임</div>
+            <div class="margin-10 margin-top-70">
+              <button type="button" class="btn btn-primary">편집</button>
+            </div>
           </div>
-        </div>
-        <div class="margin_10 margin-top_81">
-          <button type="button" class="btn btn-primary">가입</button>
-        </div>
-        <div class="margin_10 margin-top_81">
-          <button type="button" class="btn btn-primary">찜</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <nav
-        class="navbar navbar-expand-lg navbar-light"
-        style="background-color: #e3f2fd"
-      >
-        <div class="container-fluid">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link font_s_20 margin_right_30">모임</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link font_s_20 margin_right_30">게시판</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link font_s_20 margin_right_30">사진첩</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link font_s_20 margin_right_30">채팅</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-    <section class="container flex_box">
-      <div class="border_1 margin_10 box_width_30">
-        <!-- 정보박스 -->
-        <div class="margin_10 border_1 bc_sb">
-          <!-- 모임정보 -->
-          <div class="center">모임정보</div>
-        </div>
-
-        <div class="margin_10 border_1">
-          <!-- 모임상세설명 -->
-          <div class="space-between margin_10">
-            <div class="category_box_60 bc_gr flex_box"></div>
-            <div>직책</div>
-            <div>최주영</div>
+          <div class="margin-10 margin-top-81">
+            <button type="button" class="btn btn-primary">가입</button>
           </div>
-        </div>
-        <div class="margin_10 border_1">
-          <div class="center">
-            모임상세정보칸 입니다. 자유롭게 작성해주세요
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
-            ------------------------------------------
+          <div class="margin-10 margin-top-81">
+            <button type="button" class="btn btn-primary">찜</button>
           </div>
         </div>
       </div>
-
-      <div class="border_1 margin_10 box_width_50">
-        <div class="center border_1 margin_10 bc_sb">모임게시판</div>
-        <!--모임게시판1(아래서부터)-->
-        <div
-          class="container flex_box margin_bottom_10 margin_top_10 moim-colecter"
+      <!--네비게이션바-->
+      <div>
+        <nav
+          class="navbar navbar-expand-lg navbar-light"
+          style="background-color: #eff1f3"
         >
-          <div class="col-md-3 m_auto date_bs border_sh c_gr">
-            <span class="center font_nanum">2022.8.26</span>
+          <div class="container-fluid">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link">모임</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">게시판</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">사진첩</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">채팅</a>
+              </li>
+            </ul>
           </div>
-          <div class="col-md-3 margin_left_10">
-            <div class="font_Nanum_B">08.26 15시</div>
-            <div class="font_Nanum_B">홍대 8번출구</div>
-            <div class="font_Nanum_B">비용</div>
-            <div class="font_Nanum_B">정원수</div>
+        </nav>
+      </div>
+      <!--모임정보,모임게시판,모임멤버,버튼, 페이지 전체박스-->
+      <section class="flex-box pt-3 px-0">
+        <div class="col-md-3 bc-wh shadow-sm">
+          <!-- 모임정보박스 -->
+          <div class="margin-10 p-15">
+            <div class="center p-6 bc-wg">모임정보</div>
           </div>
-          <div class="col-md-5 accordion-item width">
-            <h2 class="accordion-header" id="heading1">
-              <button
-                class="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse1"
-                aria-expanded="true"
-                aria-controls="collapse1"
-              >
-                가입 멤버
-              </button>
-            </h2>
-            <div
-              id="collapse1"
-              class="accordion-collapse collapse"
-              aria-labelledby="heading1"
-            >
-              <div class="accordion-body">
-                <div class="flex_box margin_right_30 margin_bottom_20">
-                  <div class="category_box_40 bc_gr flex_box"></div>
-                  <div class="center margin_left_10">최주영</div>
-                </div>
-                <div class="flex_box margin_right_30 margin_bottom_20">
-                  <div class="category_box_40 bc_gr flex_box"></div>
-                  <div class="center margin_left_10">최주영</div>
-                </div>
-                <div class="flex_box margin_right_30 margin_bottom_20">
-                  <div class="category_box_40 bc_gr flex_box"></div>
-                  <div class="center margin_left_10">최주영</div>
+          <div class="margin-10">
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="100"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+          </div>
+          <div class="margin-10">
+            <div class="center p-6">
+              모임상세정보칸 입니다. 자유롭게 작성해주세요
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+              ------------------------------------------
+            </div>
+          </div>
+        </div>
+        <!--모임게시판 박스-->
+        <div class="col-md-6 bc-wh shadow-sm p-15">
+          <div class="center margin-10 p-6 bc-wg">모임게시판</div>
+
+          <!--정모모임1-->
+          <div class="p-15">
+            <div class="flex-box space-between">
+              <div class="bc-wh shadow-sm date-bs p-6 psi-r">
+                <div class="psi-a top-20 left-24 font_s_10">토요일</div>
+                <div class="psi-a top-40 left-28 font-s-30">26</div>
+              </div>
+              <div class="info-box-mb">
+                <div>08.26 15시</div>
+                <div>홍대 8번출구</div>
+                <div>비용</div>
+                <div>정원수</div>
+              </div>
+              <!--정모모임1 가입멤버 아코디언박스-->
+              <div class="moim-colecter">
+                <div class="accordion-item width">
+                  <h2 class="accordion-header" id="heading1">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse1"
+                      aria-expanded="true"
+                      aria-controls="collapse1"
+                    >
+                      가입 멤버
+                    </button>
+                  </h2>
+                  <div
+                    id="collapse1"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="heading1"
+                  >
+                    <!--스크롤박스-->
+                    <div
+                      class="p-4 rounded-3 shadow-sm bg-white scroll"
+                      style="height: 200px; overflow-y: scroll"
+                    >
+                      <div class="accordion-body">
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <hr class="container_1" />
-        <!--모임게시판1(여기까지)-->
-
-        <!--모임게시판2(아래서부터)-->
-        <div
-          class="container flex_box margin_bottom_10 margin_top_10 moim-colecter"
-        >
-          <div class="col-md-3 m_auto date_bs border_sh c_gr">
-            <span class="center font_nanum"> 2022.08.26</span>
-          </div>
-          <div class="col-md-3 margin_left_10">
-            <div class="font_Nanum_B">08.26 15시</div>
-            <div class="font_Nanum_B">홍대 8번출구</div>
-            <div class="font_Nanum_B">비용</div>
-            <div class="font_Nanum_B">정원수</div>
-          </div>
-          <div class="col-md-5 accordion-item width">
-            <h2 class="accordion-header" id="heading2">
-              <button
-                class="accordion-button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapse2"
-                aria-expanded="true"
-                aria-controls="collapse2"
-              >
-                가입 멤버
-              </button>
-            </h2>
-            <div
-              id="collapse2"
-              class="accordion-collapse collapse"
-              aria-labelledby="heading2"
-            >
-              <div class="accordion-body">
-                <div class="flex_box margin_right_30 margin_bottom_20">
-                  <div class="category_box_40 bc_gr flex_box"></div>
-                  <div class="center margin_left_10">최주영</div>
-                </div>
-                <div class="flex_box margin_right_30 margin_bottom_20">
-                  <div class="category_box_40 bc_gr flex_box"></div>
-                  <div class="center margin_left_10">최주영</div>
-                </div>
-                <div class="flex_box margin_right_30 margin_bottom_20">
-                  <div class="category_box_40 bc_gr flex_box"></div>
-                  <div class="center margin_left_10">최주영</div>
+          <hr class="container-1" />
+          <!--정모모임2-->
+          <div class="p-15">
+            <div class="flex-box space-between">
+              <div class="bc-wh shadow-sm date-bs p-6 psi-r">
+                <div class="psi-a top-20 left-24 font_s_10">토요일</div>
+                <div class="psi-a top-40 left-28 font-s-30">26</div>
+              </div>
+              <div class="info-box-mb">
+                <div>08.26 15시</div>
+                <div>홍대 8번출구</div>
+                <div>비용</div>
+                <div>정원수</div>
+              </div>
+              <!--정모모임2 가입멤버 아코디언박스-->
+              <div class="moim-colecter">
+                <div class="accordion-item width">
+                  <h2 class="accordion-header" id="heading2">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse2"
+                      aria-expanded="true"
+                      aria-controls="collapse2"
+                    >
+                      가입 멤버
+                    </button>
+                  </h2>
+                  <div
+                    id="collapse2"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="heading2"
+                  >
+                    <!--스크롤박스-->
+                    <div
+                      class="p-4 rounded-3 shadow-sm bg-white scroll"
+                      style="height: 200px; overflow-y: scroll"
+                    >
+                      <div class="accordion-body">
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <hr class="container_1" />
-        <!--모임게시판2(여기까지)-->
 
-        <div
-          class="container flex_box margin_bottom_10 margin_top_10 moim-colecter"
-        >
-          <div class="col-md-3 m_auto date_bs border_sh c_gr">
-            <i
-              class="center font_nanumbi bi-plus-lg margin_right_10 cursor c_gr font_s_50"
-            ></i>
+          <hr class="container-1" />
+          <!--개설버튼-->
+          <div class="p-15">
+            <div class="flex-box space-between">
+              <div class="bc-wh shadow-sm date-bs psi-r">
+                <i class="bi bi-plus-lg font-s-50 psi-a left-24 top-20"></i>
+              </div>
+            </div>
           </div>
-          <div class="col-md-3 margin_left_10"></div>
-          <div class="col-md-5 width"></div>
+          <hr class="container-1" />
         </div>
-      </div>
 
-      <div class="border_1 margin_10 box_width_20">
-        <div class="center border_1 margin_10 bc_sb">모임멤버</div>
-        <div class="space-between margin_10">
-          <div class="category_box_60 bc_gr flex_box"></div>
-          <div>직책</div>
-          <div>최주영</div>
+        <!--모임멤버박스-->
+        <div class="col-md-3 bc-wh shadow-sm p-15">
+          <div class="center margin-10 p-6 bc-wg">모임멤버</div>
+          <!--스크롤박스-->
+          <div
+            class="p-4 rounded-3 shadow-sm bg-white scroll"
+            style="height: 720px; overflow-y: scroll"
+          >
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+            <div class="space-between margin-10">
+              <img
+                src="${img}/profile-image.png"
+                class="rounded-circle"
+                alt="profile-image"
+                width="70"
+              />
+              <div>직책</div>
+              <div>최주영</div>
+            </div>
+          </div>
         </div>
-        <div class="space-between margin_10">
-          <div class="category_box_60 bc_gr flex_box"></div>
-          <div>직책</div>
-          <div>최주영</div>
-        </div>
-        <div class="space-between margin_10">
-          <div class="category_box_60 bc_gr flex_box"></div>
-          <div>직책</div>
-          <div>최주영</div>
-        </div>
-      </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-  	</script>
+      </section>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
