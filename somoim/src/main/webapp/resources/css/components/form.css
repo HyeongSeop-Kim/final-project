@@ -39,6 +39,6 @@ input::placeholder {
 .btn-yellow {
 	background-color: var(--yellow);
 }
-.btn-transparent {
-	background-color: transparent;
+.btn-light-gray {
+	background-color: var(--light-gray);
 }

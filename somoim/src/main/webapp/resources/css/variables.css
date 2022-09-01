@@ -3,6 +3,7 @@
 :root {
   --yellow: #fae100;
   --gray: rgba(0, 0, 0, 0.5);
+  --light-gray: rgba(0, 0, 0, 0.2);
   --green: rgb(0, 191, 24);
   --white: rgb(245, 245, 245);
 }

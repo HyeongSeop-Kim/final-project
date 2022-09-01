@@ -27,7 +27,7 @@
 				<label class="find-form__label">휴대전화</label>
 				<input class="find-form__input" type="text" placeholder="핸드폰 번호">
 				<div class="find-form-inline div-line">
-						<button class="find-form__btn btn-transparent" type="button">뒤로가기</button>
+						<button class="find-form__btn btn-light-gray" type="button">뒤로가기</button>
 						<input class="find-form__btn green" type="submit" value="확인"  />
 				</div>
 			</form>
