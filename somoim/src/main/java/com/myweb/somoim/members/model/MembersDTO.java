@@ -1,0 +1,122 @@
+package com.myweb.somoim.members.model;
+
+import java.sql.Date;
+
+public class MembersDTO {
+	private int memberId;
+	private String memberName;
+	private String id;
+	private String password;
+	private String gender;
+	private Date birth;
+	private String phone;
+	private int LocationId;
+	private String category;
+	private String bookmark;
+	private String memberImagePath;
+	private String infoImagePath;
+	
+	public int getMemberId() {
+		return memberId;
+	}
+	
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public Date getBirth() {
+		return birth;
+	}
+	
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public int getLocationId() {
+		return LocationId;
+	}
+	
+	public void setLocationId(int locationId) {
+		LocationId = locationId;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+	
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	public String getBookmark() {
+		return bookmark;
+	}
+	
+	public void setBookmark(String bookmark) {
+		this.bookmark = bookmark;
+	}
+	
+	public String getMemberImagePath() {
+		return memberImagePath;
+	}
+	
+	public void setMemberImagePath(String memberImagePath) {
+		this.memberImagePath = memberImagePath;
+	}
+	
+	public String getInfoImagePath() {
+		return infoImagePath;
+	}
+	
+	public void setInfoImagePath(String infoImagePath) {
+		this.infoImagePath = infoImagePath;
+	}
+	
+	@Override
+	public String toString() {
+		return "MembersDTO [memberId=" + memberId + ", memberName=" + memberName + ", id=" + id + ", password="
+				+ password + ", gender=" + gender + ", birth=" + birth + ", phone=" + phone + ", LocationId="
+				+ LocationId + ", category=" + category + ", bookmark=" + bookmark + ", memberImagePath="
+				+ memberImagePath + ", infoImagePath=" + infoImagePath + "]";
+	}
+}
