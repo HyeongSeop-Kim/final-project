@@ -167,8 +167,8 @@
                   </li>
                 </ul>
               </nav>
-               <c:url var="moimAddUrl" value="/add" />
-              <button type="button" class="btn btn-primary btn-sm add-btn px-3 btn-blue" onclick="location.href='${moimAddUrl}'">상세</button>
+               <c:url var="moimAddUrl" value="/moim/add" />
+              <button type="button" class="btn btn-primary btn-sm add-btn px-3 btn-blue" onclick="location.href='${moimAddUrl}'">개설</button>
             </footer>
           </div>
         </div>
@@ -185,7 +185,7 @@
                 <p class="pb-1">홍길동</p>
                 <p>서울특별시</p>
               </div>
-              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info'" >수정</button>
+              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='userInfo'" >상세</button>
             </section>
             <section class="d-flex justify-content-between align-items-center pb-3">
            		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>

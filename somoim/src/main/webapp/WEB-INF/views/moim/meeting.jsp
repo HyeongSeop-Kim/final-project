@@ -10,7 +10,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>모임 상세페이지</title>
+    <title>모임 페이지</title>
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
 
@@ -33,10 +33,11 @@
       referrerpolicy="no-referrer"
     />
 
-     <link rel="stylesheet" href="${cs}/styles.css" />
+    <link rel="stylesheet" href="${cs}/styles.css" />
   </head>
 
-  <body>
+
+   <body>
     <!--이미지 사진박스-->
     <header
       class="container d-flex justify-content-center align-items-center rounded-3 shadow-sm bg-white"
@@ -44,7 +45,6 @@
       <h1 class="font-s-50">이미지</h1>
       <i class="bi bi-plus-lg margin-right-10 font-s-50"></i>
     </header>
-
     <!--헤더 밑에 전부 메인박스-->
     <main class="mainbox">
       <!--모임 아이콘,이름,버튼박스 -->
@@ -68,7 +68,6 @@
           </div>
         </div>
       </div>
-
       <!--네비게이션바-->
       <div>
         <nav
@@ -78,16 +77,16 @@
           <div class="container-fluid">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link">모임</a>
+                <a class="nav-link">정모</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link ">게시판</a>
+                <a class="nav-link">게시판</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link">사진첩</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link ">채팅</a>
+                <a class="nav-link">채팅</a>
               </li>
             </ul>
           </div>
@@ -95,8 +94,8 @@
       </div>
       <!--모임정보,모임게시판,모임멤버,버튼, 페이지 전체박스-->
       <section class="flex-box pt-3 px-0">
-        <!-- 모임정보박스 -->
         <div class="col-md-3 bc-wh shadow-sm">
+          <!-- 모임정보박스 -->
           <div class="margin-10 p-15">
             <div class="center p-6 bc-wg">모임정보</div>
           </div>
@@ -145,95 +144,168 @@
             </div>
           </div>
         </div>
-        <!--모임게시글 박스-->
+        <!--모임게시판 박스-->
         <div class="col-md-6 bc-wh shadow-sm p-15">
-          <div class="center margin-10 p-6 bc-wg">모임게시글</div>
-          <!--첫번째 게시글 박스-->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
+          <div class="center margin-10 p-6 bc-wg">정모 일정</div>
+
+          <!--정모모임1-->
+          <div class="p-15">
+            <div class="flex-box space-between">
+              <div class="bc-wh shadow-sm date-bs p-6 psi-r">
+                <div class="psi-a top-20 left-24 font_s_10">토요일</div>
+                <div class="psi-a top-40 left-28 font-s-30">26</div>
+              </div>
+              <div class="info-box-mb">
+                <div>08.26 15시</div>
+                <div>홍대 8번출구</div>
+                <div>비용</div>
+                <div>정원수</div>
+              </div>
+              <!--정모모임1 가입멤버 아코디언박스-->
+              <div class="moim-colecter">
+                <div class="accordion-item width">
+                  <h2 class="accordion-header" id="heading1">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse1"
+                      aria-expanded="true"
+                      aria-controls="collapse1"
+                    >
+                      가입 멤버
+                    </button>
+                  </h2>
+                  <div
+                    id="collapse1"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="heading1"
+                  >
+                    <!--스크롤박스-->
+                    <div
+                      class="p-4 rounded-3 shadow-sm bg-white scroll"
+                      style="height: 200px; overflow-y: scroll"
+                    >
+                      <div class="accordion-body">
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                      </div>
                     </div>
-                    <span><small>2017.01.01</small></span>
                   </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text">
-                    게시글----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <!--두번째 게시글 박스-->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
+          <hr class="container-1" />
+          <!--정모모임2-->
+          <div class="p-15">
+            <div class="flex-box space-between">
+              <div class="bc-wh shadow-sm date-bs p-6 psi-r">
+                <div class="psi-a top-20 left-24 font_s_10">토요일</div>
+                <div class="psi-a top-40 left-28 font-s-30">26</div>
+              </div>
+              <div class="info-box-mb">
+                <div>08.26 15시</div>
+                <div>홍대 8번출구</div>
+                <div>비용</div>
+                <div>정원수</div>
+              </div>
+              <!--정모모임2 가입멤버 아코디언박스-->
+              <div class="moim-colecter">
+                <div class="accordion-item width">
+                  <h2 class="accordion-header" id="heading2">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse2"
+                      aria-expanded="true"
+                      aria-controls="collapse2"
+                    >
+                      가입 멤버
+                    </button>
+                  </h2>
+                  <div
+                    id="collapse2"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="heading2"
+                  >
+                    <!--스크롤박스-->
+                    <div
+                      class="p-4 rounded-3 shadow-sm bg-white scroll"
+                      style="height: 200px; overflow-y: scroll"
+                    >
+                      <div class="accordion-body">
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                        <div class="flex-box margin-right-10 margin-bottom-20">
+                          <img
+                            src="${img}/profile-image.png"
+                            class="rounded-circle"
+                            alt="profile-image"
+                            width="40"
+                          />
+                          <div class="center margin-left-10">최주영</div>
+                        </div>
+                      </div>
                     </div>
-                    <span><small>2017.01.01</small></span>
                   </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text">
-                    게시글----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <!-- 세번째 게시글 박스 -->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
-                    </div>
-                    <span><small>2017.01.01</small></span>
-                  </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text">게시글3</p>
-                </div>
+
+          <hr class="container-1" />
+          <!--개설버튼-->
+          <div class="p-15">
+            <div class="flex-box space-between">
+              <div class="bc-wh shadow-sm date-bs psi-r">
+                <i class="bi bi-plus-lg font-s-50 psi-a left-24 top-20"></i>
               </div>
             </div>
           </div>
-          <!--작성버튼-->
-          <div class="text-end margin-right-40">
-            <button class="btn btn-sm btn-primary" type="button">작성</button>
-          </div>
-          <!-- 페이지 -->
-          <nav aria-label="Page navigation example ">
-            <ul class="pagination justify-content-center">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <hr class="container-1" />
         </div>
 
         <!--모임멤버박스-->

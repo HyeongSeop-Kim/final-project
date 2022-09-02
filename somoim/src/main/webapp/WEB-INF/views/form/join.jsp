@@ -64,7 +64,7 @@
 				<label class="join-form__label">휴대전화</label>
 				<input class="join-form__input" type="text" placeholder="핸드폰 번호">
 				<input class="join-form__btn btn-green" type="submit" value="회원가입"  />
-				<button class="join-form__btn btn-green" type="button" onclick="popClose();" >취소</button>
+				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
 			</form>
 		</div>
 	</section>

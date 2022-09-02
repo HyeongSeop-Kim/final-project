@@ -88,13 +88,12 @@ footer .add-btn {
 
 .scroll::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: green; /* 스크롤바의 색상 */
-    
+    background: green; /* 스크롤바의 색상 */ 
     border-radius: 10px;
 }
 
 .scroll::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    background: white;  /*스크롤바 뒷 배경 색상*/
 }
 
 

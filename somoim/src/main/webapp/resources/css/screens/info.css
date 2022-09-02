@@ -260,18 +260,3 @@ ul>li>.pati-info{
 .comment>span{
 	font-weight: bold;
 }
-
-/*--------------------------------------------------------스크롤바*/
-.scroll::-webkit-scrollbar {
-	width: 8px !important; /* 스크롤바의 너비 */
-}
-
-.scroll::-webkit-scrollbar-thumb {
-	height: 30%; /* 스크롤바의 길이 */
-	background: green; /* 스크롤바의 색상 */
-	border-radius: 10px;
-}
-
-.scroll::-webkit-scrollbar-track {
-	background: white; /*스크롤바 뒷 배경 색상 */
-}
