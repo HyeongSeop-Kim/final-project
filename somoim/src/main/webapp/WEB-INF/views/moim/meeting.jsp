@@ -13,6 +13,7 @@
     <title>모임 페이지</title>
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
+    <c:url var="meetingimg" value="/resources/img"/>
 
     <!-- Bootstrap CSS -->
     <link
@@ -37,37 +38,50 @@
   </head>
 
 
-   <body>
+  <body>
     <!--이미지 사진박스-->
-    <header
-      class="container d-flex justify-content-center align-items-center rounded-3 shadow-sm bg-white"
-    >
-      <h1 class="font-s-50">이미지</h1>
-      <i class="bi bi-plus-lg margin-right-10 font-s-50"></i>
-    </header>
-    <!--헤더 밑에 전부 메인박스-->
-    <main class="mainbox">
-      <!--모임 아이콘,이름,버튼박스 -->
-      <div>
-        <div class="meeting-more-box flex-box margin-bottom-10">
-          <a href="#" class="margin-10 category-box-120 icon-green">
+
+    <header class="p-6">
+      <div class="img-box" onclick="coverImageSelect();">
+        <img
+          class="img-box-size-1 bora-20 shadow-sm bc-wh"
+          src="${meetingimg}/meetingimg1.jpg"
+        />
+        <input
+          class="ImgSelect"
+          type="file"
+          name="uploadImg"
+          value="이미지 선택"
+        />
+      </div>
+      <div class="margin-bottom-20 flex-box margin-left-223">
+        <!--아이콘-->
+        <div class="psi-r">
+          <a
+            href="#"
+            class="category-box-120 icon-green psi-a bottom-10 left-24"
+          >
             <i class="fa-solid fa-suitcase fa-3x"></i>
           </a>
-
-          <div class="margin-10 mb-1 shadow-sm bc-wh flex-box">
-            <div class="margin-10 flex-box font-s-30 center">TEST ___모임</div>
-            <div class="margin-10 margin-top-70">
-              <button type="button" class="btn btn-primary">편집</button>
-            </div>
+        </div>
+        <!--정모이름,편집버튼-->
+        <div class="flex-box margin-left-160">
+          <div class="margin-10 margin-top-20 font-s-30">TEST ___모임</div>
+          <div class="margin-10 margin-top-50">
+            <button type="button" class="btn btn-primary">편집</button>
           </div>
-          <div class="margin-10 margin-top-81">
+          <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary">가입</button>
           </div>
-          <div class="margin-10 margin-top-81">
+          <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary">찜</button>
           </div>
         </div>
       </div>
+    </header>
+    <!--헤더 밑에 전부 메인박스-->
+
+    <main class="mainbox p-30">
       <!--네비게이션바-->
       <div>
         <nav
@@ -77,7 +91,7 @@
           <div class="container-fluid">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link">정모</a>
+                <a class="nav-link">모임</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link">게시판</a>
@@ -93,7 +107,7 @@
         </nav>
       </div>
       <!--모임정보,모임게시판,모임멤버,버튼, 페이지 전체박스-->
-      <section class="flex-box pt-3 px-0">
+      <section class="flex-box pt-3 px-0 p-3">
         <div class="col-md-3 bc-wh shadow-sm">
           <!-- 모임정보박스 -->
           <div class="margin-10 p-15">
@@ -111,42 +125,47 @@
               <div>최주영</div>
             </div>
           </div>
-          <div class="margin-10">
-            <div class="center p-6">
-              모임상세정보칸 입니다. 자유롭게 작성해주세요
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
-              ------------------------------------------
+          <div
+            class="p-4 rounded-3 shadow-sm bg-white scroll"
+            style="height: 640px; overflow-y: scroll"
+          >
+            <div class="margin-10">
+              <div class="center p-6">
+                모임상세정보칸 입니다. 자유롭게 작성해주세요
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+                ------------------------------------------
+              </div>
             </div>
           </div>
         </div>
         <!--모임게시판 박스-->
         <div class="col-md-6 bc-wh shadow-sm p-15">
-          <div class="center margin-10 p-6 bc-wg">정모 일정</div>
+          <div class="center margin-10 p-6 bc-wg">모임게시판</div>
 
           <!--정모모임1-->
           <div class="p-15">
@@ -187,7 +206,7 @@
                       style="height: 200px; overflow-y: scroll"
                     >
                       <div class="accordion-body">
-                        <div class="flex-box margin-right-10 margin-bottom-20">
+                        <div class="flex-box margin-bottom-20">
                           <img
                             src="${img}/profile-image.png"
                             class="rounded-circle"
@@ -196,7 +215,7 @@
                           />
                           <div class="center margin-left-10">최주영</div>
                         </div>
-                        <div class="flex-box margin-right-10 margin-bottom-20">
+                        <div class="flex-box margin-bottom-20">
                           <img
                             src="${img}/profile-image.png"
                             class="rounded-circle"
@@ -205,7 +224,7 @@
                           />
                           <div class="center margin-left-10">최주영</div>
                         </div>
-                        <div class="flex-box margin-right-10 margin-bottom-20">
+                        <div class="flex-box margin-bottom-20">
                           <img
                             src="${img}/profile-image.png"
                             class="rounded-circle"
@@ -261,7 +280,7 @@
                       style="height: 200px; overflow-y: scroll"
                     >
                       <div class="accordion-body">
-                        <div class="flex-box margin-right-10 margin-bottom-20">
+                        <div class="flex-box margin-bottom-20">
                           <img
                             src="${img}/profile-image.png"
                             class="rounded-circle"
@@ -270,7 +289,7 @@
                           />
                           <div class="center margin-left-10">최주영</div>
                         </div>
-                        <div class="flex-box margin-right-10 margin-bottom-20">
+                        <div class="flex-box margin-bottom-20">
                           <img
                             src="${img}/profile-image.png"
                             class="rounded-circle"
@@ -279,7 +298,7 @@
                           />
                           <div class="center margin-left-10">최주영</div>
                         </div>
-                        <div class="flex-box margin-right-10 margin-bottom-20">
+                        <div class="flex-box margin-bottom-20">
                           <img
                             src="${img}/profile-image.png"
                             class="rounded-circle"
@@ -314,7 +333,7 @@
           <!--스크롤박스-->
           <div
             class="p-4 rounded-3 shadow-sm bg-white scroll"
-            style="height: 720px; overflow-y: scroll"
+            style="height: 770px; overflow-y: scroll"
           >
             <div class="space-between margin-10">
               <img
@@ -450,10 +469,19 @@
         </div>
       </section>
     </main>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script type="text/javascript">
+      function coverImageSelect() {
+        const coverImgSelect = document.querySelector(".ImgSelect");
+        const coverImg = document.querySelector(".img-box");
+
+        coverImg.addEventListener("click", () => coverImgSelect.click());
+      }
+    </script>
   </body>
 </html>
