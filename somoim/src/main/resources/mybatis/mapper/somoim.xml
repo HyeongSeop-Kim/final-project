@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="SomoimMapper">
+	<select id="selectData" resultType="somoimDto">
+		SELECT MOIM_ID AS moimId
+			 , MOIM_TITLE AS moimTitle
+			 , MOIM_INFO AS moimInfo
+			 , MOIM_LIMIT AS moimLimit
+			 , L.LOCATION_NAME AS locationName
+			 , MOIM_IMAGE_PATH AS moimImagePah
+		  FROM MOIM M
+		  JOIN LOCATIONS L
+		    ON M.LOCATION_ID = L.LOCATION_ID
+		 WHERE MOIM_ID = #{id}
+	</select>
+</mapper>
+
