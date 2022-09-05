@@ -8,6 +8,8 @@
 	<typeAliases>
 		<typeAlias type="com.myweb.somoim.model.SomoimDTO" alias="somoimDto"/>
 		<typeAlias type="com.myweb.somoim.moim.model.MeetingsDTO" alias="meetingsDto"/>
+		<typeAlias type="com.myweb.somoim.participants.model.MeetingParticipantsDTO" alias="meetingParticipantsDto"/>
+		<typeAlias type="com.myweb.somoim.participants.model.MoimParticipantsDTO" alias="moimParticipantsDto"/>
 	</typeAliases>
 </configuration>
 

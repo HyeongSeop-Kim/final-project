@@ -93,12 +93,18 @@
 					<div class="center p-6 bc-wg">모임정보</div>
 				</div>
 				<div class="margin-10">
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="100" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
+					<c:if test="${not empty moimParticipantsList}">
+						<c:forEach items="${moimParticipantsList}" var="data">
+							<c:if test="${data.jobId eq 1}">
+								<div class="space-between margin-10">
+									<img src="${img}/profile-image.png" class="rounded-circle"
+										alt="profile-image" width="100" />
+									<div>${data.jobName}</div>
+									<div>${data.memberName}</div>
+								</div>
+							</c:if>
+						</c:forEach>
+					</c:if>
 				</div>
 				<div class="p-4 rounded-3 shadow-sm bg-white scroll"
 					style="height: 640px; overflow-y: scroll">
@@ -112,41 +118,47 @@
 				<div class="center margin-10 p-6 bc-wg">모임게시판</div>
 
 				<!--정모모임1-->
-				<c:if test="${not empty meetingsDatas}">
-					<c:forEach items="${meetingsDatas}" var="data">
+				<c:if test="${not empty meetingsList}">
+					<c:forEach items="${meetingsList}" var="meetingData" varStatus="status">
 						<div class="p-15">
 							<div class="flex-box space-between">
 								<div class="bc-wh shadow-sm date-bs p-6 psi-r">
-									<div class="psi-a top-20 left-24 font_s_10">${data.meetDay}</div>
-									<div class="psi-a top-40 left-28 font-s-30">${data.meetDate}</div>
+									<div class="psi-a top-20 left-24 font_s_10">${meetingData.meetDay}</div>
+									<div class="psi-a top-40 left-28 font-s-30">${meetingData.meetDate}</div>
 								</div>
 								<div class="info-box-mb">
-									<div>${data.meetTime}</div>
-									<div>${data.meetingPlace}</div>
-									<div>${data.meetingPrice}</div>
-									<div>${data.meetingLimit}</div>
+									<div>${meetingData.meetTime}</div>
+									<div>${meetingData.meetingPlace}</div>
+									<div>${meetingData.meetingPrice}</div>
+									<div>${meetingData.meetingLimit}</div>
 								</div>
 								<!--정모모임1 가입멤버 아코디언박스-->
 								<div class="moim-colecter">
 									<div class="accordion-item width">
 										<h2 class="accordion-header" id="heading1">
 											<button class="accordion-button" type="button"
-												data-bs-toggle="collapse" data-bs-target="#collapse1"
-												aria-expanded="true" aria-controls="collapse1">
+												data-bs-toggle="collapse" data-bs-target="#collapse${status.count}"
+												aria-expanded="true" aria-controls="collapse${status.count}">
 												가입 멤버</button>
 										</h2>
-										<div id="collapse1" class="accordion-collapse collapse"
-											aria-labelledby="heading1">
+										<div id="collapse${status.count}" class="accordion-collapse collapse"
+											 aria-labelledby="heading1">
 											<!--스크롤박스-->
 											<div class="p-4 rounded-3 shadow-sm bg-white scroll"
-												style="height: 200px; overflow-y: scroll">
-												<div class="accordion-body">
-													<div class="flex-box margin-bottom-20">
-														<img src="${img}/profile-image.png" class="rounded-circle"
-															alt="profile-image" width="40" />
-														<div class="center margin-left-10">최주영</div>
-													</div>
-												</div>
+												 style="height: 200px; overflow-y: scroll">
+												<c:if test="${not empty meetingParticipantsList}">
+													<c:forEach items="${meetingParticipantsList}" var="participantsData">
+														<c:if test="${participantsData.meetingId eq meetingData.meetingId}">
+															<div class="accordion-body">
+																<div class="flex-box margin-bottom-20">
+																	<img src="${img}/profile-image.png" class="rounded-circle"
+																		alt="profile-image" width="40" />
+																	<div class="center margin-left-10">${participantsData.memberName}</div>
+																</div>
+															</div>
+														</c:if>
+													</c:forEach>
+												</c:if>
 											</div>
 										</div>
 									</div>
@@ -156,58 +168,6 @@
 						<hr class="container-1" />
 					</c:forEach>
 				</c:if>
-				<!--정모모임2-->
-				<div class="p-15">
-					<div class="flex-box space-between">
-						<div class="bc-wh shadow-sm date-bs p-6 psi-r">
-							<div class="psi-a top-20 left-24 font_s_10">토요일</div>
-							<div class="psi-a top-40 left-28 font-s-30">26</div>
-						</div>
-						<div class="info-box-mb">
-							<div>08.26 15시</div>
-							<div>홍대 8번출구</div>
-							<div>비용</div>
-							<div>정원수</div>
-						</div>
-						<!--정모모임2 가입멤버 아코디언박스-->
-						<div class="moim-colecter">
-							<div class="accordion-item width">
-								<h2 class="accordion-header" id="heading2">
-									<button class="accordion-button" type="button"
-										data-bs-toggle="collapse" data-bs-target="#collapse2"
-										aria-expanded="true" aria-controls="collapse2">
-										가입 멤버</button>
-								</h2>
-								<div id="collapse2" class="accordion-collapse collapse"
-									aria-labelledby="heading2">
-									<!--스크롤박스-->
-									<div class="p-4 rounded-3 shadow-sm bg-white scroll"
-										style="height: 200px; overflow-y: scroll">
-										<div class="accordion-body">
-											<div class="flex-box margin-bottom-20">
-												<img src="${img}/profile-image.png" class="rounded-circle"
-													alt="profile-image" width="40" />
-												<div class="center margin-left-10">최주영</div>
-											</div>
-											<div class="flex-box margin-bottom-20">
-												<img src="${img}/profile-image.png" class="rounded-circle"
-													alt="profile-image" width="40" />
-												<div class="center margin-left-10">최주영</div>
-											</div>
-											<div class="flex-box margin-bottom-20">
-												<img src="${img}/profile-image.png" class="rounded-circle"
-													alt="profile-image" width="40" />
-												<div class="center margin-left-10">최주영</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<hr class="container-1" />
 				<!--개설버튼-->
 				<div class="p-15">
 					<div class="flex-box space-between">
@@ -225,84 +185,16 @@
 				<!--스크롤박스-->
 				<div class="p-4 rounded-3 shadow-sm bg-white scroll"
 					style="height: 770px; overflow-y: scroll">
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
-					<div class="space-between margin-10">
-						<img src="${img}/profile-image.png" class="rounded-circle"
-							alt="profile-image" width="70" />
-						<div>직책</div>
-						<div>최주영</div>
-					</div>
+					<c:if test="${not empty moimParticipantsList}">
+						<c:forEach items="${moimParticipantsList}" var="data">
+							<div class="space-between margin-10">
+								<img src="${img}/profile-image.png" class="rounded-circle"
+									alt="profile-image" width="70" />
+								<div>${data.jobName}</div>
+								<div>${data.memberName}</div>
+							</div>
+						</c:forEach>
+					</c:if>
 				</div>
 			</div>
 		</section>

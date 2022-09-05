@@ -6,6 +6,10 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
+import com.myweb.somoim.participants.model.MeetingParticipantsDTO;
+import com.myweb.somoim.participants.model.MoimParticipantsDTO;
+import com.myweb.somoim.participants.service.MeetingParticipantsService;
+import com.myweb.somoim.participants.service.MoimParticipantsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,19 +26,22 @@ import com.myweb.somoim.service.SomoimService;
 
 @Controller
 public class MoimController {
-	
+
 	@Autowired
 	private SomoimService somoimService;
 	@Autowired
 	private MeetingsService meetingsService;
-	
-	
+	@Autowired
+	private MoimParticipantsService moimParticipantsService;
+	@Autowired
+	private MeetingParticipantsService meetingParticipantsService;
+
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
 	public String add(Locale locale, Model model) {
-		
+
 		return "moim/add";
 	}
-	
+
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model
 			, @RequestParam int moimId) {
@@ -43,10 +50,18 @@ public class MoimController {
 	
 		model.addAttribute("somoimDatas", somoimDatas);
 		
-		List<MeetingsDTO> meetingsDatas = meetingsService.getDatas(moimId);
+		List<MeetingsDTO> meetingsList = meetingsService.getDatas(moimId);
 		
-		model.addAttribute("meetingsDatas", meetingsDatas);
-		
+		model.addAttribute("meetingsList", meetingsList);
+
+		List<MoimParticipantsDTO> moimParticipantsList = moimParticipantsService.getDatas(moimId);
+
+		model.addAttribute("moimParticipantsList", moimParticipantsList);
+
+		List<MeetingParticipantsDTO> meetingParticipantsList = meetingParticipantsService.getDatas(moimId);
+
+		model.addAttribute("meetingParticipantsList", meetingParticipantsList);
+
 		return "moim/meeting";
 	}
 	

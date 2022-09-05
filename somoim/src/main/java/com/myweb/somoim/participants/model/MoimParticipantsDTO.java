@@ -4,7 +4,10 @@ public class MoimParticipantsDTO {
 	private int memberId;
 	private int jobId;
 	private int moimId;
-	
+	private String memberName;
+	private String JobName;
+	private String memberImagePath;
+
 	public int getMemberId() {
 		return memberId;
 	}
@@ -27,6 +30,30 @@ public class MoimParticipantsDTO {
 	
 	public void setMoimId(int moimId) {
 		this.moimId = moimId;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getJobName() {
+		return JobName;
+	}
+
+	public void setJobName(String jobName) {
+		JobName = jobName;
+	}
+
+	public String getMemberImagePath() {
+		return memberImagePath;
+	}
+
+	public void setMemberImagePath(String memberImagePath) {
+		this.memberImagePath = memberImagePath;
 	}
 
 	@Override

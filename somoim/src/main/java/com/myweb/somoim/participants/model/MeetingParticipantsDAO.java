@@ -3,27 +3,36 @@ package com.myweb.somoim.participants.model;
 import java.util.List;
 
 import com.myweb.somoim.common.abstracts.AbstractDAO;
-import com.myweb.somoim.moim.model.MeetingsDTO;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO> {
+@Repository
+public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipantsDTO>, MeetingParticipantsDTO> {
+
+	@Autowired
+	private SqlSession session;
+	private String mapper = "ParticipantsMapper.%s";
 
 	@Override
-	public List<MeetingsDTO> selectAll() {
+	public List<MeetingParticipantsDTO> selectAll() {
 		return null;
 	}
 	
 	@Override
-	public List<MeetingsDTO> selectDatas(int i) {
+	public List<MeetingParticipantsDTO> selectDatas(int id) {
+		String mapperId = String.format(mapper, "selectMeetingDatas");
+		List<MeetingParticipantsDTO> datas = session.selectList(mapperId, id);
+		return datas;
+	}
+
+	@Override
+	public MeetingParticipantsDTO selectData(int id) {
 		return null;
 	}
 
 	@Override
-	public MeetingsDTO selectData(int id) {
-		return null;
-	}
-
-	@Override
-	public MeetingsDTO selectData(MeetingsDTO dto) {
+	public MeetingParticipantsDTO selectData(MeetingParticipantsDTO dto) {
 		return null;
 	}
 
@@ -33,17 +42,17 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 	}
 
 	@Override
-	public boolean insertData(MeetingsDTO dto) {
+	public boolean insertData(MeetingParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean updateData(MeetingsDTO dto) {
+	public boolean updateData(MeetingParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean deleteData(MeetingsDTO dto) {
+	public boolean deleteData(MeetingParticipantsDTO dto) {
 		return false;
 	}
 
