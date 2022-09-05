@@ -10,6 +10,11 @@ public class PhotosDAO extends AbstractDAO<List<PhotosDTO>, PhotosDTO> {
 	public List<PhotosDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<PhotosDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public PhotosDTO selectData(int id) {
@@ -44,6 +49,5 @@ public class PhotosDAO extends AbstractDAO<List<PhotosDTO>, PhotosDTO> {
 	@Override
 	public boolean deleteData(int id) {
 		return false;
-	}
-	
+	}	
 }

@@ -11,6 +11,11 @@ public class LocationsService extends AbstractService<List<LocationsDTO>, Locati
 	public List<LocationsDTO> getAll() {
 		return null;
 	}
+	
+	@Override
+	public List<LocationsDTO> getDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public LocationsDTO getData(int id) {
@@ -41,5 +46,4 @@ public class LocationsService extends AbstractService<List<LocationsDTO>, Locati
 	public boolean removeData(int id) {
 		return false;
 	}
-
 }

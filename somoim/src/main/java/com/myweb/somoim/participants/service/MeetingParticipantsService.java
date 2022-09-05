@@ -11,6 +11,11 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingsDTO
 	public List<MeetingsDTO> getAll() {
 		return null;
 	}
+	
+	@Override
+	public List<MeetingsDTO> getDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public MeetingsDTO getData(int id) {
@@ -41,5 +46,4 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingsDTO
 	public boolean removeData(int id) {
 		return false;
 	}
-
 }

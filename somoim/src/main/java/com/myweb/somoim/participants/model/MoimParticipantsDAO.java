@@ -11,6 +11,11 @@ public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO>
 	public List<SomoimDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<SomoimDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public SomoimDTO selectData(int id) {
@@ -46,5 +51,4 @@ public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO>
 	public boolean deleteData(int id) {
 		return false;
 	}
-
 }

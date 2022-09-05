@@ -13,6 +13,11 @@ public class JobsSerivce extends AbstractService<List<JobsDTO>, JobsDTO> {
 	}
 
 	@Override
+	public List<JobsDTO> getDatas(int i) {
+		return null;
+	}
+	
+	@Override
 	public JobsDTO getData(int id) {
 		return null;
 	}
@@ -41,5 +46,4 @@ public class JobsSerivce extends AbstractService<List<JobsDTO>, JobsDTO> {
 	public boolean removeData(int id) {
 		return false;
 	}
-
 }

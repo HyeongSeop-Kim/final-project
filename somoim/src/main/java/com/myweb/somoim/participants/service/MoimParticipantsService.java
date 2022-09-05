@@ -42,4 +42,8 @@ public class MoimParticipantsService extends AbstractService<List<SomoimDTO>, So
 		return false;
 	}
 
+	@Override
+	public List<SomoimDTO> getDatas(int i) {
+		return null;
+	}
 }

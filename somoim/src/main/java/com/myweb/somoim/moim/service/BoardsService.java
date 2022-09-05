@@ -11,6 +11,11 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 	public List<BoardsDTO> getAll() {
 		return null;
 	}
+	
+	@Override
+	public List<BoardsDTO> getDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public BoardsDTO getData(int id) {
@@ -41,5 +46,4 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 	public boolean removeData(int id) {
 		return false;
 	}
-
 }

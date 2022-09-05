@@ -10,6 +10,11 @@ public class JobsDAO extends AbstractDAO<List<JobsDTO>, JobsDTO> {
 	public List<JobsDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<JobsDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public JobsDTO selectData(int id) {
@@ -45,5 +50,4 @@ public class JobsDAO extends AbstractDAO<List<JobsDTO>, JobsDTO> {
 	public boolean deleteData(int id) {
 		return false;
 	}
-	
 }

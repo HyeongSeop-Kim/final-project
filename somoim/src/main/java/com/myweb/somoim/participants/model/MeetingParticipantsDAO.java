@@ -11,6 +11,11 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 	public List<MeetingsDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<MeetingsDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public MeetingsDTO selectData(int id) {
@@ -46,5 +51,4 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 	public boolean deleteData(int id) {
 		return false;
 	}
-
 }
