@@ -2,19 +2,28 @@ package com.myweb.somoim.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.myweb.somoim.common.abstracts.AbstractService;
+import com.myweb.somoim.model.SomoimDAO;
 import com.myweb.somoim.model.SomoimDTO;
-
+@Service
 public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
-
+	
+	@Autowired
+	private SomoimDAO dao;
+	
 	@Override
 	public List<SomoimDTO> getAll() {
-		return null;
+		List<SomoimDTO> datas = dao.selectAll();
+		return datas;
 	}
 
 	@Override
 	public SomoimDTO getData(int id) {
-		return null;
+		SomoimDTO datas = dao.selectData(id);
+		return datas;
 	}
 
 	@Override
@@ -24,7 +33,11 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 
 	@Override
 	public boolean addData(SomoimDTO dto) {
-		return false;
+		int seq = dao.getNextSeq();
+		dto.setMoimId(seq);
+		
+		boolean result = dao.insertData(dto);
+		return result;
 	}
 
 	@Override

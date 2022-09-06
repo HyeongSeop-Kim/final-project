@@ -5,5 +5,9 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
+	<typeAliases>
+		<typeAlias type="com.myweb.somoim.model.SomoimDTO" alias="somoimDto" />
+		<typeAlias type="com.myweb.somoim.common.model.LocationsDTO" alias="locationDto" />
+	</typeAliases>
 </configuration>
 

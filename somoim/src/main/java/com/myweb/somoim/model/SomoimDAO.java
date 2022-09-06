@@ -2,18 +2,32 @@ package com.myweb.somoim.model;
 
 import java.util.List;
 
-import com.myweb.somoim.common.abstracts.AbstractDAO;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.myweb.somoim.common.abstracts.AbstractDAO;
+@Repository
 public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 
+	@Autowired
+	private SqlSession session;
+	
+	private String mapper = "somoimMapper.%s";
+	
 	@Override
 	public List<SomoimDTO> selectAll() {
-		return null;
+		String mapperId = String.format(mapper, "selectAll");
+		List<SomoimDTO> datas = session.selectList(mapperId);
+		System.out.println(datas);
+		return datas;
 	}
 
 	@Override
 	public SomoimDTO selectData(int id) {
-		return null;
+		String mapperId = String.format(mapper, "selectData");
+		SomoimDTO datas = session.selectOne(mapperId);
+		return datas;
 	}
 
 	@Override
@@ -23,12 +37,16 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 
 	@Override
 	public int getNextSeq() {
-		return 0;
+		String mapperId = String.format(mapper, "getNextSeq");
+		int seq = session.selectOne(mapperId);
+		return seq;
 	}
 
 	@Override
 	public boolean insertData(SomoimDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "insertData");
+		int res = session.insert(mapperId, dto);
+		return res == 1 ? true : false;
 	}
 
 	@Override
