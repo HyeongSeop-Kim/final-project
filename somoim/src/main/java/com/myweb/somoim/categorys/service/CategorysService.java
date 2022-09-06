@@ -2,14 +2,22 @@ package com.myweb.somoim.categorys.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.myweb.somoim.categorys.model.CategorysDAO;
 import com.myweb.somoim.categorys.model.CategorysDTO;
 import com.myweb.somoim.common.abstracts.AbstractService;
-
+@Service
 public class CategorysService extends AbstractService<List<CategorysDTO>, CategorysDTO> {
-
+	
+	@Autowired
+	private CategorysDAO dao;
+	
 	@Override
 	public List<CategorysDTO> getAll() {
-		return null;
+		List<CategorysDTO> categorysDatas = dao.selectAll();
+		return categorysDatas;
 	}
 
 	@Override

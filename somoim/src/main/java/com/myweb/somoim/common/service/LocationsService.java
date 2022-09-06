@@ -2,14 +2,22 @@ package com.myweb.somoim.common.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.myweb.somoim.common.abstracts.AbstractService;
+import com.myweb.somoim.common.model.LocationsDAO;
 import com.myweb.somoim.common.model.LocationsDTO;
-
+@Service
 public class LocationsService extends AbstractService<List<LocationsDTO>, LocationsDTO> {
-
+	
+	@Autowired
+	private LocationsDAO dao;
+	
 	@Override
 	public List<LocationsDTO> getAll() {
-		return null;
+		List<LocationsDTO> locDatas = dao.selectAll();
+		return locDatas;
 	}
 
 	@Override

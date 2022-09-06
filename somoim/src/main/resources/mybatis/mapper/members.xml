@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="memberMapper">
+	<select id="getNextSeq" resultType="_int">
+		SELECT  SQU_MEMBERS.NEXTVAL FROM DUAL
+	</select>
+	<select id="insertData" resultType="memberDto">
+		INSERT INTO MEMBERS(
+		  MEMBER_ID
+		, MEMBER_NAME
+		, ID
+		, PASSWORD
+		, GENDER
+		, BIRTH
+		, PHONE 
+		, CATEGORY 
+		, LOCATION_ID)
+     VALUES( #{memberId},#{memberName},#{id}, #{password}, #{gender}, #{birth}, #{phone},#{category},#{locationId})
+	</select>
+</mapper>
+
