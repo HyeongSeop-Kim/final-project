@@ -15,20 +15,20 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingsDTO
 
 	@Autowired
 	private MeetingParticipantsDAO dao;
-	
-	
-	public List<MeetingParticipantsDTO> getAll(int id) {
-		List<MeetingParticipantsDTO> data = dao.selectAll(id);
+
+	@Override
+	public List<MeetingParticipantsDTO> getDatas(int id) {
+		List<MeetingParticipantsDTO> data = dao.selectDatas(id);
 		System.out.println("미팅참가자서비스:" + data);
 		return data;
 	}
-	
-	
+
+
 	@Override
 	public List<MeetingsDTO> getAll() {
 		return null;
 	}
-	
+
 	@Override
 	public MeetingsDTO getData(int id) {
 		return null;

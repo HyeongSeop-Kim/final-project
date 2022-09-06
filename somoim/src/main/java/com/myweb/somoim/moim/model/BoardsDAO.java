@@ -32,6 +32,11 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 	
 
 	@Override
+	public List<BoardsDTO> selectDatas(int i) {
+		return null;
+	}
+	
+	@Override
 	public BoardsDTO selectData(int id) {
 		return null;
 	}
@@ -65,5 +70,4 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 	public boolean deleteData(int id) {
 		return false;
 	}
-
 }

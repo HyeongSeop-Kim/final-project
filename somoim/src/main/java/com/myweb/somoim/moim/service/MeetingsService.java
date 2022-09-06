@@ -15,16 +15,17 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 
 	@Autowired
 	private MeetingsDAO dao;
-	
-	
-	
+
+
+
 	@Override
 	public List<MeetingsDTO> getAll() {
 		return null;
 	}
-	
-	public List<MeetingsDTO> getListAll(int id){ //새로 만든 메서드
-		List<MeetingsDTO> data = dao.selectListAll(id);
+
+	@Override
+	public List<MeetingsDTO> getDatas(int id){ //새로 만든 메서드
+		List<MeetingsDTO> data = dao.selectDatas(id);
 	    return data;
 	}
 
@@ -32,10 +33,7 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 	public MeetingsDTO getData(int id) {
 		return null;
 	}
-	
 
-	
-	
 	@Override
 	public MeetingsDTO getData(MeetingsDTO dto) {
 		return null;

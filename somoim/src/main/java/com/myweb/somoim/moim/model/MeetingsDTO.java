@@ -1,7 +1,6 @@
 package com.myweb.somoim.moim.model;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 public class MeetingsDTO {
 	private int meetingId;
@@ -16,8 +15,8 @@ public class MeetingsDTO {
 	private String dayOfW;
 	private String hour;
 	private String minute;
-	
-	
+
+
 	public int getMeetingId() {
 		return meetingId;
 	}
@@ -40,7 +39,7 @@ public class MeetingsDTO {
 	
 	public void setMeetingDate(Date meetingDate) {
 		this.meetingDate = meetingDate;
-	SimpleDateFormat dateFm = new SimpleDateFormat("yyyy MM dd E요일 HH mm"); 
+	SimpleDateFormat dateFm = new SimpleDateFormat("yyyy MM dd E요일 HH mm");
 	String date = dateFm.format(meetingDate);
 	System.out.println("시간출력:" + date);
 	String [] dateSplit = date.split(" ");
@@ -86,7 +85,7 @@ public class MeetingsDTO {
 		this.moimId = moimId;
 	}
 	
-	
+
 
 	public String getMonth() {
 		return month;

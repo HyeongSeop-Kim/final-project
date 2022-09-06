@@ -10,6 +10,11 @@ public class CategorysDAO extends AbstractDAO<List<CategorysDTO>, CategorysDTO> 
 	public List<CategorysDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<CategorysDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public CategorysDTO selectData(int id) {
@@ -45,5 +50,4 @@ public class CategorysDAO extends AbstractDAO<List<CategorysDTO>, CategorysDTO> 
 	public boolean deleteData(int id) {
 		return false;
 	}
-
 }

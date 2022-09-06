@@ -13,6 +13,11 @@ public class CategorysService extends AbstractService<List<CategorysDTO>, Catego
 	}
 
 	@Override
+	public List<CategorysDTO> getDatas(int i) {
+		return null;
+	}
+	
+	@Override
 	public CategorysDTO getData(int id) {
 		return null;
 	}
@@ -41,5 +46,4 @@ public class CategorysService extends AbstractService<List<CategorysDTO>, Catego
 	public boolean removeData(int id) {
 		return false;
 	}
-	
 }

@@ -15,19 +15,19 @@ public class MoimParticipantsService extends AbstractService<List<SomoimDTO>, So
 
 	@Autowired
 	private MoimParticipantsDAO dao;
-	
-	
+
+
 	@Override
 	public List<SomoimDTO> getAll() {
 		return null;
 	}
-	
 
-	public List<MoimParticipantsDTO> getParticipantAll(int id) { //추가한 메서드
-		List<MoimParticipantsDTO> data = dao.selectParticipantsAll(id);
+
+	public List<MoimParticipantsDTO> getDatas(int id) { //추가한 메서드
+		List<MoimParticipantsDTO> data = dao.selectDatas(id);
 		return data;
 	}
-	
+
 
 	@Override
 	public SomoimDTO getData(int id) {

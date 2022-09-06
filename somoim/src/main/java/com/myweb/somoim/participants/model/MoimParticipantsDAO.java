@@ -15,19 +15,20 @@ public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO>
 	@Autowired
 	private SqlSession session;
 	private String mapper = "moimParticipantsMapper.%s";
-	
+
 	@Override
 	public List<SomoimDTO> selectAll() {
 		return null;
 	}
 
-	public List<MoimParticipantsDTO> selectParticipantsAll(int id) {
-		String mapperId = String.format(mapper, "selectAll");
+	@Override
+	public List<MoimParticipantsDTO> selectDatas(int id) {
+		String mapperId = String.format(mapper, "selectDatas");
 		List<MoimParticipantsDTO> data = session.selectList(mapperId,id);
 		return data;
 	}
-	
-	
+
+
 	@Override
 	public SomoimDTO selectData(int id) {
 		return null;
@@ -62,7 +63,5 @@ public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO>
 	public boolean deleteData(int id) {
 		return false;
 	}
-
-	
 
 }

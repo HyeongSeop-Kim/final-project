@@ -10,6 +10,11 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	public List<MembersDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<MembersDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public MembersDTO selectData(int id) {
@@ -45,5 +50,4 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	public boolean deleteData(int id) {
 		return false;
 	}
-
 }

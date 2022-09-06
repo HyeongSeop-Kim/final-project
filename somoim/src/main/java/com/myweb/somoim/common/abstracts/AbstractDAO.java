@@ -7,6 +7,8 @@ public abstract class AbstractDAO<C, E> {
 	
 	public abstract C selectAll();
 	
+	public abstract C selectDatas(int i);
+	
 	public abstract E selectData(int i);
 	
 	public abstract E selectData(E e);

@@ -1,17 +1,18 @@
 package com.myweb.somoim.participants.model;
 
 public class MoimParticipantsDTO {
-	private int memberId;
+	private String memberId;
 	private int jobId;
 	private int moimId;
-	private String memberName;  //추가
-	private String jobName; //추가
-	
-	public int getMemberId() {
+	private String memberName;
+	private String JobName;
+	private String memberImagePath;
+
+	public String getMemberId() {
 		return memberId;
 	}
 	
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 	
@@ -30,7 +31,7 @@ public class MoimParticipantsDTO {
 	public void setMoimId(int moimId) {
 		this.moimId = moimId;
 	}
-	
+
 	public String getMemberName() {
 		return memberName;
 	}
@@ -39,16 +40,23 @@ public class MoimParticipantsDTO {
 		this.memberName = memberName;
 	}
 
-	
 	public String getJobName() {
-		return jobName;
+		return JobName;
 	}
 
 	public void setJobName(String jobName) {
-		this.jobName = jobName;
+		JobName = jobName;
 	}
 
-	@Override 
+	public String getMemberImagePath() {
+		return memberImagePath;
+	}
+
+	public void setMemberImagePath(String memberImagePath) {
+		this.memberImagePath = memberImagePath;
+	}
+
+	@Override
 	public String toString() {
 		return "MoimParticipantsDTO [memberId=" + memberId + ", jobId=" + jobId + ", moimId=" + moimId + "]";
 	}

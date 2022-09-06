@@ -14,16 +14,16 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 	@Autowired
 	private SqlSession session;
 	private String mapper = "mettingsMapper.%s";
-	
-	
-	
+
+
+
 	@Override
 	public List<MeetingsDTO> selectAll() {
 		return null;
 	}
-	
-	public List<MeetingsDTO> selectListAll(int id){ //새로 만든메서드
-		String mapperId = String.format(mapper,"selectAll");
+
+	public List<MeetingsDTO> selectDatas(int id){ //새로 만든메서드
+		String mapperId = String.format(mapper,"selectDatas");
 		List<MeetingsDTO> data =  session.selectList(mapperId,id);
 		return data;
 	}

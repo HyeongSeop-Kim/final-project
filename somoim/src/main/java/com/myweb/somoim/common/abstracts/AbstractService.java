@@ -3,6 +3,8 @@ package com.myweb.somoim.common.abstracts;
 public abstract class AbstractService<C, E> {
 	public abstract C getAll();
 	
+	public abstract C getDatas(int i);
+	
 	public abstract E getData(int i);
 	
 	public abstract E getData(E e);

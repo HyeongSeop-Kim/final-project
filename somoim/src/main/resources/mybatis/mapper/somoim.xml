@@ -3,21 +3,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="moimsMapper">
-  
-   <select id ="selectData" resultType="somoimDTO" parameterType="_int"> 
+
+   <select id ="selectData" resultType="somoimDTO" parameterType="_int">
       SELECT  M.MOIM_ID  AS moimId
              ,M.MOIM_TITLE AS moimTitle
              ,M.MOIM_INFO  AS moimInfo
              ,M.MOIM_LIMIT  AS moimLimit
+			 ,L.LOCATION_NAME AS locationName
              ,M.MOIM_IMAGE_PATH  AS moimImagePath
              ,M.LOCATION_ID  AS locationId
            FROM MOIM M
+		   JOIN LOCATIONS L
+			 ON M.LOCATION_ID = L.LOCATION_ID
           WHERE M.MOIM_ID = #{id}
     </select>
-    
 
 
-  
+
+
 
 </mapper>
 

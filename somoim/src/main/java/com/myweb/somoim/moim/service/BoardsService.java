@@ -16,27 +16,27 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 
 	@Autowired
 	private BoardsDAO dao;
-	
+
 	@Override
 	public List<BoardsDTO> getAll() {
 		return null;
 	}
-	
-	
-	public List<BoardsDTO> getAll(int id) {  //추가메서드
-		List<BoardsDTO> datas = dao.selectBoardAll(id);
+
+
+	public List<BoardsDTO> getDatas(int id) {  //추가메서드
+		List<BoardsDTO> datas = dao.selectDatas(id);
 		return datas;
 	}
-	
+
 
 	@Override
 	public BoardsDTO getData(int id) {
-		 return null;
+		return null;
 	}
 
 	@Override
 	public BoardsDTO getData(BoardsDTO dto) {
-	     return null;
+		return null;
 	}
 
 	@Override

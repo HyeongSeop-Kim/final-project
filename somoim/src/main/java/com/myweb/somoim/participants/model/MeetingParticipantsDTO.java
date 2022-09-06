@@ -3,9 +3,10 @@ package com.myweb.somoim.participants.model;
 public class MeetingParticipantsDTO {
 	private int memberId;
 	private int moimId;
-	private int meetingId;
-	private String memberName; //추가
-	
+	private String meetingId;
+	private String memberName;
+	private String memberImagePath;
+
 	public int getMemberId() {
 		return memberId;
 	}
@@ -22,11 +23,11 @@ public class MeetingParticipantsDTO {
 		this.moimId = moimId;
 	}
 	
-	public int getMeetingId() {
+	public String getMeetingId() {
 		return meetingId;
 	}
 	
-	public void setMeetingId(int meetingId) {
+	public void setMeetingId(String meetingId) {
 		this.meetingId = meetingId;
 	}
 	
@@ -38,13 +39,17 @@ public class MeetingParticipantsDTO {
 		this.memberName = memberName;
 	}
 
+	public String getMemberImagePath() {
+		return memberImagePath;
+	}
+
+	public void setMemberImagePath(String memberImagePath) {
+		this.memberImagePath = memberImagePath;
+	}
+
 	@Override
 	public String toString() {
 		return "MeetingParticipantsDTO [memberId=" + memberId + ", moimId=" + moimId + ", meetingId=" + meetingId
-				+ ", memberName=" + memberName + "]";
+				+ ", memberName=" + memberName + "]" + ", memberImagePath=" + memberImagePath + "]";
 	}
-
-	
-     
-	
 }

@@ -14,23 +14,23 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 
 	@Autowired
 	private SqlSession session ;
-	
+
 	private String mapper ="meetingParticipantsMapper.%s";
-	
-	
+
+
 	@Override
 	public List<MeetingsDTO> selectAll() {
 		return null;
 	}
-	
-	
-	public List<MeetingParticipantsDTO> selectAll(int id) {
-		String mapperId = String.format(mapper, "selectAll");
+
+	@Override
+	public List<MeetingParticipantsDTO> selectDatas(int id) {
+		String mapperId = String.format(mapper, "selectDatas");
 		List<MeetingParticipantsDTO> data = session.selectList(mapperId,id);
 		System.out.println("미팅참가자DAO:" + data);
 		return data;
 	}
-	
+
 
 	@Override
 	public MeetingsDTO selectData(int id) {

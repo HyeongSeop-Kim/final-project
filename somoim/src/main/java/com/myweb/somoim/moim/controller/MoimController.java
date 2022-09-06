@@ -35,20 +35,20 @@ public class MoimController {
 	
 	@Autowired
 	private SomoimService SomoimService;
-	
+
 	@Autowired
 	private BoardsService boardsService;
-	
+
 	@Autowired
 	private MeetingsService meetingsService;
-	
+
 	@Autowired
 	private MoimParticipantsService moimParticipantsService;
-	
+
 	@Autowired
 	private MeetingParticipantsService meetingParticipantsService;
-	
-	
+
+
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
 	public String add(Locale locale, Model model) {
 		
@@ -56,74 +56,50 @@ public class MoimController {
 	}
 	
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
-	public String board(Locale locale
-			        , Model model
+	public String board(Model model
 			        ,@RequestParam int id) {
-		System.out.println(id);
-		
+
 		SomoimDTO moimData = SomoimService.getData(id); //모임정보
-		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getParticipantAll(id); //참가자정보 
-		
-		List<MeetingsDTO> meetingsData = meetingsService.getListAll(id);//정모정보
-		
-		
-		
-		
-		System.out.println(moimData);
-		System.out.println(meetingsData);
+		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+
+		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
+
+		List<MeetingParticipantsDTO> meetingParticipants = meetingParticipantsService.getDatas(id);
+
 		model.addAttribute("moimData" , moimData);
 		model.addAttribute("meetingsData",meetingsData);
 		model.addAttribute("moimParticipants",moimParticipants);
-		
+		model.addAttribute("meetingParticipants", meetingParticipants);
+
 		
 		return "moim/meeting";
 	}
 	
 	@RequestMapping(value = "/moim/board", method = RequestMethod.GET)
-	public String detail(Locale locale
-			            , Model model
+	public String detail(Model model
 			            ,@RequestParam int id
 			            ,@RequestParam(defaultValue="1", required=false) int page
 			            ) {
-		
+
 		SomoimDTO moimData = SomoimService.getData(id);//모임정보
-		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getParticipantAll(id); //참가자정보 
-		
-		
+		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getParticipantAll(id); //참가자정보
+
+
 		List datas = boardsService.getAll(id); //게시글 전부 가져오기
 		System.out.println(datas);
-		
+
 		   int pageCount = 5;
-		   
+
 		   PagingDTO paging = new PagingDTO (datas,page,pageCount);
 		   System.out.println("컨트롤러 출력: " + paging.getPageData());
-		   
-		   
+
+
 		   model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
 		   model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
-		  
-		    
+		
+		
 		return "moim/board";
 	}
-	
-	
-	@PostMapping(value = "/moim/meeting/p" , produces="application/json; charset=utf-8")
-	@ResponseBody
-	public String p(@RequestParam int id) {
-		
-		System.out.println("미팅참가자:ajax" );
-		List<MeetingParticipantsDTO> pData =  meetingParticipantsService.getAll(id);
-		
-		
-		JSONObject json = new JSONObject(); 
-		
-		json.put("code", "meetingParticipants");
-		json.put("msg", "성공");
-		
-		
-		return json.toJSONString();
-	}
-
 	
 }

@@ -36,27 +36,28 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${cs}/styles.css" />
   </head>
-  
+
    <script type="text/javascript">
    window.onload = function() {
 	   previewImage.addEventListener("click", function(e) {
-		   moimImageSelect.click();   
+		   moimImageSelect.click();
 	    });
-	   
+
 	   moimImageSelect.addEventListener("change" , function(e) {
 			var file = e.target.files[0];
 			var imgUrl = URL.createObjectURL(file);
 			previewImage.src = imgUrl;
 	  });
    }
-   
+
 </script>
 
-<body>
+  <body>
     <c:url var="meetingUrl" value="/moim/meeting/">
 		<c:param name="id" value="${moimData.moimId}"></c:param>
 	</c:url>
     <!--이미지 사진박스-->
+
     <header class="p-6">
      <c:url var="moimUpdateImageUrl" value="/moim/imageUpload" />
      <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
@@ -65,7 +66,7 @@
           class="img-box-size-1 bora-20 shadow-sm width-100"
           alt="이미지 선택"
           src="${meetingimg}/meetingimg1.jpg"
-        />        
+        />
         <input id="moimImageSelect"
           class="ImgSelect"
           type="file"
@@ -133,6 +134,7 @@
             <div class="center p-6 bc-wg">모임정보</div>
           </div>
            <!-- 모임장정보 -->
+          <c:if test="${not empty moimParticipants}">
              <c:forEach items="${moimParticipants}" var="moimParticipants">
              <c:if test="${moimParticipants.jobId eq 1}">
           <div class="margin-10">
@@ -145,10 +147,11 @@
               />
               <div>${moimParticipants.jobName}</div>
               <div>${moimParticipants.memberName}</div>
-             </div>
-           </div>
+            </div>
+          </div>
            </c:if>
           </c:forEach>
+          </c:if>
           <!-- 모임인포 -->
           <div
             class="p-4 rounded-3 shadow-sm bg-white scroll"
@@ -166,7 +169,8 @@
           <div class="center margin-10 p-6 bc-wg">정모</div>
 
           <!--정모모임 반복출력-->
-          <c:forEach items="${meetingsData}" var="meetingsData">
+          <c:if test="${not empty meetingsData}">
+          <c:forEach items="${meetingsData}" var="meetingsData" varStatus="status">
           <div class="p-15">
             <div class="flex-box space-between">
               <div class="bc-wh shadow-sm date-bs p-6 psi-r">
@@ -174,7 +178,7 @@
                 <div class="psi-a top-40 left-28 font-s-30">${meetingsData.day}</div>
               </div>
               <div class="info-box-mb">
-              
+
                 <div><span class="material-icons" style="font-size:14px; color: gray;">favorite</span>&nbsp;&nbsp;${meetingsData.meetingTitle}</div>
                 <div><span class="material-icons" style="font-size:14px; color: gray;">date_range</span>&nbsp;&nbsp;${meetingsData.month}.${meetingsData.day} ${meetingsData.hour}:${meetingsData.minute}</div>
                 <div><span class="material-icons" style="font-size:14px; color: gray;">room</span>&nbsp;&nbsp;${meetingsData.meetingPlace}</div>
@@ -184,71 +188,39 @@
               <!--정모모임1 가입멤버 아코디언박스-->
               <div class="moim-colecter">
                 <div class="accordion-item width">
-                  <h2 class="accordion-header" id="heading${meetingsData.meetingId}">
-                    <c:url var="meetingUrl" value="/moim/meeting"/>
-                    <button
-                      class="accordion-button"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse${meetingsData.meetingId}"
-                      aria-expanded="true"
-                      aria-controls="collapse${meetingsData.meetingId}"
-                      onclick="meetingsParticipants(${meetingsData.meetingId})"
-                    >
-                      가입 멤버
-                    </button>
+										<h2 class="accordion-header" id="heading${status.count}">
+											<button class="accordion-button" type="button"
+												data-bs-toggle="collapse" data-bs-target="#collapse${status.count}"
+												aria-expanded="true" aria-controls="collapse${status.count}">
+												가입 멤버</button>
                   </h2>
-                  <div
-                    id="collapse${meetingsData.meetingId}"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="heading${meetingsData.meetingId}"
-                  >
+										<div id="collapse${status.count}" class="accordion-collapse collapse"
+											 aria-labelledby="heading${status.count}">
                     <!--스크롤박스-->
-                    <div
-                      class="p-4 rounded-3 shadow-sm bg-white scroll"
-                      style="height: 200px; overflow-y: scroll"
-                    >
+											<div class="p-4 rounded-3 shadow-sm bg-white scroll"
+												 style="height: 200px; overflow-y: scroll">
+												<c:if test="${not empty meetingParticipants}">
+													<c:forEach items="${meetingParticipants}" var="participantsData">
+														<c:if test="${participantsData.meetingId eq meetingData.meetingId}">
                       <div class="accordion-body">
                         <div class="flex-box margin-bottom-20">
-                          <img
-                            src="${img}/profile-image.png"
-                            class="rounded-circle"
-                            alt="profile-image"
-                            width="40"
-                          />
-                          <div class="center margin-left-10">최주영</div>
-                        </div>
-                        <div class="flex-box margin-bottom-20">
-                          <img
-                            src="${img}/profile-image.png"
-                            class="rounded-circle"
-                            alt="profile-image"
-                            width="40"
-                          />
-                          <div class="center margin-left-10">최주영</div>
-                        </div>
-                        <div class="flex-box margin-bottom-20">
-                          <img
-                            src="${img}/profile-image.png"
-                            class="rounded-circle"
-                            alt="profile-image"
-                            width="40"
-                          />
-                          <div class="center margin-left-10">최주영</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr class="container-1" />
-          </c:forEach>
-          <!--여기까지 정모모임-->
-         
-         
-         
+																	<img src="${img}/profile-image.png" class="rounded-circle"
+																		alt="profile-image" width="40" />
+																	<div class="center margin-left-10">${participantsData.memberName}</div>
+																</div>
+															</div>
+														</c:if>
+													</c:forEach>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="container-1" />
+					</c:forEach>
+				</c:if>
           <!--개설버튼-->
           <div class="p-15">
             <div class="flex-box space-between">
@@ -268,6 +240,7 @@
             class="p-4 rounded-3 shadow-sm bg-white scroll"
             style="height: 770px; overflow-y: scroll"
           >
+            <c:if test="${not empty moimParticipants}">
           <c:forEach items="${moimParticipants}" var="moimParticipants">
             <div class="space-between margin-10">
               <img
@@ -280,6 +253,7 @@
               <div>${moimParticipants.memberName}</div>
             </div>
             </c:forEach>
+            </c:if>
           </div>
         </div>
       </section>
@@ -302,13 +276,12 @@
  		success: function(data){
  			if(data.code === "meetingParticipants"){
  				alert(data.msg);
- 				
+
  			}
  		}
  	})
  }
- 
- </script>
 
+ </script>
   </body>
 </html>

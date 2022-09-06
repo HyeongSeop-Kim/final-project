@@ -10,6 +10,11 @@ public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> 
 	public List<LocationsDTO> selectAll() {
 		return null;
 	}
+	
+	@Override
+	public List<LocationsDTO> selectDatas(int i) {
+		return null;
+	}
 
 	@Override
 	public LocationsDTO selectData(int id) {
@@ -44,6 +49,5 @@ public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> 
 	@Override
 	public boolean deleteData(int id) {
 		return false;
-	}
-	
+	}	
 }
