@@ -15,13 +15,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Bootstrap CSS -->
-  								<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-   								 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-  								<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-							    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
-							    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+  integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="${path}/resources/css/styles.css">
-  <title>Demo</title>
+  <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
+  <title>소모임</title>
 </head>
 
 <body>
@@ -96,75 +97,49 @@
         <!-- main-menu -->
       <div class="col-md-6">
           <div class="p-4 rounded-3 shadow-sm bg-white">
-            <form class="d-flex">
+          	<c:url var="boardUrl" value="/" />
+            <form class="d-flex" action="${boardUrl}" method="get">
               <button class="btn btn-outline-success me-2 d-flex justify-content-center align-items-center"
-                type="submit">
+                type="button" onclick="search();">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
-              <input class="form-control" type="search" placeholder="검색어를 입력하세요." aria-label="Search">
+              <input id="list_search" class="form-control" type="search" placeholder="검색어를 입력하세요." aria-label="Search">
+              <div class="col-1">
+				<select id="page_count" class="form-select" onchange="location.href='${boardUrl}?pageCount=' + this.value">
+					<option value="5" ${sessionScope.pageCount == 5 ? 'selected' : ''}>5 개</option>
+					<option value="10" ${sessionScope.pageCount == 10 ? 'selected' : ''}>10 개</option>
+					<option value="15" ${sessionScope.pageCount == 15 ? 'selected' : ''}>15 개</option>
+					<option value="20" ${sessionScope.pageCount == 20 ? 'selected' : ''}>20 개</option>
+				</select>
+			  </div>
             </form>
 
-            <section class="pt-5">
-              <div class="section-container d-flex align-items-center p-3 rounded-3">
-                <div class="col-md-3">
-                  <img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">
-                </div>
-                <div class="col-md-9">
-                  <p class="pb-2">지역(구)</p>
-                  <p class="pb-2">모임명</p>
-                  <p>인원수<span>상세지역(지하철역)</span></p>
-                </div>
-              </div>
-              <div class="section-container d-flex align-items-center p-3 rounded-3">
-                <div class="col-md-3">
-                  <img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">
-                </div>
-                <div class="col-md-9">
-                  <p class="pb-2">지역(구)</p>
-                  <p class="pb-2">모임명</p>
-                  <p>인원수<span>상세지역(지하철역)</span></p>
-                </div>
-              </div>
-              <div class="section-container d-flex align-items-center p-3 rounded-3">
-                <div class="col-md-3">
-                  <img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">
-                </div>
-                <div class="col-md-9">
-                  <p class="pb-2">지역(구)</p>
-                  <p class="pb-2">모임명</p>
-                  <p>인원수<span>상세지역(지하철역)</span></p>
-                </div>
-              </div>
-              <div class="section-container d-flex align-items-center p-3 rounded-3">
-                <div class="col-md-3">
-                  <img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">
-                </div>
-                <div class="col-9">
-                  <p class="pb-2">지역(구)</p>
-                  <p class="pb-2">모임명</p>
-                  <p>인원수<span>상세지역(지하철역)</span></p>
-                </div>
-              </div>
+            <section id="m_list" class="pt-5">
+	              
             </section>
 
             <footer style="position: relative;">
               <nav aria-label="..." class="d-flex justify-content-center">
                 <ul class="pagination">
+              	<c:if test="${pageData.hasPrevPage()}">
                   <li class="page-item disabled">
-                    <a class="page-link">
+                    <a class="page-link" href="${boardUrl}?page=${pageData.prevPageNumber}">
                       <i class="fa-solid fa-chevron-left arrow-icon"></i>
                     </a>
                   </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">2</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                 </c:if>
+                 <c:forEach items="${pageData.getPageNumberList(pageData.currentPageNumber - 2, pageData.currentPageNumber + 2)}" var="num"> 
                   <li class="page-item">
-                    <a class="page-link" href="#">
+                  	<a class="page-link" href="#">1</a>
+                  </li>
+                 </c:forEach> 
+                  <c:if test="${pageData.hasNextPage()}">
+                  <li class="page-item">
+                    <a class="page-link" href="${boardUrl}?page=${pageData.nextPageNumber}">
                       <i class="fa-solid fa-chevron-right arrow-icon"></i>
                     </a>
                   </li>
+                  </c:if>
                 </ul>
               </nav>
                <c:url var="moimAddUrl" value="/moim/add" />
@@ -194,54 +169,54 @@
               <button type="button" class="btn btn-primary btn-sm btn-blue">편집</button>
             </section>
             <section>
-	        <div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        가입한 모임
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" >
-      <div class="accordion-body">
-         <a href="#"><p class="pb-3">가입 모임A</p></a>
-         <a href="#"><p class="pb-3">가입 모임B</p></a>
-         <a href="#"><p class="pb-3">가입 모임C</p></a>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-        찜 한 모임
-      </button>
-    </h2>
-    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" >
-      <div class="accordion-body">
-         <a href="#"><p class="pb-3">찜 한 모임A</p></a>
-         <a href="#"><p class="pb-3">찜 한 모임B</p></a>
-         <a href="#"><p class="pb-3">찜 한 모임C</p></a>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-        최근 본 모임
-      </button>
-    </h2>
-    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" >
-      <div class="accordion-body">
-         <a href="#"><p class="pb-3">최근 본 모임A</p></a>
-         <a href="#"><p class="pb-3">최근 본 모임B</p></a>
-         <a href="#"><p class="pb-3">최근 본 모임C</p></a>      </div>
-    </div>
-  </div>
-</div>
+		        <div class="accordion" id="accordionExample">
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="headingOne">
+				      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				        가입한 모임
+				      </button>
+				    </h2>
+				    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" >
+				      <div class="accordion-body">
+				         <a href="#"><p class="pb-3">가입 모임A</p></a>
+				         <a href="#"><p class="pb-3">가입 모임B</p></a>
+				         <a href="#"><p class="pb-3">가입 모임C</p></a>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="headingTwo">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				        찜 한 모임
+				      </button>
+				    </h2>
+				    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" >
+				      <div class="accordion-body">
+				         <a href="#"><p class="pb-3">찜 한 모임A</p></a>
+				         <a href="#"><p class="pb-3">찜 한 모임B</p></a>
+				         <a href="#"><p class="pb-3">찜 한 모임C</p></a>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="accordion-item">
+				    <h2 class="accordion-header" id="headingThree">
+				      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+				        최근 본 모임
+				      </button>
+				    </h2>
+				    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" >
+				      <div class="accordion-body">
+				         <a href="#"><p class="pb-3">최근 본 모임A</p></a>
+				         <a href="#"><p class="pb-3">최근 본 모임B</p></a>
+				         <a href="#"><p class="pb-3">최근 본 모임C</p></a>     
+				      </div>
+				    </div>
+				  </div>
+				</div>
             </section>
           </div>
         </div>
-      
-</div>
+	 </div>
     </main>
     <!-- // main -->
   </div>
@@ -249,6 +224,67 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
   </script>
+  <script type="text/javascript">
+function get_moim_list(page) {
+	
+	$.ajax({
+		url: "./list?page=" + page + "&page_count=" + $('#page_count').val(),
+		type: "GET",
+		dataType: "json",
+		success: function(res) {
+			var _html = '';
+			for (var i=0 ; i < res.length ; i++) {
+				console.log(res[i].locationName);
+				_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=/moim/'+ res[i].moimId +'">';
+				_html += '<div class="col-md-3">';
+				_html += '<img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">';
+				_html += '</div>';
+				_html += '<div class="col-md-9">';
+				_html += '<p class="pb-2">'+ res[i].locationName +'</p>';
+				_html += '<p class="pb-2">'+ res[i].moimTitle +'</p>';
+				_html += '<p>정원 : '+ res[i].moimLimit +'명</p>';
+				_html += '</div>';
+				_html += '</div>';
+			}
+			$('#m_list').html(_html);
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown){
+			alert('error');
+		}
+	})
+}
+$(document).ready(function() {
+	get_moim_list(1);	
+});
+
+
+function search() {
+	const input = document.getElementById('list_search').value;
+	
+	if(input === $(datas.moimTitle)){
+		var _html = '';
+		for (var i=0 ; i < datas.length ; i++) {
+			console.log(res[i].locationName);
+			_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=/moim/meeting'+ res[i].moimId +'">';
+			_html += '<div class="col-md-3">';
+			_html += '<img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">';
+			_html += '</div>';
+			_html += '<div class="col-md-9">';
+			_html += '<p class="pb-2">'+ res[i].locationName +'</p>';
+			_html += '<p class="pb-2">'+ res[i].moimTitle +'</p>';
+			_html += '<p>정원 : '+ res[i].moimLimit +'명</p>';
+			_html += '</div>';
+			_html += '</div>';
+		}
+		$('#m_list').html(_html);
+	}
+}
+
+
+function search_list(){
+	
+}
+</script>
 
 </body>
 

@@ -18,7 +18,10 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	
 	@Override
 	public List<SomoimDTO> selectAll() {
-		return null;
+		String mapperId = String.format(mapper, "selectAll");
+		List<SomoimDTO> datas = session.selectList(mapperId);
+		System.out.println(datas);
+		return datas;
 	}
 
 	@Override
@@ -35,12 +38,16 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 
 	@Override
 	public int getNextSeq() {
-		return 0;
+		String mapperId = String.format(mapper, "getNextSeq");
+		int seq = session.selectOne(mapperId);
+		return seq;
 	}
 
 	@Override
 	public boolean insertData(SomoimDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "insertData");
+		int res = session.insert(mapperId, dto);
+		return res == 1 ? true : false;
 	}
 
 	@Override

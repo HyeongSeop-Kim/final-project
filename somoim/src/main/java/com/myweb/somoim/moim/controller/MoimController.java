@@ -26,8 +26,8 @@ import com.myweb.somoim.participants.model.MoimParticipantsDTO;
 import com.myweb.somoim.participants.service.MeetingParticipantsService;
 import com.myweb.somoim.participants.service.MoimParticipantsService;
 import com.myweb.somoim.service.SomoimService;
-
-
+import com.myweb.somoim.common.model.LocationsDTO;
+import com.myweb.somoim.common.service.LocationsService;
 
 
 @Controller
@@ -48,13 +48,40 @@ public class MoimController {
 	@Autowired
 	private MeetingParticipantsService meetingParticipantsService;
 
+	@Autowired
+	private LocationsService locService;
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
-	public String add(Locale locale, Model model) {
+	public String add(Model model) {
+		List<LocationsDTO> locDatas = locService.getAll();
 		
+		model.addAttribute("locDatas", locDatas);
 		return "moim/add";
 	}
 	
+	@RequestMapping(value = "/moim/add", method = RequestMethod.POST)
+	@ResponseBody
+	public String addBoard(Model model,
+			@RequestParam("locationId") int locationId
+		   ,@RequestParam String moimTitle
+		   ,@RequestParam String moimInfo
+		   ,@RequestParam int moimLimit) {
+		JSONObject json = new JSONObject();
+
+		SomoimDTO data = new SomoimDTO();
+		data.setLocationId(locationId);
+		data.setMoimTitle(moimTitle);
+		data.setMoimInfo(moimInfo);
+		data.setMoimLimit(moimLimit);
+		data.setMoimImagePath(null);
+
+		boolean result = service.addData(data);
+		if(result) {
+		}
+		return json.toJSONString();
+	}
+
+
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model
 			        ,@RequestParam int id) {
@@ -70,7 +97,7 @@ public class MoimController {
 		model.addAttribute("meetingsData",meetingsData);
 		model.addAttribute("moimParticipants",moimParticipants);
 		model.addAttribute("meetingParticipants", meetingParticipants);
-
+		
 		
 		return "moim/meeting";
 	}

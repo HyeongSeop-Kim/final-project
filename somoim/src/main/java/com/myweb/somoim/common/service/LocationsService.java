@@ -10,16 +10,16 @@ import com.myweb.somoim.common.model.LocationsDAO;
 import com.myweb.somoim.common.model.LocationsDTO;
 @Service
 public class LocationsService extends AbstractService<List<LocationsDTO>, LocationsDTO> {
-	
+
 	@Autowired
 	private LocationsDAO dao;
-	
+
 	@Override
 	public List<LocationsDTO> getAll() {
 		List<LocationsDTO> locDatas = dao.selectAll();
 		return locDatas;
 	}
-	
+
 	@Override
 	public List<LocationsDTO> getDatas(int i) {
 		return null;
@@ -54,4 +54,5 @@ public class LocationsService extends AbstractService<List<LocationsDTO>, Locati
 	public boolean removeData(int id) {
 		return false;
 	}
+
 }

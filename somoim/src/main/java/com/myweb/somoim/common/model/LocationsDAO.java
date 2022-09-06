@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import com.myweb.somoim.common.abstracts.AbstractDAO;
 @Repository
 public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> {
-	
+
 	@Autowired
 	private SqlSession session;
-	
+
 	private String mapper = "locMapper.%s";
 
 	@Override
@@ -21,7 +21,7 @@ public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> 
 		List<LocationsDTO> res = session.selectList(mapperId);
 		return res;
 	}
-	
+
 	@Override
 	public List<LocationsDTO> selectDatas(int i) {
 		return null;
@@ -60,5 +60,6 @@ public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> 
 	@Override
 	public boolean deleteData(int id) {
 		return false;
-	}	
+	}
+	
 }

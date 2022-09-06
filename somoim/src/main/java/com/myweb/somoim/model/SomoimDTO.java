@@ -8,6 +8,7 @@ public class SomoimDTO {
 	private int locationId;
 	private String locationName;
 	private String moimImagePath;
+	private String locationName;
 	
 	public String getLocationName() {
 		return locationName;
@@ -64,10 +65,21 @@ public class SomoimDTO {
 	public void setMoimImagePath(String moimImagePath) {
 		this.moimImagePath = moimImagePath;
 	}
-	
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+
 	@Override
 	public String toString() {
 		return "SomoimDTO [moimId=" + moimId + ", moimTitle=" + moimTitle + ", moimInfo=" + moimInfo + ", moimLimit="
-				+ moimLimit + ", locationId=" + locationId + ", moimImagePath=" + moimImagePath + "]";
+				+ moimLimit + ", locationId=" + locationId + ", moimImagePath=" + moimImagePath + ", locationName="
+				+ locationName + "]";
 	}
+	
+	
 }
