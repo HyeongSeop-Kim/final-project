@@ -2,13 +2,24 @@ package com.myweb.somoim.common.model;
 
 import java.util.List;
 
-import com.myweb.somoim.common.abstracts.AbstractDAO;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.myweb.somoim.common.abstracts.AbstractDAO;
+@Repository
 public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> {
+	
+	@Autowired
+	private SqlSession session;
+	
+	private String mapper = "locMapper.%s";
 
 	@Override
 	public List<LocationsDTO> selectAll() {
-		return null;
+		String mapperId = String.format(mapper, "selectAll");
+		List<LocationsDTO> res = session.selectList(mapperId);
+		return res;
 	}
 	
 	@Override

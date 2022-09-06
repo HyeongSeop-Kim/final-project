@@ -12,6 +12,9 @@
 	   <typeAlias type="com.myweb.somoim.moim.model.MeetingsDTO" alias="meetingsDTO"/>
 	   <typeAlias type="com.myweb.somoim.participants.model.MoimParticipantsDTO" alias="moimParticipantsDTO"/>
 	   <typeAlias type="com.myweb.somoim.participants.model.MeetingParticipantsDTO" alias="meetingParticipantsDTO"/>
+		<typeAlias type="com.myweb.somoim.common.model.LocationsDTO" alias="locDto" />
+		<typeAlias type="com.myweb.somoim.categorys.model.CategorysDTO" alias="categoryDto" />
+		<typeAlias type="com.myweb.somoim.members.model.MembersDTO" alias="MemberDto" />
 	</typeAliases>
 
 </configuration>

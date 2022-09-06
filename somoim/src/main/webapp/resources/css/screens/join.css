@@ -12,7 +12,7 @@
 	border-radius: 5px;
 	padding: 8px 10px;
 	font-size: 18px;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 	transition: border-color 0.3s ease-in-out;
 }
 .join-form__label {
@@ -35,6 +35,18 @@
 	display: flex;
 	justify-content: space-evenly;
 }
+
+.join-form-flex {
+	display: flex;
+}
+
+.join-form_category_option{
+	display: inline-block;
+	width: 49%;
+	margin-bottom: 0.2rem;
+}
+
+
 .join-form-inline__input {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
@@ -43,10 +55,20 @@
 	padding: 10px 10px;
 	width: 33%;
 	color: var(--gray);
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 }
 .join-form-inline__div {
 	display: flex;
 	flex-direction: column;
 	width: 48%;
 }
+
+.error-msg{
+	color: red;
+	font-size: 15px;
+}
+.error-phone-msg{
+		color: red;
+	font-size: 15px;
+}
+

@@ -2,10 +2,19 @@ package com.myweb.somoim.members.model;
 
 import java.util.List;
 
-import com.myweb.somoim.common.abstracts.AbstractDAO;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import com.myweb.somoim.common.abstracts.AbstractDAO;
+@Repository
 public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
+	@Autowired
+	private SqlSession session;
+	
+	private String mapper = "memberMapper.%s";
+	
 	@Override
 	public List<MembersDTO> selectAll() {
 		return null;
@@ -28,12 +37,16 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Override
 	public int getNextSeq() {
-		return 0;
+		String mapperId = String.format(mapper, "getNextSeq");
+		int seq = session.selectOne(mapperId);
+		return seq;
 	}
 
 	@Override
-	public boolean insertData(MembersDTO dto) {
-		return false;
+	public boolean insertData(MembersDTO data) {
+		String mapId = String.format(mapper, "insertData");
+		int res = session.insert(mapId, data);
+		return res == 1 ? true : false;
 	}
 
 	@Override

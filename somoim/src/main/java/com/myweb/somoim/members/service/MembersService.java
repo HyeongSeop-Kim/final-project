@@ -2,11 +2,18 @@ package com.myweb.somoim.members.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.myweb.somoim.common.abstracts.AbstractService;
+import com.myweb.somoim.members.model.MembersDAO;
 import com.myweb.somoim.members.model.MembersDTO;
-
+@Service
 public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO>{
-
+	
+	@Autowired
+	private MembersDAO dao;
+	
 	@Override
 	public List<MembersDTO> getAll() {
 		return null;
@@ -28,8 +35,11 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	}
 
 	@Override
-	public boolean addData(MembersDTO dto) {
-		return false;
+	public boolean addData(MembersDTO data) {
+		
+		boolean result = dao.insertData(data);
+		
+		return result;
 	}
 
 	@Override
