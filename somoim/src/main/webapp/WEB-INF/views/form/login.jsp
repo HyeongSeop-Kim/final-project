@@ -19,8 +19,9 @@
 	</header>
 	<section class="form-section">
 		<div class="form-container">
-			<form class="login-form" action="">
-				<input class="login-form__input" name="username" type="text" placeholder="Username"  />
+			<c:url var="loginUrl" value="/login"></c:url>
+			<form class="login-form" action="${loginUrl}" method="post" >
+				<input class="login-form__input" name="memberId" type="text" placeholder="Username"  />
 			    <input class="login-form__input" name="password" type="password" placeholder="Password" />
 			    <span>
 			    	<input class="login-form__checkbox" type="checkbox" value="" />

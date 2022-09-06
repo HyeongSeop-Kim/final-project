@@ -31,8 +31,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 
 	@Override
 	public boolean addData(MembersDTO data) {
-		int seq = dao.getNextSeq();
-		data.setMemberId(seq);
+		
 		boolean result = dao.insertData(data);
 		
 		return result;

@@ -81,7 +81,7 @@ public class LoginController {
 		membersDTO.setBirth(bitrhs);
 		
 		MembersDTO data = new MembersDTO();
-		data.setId(membersDTO.getId());
+		data.setMemberId(membersDTO.getMemberId());
 		data.setMemberName(membersDTO.getMemberName());
 		data.setPassword(membersDTO.getPassword());
 		data.setGender(membersDTO.getGender());
@@ -101,8 +101,13 @@ public class LoginController {
 		}
 	}
 	
-	
-	
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public String login(MembersDTO membersDTO) {
+		System.out.println(membersDTO);
+		
+		
+		return "";
+	}
 	
 	@RequestMapping(value = "/login/kakao",method = RequestMethod.GET)
 	public String kakaoLogin() {

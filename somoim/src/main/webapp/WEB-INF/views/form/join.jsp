@@ -24,7 +24,7 @@
 		<c:url  var="joinAddUrl" value="/addJoin"></c:url>
 			<form class="join-form " method="post" action="${joinAddUrl}">
 				<label class="join-form__label ">아이디</label>
-				<input class="join-form__input info__id" type="text" name="id" id="uId">
+				<input class="join-form__input info__id" type="text" name="memberId" id="uId">
 				<div class="error-msg"></div>
 				<label class="join-form__label">비밀번호</label>
 				<input class="join-form__input pw" type="password" name="password" id="pw1">
@@ -315,14 +315,24 @@
 		  return false;
 	  }
 	  
-	  if(gender.value !== 'M' || gender.value !== 'F' ){
+	  if(gender.value != 'M' && gender.value != 'F' ){
 		  alert("성별을 선택해주세요");
 		  gender.focus();
 		  return false;
 	  }
 	  
-
+	  form.submit();
+	  move();
+	  
+	  function move() {
+	  setTimeout(() => {
+		  window.opener.location.href="/somoim/login"
+			    window.close();
+	}, 1);
 	}
+		  
+	  }
+	  
 	
 	  
 	  
