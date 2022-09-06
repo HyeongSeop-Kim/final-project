@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mettingsMapper">
+  
+   <select id ="selectAll" resultType="meetingsDTO" parameterType="_int"> 
+  SELECT  M.MEETING_ID  AS meetingId   
+             ,M.MEETING_TITLE AS meetingTitle
+             ,M.MEETING_DATE  AS meetingDate
+             ,M.MEETING_PLACE  AS meetingPlace
+             ,M.MEETING_PRICE  AS meetingPrice
+             ,M.MEETING_LIMIT  AS meetingLimit
+             ,M.MOIM_ID  AS moimId
+           FROM MEETINGS M
+          WHERE M.MOIM_ID = #{id}
+    </select>
+    
+
+
+  
+
+</mapper>
+

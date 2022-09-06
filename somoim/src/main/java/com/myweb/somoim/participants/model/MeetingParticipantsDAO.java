@@ -2,15 +2,35 @@ package com.myweb.somoim.participants.model;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.myweb.somoim.common.abstracts.AbstractDAO;
 import com.myweb.somoim.moim.model.MeetingsDTO;
 
+@Repository
 public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO> {
 
+	@Autowired
+	private SqlSession session ;
+	
+	private String mapper ="meetingParticipantsMapper.%s";
+	
+	
 	@Override
 	public List<MeetingsDTO> selectAll() {
 		return null;
 	}
+	
+	
+	public List<MeetingParticipantsDTO> selectAll(int id) {
+		String mapperId = String.format(mapper, "selectAll");
+		List<MeetingParticipantsDTO> data = session.selectList(mapperId,id);
+		System.out.println("미팅참가자DAO:" + data);
+		return data;
+	}
+	
 
 	@Override
 	public MeetingsDTO selectData(int id) {

@@ -5,5 +5,14 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
+	
+	<typeAliases>
+	   <typeAlias type="com.myweb.somoim.moim.model.BoardsDTO" alias="boardsDTO"/>
+	   <typeAlias type="com.myweb.somoim.model.SomoimDTO" alias="somoimDTO"/>
+	   <typeAlias type="com.myweb.somoim.moim.model.MeetingsDTO" alias="meetingsDTO"/>
+	   <typeAlias type="com.myweb.somoim.participants.model.MoimParticipantsDTO" alias="moimParticipantsDTO"/>
+	   <typeAlias type="com.myweb.somoim.participants.model.MeetingParticipantsDTO" alias="meetingParticipantsDTO"/>
+	</typeAliases>
+	
 </configuration>
 

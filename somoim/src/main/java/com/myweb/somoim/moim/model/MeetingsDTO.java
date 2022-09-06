@@ -1,6 +1,7 @@
 package com.myweb.somoim.moim.model;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class MeetingsDTO {
 	private int meetingId;
@@ -10,6 +11,12 @@ public class MeetingsDTO {
 	private int meetingPrice;
 	private int meetingLimit;
 	private int moimId;
+	private String month;
+	private String day;
+	private String dayOfW;
+	private String hour;
+	private String minute;
+	
 	
 	public int getMeetingId() {
 		return meetingId;
@@ -33,6 +40,18 @@ public class MeetingsDTO {
 	
 	public void setMeetingDate(Date meetingDate) {
 		this.meetingDate = meetingDate;
+	SimpleDateFormat dateFm = new SimpleDateFormat("yyyy MM dd E요일 HH mm"); 
+	String date = dateFm.format(meetingDate);
+	System.out.println("시간출력:" + date);
+	String [] dateSplit = date.split(" ");
+	for (int i=0 ; i< dateSplit.length ;i++ ) {
+		System.out.println(dateSplit[i]);
+	}
+	this.month = dateSplit[1];
+	this.day = dateSplit[2];
+	this.dayOfW = dateSplit[3];
+	this.hour = dateSplit[4];
+	this.minute = dateSplit[5];
 	}
 	
 	public String getMeetingPlace() {
@@ -67,7 +86,49 @@ public class MeetingsDTO {
 		this.moimId = moimId;
 	}
 	
-	@Override
+	
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public String getDayOfW() {
+		return dayOfW;
+	}
+
+	public void setDayOfW(String dayOfW) {
+		this.dayOfW = dayOfW;
+	}
+
+	public String getHour() {
+		return hour;
+	}
+
+	public void setHour(String hour) {
+		this.hour = hour;
+	}
+
+	public String getMinute() {
+		return minute;
+	}
+
+	public void setMinute(String minute) {
+		this.minute = minute;
+	}
+
+	@Override //수정해야함
 	public String toString() {
 		return "MeetingsDTO [meetingId=" + meetingId + ", meetingTitle=" + meetingTitle + ", meetingDate=" + meetingDate
 				+ ", meetingPlace=" + meetingPlace + ", meetingPrice=" + meetingPrice + ", meetingLimit=" + meetingLimit

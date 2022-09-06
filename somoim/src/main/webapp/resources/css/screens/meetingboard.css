@@ -4,8 +4,8 @@
 
 
 .mainbox{
-	margin-left: 11rem;
-	margin-right: 11rem;
+	margin-left: 8rem;
+	margin-right: 8rem;
 	margin-top:227px;
 	margin-bottom:150px;
 }
@@ -17,8 +17,7 @@
 
 .img-box-size-1{
 	height: 240px;
-    width: 100%;
-	
+  
 }
 
 .category-box-120{
@@ -38,10 +37,16 @@
 }
 
 .moim-colecter{
-    width:250px;
+    width:220px;
     height:90px;
     z-index:1;
 }
+
+.width-100{
+	width:100%;
+}
+
+
 
 /*position*/
 

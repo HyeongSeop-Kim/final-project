@@ -10,7 +10,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>모임 페이지</title>
+    <title>${moimData.moimTitle}입니다.</title>
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
     <c:url var="meetingimg" value="/resources/img"/>
@@ -33,27 +33,46 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${cs}/styles.css" />
   </head>
+  
+   <script type="text/javascript">
+   window.onload = function() {
+	   previewImage.addEventListener("click", function(e) {
+		   moimImageSelect.click();   
+	    });
+	   
+	   moimImageSelect.addEventListener("change" , function(e) {
+			var file = e.target.files[0];
+			var imgUrl = URL.createObjectURL(file);
+			previewImage.src = imgUrl;
+	  });
+   }
+   
+</script>
 
-
-  <body>
+<body>
+    <c:url var="meetingUrl" value="/moim/meeting/">
+		<c:param name="id" value="${moimData.moimId}"></c:param>
+	</c:url>
     <!--이미지 사진박스-->
-
     <header class="p-6">
-      <div class="img-box" onclick="coverImageSelect();">
-        <img
-          class="img-box-size-1 bora-20 shadow-sm bc-wh"
+     <c:url var="moimUpdateImageUrl" value="/moim/imageUpload" />
+     <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+      <div class="img-box img-box-size-1">
+        <img id="previewImage"
+          class="img-box-size-1 bora-20 shadow-sm width-100"
+          alt="이미지 선택"
           src="${meetingimg}/meetingimg1.jpg"
-        />
-        <input
+        />        
+        <input id="moimImageSelect"
           class="ImgSelect"
           type="file"
-          name="uploadImg"
           value="이미지 선택"
         />
       </div>
+      </form>
       <div class="margin-bottom-20 flex-box margin-left-223">
         <!--아이콘-->
         <div class="psi-r">
@@ -66,7 +85,7 @@
         </div>
         <!--정모이름,편집버튼-->
         <div class="flex-box margin-left-160">
-          <div class="margin-10 margin-top-20 font-s-30">TEST ___모임</div>
+          <div class="margin-10 margin-top-20 font-s-30">${moimData.moimTitle}</div>
           <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary">편집</button>
           </div>
@@ -91,9 +110,9 @@
           <div class="container-fluid">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link">모임</a>
+                <a class="nav-link" onclick="location.href='/somoim/moim/meeting?id=${moimData.moimId}'">모임</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" onclick="location.href='/somoim/moim/board?id=${moimData.moimId}'">
                 <a class="nav-link">게시판</a>
               </li>
               <li class="nav-item">
@@ -113,6 +132,9 @@
           <div class="margin-10 p-15">
             <div class="center p-6 bc-wg">모임정보</div>
           </div>
+           <!-- 모임장정보 -->
+             <c:forEach items="${moimParticipants}" var="moimParticipants">
+             <c:if test="${moimParticipants.jobId eq 1}">
           <div class="margin-10">
             <div class="space-between margin-10">
               <img
@@ -121,84 +143,65 @@
                 alt="profile-image"
                 width="100"
               />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-          </div>
+              <div>${moimParticipants.jobName}</div>
+              <div>${moimParticipants.memberName}</div>
+             </div>
+           </div>
+           </c:if>
+          </c:forEach>
+          <!-- 모임인포 -->
           <div
             class="p-4 rounded-3 shadow-sm bg-white scroll"
             style="height: 640px; overflow-y: scroll"
           >
             <div class="margin-10">
               <div class="center p-6">
-                모임상세정보칸 입니다. 자유롭게 작성해주세요
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
+                ${moimData.moimInfo}
               </div>
             </div>
           </div>
         </div>
-        <!--모임게시판 박스-->
+        <!--정모게시판 박스-->
         <div class="col-md-6 bc-wh shadow-sm p-15">
-          <div class="center margin-10 p-6 bc-wg">모임게시판</div>
+          <div class="center margin-10 p-6 bc-wg">정모</div>
 
-          <!--정모모임1-->
+          <!--정모모임 반복출력-->
+          <c:forEach items="${meetingsData}" var="meetingsData">
           <div class="p-15">
             <div class="flex-box space-between">
               <div class="bc-wh shadow-sm date-bs p-6 psi-r">
-                <div class="psi-a top-20 left-24 font_s_10">토요일</div>
-                <div class="psi-a top-40 left-28 font-s-30">26</div>
+                <div class="psi-a top-20 left-24 font_s_10">${meetingsData.dayOfW}</div>
+                <div class="psi-a top-40 left-28 font-s-30">${meetingsData.day}</div>
               </div>
               <div class="info-box-mb">
-                <div>08.26 15시</div>
-                <div>홍대 8번출구</div>
-                <div>비용</div>
-                <div>정원수</div>
+              
+                <div><span class="material-icons" style="font-size:14px; color: gray;">favorite</span>&nbsp;&nbsp;${meetingsData.meetingTitle}</div>
+                <div><span class="material-icons" style="font-size:14px; color: gray;">date_range</span>&nbsp;&nbsp;${meetingsData.month}.${meetingsData.day} ${meetingsData.hour}:${meetingsData.minute}</div>
+                <div><span class="material-icons" style="font-size:14px; color: gray;">room</span>&nbsp;&nbsp;${meetingsData.meetingPlace}</div>
+                <div><span class="material-icons" style="font-size:14px; color: gray;">money</span>&nbsp;&nbsp;${meetingsData.meetingPrice}</div>
+                <div><span class="material-icons" style="font-size:14px; color: gray;">groups</span>&nbsp;&nbsp;${meetingsData.meetingLimit}</div>
               </div>
               <!--정모모임1 가입멤버 아코디언박스-->
               <div class="moim-colecter">
                 <div class="accordion-item width">
-                  <h2 class="accordion-header" id="heading1">
+                  <h2 class="accordion-header" id="heading${meetingsData.meetingId}">
+                    <c:url var="meetingUrl" value="/moim/meeting"/>
                     <button
                       class="accordion-button"
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target="#collapse1"
+                      data-bs-target="#collapse${meetingsData.meetingId}"
                       aria-expanded="true"
-                      aria-controls="collapse1"
+                      aria-controls="collapse${meetingsData.meetingId}"
+                      onclick="meetingsParticipants(${meetingsData.meetingId})"
                     >
                       가입 멤버
                     </button>
                   </h2>
                   <div
-                    id="collapse1"
+                    id="collapse${meetingsData.meetingId}"
                     class="accordion-collapse collapse"
-                    aria-labelledby="heading1"
+                    aria-labelledby="heading${meetingsData.meetingId}"
                   >
                     <!--스크롤박스-->
                     <div
@@ -241,81 +244,11 @@
             </div>
           </div>
           <hr class="container-1" />
-          <!--정모모임2-->
-          <div class="p-15">
-            <div class="flex-box space-between">
-              <div class="bc-wh shadow-sm date-bs p-6 psi-r">
-                <div class="psi-a top-20 left-24 font_s_10">토요일</div>
-                <div class="psi-a top-40 left-28 font-s-30">26</div>
-              </div>
-              <div class="info-box-mb">
-                <div>08.26 15시</div>
-                <div>홍대 8번출구</div>
-                <div>비용</div>
-                <div>정원수</div>
-              </div>
-              <!--정모모임2 가입멤버 아코디언박스-->
-              <div class="moim-colecter">
-                <div class="accordion-item width">
-                  <h2 class="accordion-header" id="heading2">
-                    <button
-                      class="accordion-button"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapse2"
-                      aria-expanded="true"
-                      aria-controls="collapse2"
-                    >
-                      가입 멤버
-                    </button>
-                  </h2>
-                  <div
-                    id="collapse2"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="heading2"
-                  >
-                    <!--스크롤박스-->
-                    <div
-                      class="p-4 rounded-3 shadow-sm bg-white scroll"
-                      style="height: 200px; overflow-y: scroll"
-                    >
-                      <div class="accordion-body">
-                        <div class="flex-box margin-bottom-20">
-                          <img
-                            src="${img}/profile-image.png"
-                            class="rounded-circle"
-                            alt="profile-image"
-                            width="40"
-                          />
-                          <div class="center margin-left-10">최주영</div>
-                        </div>
-                        <div class="flex-box margin-bottom-20">
-                          <img
-                            src="${img}/profile-image.png"
-                            class="rounded-circle"
-                            alt="profile-image"
-                            width="40"
-                          />
-                          <div class="center margin-left-10">최주영</div>
-                        </div>
-                        <div class="flex-box margin-bottom-20">
-                          <img
-                            src="${img}/profile-image.png"
-                            class="rounded-circle"
-                            alt="profile-image"
-                            width="40"
-                          />
-                          <div class="center margin-left-10">최주영</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="container-1" />
+          </c:forEach>
+          <!--여기까지 정모모임-->
+         
+         
+         
           <!--개설버튼-->
           <div class="p-15">
             <div class="flex-box space-between">
@@ -335,6 +268,7 @@
             class="p-4 rounded-3 shadow-sm bg-white scroll"
             style="height: 770px; overflow-y: scroll"
           >
+          <c:forEach items="${moimParticipants}" var="moimParticipants">
             <div class="space-between margin-10">
               <img
                 src="${img}/profile-image.png"
@@ -342,129 +276,10 @@
                 alt="profile-image"
                 width="70"
               />
-              <div>직책</div>
-              <div>최주영</div>
+              <div>${moimParticipants.jobName}</div>
+              <div>${moimParticipants.memberName}</div>
             </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
+            </c:forEach>
           </div>
         </div>
       </section>
@@ -475,13 +290,25 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript">
-      function coverImageSelect() {
-        const coverImgSelect = document.querySelector(".ImgSelect");
-        const coverImg = document.querySelector(".img-box");
+ <script type="text/javascript">
+ function meetingsParticipants(meetingId){
+ 	$.ajax({
+ 		url: "${meetingUrl}/p",
+ 		type: "post",
+ 		data: {
+ 			id:meetingId
+ 		},
+ 		dataType: "json",
+ 		success: function(data){
+ 			if(data.code === "meetingParticipants"){
+ 				alert(data.msg);
+ 				
+ 			}
+ 		}
+ 	})
+ }
+ 
+ </script>
 
-        coverImg.addEventListener("click", () => coverImgSelect.click());
-      }
-    </script>
   </body>
 </html>

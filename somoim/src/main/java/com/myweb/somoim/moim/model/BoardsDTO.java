@@ -10,6 +10,9 @@ public class BoardsDTO {
 	private String content;
 	private Date createDate;
 	private int like;
+	private String memberName; //추가
+	private String jobName; //추가
+	
 	
 	public int getMoimId() {
 		return moimId;
@@ -67,6 +70,23 @@ public class BoardsDTO {
 		this.like = like;
 	}
 	
+	
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardsDTO [moimId=" + moimId + ", boardId=" + boardId + ", memberId=" + memberId + ", boardTitle="

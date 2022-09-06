@@ -4,6 +4,8 @@ public class MoimParticipantsDTO {
 	private int memberId;
 	private int jobId;
 	private int moimId;
+	private String memberName;  //추가
+	private String jobName; //추가
 	
 	public int getMemberId() {
 		return memberId;
@@ -28,8 +30,25 @@ public class MoimParticipantsDTO {
 	public void setMoimId(int moimId) {
 		this.moimId = moimId;
 	}
+	
+	public String getMemberName() {
+		return memberName;
+	}
 
-	@Override
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
+	@Override 
 	public String toString() {
 		return "MoimParticipantsDTO [memberId=" + memberId + ", jobId=" + jobId + ", moimId=" + moimId + "]";
 	}

@@ -2,7 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="BoardMapper">
+<mapper namespace="boardsMapper">
+  
+   <select id ="selectAll" resultType="boardsDTO" parameterType="_int"> 
+   SELECT  B.BOARD_ID AS boardId
+             ,B.BOARD_TITLE AS boardTitle
+             ,B.CONTENT AS content
+             ,B.CREATE_DATE AS createDate
+             ,B."LIKE" AS "like"
+             ,B.MOIM_ID AS moimId
+             ,B.MEMBER_ID AS memberId
+             ,M.MEMBER_NAME AS memberName
+             ,J.JOB_NAME AS jobName
+           FROM BOARDS B
+           JOIN MEMBERS M
+             ON B.MEMBER_ID = M.MEMBER_ID
+           JOIN MOIM_PARTICIPANTS P
+             ON M.MEMBER_ID = P.MEMBER_ID
+           JOIN JOBS J
+             ON P.JOB_ID = J.JOB_ID
+          WHERE B.MOIM_ID = #{id}
+       ORDER BY B.CREATE_DATE DESC
+    </select>
+    
+
+
+  
 
 </mapper>
 

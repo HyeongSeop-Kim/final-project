@@ -40,18 +40,20 @@
   <body>
     <!--이미지 사진박스-->
     <header class="p-6">
-      <div class="img-box" onclick="coverImageSelect();">
-        <img
-          class="img-box-size-1 bora-20 shadow-sm bc-wh"
-          src="${meetingimg}/meetingimg1.jpg"
-        />
-        <input
+         <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+      <div class="img-box img-box-size-1">
+        <img id="previewImage"
+          class="img-box-size-1 bora-20 shadow-sm width-100"
+          alt="이미지 선택"
+           src="${meetingimg}/meetingimg1.jpg"
+        />        
+        <input id="moimImageSelect"
           class="ImgSelect"
           type="file"
-          name="uploadImg"
           value="이미지 선택"
         />
       </div>
+      </form>
       <div class="margin-bottom-20 flex-box margin-left-223">
         <!--아이콘-->
         <div class="psi-r">
@@ -64,7 +66,7 @@
         </div>
         <!--정모이름,편집버튼-->
         <div class="flex-box margin-left-160">
-          <div class="margin-10 margin-top-20 font-s-30">TEST ___모임</div>
+          <div class="margin-10 margin-top-20 font-s-30"> ${moimData.moimTitle}</div>
           <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary">편집</button>
           </div>
@@ -89,10 +91,10 @@
           <div class="container-fluid">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link">모임</a>
+                <a class="nav-link" onclick="location.href='/somoim/moim/meeting?id=${moimData.moimId}'">모임</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link">게시판</a>
+                <a class="nav-link" onclick="location.href='/somoim/moim/board?id=${moimData.moimId}'" >게시판</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link">사진첩</a>
@@ -111,6 +113,9 @@
           <div class="margin-10 p-15">
             <div class="center p-6 bc-wg">모임정보</div>
           </div>
+          <!-- 모임장정보 -->
+          <c:forEach items="${moimParticipants}" var="moimParticipants">
+          <c:if test="${moimParticipants.jobId eq 1}">
           <div class="margin-10">
             <div class="space-between margin-10">
               <img
@@ -119,44 +124,20 @@
                 alt="profile-image"
                 width="100"
               />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-          </div>
+              <div>${moimParticipants.jobName}</div>
+              <div>${moimParticipants.memberName}</div>
+             </div>
+           </div>
+           </c:if>
+          </c:forEach>
+          <!-- 모임인포 -->
           <div
             class="p-4 rounded-3 shadow-sm bg-white scroll"
             style="height: 640px; overflow-y: scroll"
           >
             <div class="margin-10">
               <div class="center p-6">
-                모임상세정보칸 입니다. 자유롭게 작성해주세요
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
-                ------------------------------------------
+                ${moimData.moimInfo}
               </div>
             </div>
           </div>
@@ -165,150 +146,60 @@
         <div class="col-md-6 bc-wh shadow-sm p-15 p-3">
           <div class="center margin-10 p-6 bc-wg">모임게시글</div>
           <!--첫번째 게시글 박스-->
+            <c:forEach items="${paging.pageData}" var="comment"> <!-- 요기서부터 페이징으로 나눈 데이터 출력시켜주는 코드 --> 
           <div class="mb-3 container-1">
             <div class="mb-1">
               <div class="card border-light">
                 <div class="card-header">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
+                      <span><small>${comment.memberName}</small></span>
+                      <span class="margin-10"><small>${comment.jobName}</small></span>
                     </div>
-                    <span><small>2017.01.01</small></span>
+                    <span><small>${comment.createDate}</small></span>
                   </div>
                 </div>
                 <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text word-hidden">
-                    한반도 중앙부 동쪽의 태백산맥을 중심으로 영동과 영서로 크게
-                    구분되어 있다. 위도상으로는 북위 37° 02′에서 38° 37′에
-                    걸치고 경도상으로는 동경 127° 05′에서 129° 22′에 걸쳐 있으며
-                    북위 38도선은 강원도의 거의 중앙부를 통과한다. 동서의 길이는
-                    약 150㎞, 남북은 약 243㎞에 달하며, 동쪽은 약 212㎞에 걸쳐
-                    해안선을 이루면서 서쪽은 황해도 신계·김천군, 경기도
-                    연천·포천·가평·양평·여주 등 여러 군과 경계를 이루고 남쪽은
-                    충청북도 충주·제천시, 단양군 및 경상북도의 영주시,
-                    봉화·울진군과 북쪽은 함경남도 안변군·문천군 및 황해도의
-                    곡산군과 접하여 5도 3시 13군과 경계를 이루고 있다.
-                  </p>
+                  <input type="hidden" value="${comment.boardId}" />
+                  <p class="card-text word-hidden">${comment.content }</p>
                 </div>
               </div>
             </div>
           </div>
-          <!--두번째 게시글 박스-->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
-                    </div>
-                    <span><small>2017.01.01</small></span>
-                  </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text word-hidden">
-                    한반도 중앙부 동쪽의 태백산맥을 중심으로 영동과 영서로 크게
-                    구분되어 있다. 위도상으로는 북위 37° 02′에서 38° 37′에
-                    걸치고 경도상으로는 동경 127° 05′에서 129° 22′에 걸쳐 있으며
-                    북위 38도선은 강원도의 거의 중앙부를 통과한다. 동서의 길이는
-                    약 150㎞, 남북은 약 243㎞에 달하며, 동쪽은 약 212㎞에 걸쳐
-                    해안선을 이루면서 서쪽은 황해도 신계·김천군, 경기도
-                    연천·포천·가평·양평·여주 등 여러 군과 경계를 이루고 남쪽은
-                    충청북도 충주·제천시, 단양군 및 경상북도의 영주시,
-                    봉화·울진군과 북쪽은 함경남도 안변군·문천군 및 황해도의
-                    곡산군과 접하여 5도 3시 13군과 경계를 이루고 있다.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 세번째 게시글 박스 -->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
-                    </div>
-                    <span><small>2017.01.01</small></span>
-                  </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text word-hidden">게시글3</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 네번째 게시글 박스 -->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
-                    </div>
-                    <span><small>2017.01.01</small></span>
-                  </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text word-hidden">게시글3</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 다섯번째 게시글 박스 -->
-          <div class="mb-3 container-1">
-            <div class="mb-1">
-              <div class="card border-light">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span><small>최주영</small></span>
-                      <span class="margin-10"><small>직책</small></span>
-                    </div>
-                    <span><small>2017.01.01</small></span>
-                  </div>
-                </div>
-                <div class="card-body-position">
-                  <input type="hidden" value="${comment.id}" />
-                  <p class="card-text word-hidden">게시글3</p>
-                </div>
-              </div>
-            </div>
-          </div>
+         </c:forEach>
+           
+         
+         
           <!--작성버튼-->
           <div class="text-end margin-right-40">
             <button class="btn btn-sm btn-primary" type="button">작성</button>
           </div>
           <!-- 페이지 -->
-          <nav aria-label="Page navigation example ">
+           <nav aria-label="Page navigation example ">
             <ul class="pagination justify-content-center">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
+            	<c:url var="boardUrl" value="/moim/board">
+		          <c:param name="id" value="${moimData.moimId}"></c:param>  <!-- /board/detail?id="게시물아이디" 가 출력됨 -->
+		        </c:url> 
+		        <c:if test="${paging.hasPrevPage()}">
+		         <li class="page-item">
+		           <a class="page-link" href="${boardUrl}&page=${paging.prevPageNumber}">prev</a>
+		         </li>
+		        </c:if> 
+		        
+		        <c:forEach items="${paging.getPageNumberList(paging.currentPageNumber - 2 , paging.currentPageNumber + 2)}" var="num">
+		         <li class="page-item ${paging.currentPageNumber eq num ? 'active' : ''}"> <!-- active 넣으면 활성화됨 -->
+		           <a class="page-link" href="${boardUrl}&page=${num}">${num}</a>
+		         </li>
+		        </c:forEach>
+		        <c:if test="${paging.hasNextPage()}">
+		         <li class="page-item">
+		           <a class="page-link" href="${boardUrl}&page=${paging.nextPageNumber}">next</a>
+		         </li>
+		        </c:if> 
+		    </ul>
           </nav>
         </div>
+       
 
         <!--모임멤버박스-->
         <div class="col-md-3 bc-wh shadow-sm p-15">
@@ -318,6 +209,7 @@
             class="p-4 rounded-3 shadow-sm bg-white scroll"
             style="height: 770px; overflow-y: scroll"
           >
+          <c:forEach items="${moimParticipants}" var="moimParticipants">
             <div class="space-between margin-10">
               <img
                 src="${img}/profile-image.png"
@@ -325,129 +217,11 @@
                 alt="profile-image"
                 width="70"
               />
-              <div>직책</div>
-              <div>최주영</div>
+              <div>${moimParticipants.jobName}</div>
+              <div>${moimParticipants.memberName }</div>
             </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
-            <div class="space-between margin-10">
-              <img
-                src="${img}/profile-image.png"
-                class="rounded-circle"
-                alt="profile-image"
-                width="70"
-              />
-              <div>직책</div>
-              <div>최주영</div>
-            </div>
+            </c:forEach>
+            
           </div>
         </div>
       </section>
