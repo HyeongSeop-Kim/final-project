@@ -1,17 +1,17 @@
 package com.myweb.somoim.participants.model;
 
 public class MeetingParticipantsDTO {
-	private int memberId;
+	private String memberId;
 	private int moimId;
-	private String meetingId;
+	private int meetingId;
 	private String memberName;
 	private String memberImagePath;
 
-	public int getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 	
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 	
@@ -23,11 +23,11 @@ public class MeetingParticipantsDTO {
 		this.moimId = moimId;
 	}
 	
-	public String getMeetingId() {
+	public int getMeetingId() {
 		return meetingId;
 	}
 	
-	public void setMeetingId(String meetingId) {
+	public void setMeetingId(int meetingId) {
 		this.meetingId = meetingId;
 	}
 	

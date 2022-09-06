@@ -25,7 +25,17 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	}
 
 	@Override
+	public List<MembersDTO> getDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public MembersDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public MembersDTO getData(String s) {
 		return null;
 	}
 

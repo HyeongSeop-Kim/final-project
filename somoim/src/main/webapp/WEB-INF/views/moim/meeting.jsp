@@ -200,13 +200,13 @@
 											<div class="p-4 rounded-3 shadow-sm bg-white scroll"
 												 style="height: 200px; overflow-y: scroll">
 												<c:if test="${not empty meetingParticipants}">
-													<c:forEach items="${meetingParticipants}" var="participantsData">
-														<c:if test="${participantsData.meetingId eq meetingData.meetingId}">
+													<c:forEach items="${meetingParticipants}" var="meetingParticipants">
+														<c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId}">
                       <div class="accordion-body">
                         <div class="flex-box margin-bottom-20">
 																	<img src="${img}/profile-image.png" class="rounded-circle"
 																		alt="profile-image" width="40" />
-																	<div class="center margin-left-10">${participantsData.memberName}</div>
+																	<div class="center margin-left-10">${meetingParticipants.memberName}</div>
 																</div>
 															</div>
 														</c:if>

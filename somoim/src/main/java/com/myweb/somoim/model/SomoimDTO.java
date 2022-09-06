@@ -1,5 +1,7 @@
 package com.myweb.somoim.model;
 
+import java.sql.Date;
+
 public class SomoimDTO {
 	private int moimId;
 	private String moimTitle;
@@ -8,16 +10,26 @@ public class SomoimDTO {
 	private int locationId;
 	private String locationName;
 	private String moimImagePath;
-	private String locationName;
-	
-	public String getLocationName() {
-		return locationName;
+	private Date moimCreateDate;
+	private int categoryId;
+
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public void setLocationName(String locationName) {
-		this.locationName = locationName;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-	
+
+
+	public Date getMoimCreateDate() {
+		return moimCreateDate;
+	}
+
+	public void setMoimCreateDate(Date moimCreateDate) {
+		this.moimCreateDate = moimCreateDate;
+	}
+
 	public int getMoimId() {
 		return moimId;
 	}

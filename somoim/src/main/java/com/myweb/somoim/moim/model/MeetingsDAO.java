@@ -22,6 +22,12 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 		return null;
 	}
 
+	@Override
+	public List<MeetingsDTO> selectDatas(String i) {
+		return null;
+	}
+
+	@Override
 	public List<MeetingsDTO> selectDatas(int id){ //새로 만든메서드
 		String mapperId = String.format(mapper,"selectDatas");
 		List<MeetingsDTO> data =  session.selectList(mapperId,id);
@@ -30,6 +36,11 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 
 	@Override
 	public MeetingsDTO selectData(int id) {
+		return null;
+	}
+
+	@Override
+	public MeetingsDTO selectData(String s) {
 		return null;
 	}
 

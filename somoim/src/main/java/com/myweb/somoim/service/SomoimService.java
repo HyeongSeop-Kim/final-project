@@ -24,6 +24,21 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 	}
 
 	@Override
+	public List<SomoimDTO> getDatas(int i) {
+		return null;
+	}
+
+	@Override
+	public List<SomoimDTO> getDatas(String s) {
+		return null;
+	}
+
+	@Override
+	public SomoimDTO getData(String s) {
+		return null;
+	}
+
+	@Override
 	public SomoimDTO getData(int id) {
 	     SomoimDTO data = dao.selectData(id);
 		return data;

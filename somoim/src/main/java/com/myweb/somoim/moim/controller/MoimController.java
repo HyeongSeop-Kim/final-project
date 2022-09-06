@@ -75,7 +75,7 @@ public class MoimController {
 		data.setMoimLimit(moimLimit);
 		data.setMoimImagePath(null);
 
-		boolean result = service.addData(data);
+		boolean result = SomoimService.addData(data);
 		if(result) {
 		}
 		return json.toJSONString();
@@ -109,10 +109,10 @@ public class MoimController {
 			            ) {
 
 		SomoimDTO moimData = SomoimService.getData(id);//모임정보
-		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getParticipantAll(id); //참가자정보
+		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 
-		List datas = boardsService.getAll(id); //게시글 전부 가져오기
+		List datas = boardsService.getDatas(id); //게시글 전부 가져오기
 		System.out.println(datas);
 
 		   int pageCount = 5;

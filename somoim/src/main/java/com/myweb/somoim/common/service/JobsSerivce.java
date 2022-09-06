@@ -16,9 +16,19 @@ public class JobsSerivce extends AbstractService<List<JobsDTO>, JobsDTO> {
 	public List<JobsDTO> getDatas(int i) {
 		return null;
 	}
-	
+
+	@Override
+	public List<JobsDTO> getDatas(String s) {
+		return null;
+	}
+
 	@Override
 	public JobsDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public JobsDTO getData(String s) {
 		return null;
 	}
 

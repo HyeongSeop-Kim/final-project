@@ -25,6 +25,21 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	}
 
 	@Override
+	public List<SomoimDTO> selectDatas(int i) {
+		return null;
+	}
+
+	@Override
+	public List<SomoimDTO> selectDatas(String s) {
+		return null;
+	}
+
+	@Override
+	public SomoimDTO selectData(String s) {
+		return null;
+	}
+
+	@Override
 	public SomoimDTO selectData(int id) {
 		String mapperId = String.format(mapper,"selectData");
 		SomoimDTO data = session.selectOne(mapperId,id);

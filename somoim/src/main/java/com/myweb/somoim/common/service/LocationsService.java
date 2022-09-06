@@ -26,7 +26,17 @@ public class LocationsService extends AbstractService<List<LocationsDTO>, Locati
 	}
 
 	@Override
+	public List<LocationsDTO> getDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public LocationsDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public LocationsDTO getData(String s) {
 		return null;
 	}
 

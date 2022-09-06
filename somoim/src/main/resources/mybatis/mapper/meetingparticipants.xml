@@ -4,13 +4,16 @@
   
 <mapper namespace="meetingParticipantsMapper">
   
-   <select id ="selectAll" resultType="meetingParticipantsDTO" parameterType="_int"> 
-SELECT M.MEMBER_NAME AS memberName
-FROM MEETINGS_PARTICIPANTS P
-         JOIN MEMBERS M
-           ON P.MEMBER_ID = M.MEMBER_ID  
-         WHERE P.MEETING_ID = #{id}
-
+   <select id ="selectDatas" resultType="meetingParticipantsDTO">
+       SELECT P.MEMBER_ID AS memberId
+            , P.MEETING_ID AS meetingId
+            , P.MOIM_ID AS moimId
+            , MEM.MEMBER_NAME AS memberName
+            , MEM.MEMBER_IMAGE_PATH AS memberImagePath
+       FROM MEETINGS_PARTICIPANTS P
+                JOIN MEMBERS MEM
+                     ON P.MEMBER_ID = MEM.MEMBER_ID
+       WHERE P.MOIM_ID = #{id}
    </select>
     
 

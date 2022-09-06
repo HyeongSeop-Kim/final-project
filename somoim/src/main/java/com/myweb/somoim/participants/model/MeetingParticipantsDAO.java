@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.myweb.somoim.common.abstracts.AbstractDAO;
-import com.myweb.somoim.moim.model.MeetingsDTO;
 
 @Repository
-public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO> {
+public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipantsDTO>, MeetingParticipantsDTO> {
 
 	@Autowired
 	private SqlSession session ;
@@ -19,7 +18,12 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 
 
 	@Override
-	public List<MeetingsDTO> selectAll() {
+	public List<MeetingParticipantsDTO> selectAll() {
+		return null;
+	}
+
+	@Override
+	public List<MeetingParticipantsDTO> selectDatas(String s) {
 		return null;
 	}
 
@@ -27,18 +31,23 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 	public List<MeetingParticipantsDTO> selectDatas(int id) {
 		String mapperId = String.format(mapper, "selectDatas");
 		List<MeetingParticipantsDTO> data = session.selectList(mapperId,id);
-		System.out.println("미팅참가자DAO:" + data);
+
 		return data;
 	}
 
 
 	@Override
-	public MeetingsDTO selectData(int id) {
+	public MeetingParticipantsDTO selectData(int id) {
 		return null;
 	}
 
 	@Override
-	public MeetingsDTO selectData(MeetingsDTO dto) {
+	public MeetingParticipantsDTO selectData(String s) {
+		return null;
+	}
+
+	@Override
+	public MeetingParticipantsDTO selectData(MeetingParticipantsDTO dto) {
 		return null;
 	}
 
@@ -48,17 +57,17 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingsDTO>, Meeti
 	}
 
 	@Override
-	public boolean insertData(MeetingsDTO dto) {
+	public boolean insertData(MeetingParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean updateData(MeetingsDTO dto) {
+	public boolean updateData(MeetingParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean deleteData(MeetingsDTO dto) {
+	public boolean deleteData(MeetingParticipantsDTO dto) {
 		return false;
 	}
 

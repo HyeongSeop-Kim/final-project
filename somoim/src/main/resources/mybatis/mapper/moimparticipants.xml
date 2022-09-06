@@ -4,7 +4,7 @@
   
 <mapper namespace="moimParticipantsMapper">
   
-   <select id ="selectAll" resultType="moimParticipantsDTO" parameterType="_int"> 
+   <select id ="selectDatas" resultType="moimParticipantsDTO">
 SELECT M.MEMBER_NAME AS memberName
       ,P.MEMBER_ID AS memberId
       ,J.JOB_NAME AS jobName

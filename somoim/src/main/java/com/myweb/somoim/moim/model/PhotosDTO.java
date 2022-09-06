@@ -1,10 +1,21 @@
 package com.myweb.somoim.moim.model;
 
+import java.sql.Date;
+
 public class PhotosDTO {
 	private int photoId;
 	private String photoImagePath;
 	private int moimId;
-	private int memberId;
+	private String memberId;
+	private Date photoCreateDate;
+
+	public Date getPhotoCreateDate() {
+		return photoCreateDate;
+	}
+
+	public void setPhotoCreateDate(Date photoCreateDate) {
+		this.photoCreateDate = photoCreateDate;
+	}
 
 	public int getPhotoId() {
 		return photoId;
@@ -30,11 +41,11 @@ public class PhotosDTO {
 		this.moimId = moimId;
 	}
 	
-	public int getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 	
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 	

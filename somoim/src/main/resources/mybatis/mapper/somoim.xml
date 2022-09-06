@@ -3,8 +3,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="moimsMapper">
-
-   <select id ="selectData" resultType="somoimDTO" parameterType="_int">
+    <select id="getNextSeq" resultType="_int">
+        SELECT SQU_MOIM.NEXTVAL FROM DUAL
+    </select>
+    <select id="selectAll" resultType="somoimDTO">
+        SELECT M.MOIM_ID AS moimId
+             , M.MOIM_TITLE AS moimTitle
+             , M.MOIM_INFO AS moimInfo
+             , M.MOIM_LIMIT AS moimLimit
+             , M.LOCATION_ID AS locationId
+             , M.MOIM_IMAGE_PATH AS moimImagePath
+             , L.LOCATION_NAME AS locationName
+        FROM MOIM M
+                 LEFT JOIN LOCATIONS L
+                           ON M.LOCATION_ID = L.LOCATION_ID
+    </select>
+   <select id ="selectData" resultType="somoimDTO">
       SELECT  M.MOIM_ID  AS moimId
              ,M.MOIM_TITLE AS moimTitle
              ,M.MOIM_INFO  AS moimInfo
@@ -17,10 +31,23 @@
 			 ON M.LOCATION_ID = L.LOCATION_ID
           WHERE M.MOIM_ID = #{id}
     </select>
-
-
-
-
-
+    <insert id="insertData" parameterType="somoimDTO">
+        INSERT INTO MOIM(MOIM_ID
+                        , MOIM_TITLE
+                        , MOIM_INFO
+                        , MOIM_LIMIT
+                        , LOCATION_ID
+                        , MOIM_IMAGE_PATH
+                        , CATEGORY_ID
+                        , MOIM_CREATE_DATE)
+        VALUES(SQU_MOIM.NEXTVAL
+              , #{moimTitle}
+              , #{moimInfo}
+              , #{moimLimit}
+              , #{locationId}
+              , #{moimImagePath}
+              , 1
+              , SYSDATE)
+    </insert>
 </mapper>
 

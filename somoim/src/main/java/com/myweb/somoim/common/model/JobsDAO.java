@@ -17,7 +17,17 @@ public class JobsDAO extends AbstractDAO<List<JobsDTO>, JobsDTO> {
 	}
 
 	@Override
+	public List<JobsDTO> selectDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public JobsDTO selectData(int id) {
+		return null;
+	}
+
+	@Override
+	public JobsDTO selectData(String s) {
 		return null;
 	}
 

@@ -28,7 +28,17 @@ public class LocationsDAO extends AbstractDAO<List<LocationsDTO>, LocationsDTO> 
 	}
 
 	@Override
+	public List<LocationsDTO> selectDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public LocationsDTO selectData(int id) {
+		return null;
+	}
+
+	@Override
+	public LocationsDTO selectData(String s) {
 		return null;
 	}
 

@@ -8,9 +8,13 @@ public abstract class AbstractDAO<C, E> {
 	public abstract C selectAll();
 	
 	public abstract C selectDatas(int i);
-	
+
+	public abstract C selectDatas(String s);
+
 	public abstract E selectData(int i);
-	
+
+	public abstract E selectData(String s);
+
 	public abstract E selectData(E e);
 	
 	public abstract int getNextSeq();

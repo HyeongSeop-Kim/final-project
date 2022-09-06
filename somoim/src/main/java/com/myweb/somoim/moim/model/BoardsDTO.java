@@ -5,10 +5,10 @@ import java.sql.Date;
 public class BoardsDTO {
 	private int moimId;
 	private int boardId;
-	private int memberId;
+	private String memberId;
 	private String boardTitle;
 	private String content;
-	private Date createDate;
+	private Date boardCreateDate;
 	private int like;
 	private String memberName; //추가
 	private String jobName; //추가
@@ -30,11 +30,11 @@ public class BoardsDTO {
 		this.boardId = boardId;
 	}
 	
-	public int getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 	
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 	
@@ -55,11 +55,11 @@ public class BoardsDTO {
 	}
 	
 	public Date getCreateDate() {
-		return createDate;
+		return boardCreateDate;
 	}
 	
 	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+		this.boardCreateDate = createDate;
 	}
 	
 	public int getLike() {
@@ -90,6 +90,6 @@ public class BoardsDTO {
 	@Override
 	public String toString() {
 		return "BoardsDTO [moimId=" + moimId + ", boardId=" + boardId + ", memberId=" + memberId + ", boardTitle="
-				+ boardTitle + ", content=" + content + ", createDate=" + createDate + ", like=" + like + "]";
+				+ boardTitle + ", content=" + content + ", boardCreateDate=" + boardCreateDate + ", like=" + like + "]";
 	}
 }

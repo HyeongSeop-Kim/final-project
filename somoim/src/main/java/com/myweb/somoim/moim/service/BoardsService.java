@@ -28,9 +28,19 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 		return datas;
 	}
 
+	@Override
+	public List<BoardsDTO> getDatas(String s) {
+		return null;
+	}
+
 
 	@Override
 	public BoardsDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public BoardsDTO getData(String s) {
 		return null;
 	}
 

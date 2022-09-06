@@ -29,7 +29,17 @@ public class CategorysDAO extends AbstractDAO<List<CategorysDTO>, CategorysDTO> 
 	}
 
 	@Override
+	public List<CategorysDTO> selectDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public CategorysDTO selectData(int id) {
+		return null;
+	}
+
+	@Override
+	public CategorysDTO selectData(String s) {
 		return null;
 	}
 

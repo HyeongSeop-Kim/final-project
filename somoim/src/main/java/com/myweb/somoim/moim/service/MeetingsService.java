@@ -30,7 +30,17 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 	}
 
 	@Override
+	public List<MeetingsDTO> getDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public MeetingsDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public MeetingsDTO getData(String s) {
 		return null;
 	}
 

@@ -17,7 +17,17 @@ public class PhotosDAO extends AbstractDAO<List<PhotosDTO>, PhotosDTO> {
 	}
 
 	@Override
+	public List<PhotosDTO> selectDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public PhotosDTO selectData(int id) {
+		return null;
+	}
+
+	@Override
+	public PhotosDTO selectData(String s) {
 		return null;
 	}
 

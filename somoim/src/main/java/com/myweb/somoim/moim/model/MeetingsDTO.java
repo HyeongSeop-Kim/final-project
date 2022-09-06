@@ -1,6 +1,7 @@
 package com.myweb.somoim.moim.model;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class MeetingsDTO {
 	private int meetingId;
@@ -15,7 +16,15 @@ public class MeetingsDTO {
 	private String dayOfW;
 	private String hour;
 	private String minute;
+	private Date meetingCreateDate;
 
+	public Date getMeetingCreateDate() {
+		return meetingCreateDate;
+	}
+
+	public void setMeetingCreateDate(Date meetingCreateDate) {
+		this.meetingCreateDate = meetingCreateDate;
+	}
 
 	public int getMeetingId() {
 		return meetingId;

@@ -24,9 +24,19 @@ public class CategorysService extends AbstractService<List<CategorysDTO>, Catego
 	public List<CategorysDTO> getDatas(int i) {
 		return null;
 	}
-	
+
+	@Override
+	public List<CategorysDTO> getDatas(String s) {
+		return null;
+	}
+
 	@Override
 	public CategorysDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public CategorysDTO getData(String s) {
 		return null;
 	}
 

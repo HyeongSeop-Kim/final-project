@@ -7,17 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.myweb.somoim.common.abstracts.AbstractDAO;
-import com.myweb.somoim.model.SomoimDTO;
 
 @Repository
-public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
+public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, MoimParticipantsDTO> {
 
 	@Autowired
 	private SqlSession session;
 	private String mapper = "moimParticipantsMapper.%s";
 
 	@Override
-	public List<SomoimDTO> selectAll() {
+	public List<MoimParticipantsDTO> selectAll() {
+		return null;
+	}
+
+	@Override
+	public List<MoimParticipantsDTO> selectDatas(String i) {
 		return null;
 	}
 
@@ -30,12 +34,17 @@ public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO>
 
 
 	@Override
-	public SomoimDTO selectData(int id) {
+	public MoimParticipantsDTO selectData(int id) {
 		return null;
 	}
 
 	@Override
-	public SomoimDTO selectData(SomoimDTO dto) {
+	public MoimParticipantsDTO selectData(String s) {
+		return null;
+	}
+
+	@Override
+	public MoimParticipantsDTO selectData(MoimParticipantsDTO dto) {
 		return null;
 	}
 
@@ -45,17 +54,17 @@ public class MoimParticipantsDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO>
 	}
 
 	@Override
-	public boolean insertData(SomoimDTO dto) {
+	public boolean insertData(MoimParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean updateData(SomoimDTO dto) {
+	public boolean updateData(MoimParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean deleteData(SomoimDTO dto) {
+	public boolean deleteData(MoimParticipantsDTO dto) {
 		return false;
 	}
 

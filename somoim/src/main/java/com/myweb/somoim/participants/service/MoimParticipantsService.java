@@ -6,19 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myweb.somoim.common.abstracts.AbstractService;
-import com.myweb.somoim.model.SomoimDTO;
 import com.myweb.somoim.participants.model.MoimParticipantsDTO;
 import com.myweb.somoim.participants.model.MoimParticipantsDAO;
 
 @Service
-public class MoimParticipantsService extends AbstractService<List<SomoimDTO>, SomoimDTO> {
+public class MoimParticipantsService extends AbstractService<List<MoimParticipantsDTO>, MoimParticipantsDTO> {
 
 	@Autowired
 	private MoimParticipantsDAO dao;
 
 
 	@Override
-	public List<SomoimDTO> getAll() {
+	public List<MoimParticipantsDTO> getAll() {
 		return null;
 	}
 
@@ -28,29 +27,39 @@ public class MoimParticipantsService extends AbstractService<List<SomoimDTO>, So
 		return data;
 	}
 
+	@Override
+	public List<MoimParticipantsDTO> getDatas(String s) {
+		return null;
+	}
+
 
 	@Override
-	public SomoimDTO getData(int id) {
+	public MoimParticipantsDTO getData(int id) {
 		return null;
 	}
 
 	@Override
-	public SomoimDTO getData(SomoimDTO dto) {
+	public MoimParticipantsDTO getData(String s) {
 		return null;
 	}
 
 	@Override
-	public boolean addData(SomoimDTO dto) {
+	public MoimParticipantsDTO getData(MoimParticipantsDTO dto) {
+		return null;
+	}
+
+	@Override
+	public boolean addData(MoimParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean modifyData(SomoimDTO dto) {
+	public boolean modifyData(MoimParticipantsDTO dto) {
 		return false;
 	}
 
 	@Override
-	public boolean removeData(SomoimDTO dto) {
+	public boolean removeData(MoimParticipantsDTO dto) {
 		return false;
 	}
 

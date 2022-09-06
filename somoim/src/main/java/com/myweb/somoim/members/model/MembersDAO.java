@@ -26,7 +26,17 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	}
 
 	@Override
+	public List<MembersDTO> selectDatas(String s) {
+		return null;
+	}
+
+	@Override
 	public MembersDTO selectData(int id) {
+		return null;
+	}
+
+	@Override
+	public MembersDTO selectData(String s) {
 		return null;
 	}
 

@@ -16,9 +16,19 @@ public class PhotosService extends AbstractService<List<PhotosDTO>, PhotosDTO> {
 	public List<PhotosDTO> getDatas(int i) {
 		return null;
 	}
-	
+
+	@Override
+	public List<PhotosDTO> getDatas(String s) {
+		return null;
+	}
+
 	@Override
 	public PhotosDTO getData(int id) {
+		return null;
+	}
+
+	@Override
+	public PhotosDTO getData(String s) {
 		return null;
 	}
 

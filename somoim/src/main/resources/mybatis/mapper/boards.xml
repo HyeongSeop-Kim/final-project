@@ -4,11 +4,11 @@
   
 <mapper namespace="boardsMapper">
   
-   <select id ="selectAll" resultType="boardsDTO" parameterType="_int"> 
+   <select id ="selectDatas" resultType="boardsDTO" parameterType="_int">
    SELECT  B.BOARD_ID AS boardId
              ,B.BOARD_TITLE AS boardTitle
              ,B.CONTENT AS content
-             ,B.CREATE_DATE AS createDate
+             ,B.BOARD_CREATE_DATE AS boardCreateDate
              ,B."LIKE" AS "like"
              ,B.MOIM_ID AS moimId
              ,B.MEMBER_ID AS memberId
@@ -22,7 +22,7 @@
            JOIN JOBS J
              ON P.JOB_ID = J.JOB_ID
           WHERE B.MOIM_ID = #{id}
-       ORDER BY B.CREATE_DATE DESC
+       ORDER BY B.BOARD_CREATE_DATE DESC
     </select>
     
 
