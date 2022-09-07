@@ -59,7 +59,7 @@
             	    <i class="fa-solid fa-gamepad"></i>
                 </a>
                 <a href="#" class="service-items icon-green">
-                <i class="fa-solid fa-briefcase"></i>
+                <i class="fa-solid fa-language"></i>
                 </a>
                 <a href="#" class="service-items icon-green">
                 <i class="fa-solid fa-briefcase"></i>
@@ -166,7 +166,7 @@
            		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
            		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
            		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-              <button type="button" class="btn btn-primary btn-sm btn-blue">편집</button>
+              <button type="button" class="btn btn-primary btn-sm btn-blue" onclick="popCategory();">편집</button>
             </section>
             <section>
 		        <div class="accordion" id="accordionExample">
@@ -280,12 +280,11 @@ function search() {
 	}
 }
 
-
 function search_list(){
 	
 }
 </script>
-
+<script src="${path}/resources/js/category.js"></script>
 </body>
 
 </html>

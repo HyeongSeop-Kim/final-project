@@ -87,6 +87,11 @@ public class SomoimController {
 	public String info() {
 		return "info/userInfo";
 	}
-	
+
+	@GetMapping(value = "category")
+	public String category(Locale locale, Model model) {
+
+		return "form/category";
+	}
 	
 }
