@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -93,5 +95,11 @@ public class SomoimController {
 
 		return "form/category";
 	}
+
+//	@PostMapping(value = "/ajax/cate")
+//	@ResponseBody
+//	public String ajaxCategory(HttpServletResponse response) throws Exception {
+//		return null;
+//	}
 	
 }

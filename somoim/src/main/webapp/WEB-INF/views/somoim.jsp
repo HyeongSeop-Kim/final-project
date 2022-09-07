@@ -162,10 +162,10 @@
               </div>
               <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='userInfo'" >상세</button>
             </section>
-            <section class="d-flex justify-content-between align-items-center pb-3">
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+            <section id="cate" class="d-flex justify-content-between align-items-center pb-3">
+           		<i id="cate_1" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+           		<i id="cate_2" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+           		<i id="cate_3" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
               <button type="button" class="btn btn-primary btn-sm btn-blue" onclick="popCategory();">편집</button>
             </section>
             <section>
@@ -283,6 +283,8 @@ function search() {
 function search_list(){
 	
 }
+
+
 </script>
 <script src="${path}/resources/js/category.js"></script>
 </body>

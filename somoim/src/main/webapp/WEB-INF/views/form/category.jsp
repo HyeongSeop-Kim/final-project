@@ -23,86 +23,86 @@
       <div class="row" >
         <div class="col-4 d-flex flex-column justify-content-center align-items-center" >
 
-          <div class="service-items icon-green">
+          <div id="cate_outdoor" class="service-items icon-green">
             <i class="fa-solid fa-suitcase"></i>
           </div>
           <span>아웃도어/여행</span>
-          <div class="service-items icon-green">
+          <div id="cate_sport" class="service-items icon-green">
             <i class="fa-solid fa-person-swimming"></i>
           </div>
           <span>운동/스포츠</span>
-          <div class="service-items icon-green">
+          <div id="cate_book" class="service-items icon-green">
             <i class="fa-solid fa-book"></i>
           </div>
           <span>인문학/책/글</span>
-          <div class="service-items icon-green">
+          <div id="cate_language" class="service-items icon-green">
             <i class="fa-solid fa-language"></i>
           </div>
           <span>외국/언어</span>
-          <div class="service-items icon-green">
+          <div id="cate_culture" class="service-items icon-green">
             <i class="fa-solid fa-masks-theater"></i>
           </div>
           <span>문화/공연/축제</span>
-          <div class="service-items icon-green">
+          <div id="cate_music" class="service-items icon-green">
             <i class="fa-solid fa-music"></i>
           </div>
           <span>음악/악기</span>
         </div>
         <div class="col-4 d-flex flex-column justify-content-center align-items-center" >
-          <div class="service-items icon-green">
+          <div id="cate_craft" class="service-items icon-green">
             <i class="fa-solid fa-palette"></i>
           </div>
           <span>공예/만들기</span>
-          <div class="service-items icon-green">
+          <div id="cate_cook" class="service-items icon-green">
             <i class="fa-solid fa-utensils"></i>
           </div>
           <span>요리/제조</span>
-          <div class="service-items icon-green">
+          <div id="cate_pet" class="service-items icon-green">
             <i class="fa-solid fa-dog"></i>
           </div>
           <span>반려동물</span>
-          <div class="service-items icon-green">
+          <div id="cate_dance" class="service-items icon-green">
             <i class="fa-solid fa-user-ninja"></i>
           </div>
           <span>댄스/무용</span>
-          <div class="service-items icon-green">
+          <div id="cate_serv" class="service-items icon-green">
             <i class="fa-solid fa-hands"></i>
           </div>
           <span>봉사활동</span>
-          <div class="service-items icon-green">
+          <div id="cate_society" class="service-items icon-green">
             <i class="fa-solid fa-handshake-simple"></i>
           </div>
           <span>사교/인맥</span>
         </div>
         <div class="col-4 d-flex flex-column justify-content-center align-items-center">
-          <div class="service-items icon-green">
+          <div id="cate_car" class="service-items icon-green">
             <i class="fa-solid fa-car"></i>
           </div>
           <span>차/오토바이</span>
-          <div class="service-items icon-green">
+          <div id="cate_photo" class="service-items icon-green">
             <i class="fa-brands fa-youtube"></i>
           </div>
           <span>사진/영상</span>
-          <div class="service-items icon-green">
+          <div id="cate_baseball" class="service-items icon-green">
             <i class="fa-solid fa-baseball-bat-ball"></i>
           </div>
           <span>야구관람</span>
-          <div class="service-items icon-green">
+          <div id="cate_game" class="service-items icon-green">
             <i class="fa-solid fa-gamepad"></i>
           </div>
           <span>게임/오락</span>
-          <div class="service-items icon-green">
+          <div id="cate_family" class="service-items icon-green">
             <i class="fa-solid fa-hand-holding-heart"></i>
           </div>
           <span>가족/결혼</span>
-          <div class="service-items icon-green">
+          <div id="cate_free" class="service-items icon-green">
             <i class="fa-solid fa-paper-plane"></i>
           </div>
           <span>자유주제</span>
         </div>
       </div>
       <button class="find-form__btn btn-light-gray" type="button" onclick="popClose();">취소</button>
-      <button class="find-form__btn btn-green" type="button" onclick="submitCategory();">확인</button>
+      <button class="find-form__btn btn-green" type="button" onclick="sendCategory();">확인</button>
     </div>
   </div>
 </section>

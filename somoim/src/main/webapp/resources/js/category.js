@@ -1,6 +1,6 @@
 // 변수 선언
-var category;
-var items = document.querySelectorAll(".col-4 .service-items");
+let category;
+const items = document.querySelectorAll(".col-4 .service-items");
 
 // hover 기능
 items.forEach( (item) => {
@@ -17,8 +17,8 @@ items.forEach( (item) => {
 // 관심사 선택 기능
 items.forEach( (item) => {
     item.addEventListener('click', function (){
-        var childs = item.children;
-        var chk = true;
+        const childs = item.children;
+        let chk = true;
 
         for(child of childs) {  // 이미 선택되었는지 확인
             if(child.className == 'check-badge'){
@@ -28,8 +28,8 @@ items.forEach( (item) => {
         };
         if(chk){    //  선택이 안되었으면 추가
             if(selectCntCheck()) {  // 선택된 갯수 확인
-                var span = document.createElement('span');
-                var i = document.createElement('i');
+                const span = document.createElement('span');
+                const i = document.createElement('i');
                 span.classList.add('check-badge');
                 i.classList.add('fa-solid', 'fa-check');
                 span.appendChild(i);
@@ -46,23 +46,73 @@ items.forEach( (item) => {
 });
 
 function selectCntCheck() { // 선택된 관심사 갯수 확인 함수
-    var cnt = document.querySelectorAll('.check-badge').length;
+    const cnt = document.querySelectorAll('.check-badge').length;
     if(cnt>=3) {
         return false;
     }
     return true;
 }
 
-function submitCategory() {
-    // var selectData = document.querySelectorAll('.check-badge')
-    // var
-    // $.ajax({
-    //     type: "post",
-    //     url: "/",
-    //     data:
-    //
-    // })
+//  개인정보창 관심사 변경
+function modifyCategory(selectDatas) {  // DB 수정 확인 후 작동 하도록
+    const cate = document.querySelector('#cate');
+    const before = document.querySelectorAll('#cate i');
+
+    for(const data of before) {
+        cate.removeChild(data);
+    }
+
+    for(const data of selectDatas){
+        const i = document.createElement('i');
+        const classList = 'icon-green service-sm-items ' + data
+        i.setAttribute('class', classList);
+        cate.insertBefore(i, cate.firstChild);
+    }
 }
+
+//  개인정보창 관심사 변경 데이터 전송
+function sendCategory() {   //  관심사 최소 1개 선택 유도
+    let selectDatas = [];
+
+    for(const data of document.querySelectorAll('.check-badge')) {
+        let selectData = data.previousElementSibling.classList.value
+        selectDatas.push(selectData);
+    }
+
+    opener.modifyCategory(selectDatas);
+    window.close();
+}
+
+// form submit으로 데이터 전송후 db저장
+
+// function submitCategory() {
+//     const keyName = "cate_";
+//     let selectDatas = [];
+//     let cnt = 1;
+//
+//     for(const data of document.querySelectorAll('.check-badge')) {
+//         let selectData = {};
+//         selectData = { [keyName + cnt] : data.parentElement.getAttribute('id') };
+//         selectDatas.push(selectData);
+//         cnt++;
+//     }
+//
+//     const jsonEncode = JSON.stringify(selectDatas);
+//
+//     $.ajax({
+//         type: "post",
+//         url: "/ajax/cate",
+//         data: jsonEncode,
+//         dataType: JSON,
+//         success: (result) => {
+//             console.log('성공');
+//         },
+//         error: () => {
+//             console.log('실패');
+//         }
+//
+//     })
+// }
 
 
 // 팝업 띄우기
