@@ -11,6 +11,9 @@
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
 	<title>로그인</title>
 </head>
+<style>
+	.social-login__btn:hover, .link-row > a:hover, .logging_box > label:hover  {cursor: pointer;}
+</style>
 <body>
 	<header>
 		<div class="form-title">
@@ -23,9 +26,9 @@
 			<form class="login-form" action="${loginUrl}" method="post" >
 				<input class="login-form__input" name="memberId" type="text" placeholder="Username"  />
 			    <input class="login-form__input" name="password" type="password" placeholder="Password" />
-			    <span>
-			    	<input class="login-form__checkbox" type="checkbox" value="" />
-			       	로그인 상태 유지
+			    <span class="logging_box">
+			    	<input class="login-form__checkbox" type="checkbox" value="" id="logging"/>
+			       	<label for="logging">로그인 상태 유지</label>
 			    </span>
 			    <input class="login-form__btn btn-green" type="submit" value="로그인"  />
 			</form>

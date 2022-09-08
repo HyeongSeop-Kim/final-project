@@ -309,8 +309,7 @@
 				return false;
 			}
 		 }
-	  
-
+	
 	function formCheck(form) {
 	  let uid = document.getElementById('uId');
 	  let pw1 = document.getElementById('pw1');
@@ -319,7 +318,12 @@
 	  let gender = document.getElementById('gender');
 	  let location = document.getElementById('location');
 	  let phone = document.getElementById('pnum');
-	  letcategory = document.getElementById('category');
+	  let category = document.getElementById('category');
+	  
+	  if(flag.length <= 0) {
+		  alert('관심분야를 1개 이상 선택하세요.');
+		  return false;
+	  }
 	  
 	  if(uid.value === undefined || uid.value.trim() === ""){
 		  alert("아이디를 입력해주세요.");
@@ -360,6 +364,27 @@
 		  phone.focus();
 		  return false;
 	  }
+	  
+	  // 관심분야
+	  let is_checked = [];
+	  
+	  let checkbox = document.querySelectorAll('.join-form_category_option input');
+
+	  for(let i = 0; i<checkbox.length; i++) {
+		// 체크박스 체크 여부 확인
+		  let item = checkbox[i].checked;
+		  is_checked.push(item);
+	  }
+	  
+	  // .filter() => 조건식 함수
+	  // is_checked 배열에 담김 값을 하나씩 꺼내서 item에 담음
+	  // item == true 이면, flag 변수에 담기
+	  let flag = is_checked.filter(function(item) {
+		  return item == true;
+	  })
+	  
+	  
+	  alert('회원가입이 완료되었습니다.');
 	  
 	  form.submit();
 	  move();
