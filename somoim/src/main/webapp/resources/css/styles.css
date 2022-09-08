@@ -13,6 +13,7 @@
 @import "screens/info.css";
 @import "screens/somoim.css";
 @import "screens/meetingboard.css";
+@import "screens/category.css";
 
 /* font */
 @font-face {

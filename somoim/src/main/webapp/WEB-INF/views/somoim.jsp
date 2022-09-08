@@ -41,28 +41,26 @@
         <div class="col-md-3" > 
           <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 738px; overflow-y: scroll"> 
             <div class="row" >
-            
               <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
-                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="0" end="8">	
+                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="0" end="8">
      		 			 <div >
              		 		<a href="#" class="service-items icon-green" data-value="${categoryList.categoryId}">
-          	        			<i class="fa-solid fa-dog"></i>	
+          	        			<i class="fa-solid fa-dog"></i>
                 			</a>
               			</div>
               			<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
-              	</c:forEach> 
+              	</c:forEach>
               </div>
               <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
-                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="9" end="18">	
+                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="9" end="18">
      		 			 <div >
              		 		<a href="#" class="service-items icon-green" data-value="${categoryList.categoryId}">
           	        			<i class="fa-solid fa-utensils"></i>
                 			</a>
               			</div>
-          	        	<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>	
-              	</c:forEach> 
+          	        	<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
+              	</c:forEach>
               </div>
-             
             </div>
           </div>
         </div>
@@ -130,11 +128,11 @@
               </div>
               <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='userInfo'" >상세</button>
             </section>
-            <section class="d-flex justify-content-between align-items-center pb-3">
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-              <button type="button" class="btn btn-primary btn-sm btn-blue">편집</button>
+            <section id="cate" class="d-flex justify-content-between align-items-center pb-3">
+           		<i id="cate_1" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+           		<i id="cate_2" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+           		<i id="cate_3" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+              <button type="button" class="btn btn-primary btn-sm btn-blue" onclick="popCategory();">편집</button>
             </section>
             <section>
 		        <div class="accordion" id="accordionExample">
@@ -217,12 +215,12 @@ function get_moim_list(page) {
 				_html += '</div>';
 			}
 			$('#m_list').html(_html);
-			
+
 			for (var i=0 ; i < res.pager.pagelist.length ; i++) {
 				if (res.pager.c_page == res.pager.pagelist[i]) {
-					
+
 				}
-				_page += '<button class="page-link " onclick="get_moim_list('+ res.pager.pagelist[i] +');">'+ res.pager.pagelist[i] +'</button>'; 
+				_page += '<button class="page-link " onclick="get_moim_list('+ res.pager.pagelist[i] +');">'+ res.pager.pagelist[i] +'</button>';
 			}
 			$('#p_page').attr('onclick', 'get_moim_list('+ res.pager.p_page +');');
 			if (res.pager.c_page == 1) {
@@ -233,7 +231,7 @@ function get_moim_list(page) {
 				$('#p_btn').removeClass('disabled');
 			}
 			$('#n_page').attr('onclick', 'get_moim_list('+ res.pager.n_page +');');
-			
+
 			if (res.pager.c_page == res.pager.pagelist.length) {
 				$('#n_page').prop('disabled', true);
 				$('#n_btn').addClass('disabled');
@@ -242,10 +240,10 @@ function get_moim_list(page) {
 				$('#n_btn').removeClass('disabled');
 			}
 			$('#page_list').html(_page);
-			
-			
+
+
 		},
-		
+
 		error : function(XMLHttpRequest, textStatus, errorThrown){
 			alert('error');
 		}
@@ -266,11 +264,11 @@ $(document).ready(function() {
 			get_moim_list(1);
 		}
 	});
-	
+
 });
 
 </script>
-
+<script src="${path}/resources/js/category.js"></script>
 </body>
 
 </html>
