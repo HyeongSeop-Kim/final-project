@@ -27,7 +27,7 @@ items.forEach( (item) => {
             }
         };
         if(chk){    //  선택이 안되었으면 추가
-            if(selectCntCheck()) {  // 선택된 갯수 확인
+            if(selectCntCheck() < 3) {  // 선택된 갯수 확인
                 const span = document.createElement('span');
                 const i = document.createElement('i');
                 span.classList.add('check-badge');
@@ -47,10 +47,7 @@ items.forEach( (item) => {
 
 function selectCntCheck() { // 선택된 관심사 갯수 확인 함수
     const cnt = document.querySelectorAll('.check-badge').length;
-    if(cnt>=3) {
-        return false;
-    }
-    return true;
+    return cnt;
 }
 
 //  개인정보창 관심사 변경
@@ -71,39 +68,43 @@ function modifyCategory(selectDatas) {  // DB 수정 확인 후 작동 하도록
 }
 
 //  개인정보창 관심사 변경 데이터 전송
-function sendCategory() {   //  관심사 최소 1개 선택 유도
+function sendCategory() {
+    if(selectCntCheck() < 1) {  // 관심사 미체크시 알람
+        return alert('관심사는 적어도 하나 이상 선택해야합니다.');
+    }
+
     let selectDatas = [];
 
     for(const data of document.querySelectorAll('.check-badge')) {
         let selectData = data.previousElementSibling.classList.value
         selectDatas.push(selectData);
     }
-
+    // submitCategory()
     opener.modifyCategory(selectDatas);
     window.close();
+
 }
 
-// form submit으로 데이터 전송후 db저장
+// 데이터 전송후 db저장
 
 // function submitCategory() {
-//     const keyName = "cate_";
 //     let selectDatas = [];
-//     let cnt = 1;
 //
 //     for(const data of document.querySelectorAll('.check-badge')) {
 //         let selectData = {};
-//         selectData = { [keyName + cnt] : data.parentElement.getAttribute('id') };
+//         selectData = { 'id' : data.parentElement.getAttribute('id') };
 //         selectDatas.push(selectData);
-//         cnt++;
 //     }
 //
+//     console.log(selectDatas);
 //     const jsonEncode = JSON.stringify(selectDatas);
-//
+//     console.log(jsonEncode);
 //     $.ajax({
 //         type: "post",
-//         url: "/ajax/cate",
+//         url: "ajax/cate",
+//         contentType: "application/json",
 //         data: jsonEncode,
-//         dataType: JSON,
+//         dataType: "json",
 //         success: (result) => {
 //             console.log('성공');
 //         },
