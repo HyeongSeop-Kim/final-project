@@ -53,7 +53,7 @@
 			 ON M.LOCATION_ID = L.LOCATION_ID
           WHERE M.MOIM_ID = #{id}
     </select>
-    <insert id="insertData" parameterType="somoimDTO">
+    <insert id="insertData" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
         INSERT INTO MOIM(MOIM_ID
                         , MOIM_TITLE
                         , MOIM_INFO
@@ -71,5 +71,12 @@
               , #{categoryId}
               , SYSDATE)
     </insert>
+    
+        <update id="updataImage" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
+        UPDATE MOIM 
+        SET MOIM_IMAGE_PATH= #{moimImagePath}
+      WHERE MOIM_ID = #{id};
+    </update>
+    
 </mapper>
 

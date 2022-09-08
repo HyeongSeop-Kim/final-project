@@ -1,12 +1,15 @@
 package com.myweb.somoim.moim.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myweb.somoim.common.abstracts.AbstractService;
-
+import com.myweb.somoim.model.SomoimDTO;
 import com.myweb.somoim.moim.model.MeetingsDAO;
 import com.myweb.somoim.moim.model.MeetingsDTO;
 
@@ -68,5 +71,6 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 	public boolean removeData(int id) {
 		return false;
 	}
+	
 
 }

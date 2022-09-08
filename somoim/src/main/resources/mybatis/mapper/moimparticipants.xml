@@ -5,24 +5,19 @@
 <mapper namespace="moimParticipantsMapper">
   
    <select id ="selectDatas" resultType="moimParticipantsDTO">
-SELECT M.MEMBER_NAME AS memberName
-      ,P.MEMBER_ID AS memberId
-      ,J.JOB_NAME AS jobName
-      ,J.JOB_ID AS jobId
-  FROM MEMBERS M
-  JOIN MOIM_PARTICIPANTS P
-    ON P.MEMBER_ID = M.MEMBER_ID
+SELECT B.MEMBER_NAME AS memberName
+     , B.MEMBER_ID AS memberId
+     , J.JOB_NAME AS JobName
+     , J.JOB_ID AS jobId
+  FROM MOIM M
+  JOIN MOIM_PARTICIPANTS P 
+    ON M.MOIM_ID = P.MOIM_ID
+  JOIN MEMBERS B
+    ON B.MEMBER_ID = P.MEMBER_ID 
   JOIN JOBS J
     ON P.JOB_ID = J.JOB_ID
- WHERE M.MEMBER_ID IN (SELECT  MEMBER_ID   
+    WHERE M.MOIM_ID IN (SELECT  P.MOIM_ID   
                         FROM MOIM_PARTICIPANTS P
                        WHERE P.MOIM_ID = #{id})
- ORDER BY J.JOB_ID  
    </select>
-    
-
-
-  
-
 </mapper>
-
