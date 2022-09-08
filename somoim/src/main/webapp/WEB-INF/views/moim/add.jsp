@@ -42,7 +42,6 @@
      -->
     <main class="container pt-3 px-0">
       <div class="row"> 
-	
 		<!-- add menu -->
 		 <div class="col-md-9">
 			<div class="p-4 rounded-3 shadow-sm bg-white" style="height: 100%;">
@@ -60,66 +59,20 @@
 				           	<div>
 				             	<h1 class="mb-3"> 관심사 선택</h1>
 				             	<p class="mb-3">
-									  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-									    관심 카테고리 더보기
-									  </button>
+								  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+								    관심 카테고리 더보기
+								  </button>
 								</p>
 								<div class="collapse" id="collapseExample">
 									  <div class="card card-body mb-3" >
-				      			<section class="d-flex" >
-					              	<div class="col">
-					              		<label class="service-items icon-green " for ="chk">	
-				               					 <i class="fa-solid fa-music kang"></i>
-					               		 </label>
-					               		 <div>
-						               		 <input class="form-check-input" type="checkbox" id="chk" value=""> 
-						               		 <label class="form-check-label mt-1" for="chk">1</label>
-					               		 </div>
-					                </div>
-					              	<div class="col">
-					              		<label class="service-items icon-green " for ="chk">	
-				               					 <i class="fa-solid fa-music"></i>
-					               		 </label>
-					               		 <div>
-						               		 <input class="form-check-input" type="checkbox" id="chk" value=""> 
-						               		 <label class="form-check-label mt-1" for="chk">2</label>
-					               		 </div>
-					                </div>
-					              	<div class="col">
-					              		<label class="service-items icon-green " for ="chk">	
-				               					 <i class="fa-solid fa-music"></i>
-					               		 </label>
-					               		 <div>
-						               		 <input class="form-check-input" type="checkbox" id="chk" value=""> 
-						               		 <label class="form-check-label mt-1" for="chk">3</label>
-					               		 </div>
-					                </div>
-					              	<div class="col">
-					              		<label class="service-items icon-green " for ="chk">	
-				               					 <i class="fa-solid fa-music"></i>
-					               		 </label>
-					               		 <div>
-						               		 <input class="form-check-input" type="checkbox" id="chk" value=""> 
-						               		 <label class="form-check-label mt-1" for="chk">4</label>
-					               		 </div>
-					                </div>
-					              	<div class="col">
-					              		<label class="service-items icon-green " for ="chk">	
-				               					 <i class="fa-solid fa-music"></i>
-					               		 </label>
-					               		 <div>
-						               		 <input class="form-check-input" type="checkbox" id="chk" value=""> 
-						               		 <label class="form-check-label mt-1" for="chk">5</label>
-					               		 </div>
-					                </div>
-					              	<div class="col">
-					              		<label class="service-items icon-green " for ="chk">	
-				               					 <i class="fa-solid fa-music"></i>
-					               		 </label>
-					               		 <div>
-						               		 <input class="form-check-input" type="checkbox" id="chk" value=""> 
-						               		 <label class="form-check-label mt-1" for="chk">6</label>
-					               		 </div>
+				      					<section class="d-flex" >
+					              			<div class="col">
+					              				<c:forEach var="categoryList" items="${requestScope.cateDatas}">	
+					               		 		<div>
+						               		 	  <input class="form-check-input" type="radio" name="categoryId" value="${categoryList.categoryId}"> 
+						               		      <label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
+					               			   </div>
+					               		</c:forEach> 
 					                </div>
 				      		 </section>
 				  			</div>
@@ -145,13 +98,11 @@
 				  					<button class="btn btn-primary" type="button" onclick="addData();">만들기</button>
 				  					<button class="btn btn-primary" type="button" onclick="list();">목록</button>
 								</div>
-								
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
- 		           
         <!-- right-menu -->
         <div class="col-md-3">
           <div class="p-4 rounded-3 shadow-sm bg-white">

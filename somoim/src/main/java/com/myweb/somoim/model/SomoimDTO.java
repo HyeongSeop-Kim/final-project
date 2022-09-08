@@ -10,12 +10,13 @@ public class SomoimDTO {
 	private int locationId;
 	private String locationName;
 	private String moimImagePath;
-	private Date moimCreateDate;
 	private int categoryId;
+	private Date moimCreateDate;
 
 	public int getCategoryId() {
 		return categoryId;
 	}
+
 
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
@@ -86,12 +87,16 @@ public class SomoimDTO {
 		this.locationName = locationName;
 	}
 
+
 	@Override
 	public String toString() {
 		return "SomoimDTO [moimId=" + moimId + ", moimTitle=" + moimTitle + ", moimInfo=" + moimInfo + ", moimLimit="
-				+ moimLimit + ", locationId=" + locationId + ", moimImagePath=" + moimImagePath + ", locationName="
-				+ locationName + "]";
+				+ moimLimit + ", locationId=" + locationId + ", locationName=" + locationName + ", moimImagePath="
+				+ moimImagePath + ", categoryId=" + categoryId + ", moimCreateDate=" + moimCreateDate + "]";
 	}
+
 	
+
+
 	
 }

@@ -1,6 +1,8 @@
 package com.myweb.somoim.controller;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +31,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.myweb.somoim.categorys.model.CategorysDTO;
+import com.myweb.somoim.categorys.service.CategorysService;
+import com.myweb.somoim.common.model.PagingDTO;
 import com.myweb.somoim.model.SomoimDTO;
 import com.myweb.somoim.service.SomoimService;
 
@@ -40,27 +45,29 @@ public class SomoimController {
 	@Autowired
 	private SomoimService service;
 	
+	@Autowired
+	private CategorysService categoryService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String moimMain() {
+	public String moimMain(Model model) {
+		List<CategorysDTO> datas = categoryService.getAll();
+		model.addAttribute("datas", datas);
 		return "somoim";
 	}
 	
 // 리스트 뽑기	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public String moimList(Model model, HttpSession session
-			, @RequestParam(defaultValue="1", required=false) int page
-			, @RequestParam(defaultValue="0", required=false) int pageCount) {
-		List<SomoimDTO> datas = service.getAll();
-		JSONArray json_arr = new JSONArray();
-		if(session.getAttribute("pageCount") == null) {
-			session.setAttribute("pageCount", 5);
-		}
-		
-		if(pageCount > 0) {
-			session.setAttribute("pageCount", pageCount);
-		}
-		for (SomoimDTO smoim : datas) {
+	public String moimList(@RequestParam(defaultValue="1", required=false) int page //현재페이지
+			, @RequestParam("page_count") int pageCount //한페이지에 몇개 게시물
+			, @RequestParam("list_search") String search) {
+		Map res_data = service.getAll(page, pageCount, search);
+		List datas = (List)res_data.get("datas"); // 가져온 데이터 리스트
+		PagingDTO pager = (PagingDTO)res_data.get("page_data"); // 가져온 페이징 객체
+		JSONArray data_arr = new JSONArray(); // 가져온 데이터 리스트를 넣는 배열
+		JSONObject page_obj = new JSONObject(); // 가져온 페이징 데이터를 넣는 객체
+		JSONObject rtn_data = new JSONObject(); // 결과값 
+		for (SomoimDTO smoim : (List<SomoimDTO>)datas) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
 			json.put("moimTitle", smoim.getMoimTitle());
@@ -69,19 +76,17 @@ public class SomoimController {
 			json.put("locationId", smoim.getLocationId());
 			json.put("moimImagePath", smoim.getMoimImagePath());
 			json.put("locationName", smoim.getLocationName());
-			json_arr.add(json);
+			data_arr.add(json);
 		}
-//		Paging paging = new Paging(datas, page, pageCount);
-		
-		//model.addAttribute("datas", paging.getPageData());
-		//model.addAttribute("pageData", paging);
-		if(datas != null) {
-			model.addAttribute("datas", datas);
-		}
-		
-		
-		return json_arr.toJSONString();
+		page_obj.put("c_page", pager.getCurrentPageNumber());
+		page_obj.put("pagelist", pager.getPageNumberList());
+		page_obj.put("n_page", pager.getNextPageNumber());
+		page_obj.put("p_page", pager.getPrevPageNumber());
+		rtn_data.put("datas", data_arr);
+		rtn_data.put("pager", page_obj);
+		return rtn_data.toJSONString();
 	}
+	
 	
 	@GetMapping(value="/userInfo") 
 	public String info() {
