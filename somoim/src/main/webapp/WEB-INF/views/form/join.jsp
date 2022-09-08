@@ -25,16 +25,16 @@
 			<form class="join-form " method="post" action="${joinAddUrl}">
 				<label class="join-form__label ">아이디</label>
 				<input class="join-form__input info__id" type="text" name="memberId" id="uId">
-				<div class="error-msg"></div>
+				<div class="error-id-msg"></div>
 				<label class="join-form__label">비밀번호</label>
-				<input class="join-form__input pw" type="password" name="password" id="pw1">
-		
+				<input class="join-form__input info__pw1" type="password" name="password" id="pw1">
+				<div class="error-pw1-msg"></div>
 				<label class="join-form__label">비밀번호 재확인</label>
-				<input class="join-form__input pwpw" type="password" name="password2" id="pw2">
-				
+				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2">
+				<div class="error-pw2-msg"></div>	
 				<label class="join-form__label">이름</label>
 				<input class="join-form__input" type="text" name="memberName" id ="memberName">
-	
+				<div class="error-name-msg"></div>
 				<label class="join-form__label">생년월일</label>
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
@@ -61,7 +61,7 @@
 					</div>
 					<div class="join-form-inline__div">
 						<label class="join-form__label">지역</label>
-						<select class="join-form__input" name="LocationId">
+						<select class="join-form__input" name="LocationId" id="location">
 							<option disabled selected>지역</option>
 								<c:forEach items="${locDatas}" var="locDto">
 									<option value="${locDto.locationId}">${locDto.locationName}</option>
@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" placeholder="핸드폰 번호">
+				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호">
 			    <div class="error-phone-msg"></div>
 			
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
@@ -208,7 +208,7 @@
 	  };
 	  /*** SECTION - ID ***/
 	  const idInputEl = document.querySelector('div form .info__id');
-	  const idErrorMsgEl = document.querySelector('div form  .error-msg')
+	  const idErrorMsgEl = document.querySelector('div form  .error-id-msg')
 	  idInputEl.addEventListener('focusout', () => {
 	    const idRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
 	    if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
@@ -221,21 +221,49 @@
 		    }
 		  }
 	    });
-	  /*** SECTION - PW ***/
-	  const pwInputEl = document.querySelector('div form .info__id');
-	  const pwErrorMsgEl = document.querySelector('div form  .error-msg')
-	  pwInputEl.addEventListener('focusout', () => {
-	    const pwRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
-	    if(pwInputEl.value === undefined || pwInputEl.value.trim() === ""){
-	    	pwErrorMsgEl.textContent = errMsg.id.empty
-	    }else{
-		    if(pwRegExp.test(pwInputEl.value)) { // 유효성 검사 성공
-		    	pwErrorMsgEl.textContent = "";
-		    } else { // 유효성 검사 실패
-		    	pwErrorMsgEl.textContent = errMsg.id.invalid
-		    }
+	  
+	  /*** PW ***/
+	   // pwVal: 패스워드, pwReVal: 패스워드 재입력, isPwValid: 패스워드 유효 여부
+		let pwVal = "", pwReVal = "", isPwValid = false
+		const pwInputEl = document.querySelector('div form .info__pw1')
+		const pwErrorMsgEl = document.querySelector('div form .error-pw1-msg')
+		pwInputEl.addEventListener('change', () => {
+		  const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
+		  pwVal = pwInputEl.value
+		  if(pwRegExp.test(pwVal)) { // 정규식 조건 만족 O
+		    isPwValid = true
+		    pwErrorMsgEl.textContent = ""
+		  } 
+		  else { // 정규식 조건 만족 X
+		    isPwValid = false
+		    pwErrorMsgEl.textContent = errMsg.pw
 		  }
-	    });
+		  checkPwValid()
+		  console.log(pwVal, pwReVal, isPwValid)
+		});
+		/*** SECTION - PASSWORD RECHECK ***/
+		const pwReInputEl = document.querySelector('div form .info__pw2')
+		const pwReErrorMsgEl = document.querySelector('div form .error-pw2-msg')
+		pwReInputEl.addEventListener('change', () => {
+		  pwReVal = pwReInputEl.value
+		  checkPwValid()
+		  console.log(pwVal, pwReVal, isPwValid)
+		});
+		// 비밀번호와 재입력 값 일치 여부
+		function checkPwValid() {
+		  if(pwReVal === "") { // 미입력
+		    pwReErrorMsgEl.textContent = ""
+		  }
+		  else if(pwVal === pwReVal) { // 비밀번호 재입력 일치
+		    if(isPwValid)
+		    pwReErrorMsgEl.style.color = "green"
+		    pwReErrorMsgEl.textContent = errMsg.pwRe.success
+		  }
+		  else { // 비밀번호 재입력 불일치
+		    pwReErrorMsgEl.style.color = "red"
+		    pwReErrorMsgEl.textContent = errMsg.pwRe.fail
+		  }
+		}
 	  
 	  /*** modile ***/
 	  const phoneInputEl = document.querySelector('div form .info__phone')
@@ -264,24 +292,25 @@
 			  birth: "생년월일을 다시 확인해주세요",
 			  mobile: "‘-’ 제외 11자리를 입력해주세요" 
 			}
-
 	  function count_check(element) {
-		var chkBox = document.getElementsByName('category');
-		//카테고리 name 값을 부르고
-		var chkCnt = 0;  
-		// 체크박스 초기값은 0 으로 설정
-		
-	    for(var i = 0; i < chkBox.length; i++){
-	    	if(chkBox[i].checked){
-	    		chkCnt++;
-	    	}
-	    }
-		if (chkCnt > 3) {
-			alert("관심사는 3개까지만 선택하실수 있습니다.");
-			element.checked = false;
-			return false;
-		}
-	 }
+			var chkBox = document.getElementsByName('category');
+			//카테고리 name 값을 부르고
+			var chkCnt = 0;  
+			// 체크박스 초기값은 0 으로 설정
+			
+		    for(var i = 0; i < chkBox.length; i++){
+		    	if(chkBox[i].checked){
+		    		chkCnt++;
+		    	}
+		    }
+			if (chkCnt > 3) {
+				alert("관심사는 3개까지만 선택하실수 있습니다.");
+				element.checked = false;
+				return false;
+			}
+		 }
+	  
+
 	function formCheck(form) {
 	  let uid = document.getElementById('uId');
 	  let pw1 = document.getElementById('pw1');
@@ -289,9 +318,14 @@
 	  let memberName = document.getElementById('memberName');
 	  let gender = document.getElementById('gender');
 	  let location = document.getElementById('location');
-	  let phone = document.getElementById('phone');
+	  let phone = document.getElementById('pnum');
 	  letcategory = document.getElementById('category');
-	  	
+	  
+	  if(uid.value === undefined || uid.value.trim() === ""){
+		  alert("아이디를 입력해주세요.");
+		  uid.focus();
+		  return false;
+	  }
 	  if(pw1.value === undefined || pw1.value.trim() === ""){
 		  alert("비밀번호를 입력해주세요.");
 		  pw1.focus();
@@ -304,10 +338,6 @@
 		  return false;
 	  }
 	  
-	  if(pw1.value !== pw2.value){
-		  alert("비밀번호가 일치하지 않습니다.");
-		  return false;	
-		}
 	  
 	  if(memberName.value === undefined || memberName.value.trim() === ""){
 		  alert("이름을 입력해주세요.");
@@ -320,6 +350,16 @@
 		  gender.focus();
 		  return false;
 	  }
+	  if(location.value === '지역'){
+		  alert("지역을 선택해주세요");
+		  location.focus();
+		  return false;
+	  }
+	  if(phone.value === undefined || phone.value.trim() === ""){
+		  alert("전화번호를 입력해주세요");
+		  phone.focus();
+		  return false;
+	  }
 	  
 	  form.submit();
 	  move();
@@ -328,7 +368,7 @@
 	  setTimeout(() => {
 		  window.opener.location.href="/somoim/login"
 			    window.close();
-	}, 1);
+	}, 2);
 	}
 		  
 	  }

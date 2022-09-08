@@ -19,7 +19,7 @@
 	</header>
 	<section class="form-section">
 		<div class="form-container">
-			<c:url var="loginUrl" value="/login"></c:url>
+			<c:url var="loginUrl" value="/login"/>
 			<form class="login-form" action="${loginUrl}" method="post" >
 				<input class="login-form__input" name="memberId" type="text" placeholder="Username"  />
 			    <input class="login-form__input" name="password" type="password" placeholder="Password" />

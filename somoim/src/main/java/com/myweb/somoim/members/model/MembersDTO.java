@@ -9,6 +9,7 @@ public class MembersDTO {
 	private String birth;
 	private String phone;
 	private int LocationId;
+	private String LocationName;
 	private String category;
 	private String bookmark;
 	private String memberImagePath;
@@ -16,6 +17,12 @@ public class MembersDTO {
 	
 	
 	
+	public String getLocationName() {
+		return LocationName;
+	}
+	public void setLocationName(String locationName) {
+		LocationName = locationName;
+	}
 	public String getMemberId() {
 		return memberId;
 	}
@@ -86,8 +93,9 @@ public class MembersDTO {
 	public String toString() {
 		return "MembersDTO [memberId=" + memberId + ", memberName=" + memberName + ", password=" + password
 				+ ", gender=" + gender + ", birth=" + birth + ", phone=" + phone + ", LocationId=" + LocationId
-				+ ", category=" + category + ", bookmark=" + bookmark + ", memberImagePath=" + memberImagePath
-				+ ", infoImagePath=" + infoImagePath + "]";
+				+ ", LocationName=" + LocationName + ", category=" + category + ", bookmark=" + bookmark
+				+ ", memberImagePath=" + memberImagePath + ", infoImagePath=" + infoImagePath + "]";
 	}
+
 	
 }

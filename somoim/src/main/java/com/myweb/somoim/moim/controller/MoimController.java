@@ -84,7 +84,7 @@ public class MoimController {
 
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model
-			        ,@RequestParam int id) {
+			        ,@RequestParam(defaultValue="1", required=false) int id) {
 
 		SomoimDTO moimData = SomoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보

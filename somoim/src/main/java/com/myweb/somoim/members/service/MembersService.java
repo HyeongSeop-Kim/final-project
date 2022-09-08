@@ -1,6 +1,9 @@
 package com.myweb.somoim.members.service;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,24 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	
 	@Autowired
 	private MembersDAO dao;
+	
+	
+	public boolean getLogin(HttpSession session, MembersDTO membersDTO) {
+		MembersDTO data = new MembersDTO();
+		
+		data.setMemberId(membersDTO.getMemberId());
+		data.setPassword(membersDTO.getPassword());
+		
+		data = dao.selectLogin(data);
+		
+		if(data == null) {
+			return false;
+		}else {
+			System.out.println(data);
+			session.setAttribute("loginData", data);
+			return true;
+		}
+	}
 	
 	@Override
 	public List<MembersDTO> getAll() {
@@ -66,4 +87,18 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	public boolean removeData(int id) {
 		return false;
 	}
+
+
+	public MembersDTO selectFindId(MembersDTO data) {
+		MembersDTO res = dao.selectFindId(data);
+		return res;
+	}
+
+	public MembersDTO selectFindPw(MembersDTO data) {
+		MembersDTO res = dao.selectFindPw(data);
+		System.out.println("1111"+res);
+		return res;
+	}
+
+
 }

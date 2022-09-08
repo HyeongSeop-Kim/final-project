@@ -15,6 +15,13 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	
 	private String mapper = "memberMapper.%s";
 	
+	public MembersDTO selectLogin(MembersDTO data) {
+		String mapId = String.format(mapper, "selectLogin");
+		MembersDTO result = session.selectOne(mapId,data);
+		return result;
+	}
+	
+	
 	@Override
 	public List<MembersDTO> selectAll() {
 		return null;
@@ -47,8 +54,8 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Override
 	public int getNextSeq() {
-		String mapperId = String.format(mapper, "getNextSeq");
-		int seq = session.selectOne(mapperId);
+		String mapId = String.format(mapper, "getNextSeq");
+		int seq = session.selectOne(mapId);
 		return seq;
 	}
 
@@ -73,4 +80,24 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	public boolean deleteData(int id) {
 		return false;
 	}
+
+
+	public MembersDTO selectFindId(MembersDTO data) {
+		String mapId = String.format(mapper, "selectFindId");
+		MembersDTO res = session.selectOne(mapId,data);
+		return res;
+	}
+
+
+	public MembersDTO selectFindPw(MembersDTO data) {
+		String mapId = String.format(mapper, "selectFindPw");
+		MembersDTO res = session.selectOne(mapId,data);
+		System.out.println("33333"+res);
+		// 비밀번호 찾기 후 바로 업데이트 
+		session.update("memberMapper.updatePw",res);
+		return res;
+		
+	}
+	
+
 }

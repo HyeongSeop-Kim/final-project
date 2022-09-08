@@ -33,7 +33,6 @@
       <i class="fa-solid fa-comments mx-2"></i>
     </header>
     <!-- // header -->
-
     <!-- main -->
     <main class="container pt-3 px-0">
     
@@ -157,8 +156,10 @@
                 <img src="${img}/profile-image.png" class="rounded-circle" width="60" alt="profile-image">
               </div>
               <div class="user-info">
-                <p class="pb-1">홍길동</p>
-                <p>서울특별시</p>
+               <c:if test="${not empty sessionScope.loginData}">
+                <p class="pb-1">${sessionScope.loginData.memberName}</p>
+                <p>${sessionScope.loginData.locationName}</p>
+                </c:if>
               </div>
               <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='userInfo'" >상세</button>
             </section>
