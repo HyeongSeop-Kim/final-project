@@ -40,7 +40,8 @@
   <body>
     <!--이미지 사진박스-->
     <header class="p-6">
-         <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+     <c:url var="moimUpdateImageUrl" value="/moim/imageUpload" />
+     <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
       <div class="img-box img-box-size-1">
         <img id="previewImage"
           class="img-box-size-1 bora-20 shadow-sm width-100"

@@ -5,29 +5,27 @@
 <mapper namespace="boardsMapper">
   
    <select id ="selectDatas" resultType="boardsDTO" parameterType="_int">
-   SELECT  B.BOARD_ID AS boardId
-             ,B.BOARD_TITLE AS boardTitle
+SELECT B.BOARD_ID AS boardId
+,B.BOARD_TITLE AS boardTitle
              ,B.CONTENT AS content
              ,B.BOARD_CREATE_DATE AS boardCreateDate
              ,B."LIKE" AS "like"
              ,B.MOIM_ID AS moimId
              ,B.MEMBER_ID AS memberId
              ,M.MEMBER_NAME AS memberName
-             ,J.JOB_NAME AS jobName
-           FROM BOARDS B
-           JOIN MEMBERS M
-             ON B.MEMBER_ID = M.MEMBER_ID
-           JOIN MOIM_PARTICIPANTS P
-             ON M.MEMBER_ID = P.MEMBER_ID
-           JOIN JOBS J
-             ON P.JOB_ID = J.JOB_ID
-          WHERE B.MOIM_ID = #{id}
-       ORDER BY B.BOARD_CREATE_DATE DESC
+             ,S.JOB_NAME AS jobName
+FROM (SELECT *
+      FROM MOIM_PARTICIPANTS P
+      JOIN JOBS J 
+      ON J.JOB_ID = P.JOB_ID
+      WHERE P.MOIM_ID =  #{id}) S
+JOIN BOARDS B 
+ON S.MEMBER_ID = B.MEMBER_ID 
+JOIN MEMBERS M
+ON M.MEMBER_ID = S.MEMBER_ID
+WHERE B.MOIM_ID = #{id}
+ORDER BY B.BOARD_CREATE_DATE DESC
     </select>
-    
-
-
-  
 
 </mapper>
 

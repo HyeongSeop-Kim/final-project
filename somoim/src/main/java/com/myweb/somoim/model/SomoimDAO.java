@@ -64,7 +64,17 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 		int res = session.insert(mapperId, dto);
 		return res == 1 ? true : false;
 	}
-
+	
+	
+	public boolean modifyImage(SomoimDTO dto) {
+		String mapperId = String.format(mapper, "updataImage");
+		int res = session.update(mapperId, dto);
+		return res == 1 ? true : false;
+	}
+	
+	
+	
+	
 	@Override
 	public boolean updateData(SomoimDTO dto) {
 		return false;
@@ -80,4 +90,7 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 		return false;
 	}
 
+	
+
+	
 }

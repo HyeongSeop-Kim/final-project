@@ -14,6 +14,7 @@
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
     <c:url var="meetingimg" value="/resources/img"/>
+    <c:url var="resourcesUrl" value="/resources" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -35,6 +36,8 @@
     />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${cs}/styles.css" />
+    <script type="text/javascript" src="${resourcesUrl}/js/required.js"></script>
+    <script type="text/javascript" src="${resourcesUrl}/js/jquery-3.6.0.min.js"></script>
   </head>
 
    <script type="text/javascript">
@@ -42,13 +45,33 @@
 	   previewImage.addEventListener("click", function(e) {
 		   moimImageSelect.click();
 	    });
+	   
+   moimImageSelect.addEventListener("change" , ajaxImageUpload );
 
-	   moimImageSelect.addEventListener("change" , function(e) {
-			var file = e.target.files[0];
-			var imgUrl = URL.createObjectURL(file);
-			previewImage.src = imgUrl;
-	  });
-   }
+}
+
+
+	   
+   function ajaxImageUpload(e){
+	        console.log('안녕하세요');
+		    var file = e.target.files[0];
+			var fData = new FormData(); //파일객체정보를 만들어서 추가해서 보내줄필요가잇음
+			fData.append("moimimage", file, file.name);
+			
+			$.ajax({      //Ajax사용시 jquery필요
+				type: "post",
+				enctype: "multipart/form-data",
+				url: "${moimUpdateImageUrl}",
+				data: fData,
+				processData: false, //Ajax로 파일업로드시 필요
+				contentType: false, //Ajax로 파일업로드시 필요
+				success: function(data, status) {
+					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
+				}
+     });
+
+}
+
 
 </script>
 
@@ -66,11 +89,13 @@
           class="img-box-size-1 bora-20 shadow-sm width-100"
           alt="이미지 선택"
           src="${meetingimg}/meetingimg1.jpg"
-        />
+        /> 
         <input id="moimImageSelect"
           class="ImgSelect"
           type="file"
           value="이미지 선택"
+          name="moimimage"
+          
         />
       </div>
       </form>

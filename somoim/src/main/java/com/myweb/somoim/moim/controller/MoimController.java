@@ -1,9 +1,11 @@
 package com.myweb.somoim.moim.controller;
 
 
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import org.json.simple.JSONObject;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.myweb.somoim.common.model.PagingDTO;
 import com.myweb.somoim.model.SomoimDTO;
@@ -27,6 +30,7 @@ import com.myweb.somoim.participants.service.MeetingParticipantsService;
 import com.myweb.somoim.participants.service.MoimParticipantsService;
 import com.myweb.somoim.service.SomoimService;
 import com.myweb.somoim.common.model.LocationsDTO;
+import com.myweb.somoim.common.service.FileUploadService;
 import com.myweb.somoim.common.service.LocationsService;
 
 
@@ -50,6 +54,9 @@ public class MoimController {
 
 	@Autowired
 	private LocationsService locService;
+	
+	@Autowired
+	private FileUploadService fileUploadService;
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
 	public String add(Model model) {
@@ -88,6 +95,8 @@ public class MoimController {
 
 		SomoimDTO moimData = SomoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+		System.out.println("모임아이디" + id);
+		System.out.println("참가자정보" + moimParticipants);
 
 		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
 
@@ -114,6 +123,7 @@ public class MoimController {
 
 		List datas = boardsService.getDatas(id); //게시글 전부 가져오기
 		System.out.println(datas);
+		
 
 		   int pageCount = 5;
 
@@ -128,5 +138,37 @@ public class MoimController {
 		
 		return "moim/board";
 	}
+	
+	@PostMapping(value = "/moim/imageUpload", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String addBoard(Model model
+			,@RequestParam("moimimage") MultipartFile file
+			,HttpServletRequest request) throws Exception {
+		//데이터에 넣어놓기 
+		
+		//모임 id 로 select로 data 가져와서 
+		//data에 값 넣어주기
+		int id = 1;
+		System.out.println("ajax모임아이디" + id);
+		SomoimDTO data = SomoimService.getData(id);
+		
+	 data.setMoimImagePath(request.getServletContext().getRealPath("/resources/img")+file.getOriginalFilename());
+	
+	
+	fileUploadService.modifyMoimImage(data); //업로드한이미지path를  DB에 저장
+	
+	String realPath= request.getServletContext().getRealPath("/resources"); //실제로 파일업로드 할 곳 지정
+	file.transferTo(new File(realPath + "/img/" + file.getOriginalFilename()));	//실제로 업로드해주기
+		
+	JSONObject json = new JSONObject();
+	//json.put("uploaded", 1); //하나의 파일업로드 되었다. //무조건1
+	//json.put("fileName", file.getOriginalFilename());//업로드한 파일이름
+	json.put("url", request.getContextPath() + "/resources/img/" + file.getOriginalFilename());
+	
+	
+	
+		return json.toJSONString();
+	}
+
 	
 }
