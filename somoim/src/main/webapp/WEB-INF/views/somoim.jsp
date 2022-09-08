@@ -41,53 +41,28 @@
         <div class="col-md-3" > 
           <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 738px; overflow-y: scroll"> 
             <div class="row" >
+            
               <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
-                <a href="#" class="service-items icon-green">
-   				 	 <i class="fa-solid fa-suitcase"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-               		 <i class="fa-solid fa-music"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-             	    <i class="fa-brands fa-youtube"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-           		    <i class="fa-solid fa-baseball-bat-ball"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-            	    <i class="fa-solid fa-gamepad"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-                <i class="fa-solid fa-briefcase"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-                <i class="fa-solid fa-briefcase"></i>
-                </a>
-  
+                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="0" end="8">	
+     		 			 <div >
+             		 		<a href="#" class="service-items icon-green" data-value="${categoryList.categoryId}">
+          	        			<i class="fa-solid fa-dog"></i>	
+                			</a>
+              			</div>
+              			<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
+              	</c:forEach> 
               </div>
-              <div class="col-6 d-flex flex-column justify-content-center align-items-center">
-      			<a href="#" class="service-items icon-green">
-          	        <i class="fa-solid fa-dog"></i>	
-                </a>
-                <a href="#" class="service-items icon-green">
-                	 <i class="fa-solid fa-car"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-                 	 <i class="fa-solid fa-utensils"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-              	   <i class="fa-solid fa-book"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-                  <i class="fa-solid fa-person-swimming"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-                 <i class="fa-solid fa-hand-holding-heart"></i>
-                </a>
-                <a href="#" class="service-items icon-green">
-                 <i class="fa-solid fa-hand-holding-heart"></i>
-                </a>
+              <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
+                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="9" end="18">	
+     		 			 <div >
+             		 		<a href="#" class="service-items icon-green" data-value="${categoryList.categoryId}">
+          	        			<i class="fa-solid fa-utensils"></i>
+                			</a>
+              			</div>
+          	        	<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>	
+              	</c:forEach> 
               </div>
+             
             </div>
           </div>
         </div>
@@ -96,15 +71,14 @@
         <!-- main-menu -->
       <div class="col-md-6">
           <div class="p-4 rounded-3 shadow-sm bg-white">
-          	<c:url var="boardUrl" value="/" />
-            <form class="d-flex" action="${boardUrl}" method="get">
-              <button class="btn btn-outline-success me-2 d-flex justify-content-center align-items-center"
-                type="button" onclick="search();">
+            <form class="d-flex" method="get" >
+              <button id="search_btn"class="btn btn-outline-success me-2 d-flex justify-content-center align-items-center"
+                type="button">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
-              <input id="list_search" class="form-control" type="search" placeholder="검색어를 입력하세요." aria-label="Search">
+              <input id="list_search" class="form-control" type="text" placeholder="검색어를 입력하세요." aria-label="Search">
               <div class="col-1">
-				<select id="page_count" class="form-select" onchange="location.href='${boardUrl}?pageCount=' + this.value">
+				<select id="page_count" class="form-select" >
 					<option value="5" ${sessionScope.pageCount == 5 ? 'selected' : ''}>5 개</option>
 					<option value="10" ${sessionScope.pageCount == 10 ? 'selected' : ''}>10 개</option>
 					<option value="15" ${sessionScope.pageCount == 15 ? 'selected' : ''}>15 개</option>
@@ -120,25 +94,18 @@
             <footer style="position: relative;">
               <nav aria-label="..." class="d-flex justify-content-center">
                 <ul class="pagination">
-              	<c:if test="${pageData.hasPrevPage()}">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="${boardUrl}?page=${pageData.prevPageNumber}">
+                  <li id="p_btn" class="page-item">
+                    <button id="p_page" class="page-link">
                       <i class="fa-solid fa-chevron-left arrow-icon"></i>
-                    </a>
+                    </button>
                   </li>
-                 </c:if>
-                 <c:forEach items="${pageData.getPageNumberList(pageData.currentPageNumber - 2, pageData.currentPageNumber + 2)}" var="num"> 
-                  <li class="page-item">
-                  	<a class="page-link" href="#">1</a>
+                  <li id="page_list" class="page-item d-flex">
                   </li>
-                 </c:forEach> 
-                  <c:if test="${pageData.hasNextPage()}">
-                  <li class="page-item">
-                    <a class="page-link" href="${boardUrl}?page=${pageData.nextPageNumber}">
+                  <li id="n_btn" class="page-item">
+                    <button id="n_page" class="page-link" >
                       <i class="fa-solid fa-chevron-right arrow-icon"></i>
-                    </a>
+                    </button>
                   </li>
-                  </c:if>
                 </ul>
               </nav>
                <c:url var="moimAddUrl" value="/moim/add" />
@@ -226,65 +193,82 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
   </script>
   <script type="text/javascript">
+  var main_page = 1;
 function get_moim_list(page) {
-	
+	main_page = page;
 	$.ajax({
-		url: "./list?page=" + page + "&page_count=" + $('#page_count').val(),
+		url: "./list?page=" + page + "&page_count=" + $('#page_count').val() +  "&list_search=" + $('#list_search').val(),
 		type: "GET",
 		dataType: "json",
 		success: function(res) {
-			var _html = '';
-			for (var i=0 ; i < res.length ; i++) {
-				console.log(res[i].locationName);
-				_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=/moim/'+ res[i].moimId +'">';
+			let _html = '';
+			let _page = '';
+			console.log(res.datas);
+			for (var i=0 ; i < res.datas.length ; i++) {
+				_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=\'${path}/moim/meeting?id='+ res.datas[i].moimId +'\'">';
 				_html += '<div class="col-md-3">';
 				_html += '<img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">';
 				_html += '</div>';
 				_html += '<div class="col-md-9">';
-				_html += '<p class="pb-2">'+ res[i].locationName +'</p>';
-				_html += '<p class="pb-2">'+ res[i].moimTitle +'</p>';
-				_html += '<p>정원 : '+ res[i].moimLimit +'명</p>';
+				_html += '<p class="pb-2">'+ res.datas[i].locationName +'</p>';
+				_html += '<p class="pb-2">'+ res.datas[i].moimTitle +'</p>';
+				_html += '<p>정원 : '+ res.datas[i].moimLimit +'명</p>';
 				_html += '</div>';
 				_html += '</div>';
 			}
 			$('#m_list').html(_html);
+			
+			for (var i=0 ; i < res.pager.pagelist.length ; i++) {
+				if (res.pager.c_page == res.pager.pagelist[i]) {
+					
+				}
+				_page += '<button class="page-link " onclick="get_moim_list('+ res.pager.pagelist[i] +');">'+ res.pager.pagelist[i] +'</button>'; 
+			}
+			$('#p_page').attr('onclick', 'get_moim_list('+ res.pager.p_page +');');
+			if (res.pager.c_page == 1) {
+				$('#p_page').prop('disabled', true);
+				$('#p_btn').addClass('disabled');
+			}else{
+				$('#p_page').prop('disabled', false);
+				$('#p_btn').removeClass('disabled');
+			}
+			$('#n_page').attr('onclick', 'get_moim_list('+ res.pager.n_page +');');
+			
+			if (res.pager.c_page == res.pager.pagelist.length) {
+				$('#n_page').prop('disabled', true);
+				$('#n_btn').addClass('disabled');
+			}else{
+				$('#n_page').prop('disabled', false);
+				$('#n_btn').removeClass('disabled');
+			}
+			$('#page_list').html(_page);
+			
+			
 		},
+		
 		error : function(XMLHttpRequest, textStatus, errorThrown){
 			alert('error');
 		}
 	})
 }
 $(document).ready(function() {
-	get_moim_list(1);	
+	get_moim_list(1);
+	$('#page_count').on('change', function() {
+		get_moim_list(main_page);
+	});
+	$('#search_btn').on('click', function(){
+		// 검색버튼 클릭시 함수호출
+		get_moim_list(1);
+	});
+	$('#list_search').on('keydown', function(e) {
+		if(e.keyCode == 13){
+			e.preventDefault();
+			get_moim_list(1);
+		}
+	});
+	
 });
 
-
-function search() {
-	const input = document.getElementById('list_search').value;
-	
-	if(input === $(datas.moimTitle)){
-		var _html = '';
-		for (var i=0 ; i < datas.length ; i++) {
-			console.log(res[i].locationName);
-			_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=/moim/meeting'+ res[i].moimId +'">';
-			_html += '<div class="col-md-3">';
-			_html += '<img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">';
-			_html += '</div>';
-			_html += '<div class="col-md-9">';
-			_html += '<p class="pb-2">'+ res[i].locationName +'</p>';
-			_html += '<p class="pb-2">'+ res[i].moimTitle +'</p>';
-			_html += '<p>정원 : '+ res[i].moimLimit +'명</p>';
-			_html += '</div>';
-			_html += '</div>';
-		}
-		$('#m_list').html(_html);
-	}
-}
-
-
-function search_list(){
-	
-}
 </script>
 
 </body>

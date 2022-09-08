@@ -49,6 +49,25 @@ public class PagingDTO {
 		
 	}
 	
+    public PagingDTO(int total_cnt , int currentPageNumber,int limit) {
+		this.offset = limit * (currentPageNumber - 1);
+		this.limit = limit;
+		this.currentPageNumber = currentPageNumber;
+		this.nextPageNumber = currentPageNumber + 1;
+		this.prevPageNumber = 1 > currentPageNumber - 1 ? 1 : currentPageNumber - 1;
+		int pageNum = 1;
+		this.pageNumberList = new ArrayList<Integer>();
+		for(int i = 0; i < total_cnt; i += limit) { //limit의수를 더해서 i에 넣어라 (증감식), 즉limit가 3일때는 3씩증가
+			this.pageNumberList.add(pageNum++); //페이지 목록 번호나오게하는거
+			
+		}
+		
+		//더한max값이 datas.size() 보다 크면 에러가 발생하기떄문에 에러안나게 코드추가
+		//ex)예를들어 datas list에는 10개밖에 없는데 limit값을 30으로 지정하면,  datas.subList()해줬을때 범위를 넘어가기때문에 자를수가 없기때문에 에러가 발생한다. 
+		int max = this.offset + this.limit; 
+		max = max < total_cnt ? max : total_cnt;
+	}
+	
 	
 	public int getOffset() {
 		return offset;

@@ -6,17 +6,39 @@
     <select id="getNextSeq" resultType="_int">
         SELECT SQU_MOIM.NEXTVAL FROM DUAL
     </select>
-    <select id="selectAll" resultType="somoimDTO">
-        SELECT M.MOIM_ID AS moimId
-             , M.MOIM_TITLE AS moimTitle
-             , M.MOIM_INFO AS moimInfo
-             , M.MOIM_LIMIT AS moimLimit
-             , M.LOCATION_ID AS locationId
-             , M.MOIM_IMAGE_PATH AS moimImagePath
-             , L.LOCATION_NAME AS locationName
-        FROM MOIM M
-                 LEFT JOIN LOCATIONS L
-                           ON M.LOCATION_ID = L.LOCATION_ID
+    <select id="selectAll" resultType="somoimDTO" parameterType="Map">
+     
+     SELECT RNUM
+     	  , moimId, moimTitle, moimInfo
+     	  , moimLimit, moimImagePath, categoryId
+     	  , locationId, moimCreateDate, locationName 
+     	FROM(
+	        SELECT ROWNUM AS RNUM
+	        	 , M.MOIM_ID AS moimId
+	             , M.MOIM_TITLE AS moimTitle
+	             , M.MOIM_INFO AS moimInfo
+	             , M.MOIM_LIMIT AS moimLimit
+	             , M.MOIM_IMAGE_PATH AS moimImagePath
+	             , M.CATEGORY_ID AS categoryId
+	             , M.LOCATION_ID AS locationId
+	             , M.MOIM_CREATE_DATE AS moimCreateDate
+	             , L.LOCATION_NAME AS locationName
+	        FROM MOIM M
+	             LEFT JOIN LOCATIONS L
+	             ON M.LOCATION_ID = L.LOCATION_ID
+			WHERE 1 = 1
+	             <if test=' #{search_title} != "" '>
+	              AND M.MOIM_TITLE like '%'||#{search_title}||'%'
+	             </if>       	
+	       	AND
+	       	<![CDATA[ ROWNUM <= #{num_end}]]>       
+             )
+        WHERE 
+        	<![CDATA[RNUM >= #{num_start}]]>    
+    </select>
+    <select id ="selectAllCnt" resultType="_int">
+      SELECT count(*) as cnt
+           FROM MOIM M
     </select>
    <select id ="selectData" resultType="somoimDTO">
       SELECT  M.MOIM_ID  AS moimId
@@ -46,7 +68,7 @@
               , #{moimLimit}
               , #{locationId}
               , #{moimImagePath}
-              , 1
+              , #{categoryId}
               , SYSDATE)
     </insert>
 </mapper>

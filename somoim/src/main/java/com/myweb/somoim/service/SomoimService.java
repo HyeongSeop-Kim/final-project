@@ -1,11 +1,15 @@
 package com.myweb.somoim.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myweb.somoim.common.abstracts.AbstractService;
+import com.myweb.somoim.common.model.PagingDTO;
 import com.myweb.somoim.model.SomoimDAO;
 import com.myweb.somoim.model.SomoimDTO;
 
@@ -21,6 +25,23 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 	public List<SomoimDTO> getAll() {
 		List<SomoimDTO> datas = dao.selectAll();
 		return datas;
+	}
+	
+	public Map<String,Object> getAll(int page, int pageCount, String search) {
+		int num_start =((page-1) * pageCount) + 1;
+		int num_end   = (page * pageCount); 
+		String search_title = search;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("num_start", num_start);
+		map.put("num_end", num_end);
+		map.put("search_title", search_title);
+		List<SomoimDTO> datas = dao.selectAll(map);
+		int total = dao.selectAllCnt();
+		PagingDTO pager = new PagingDTO(total, page, pageCount);
+		Map res_data = new HashMap<String, Object>();
+		res_data.put("datas", datas);
+		res_data.put("page_data", pager);
+		return res_data;
 	}
 
 	@Override

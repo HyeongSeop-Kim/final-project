@@ -26,6 +26,8 @@ import com.myweb.somoim.participants.model.MoimParticipantsDTO;
 import com.myweb.somoim.participants.service.MeetingParticipantsService;
 import com.myweb.somoim.participants.service.MoimParticipantsService;
 import com.myweb.somoim.service.SomoimService;
+import com.myweb.somoim.categorys.model.CategorysDTO;
+import com.myweb.somoim.categorys.service.CategorysService;
 import com.myweb.somoim.common.model.LocationsDTO;
 import com.myweb.somoim.common.service.LocationsService;
 
@@ -50,12 +52,16 @@ public class MoimController {
 
 	@Autowired
 	private LocationsService locService;
+	
+	@Autowired
+	private CategorysService categoryService;
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
 	public String add(Model model) {
 		List<LocationsDTO> locDatas = locService.getAll();
-		
+		List<CategorysDTO> cateDatas = categoryService.getAll();
 		model.addAttribute("locDatas", locDatas);
+		model.addAttribute("cateDatas", cateDatas);
 		return "moim/add";
 	}
 	
@@ -65,7 +71,8 @@ public class MoimController {
 			@RequestParam("locationId") int locationId
 		   ,@RequestParam String moimTitle
 		   ,@RequestParam String moimInfo
-		   ,@RequestParam int moimLimit) {
+		   ,@RequestParam int moimLimit
+		   ,@RequestParam int categoryId) {
 		JSONObject json = new JSONObject();
 
 		SomoimDTO data = new SomoimDTO();
@@ -74,10 +81,10 @@ public class MoimController {
 		data.setMoimInfo(moimInfo);
 		data.setMoimLimit(moimLimit);
 		data.setMoimImagePath(null);
-
+		data.setCategoryId(categoryId);
+		System.out.println(data);
 		boolean result = SomoimService.addData(data);
-		if(result) {
-		}
+		
 		return json.toJSONString();
 	}
 

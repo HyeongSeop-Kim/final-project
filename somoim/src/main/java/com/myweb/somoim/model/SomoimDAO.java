@@ -1,6 +1,8 @@
 package com.myweb.somoim.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,19 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 		System.out.println(datas);
 		return datas;
 	}
+	
+	public List<SomoimDTO> selectAll(Map map) {
+		String mapperId = String.format(mapper, "selectAll");
+		List<SomoimDTO> datas = session.selectList(mapperId, map);
+		System.out.println(datas);
+		return datas;
+	}
 
+	public int selectAllCnt() {
+		String mapperId = String.format(mapper, "selectAllCnt");
+		int data = session.selectOne(mapperId);
+		return data;
+	}
 	@Override
 	public List<SomoimDTO> selectDatas(int i) {
 		return null;
