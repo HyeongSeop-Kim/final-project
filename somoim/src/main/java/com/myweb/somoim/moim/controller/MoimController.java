@@ -335,7 +335,7 @@ public class MoimController {
 	JSONObject json = new JSONObject();
 	//json.put("uploaded", 1); //하나의 파일업로드 되었다. //무조건1
 	//json.put("fileName", file.getOriginalFilename());//업로드한 파일이름
-	json.put("url", request.getContextPath() + "somoim/resources/img/" + data1.getMoimId() + ".png");
+	json.put("url", request.getContextPath() + "/resources/img/" + data1.getMoimId() + ".png");
 
 
 

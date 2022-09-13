@@ -11,6 +11,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>${moimData.moimTitle}입니다.</title>
+    <c:set var="path" value="${pageContext.request.contextPath}" />
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
     <c:url var="meetingimg" value="/resources/img"/>
@@ -65,6 +66,7 @@
 				contentType: false, //Ajax로 파일업로드시 필요
 				success: function(data, status) {
 					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
+                    console.log(previewImage.src);
 				}
      });
 
@@ -86,7 +88,7 @@
         <img id="previewImage"
           class="img-box-size-1 bora-20 shadow-sm width-100"
           alt="이미지 선택"
-          src="/somoim/resources/img/${moimData.moimId}.png"
+          src="${path}/resources/img/${moimData.moimId}.png"
         /> 
         <input id="moimImageSelect"
           class="ImgSelect"

@@ -60,7 +60,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/moim/*"/>
-			<mapping path="/info/*"/>
+			<mapping path="/userInfo"/>
 			<beans:bean class="com.myweb.somoim.login.interceptor.LoginInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>

@@ -319,12 +319,7 @@
 	  let location = document.getElementById('location');
 	  let phone = document.getElementById('pnum');
 	  let category = document.getElementById('category');
-	  
-	  if(flag.length <= 0) {
-		  alert('관심분야를 1개 이상 선택하세요.');
-		  return false;
-	  }
-	  
+
 	  if(uid.value === undefined || uid.value.trim() === ""){
 		  alert("아이디를 입력해주세요.");
 		  uid.focus();
@@ -380,9 +375,14 @@
 	  // is_checked 배열에 담김 값을 하나씩 꺼내서 item에 담음
 	  // item == true 이면, flag 변수에 담기
 	  let flag = is_checked.filter(function(item) {
+		  console.log("aaaa");
 		  return item == true;
 	  })
-	  
+
+		if(flag.length <= 0) {
+			alert('관심분야를 1개 이상 선택하세요.');
+			return false;
+		}
 	  
 	  alert('회원가입이 완료되었습니다.');
 	  
