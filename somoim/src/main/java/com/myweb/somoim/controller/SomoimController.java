@@ -49,7 +49,7 @@ public class SomoimController {
 	public String moimMain(Model model) {
 		List<CategorysDTO> datas = categoryService.getAll();
 		model.addAttribute("datas", datas);
-		return "somoim";
+		return "somoim_m";
 	}
 	
 // 리스트 뽑기	
@@ -95,7 +95,13 @@ public class SomoimController {
 
 		return "form/category";
 	}
-
+	
+	@RequestMapping(value = "startPage")
+	public String startPage() {
+		return "/form/startPage";
+	}
+	
+	
 //	@PostMapping(value = "/ajax/cate")
 //	@ResponseBody
 //	public String ajaxCategory(@RequestBody List<Map<String, Object>> param) throws Exception {

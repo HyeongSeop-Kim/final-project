@@ -3,16 +3,26 @@ package com.myweb.somoim.login.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -145,11 +155,29 @@ public class LoginController {
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(MembersDTO membersDTO
-			,HttpSession session, Model model) {
-		boolean result = membersService.getLogin(session, membersDTO);
+			,HttpSession session, Model model
+			,HttpServletRequest request
+			,HttpServletResponse response
+			,@RequestParam(value = "userCookies", required = false) boolean checkboxValue) {
+		System.out.println("체크박스" + checkboxValue);
 		
-		if(result) {
+		if ( session.getAttribute("loginData") != null) {
+			//기존의 loginData 란 세션 값이 존재한다면 제거
+			session.removeAttribute("loginData");   //기존 값 제거후 로그인
+		}
+		MembersDTO data = membersService.getLogin(session, membersDTO);
+		
+		
+		if(data !=null) {
 			// 로그인 성공
+			session.setAttribute("loginData", data);
+			
+			if (checkboxValue){
+				 Cookie cookie = new Cookie("loginCookie", session.getId());
+				 cookie.setPath("/");
+				 cookie.setMaxAge(60);
+				 response.addCookie(cookie); 
+			}
 			return "redirect:/";
 		} else {
 			// 로그인 실패
@@ -160,8 +188,8 @@ public class LoginController {
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		// session.invalidate();
-		session.removeAttribute("loginData");
-		return "redirect:/login";
+		session.invalidate();
+		return "somoim_m";
 	}
 	
 	@RequestMapping(value = "/login/kakao",method = RequestMethod.GET)
@@ -169,7 +197,7 @@ public class LoginController {
 		UriComponents kakaoAuthUri = UriComponentsBuilder.newInstance()
 				.scheme("https").host("kauth.kakao.com").path("/oauth/authoize")
 				.queryParam("client_id","9e97acd24d70a166f8d300fad1b72ab7" )
-				.queryParam("redirect_uri", "https://localhost/home/")
+				.queryParam("redirect_uri", "http://localhost/somoim/login/kakao/auth_code")
 				.queryParam("response_type", "code").build();
 		
 		RestTemplate rest = new RestTemplate();
@@ -182,7 +210,61 @@ public class LoginController {
 		rest.setRequestFactory(factory);
 		
 		ResponseEntity<String> restResponse = rest.getForEntity(kakaoAuthUri.toUriString(), String.class);
-		
+	
 		return "redirect:" + restResponse.getHeaders().getLocation();
 	}
+	
+	@RequestMapping(value = "/login/kakao/auth_code", method = RequestMethod.GET)
+	public String kakaoAuthCode(HttpSession SessionStatus
+			,String code, String error, String state
+			,@RequestParam(name="error_descripition",required = false)String Descripition) {
+			String tokenType = null, accessToken =null, refreshToken = null;
+			long expiresIn = -1, refreshTokenExpiresIn = -1;
+			
+			if (error == null) {
+				UriComponents kakaoAuthUri = UriComponentsBuilder.newInstance()
+						.scheme("https").host("kauth.kakao.com").path("/oauth/token").build();
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=utf-8");
+				
+				MultiValueMap<String, String> param = new LinkedMultiValueMap<String, String>();
+				param.add("grant_type", "authorization_code");
+				param.add("client_id","9e97acd24d70a166f8d300fad1b72ab7" );
+				param.add("redirect_uri", "http://localhost/somoim/login/kakao/auth_code");
+				param.add("code",code);
+				
+				HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String,String>>(param,headers);
+				
+				RestTemplate rest = new RestTemplate();
+				rest.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+				
+				ResponseEntity<String> restResponse = rest.postForEntity(kakaoAuthUri.toUriString(), entity, String.class);
+				
+				JSONParser jsonParser = new JSONParser();
+				try {
+					JSONObject json = (JSONObject)jsonParser.parse(restResponse.getBody());
+					
+					tokenType = json.get("token_type").toString();
+					
+					accessToken = json.get("access_token").toString();
+					
+					expiresIn = Long.valueOf(json.get("expires_in").toString());
+					
+					refreshToken = json.get("refresh_token").toString();
+					
+					refreshTokenExpiresIn = Long.valueOf(json.get("refresh_token_expires_in").toString());
+					    System.out.println(code);
+			            System.out.println("access_token : " + accessToken);
+		                System.out.println("refresh_token : " + refreshToken);
+				} catch (ParseException e) {
+				 e.printStackTrace();
+				}
+				
+			}
+			
+		return "redirect:/" ;
+	}
+	
+	
 }

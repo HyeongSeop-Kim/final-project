@@ -18,7 +18,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	private MembersDAO dao;
 	
 	
-	public boolean getLogin(HttpSession session, MembersDTO membersDTO) {
+	public MembersDTO getLogin(HttpSession session, MembersDTO membersDTO) {
 		MembersDTO data = new MembersDTO();
 		
 		data.setMemberId(membersDTO.getMemberId());
@@ -27,11 +27,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		data = dao.selectLogin(data);
 		
 		if(data == null) {
-			return false;
+			return data;
 		}else {
 			System.out.println(data);
-			session.setAttribute("loginData", data);
-			return true;
+			return data;
 		}
 	}
 	
