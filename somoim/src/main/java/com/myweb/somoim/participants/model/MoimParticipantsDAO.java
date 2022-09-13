@@ -45,16 +45,27 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 
 	@Override
 	public MoimParticipantsDTO selectData(MoimParticipantsDTO dto) {
-		return null;
+		String mapperId = String.format(mapper, "selectData");
+		System.out.println("dao 데이터확인" + dto);
+		MoimParticipantsDTO data = session.selectOne(mapperId,dto);
+		System.out.println("mapper실행결과" + data);
+		return data;
 	}
 
-	@Override
+	@Override 
 	public int getNextSeq() {
 		return 0;
 	}
 
 	@Override
 	public boolean insertData(MoimParticipantsDTO dto) {
+		String mapperId = String.format(mapper, "insertData");
+		int result = session.insert(mapperId,dto);
+		
+		
+		if(result == 1) {
+			return true;
+		}
 		return false;
 	}
 

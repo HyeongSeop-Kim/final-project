@@ -51,7 +51,9 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean addData(BoardsDTO dto) {
-		return false;
+		boolean result = dao.insertData(dto);
+		
+		return result;
 	}
 
 	@Override

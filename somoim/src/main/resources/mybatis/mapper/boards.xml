@@ -26,6 +26,18 @@ ON M.MEMBER_ID = S.MEMBER_ID
 WHERE B.MOIM_ID = #{id}
 ORDER BY B.BOARD_CREATE_DATE DESC
     </select>
+    
+    <insert id="insertData" parameterType="boardsDTO" >
+    INSERT INTO BOARDS VALUES (
+                  SQU_BOARDS.NEXTVAL,
+                  #{boardTitle}, 
+                  #{content},
+                  SYSDATE,
+                  '',
+                  #{moimId},
+                  #{memberId})
+    </insert>
+    
 
 </mapper>
 

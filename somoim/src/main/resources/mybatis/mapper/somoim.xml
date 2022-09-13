@@ -23,7 +23,7 @@
 	             , M.LOCATION_ID AS locationId
 	             , M.MOIM_CREATE_DATE AS moimCreateDate
 	             , L.LOCATION_NAME AS locationName
-	        FROM (SELECT * 
+	        FROM (SELECT *
 	        		FROM MOIM
 	        	 ORDER BY MOIM_CREATE_DATE DESC) M
 	             LEFT JOIN LOCATIONS L
@@ -34,14 +34,14 @@
 	             </if>
 	              <if test=' category_id > 0 '>
 	              AND  M.CATEGORY_ID = #{category_id}
-	             </if> 
+	             </if>
 	       	AND
 	       	<![CDATA[ ROWNUM <= #{num_end}]]>
             )
-       WHERE 
-       	<![CDATA[RNUM >= #{num_start}]]>    
+       WHERE
+       	<![CDATA[RNUM >= #{num_start}]]>
    </select>
-   
+
   <select id ="selectAllCnt" resultType="_int">
      SELECT count(*) as cnt
      FROM MOIM M
@@ -61,6 +61,7 @@
 		    ,L.LOCATION_NAME AS locationName
             ,M.MOIM_IMAGE_PATH  AS moimImagePath
             ,M.LOCATION_ID  AS locationId
+             ,M.CATEGORY_ID  AS categoryId
           FROM MOIM M
 	   JOIN LOCATIONS L
 		 ON M.LOCATION_ID = L.LOCATION_ID
@@ -96,11 +97,23 @@
  		  	, #{moimId}
  		  	, 1)
    </insert>
-   <update id="updataImage" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
-        UPDATE MOIM 
+    <update id="updateData" parameterType="somoimDTO">
+        UPDATE MOIM
+           SET MOIM_TITLE = #{moimTitle}
+             , MOIM_INFO = #{moimInfo}
+             , MOIM_LIMIT = #{moimLimit}
+             ,CATEGORY_ID = #{categoryId}
+             ,LOCATION_ID = #{locationId}
+             ,MOIM_CREATE_DATE = SYSDATE
+              WHERE MOIM_ID = #{moimId}
+      </update>
+
+     <update id="updateImage" parameterType="somoimDTO">
+        UPDATE MOIM
         SET MOIM_IMAGE_PATH= #{moimImagePath}
-     	WHERE MOIM_ID = #{id};
+      WHERE MOIM_ID = #{moimId}
    </update>
+
     <select id="selectSubDatas" resultType="somoimDTO">
    		SELECT M.MOIM_TITLE AS moimTitle
 	 		 , M.MOIM_ID AS moimId

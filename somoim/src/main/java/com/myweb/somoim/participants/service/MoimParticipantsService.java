@@ -45,12 +45,16 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 
 	@Override
 	public MoimParticipantsDTO getData(MoimParticipantsDTO dto) {
-		return null;
+		MoimParticipantsDTO data = dao.selectData(dto);
+		System.out.println("서비스쪽"+ data);
+		return data;
 	}
 
 	@Override
 	public boolean addData(MoimParticipantsDTO dto) {
-		return false;
+		boolean result = dao.insertData(dto);
+		
+		return result;
 	}
 
 	@Override

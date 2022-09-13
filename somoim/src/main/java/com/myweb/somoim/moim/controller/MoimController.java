@@ -2,6 +2,7 @@ package com.myweb.somoim.moim.controller;
 
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.myweb.somoim.common.model.PagingDTO;
 import com.myweb.somoim.model.SomoimDTO;
+import com.myweb.somoim.moim.model.BoardsDTO;
 import com.myweb.somoim.moim.model.MeetingsDTO;
 import com.myweb.somoim.moim.service.BoardsService;
 import com.myweb.somoim.moim.service.MeetingsService;
@@ -66,9 +68,13 @@ public class MoimController {
 
 	@Autowired
 	private FileUploadService fileUploadService;
-	
+
 	@Autowired
 	private MembersService memberService;
+
+	@Autowired
+	private LocationsService locationService;
+
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
 	public String add(Model model) {
@@ -79,6 +85,35 @@ public class MoimController {
 		return "moim/add";
 	}
 	
+
+@RequestMapping(value = "/moim/join", method = RequestMethod.GET)
+
+	public String moimJoin(Model model,
+			@RequestParam int id
+			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+
+
+	MoimParticipantsDTO dto = new MoimParticipantsDTO();
+
+	dto.setMoimId(id);
+	dto.setMemberId(membersDto.getMemberId());
+
+
+	boolean result = moimParticipantsService.addData(dto);
+
+
+	if(test.equals("2")) {
+		if(result) {
+			 return "redirect:/moim/board?id="+id;
+		}
+	}        return "redirect:/moim/meeting?id="+id;
+
+
+		}
+
+
 	@RequestMapping(value = "/moim/add", method = RequestMethod.POST)
 	@ResponseBody
 	public String addBoard(Model model,HttpSession session
@@ -88,21 +123,21 @@ public class MoimController {
 		   ,@RequestParam(required= false, defaultValue="5")int moimLimit
 		   ,@RequestParam() int categoryId) {
 		JSONObject json = new JSONObject();
-		
+
 		SomoimDTO data = new SomoimDTO();
-		
 		data.setLocationId(locationId);
 		data.setMoimTitle(moimTitle);
 		data.setMoimLimit(moimLimit);
 		data.setMoimInfo(moimInfo);
 		data.setMoimImagePath(null);
 		data.setCategoryId(categoryId);
+
 		boolean result = SomoimService.addData(data);
 		MoimParticipantsDTO partData = new MoimParticipantsDTO();
 		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
 		partData.setMemberId(memData.getMemberId());
 		partData.setMoimId(data.getMoimId());
-		
+
 		boolean res = SomoimService.addDataSub(partData);
 		json.put("data", result);
 		if(result == false) {
@@ -112,9 +147,12 @@ public class MoimController {
 	}
 
 
+
+
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model
-			        ,@RequestParam(defaultValue="1", required=false) int id) {
+			        ,@RequestParam int id
+			        ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 		SomoimDTO moimData = SomoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
@@ -123,6 +161,12 @@ public class MoimController {
 
 		List<MeetingParticipantsDTO> meetingParticipants = meetingParticipantsService.getDatas(id);
 
+		MoimParticipantsDTO data = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
+		data.setMemberId(membersDto.getMemberId());
+		data.setMoimId(id);
+		MoimParticipantsDTO res = moimParticipantsService.getData(data);
+
+		model.addAttribute("res" , res); //로그인한 유저가 참가자인지 확인
 		model.addAttribute("moimData" , moimData);
 		model.addAttribute("meetingsData",meetingsData);
 		model.addAttribute("moimParticipants",moimParticipants);
@@ -136,22 +180,29 @@ public class MoimController {
 	public String detail(Model model
 			            ,@RequestParam int id
 			            ,@RequestParam(defaultValue="1", required=false) int page
-			            ) {
+			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 		SomoimDTO moimData = SomoimService.getData(id);//모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 
+
 		List datas = boardsService.getDatas(id); //게시글 전부 가져오기
-		System.out.println(datas);
-
-		   int pageCount = 5;
-
-		   PagingDTO paging = new PagingDTO (datas,page,pageCount);
-		   System.out.println("컨트롤러 출력: " + paging.getPageData());
 
 
-		   model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
+		int pageCount = 5;
+
+        PagingDTO paging = new PagingDTO (datas,page,pageCount);
+
+        MoimParticipantsDTO data = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
+		data.setMemberId(membersDto.getMemberId());
+		data.setMoimId(id);
+
+		MoimParticipantsDTO res = moimParticipantsService.getData(data);
+
+
+		   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
+           model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
 		   model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
 		
@@ -159,31 +210,132 @@ public class MoimController {
 		return "moim/board";
 	}
 	
+	@RequestMapping(value = "/moim/modify", method = RequestMethod.GET)
+	public String modify(Model model
+			,@RequestParam int id
+            ,@RequestParam String test
+            ,@SessionAttribute("loginData") MembersDTO membersDto) {
+
+	SomoimDTO  somoimDto =	SomoimService.getData(id);
+	List<LocationsDTO> locList =  locationService.getAll();
+	List<CategorysDTO> categoryList =  categoryService.getAll();
+
+
+	   model.addAttribute("test",test); //board,meeting 쪽으로 가기하기위한 구분
+	   model.addAttribute("locList" , locList);
+	   model.addAttribute("categoryList" , categoryList);
+	   model.addAttribute("somoimDto" , somoimDto);
+		return "moim/meetingmodify";
+	}
+
+	@RequestMapping(value = "/moim/update", method = RequestMethod.POST)
+     public String update(Model model
+			            ,@RequestParam int id
+			            ,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+			            ,@SessionAttribute("loginData") MembersDTO membersDto
+			            ,@RequestParam("locationId") int locationId
+			 		    ,@RequestParam String moimTitle
+			 		    ,@RequestParam String moimInfo
+			 		    ,@RequestParam int moimLimit
+			 		    ,@RequestParam int categoryId) {
+
+
+
+
+		SomoimDTO data = new SomoimDTO();
+		data.setMoimId(id);
+		data.setLocationId(locationId);
+		data.setMoimTitle(moimTitle);
+		data.setMoimInfo(moimInfo);
+		data.setMoimLimit(moimLimit);
+		data.setMoimImagePath(null);
+		data.setCategoryId(categoryId);
+
+
+		boolean result = SomoimService.modifyData(data);
+
+
+		if(test.equals("2")) {
+			 return "redirect:/moim/board?id="+id;
+		}
+
+		return "redirect:/moim/meeting?id="+id;
+
+		}
+
+
+
+
+
+
+
+
+   @RequestMapping(value = "/moim/board/add", method = RequestMethod.GET)
+
+	public String boardAddPage(Model model,
+			@RequestParam int id
+			,HttpSession session
+		   ) {
+
+	   model.addAttribute("moimId",id);
+
+		return "moim/boardadd";
+	}
+
+
+
+	@RequestMapping(value = "/moim/board/add", method = RequestMethod.POST)
+
+	public String boardAdd(Model model,
+			@RequestParam int id
+			,@RequestParam String boardTitle
+			,@RequestParam String content
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+	  BoardsDTO boardsDto = new BoardsDTO();
+	  boardsDto.setMoimId(id);
+	  boardsDto.setBoardTitle(boardTitle);
+	  boardsDto.setContent(content);
+	  boardsDto.setMemberId(membersDto.getMemberId());
+	  boardsDto.setMemberName(membersDto.getMemberName());
+
+	  boolean result = boardsService.addData(boardsDto);
+
+	  if(result) {
+		  return "redirect:/moim/board?id="+id;
+	  }
+
+	  return "redirect:/moim/board?id="+id;
+	}
+
+
+
+
+
 	@PostMapping(value = "/moim/imageUpload", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String addBoard(Model model
+			,@RequestParam int id
 			,@RequestParam("moimimage") MultipartFile file
 			,HttpServletRequest request) throws Exception {
-		//데이터에 넣어놓기
-
-		//모임 id 로 select로 data 가져와서
-		//data에 값 넣어주기
-		int id = 1;
-		System.out.println("ajax모임아이디" + id);
-		SomoimDTO data = SomoimService.getData(id);
-
-	 data.setMoimImagePath(request.getServletContext().getRealPath("/resources/img")+file.getOriginalFilename());
 
 
-	fileUploadService.modifyMoimImage(data); //업로드한이미지path를  DB에 저장
+
+		SomoimDTO data1 = SomoimService.getData(id);
+
+	 data1.setMoimImagePath(request.getServletContext().getRealPath("/resources/img/")+data1.getMoimId() + ".png");
+
+
+	boolean res = fileUploadService.modifyMoimImage(data1); //업로드한이미지path를  DB에 저장
+
 
 	String realPath= request.getServletContext().getRealPath("/resources"); //실제로 파일업로드 할 곳 지정
-	file.transferTo(new File(realPath + "/img/" + file.getOriginalFilename()));	//실제로 업로드해주기
+	file.transferTo(new File(realPath + "/img/" + data1.getMoimId() + ".png"));	//실제로 업로드해주기
 
 	JSONObject json = new JSONObject();
 	//json.put("uploaded", 1); //하나의 파일업로드 되었다. //무조건1
 	//json.put("fileName", file.getOriginalFilename());//업로드한 파일이름
-	json.put("url", request.getContextPath() + "/resources/img/" + file.getOriginalFilename());
+	json.put("url", request.getContextPath() + "somoim/resources/img/" + data1.getMoimId() + ".png");
 
 
 

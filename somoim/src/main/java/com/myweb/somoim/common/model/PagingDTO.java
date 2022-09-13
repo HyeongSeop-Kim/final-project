@@ -17,9 +17,7 @@ public class PagingDTO {
 	
 	public PagingDTO(List<Object> datas , int currentPageNumber,int limit) {
 		
-		System.out.println("페이징에 넘어가는 데이타 " + datas);
-		System.out.println("페이징 현제페이지" + currentPageNumber);
-		System.out.println("페이지출력수" + limit);
+		
 		
 		this.offset = limit * (currentPageNumber - 1);
 		this.limit = limit;
@@ -37,7 +35,7 @@ public class PagingDTO {
 			//pageNum을 먼저 사용한후에 1증가라는 의미
 			//pageNum:1먼저사용한후에(pageNumberList에 1추가) +1더해서 pageNumberList에 1추가시켜줌
 			//3번반복시켰으므로 최종 pageNumberList에 [1,2,3]이 추가됨
-			System.out.println("페이지 전체 리스트출력" + pageNumberList );
+			
 		}
 		
 		//더한max값이 datas.size() 보다 크면 에러가 발생하기떄문에 에러안나게 코드추가
@@ -46,7 +44,7 @@ public class PagingDTO {
 		max = max < datas.size() ? max : datas.size();
 		//list에서 일부분을 자를경우사용,max앞에값사용
 		this.pageData = datas.subList(this.offset, max);
-		System.out.println("페이징으로 자른 페이지만큼 보여주기" + pageData);
+		
 		
 		
 	}

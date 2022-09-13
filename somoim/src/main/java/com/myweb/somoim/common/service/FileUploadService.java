@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.myweb.somoim.common.model.FilesDAO;
 import com.myweb.somoim.model.SomoimDAO;
 import com.myweb.somoim.model.SomoimDTO;
 
@@ -15,14 +15,12 @@ import com.myweb.somoim.model.SomoimDTO;
 public class FileUploadService {
 	
 	@Autowired
-	private SomoimDAO dao;
+	private FilesDAO dao;
 
-	@Transactional
-	public int modifyMoimImage(SomoimDTO data){
-
-		
-		boolean result = dao.modifyImage(data);
-		return 1;
+	
+	public boolean modifyMoimImage(SomoimDTO data){
+        boolean result = dao.modifyImage(data);
+		return result;
 
 
 }
