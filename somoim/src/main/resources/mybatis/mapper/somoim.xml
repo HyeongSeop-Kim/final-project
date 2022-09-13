@@ -48,6 +48,7 @@
 			 ,L.LOCATION_NAME AS locationName
              ,M.MOIM_IMAGE_PATH  AS moimImagePath
              ,M.LOCATION_ID  AS locationId
+             ,M.CATEGORY_ID  AS categoryId
            FROM MOIM M
 		   JOIN LOCATIONS L
 			 ON M.LOCATION_ID = L.LOCATION_ID
@@ -72,10 +73,23 @@
               , SYSDATE)
     </insert>
     
-        <update id="updataImage" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
+      <update id="updateData" parameterType="somoimDTO"> 
+        UPDATE MOIM 
+           SET MOIM_TITLE = #{moimTitle}
+             , MOIM_INFO = #{moimInfo}
+             , MOIM_LIMIT = #{moimLimit}
+             ,CATEGORY_ID = #{categoryId}
+             ,LOCATION_ID = #{locationId}
+             ,MOIM_CREATE_DATE = SYSDATE 
+              WHERE MOIM_ID = #{moimId}
+      </update>
+    
+    
+    
+     <update id="updateImage" parameterType="somoimDTO">
         UPDATE MOIM 
         SET MOIM_IMAGE_PATH= #{moimImagePath}
-      WHERE MOIM_ID = #{id};
+      WHERE MOIM_ID = #{moimId}
     </update>
     
 </mapper>

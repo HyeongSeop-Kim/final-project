@@ -20,4 +20,21 @@ SELECT B.MEMBER_NAME AS memberName
                         FROM MOIM_PARTICIPANTS P
                        WHERE P.MOIM_ID = #{id})
    </select>
+   
+    <select id ="selectData" resultType="moimParticipantsDTO" parameterType="moimParticipantsDTO" >
+  SELECT MEMBER_ID 	AS  memberId
+       ,MOIM_ID AS  moimId 
+       ,JOB_ID AS jobId
+   FROM MOIM_PARTICIPANTS WHERE MOIM_ID = #{moimId}  AND MEMBER_ID = #{memberId}
+   </select>
+   
+   
+   
+   
+   <insert id="insertData" parameterType="moimParticipantsDTO">
+   INSERT INTO MOIM_PARTICIPANTS 
+   VALUES (#{memberId}, #{moimId}, 3)
+   
+   </insert>
+   
 </mapper>

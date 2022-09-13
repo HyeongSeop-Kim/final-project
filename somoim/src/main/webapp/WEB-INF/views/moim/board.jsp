@@ -36,44 +36,143 @@
 
      <link rel="stylesheet" href="${cs}/styles.css" />
   </head>
+  
+  <script type="text/javascript">
+   window.onload = function() {
+	   previewImage.addEventListener("click", function(e) {
+		   moimImageSelect.click();
+	    });
+	   
+   moimImageSelect.addEventListener("change" , ajaxImageUpload );
+
+}
+   
+   function ajaxImageUpload(e){
+	        
+		    var file = e.target.files[0]; 
+		    var fData = new FormData(); //파일객체정보를 만들어서 추가해서 보내줄필요가잇음
+			fData.append("moimimage", file, file.name);  
+			fData.append("id","${moimData.moimId}"); // enctype="multipart/form-data" 형식으로 할떄는 FormData에 데이터 다 넣어줘야함!
+			$.ajax({      //Ajax사용시 jquery필요
+				type: "post",
+				enctype: "multipart/form-data",
+				url: "/somoim/moim/imageUpload",
+				data: fData,
+				processData: false, //Ajax로 파일업로드시 필요
+				contentType: false, //Ajax로 파일업로드시 필요
+				success: function(data, status) {
+					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
+				}
+     });
+
+}
+
+
+</script>
+  
+  
 
   <body>
     <!--이미지 사진박스-->
-    <header class="p-6">
-     <c:url var="moimUpdateImageUrl" value="/moim/imageUpload" />
+       <header class="p-6">
+     <c:url var="moimUpdateImageUrl" value="/moim/imageUpload?id=${moimData.moimId}" />
      <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
       <div class="img-box img-box-size-1">
         <img id="previewImage"
           class="img-box-size-1 bora-20 shadow-sm width-100"
           alt="이미지 선택"
-           src="${meetingimg}/meetingimg1.jpg"
-        />        
+          src="/somoim/resources/img/${moimData.moimId}.png"
+        /> 
         <input id="moimImageSelect"
           class="ImgSelect"
           type="file"
           value="이미지 선택"
+          name="moimimage"
+          multiple
+          
         />
       </div>
       </form>
       <div class="margin-bottom-20 flex-box margin-left-223">
         <!--아이콘-->
-        <div class="psi-r">
+      <div class="psi-r">
           <a
             href="#"
             class="category-box-120 icon-green psi-a bottom-10 left-24"
           >
-            <i class="fa-solid fa-suitcase fa-3x"></i>
+          <c:choose>
+            <c:when test="${moimData.categoryId eq 1 }">
+             <i class="fa-solid fa-suitcase fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 2 }">
+             <i class="fa-solid fa-person-swimming fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 3}">
+             <i class="fa-solid fa-book fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 4}">
+             <i class="fa-solid fa-language fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 5}">
+             <i class="fa-solid fa-masks-theater fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 6}">
+             <i class="fa-solid fa-music fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 7}">
+             <i class="fa-solid fa-palette fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 8}">
+             <i class="fa-solid fa-user-ninja fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 9}">
+             <i class="fa-solid fa-hands fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 10}">
+             <i class="fa-solid fa-handshake-simple  fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 11}">
+             <i class="fa-solid fa-car fa-3x"></i>
+            </c:when>    
+            <c:when test="${moimData.categoryId eq 12}">
+             <i class="fa-brands fa-youtube fa-3x"></i>
+            </c:when>  
+            <c:when test="${moimData.categoryId eq 13}">
+             <i class="fa-solid fa-baseball-bat-ball fa-3x"></i>
+            </c:when> 
+            <c:when test="${moimData.categoryId eq 14}">
+             <i class="fa-solid fa-gamepad fa-3x"></i>
+            </c:when>                                           
+            <c:when test="${moimData.categoryId eq 15}">
+             <i class="fa-solid fa-utensils fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 16}">
+             <i class="fa-solid fa-dog fa-3x"></i>
+            </c:when>
+            <c:when test="${moimData.categoryId eq 17}">
+             <i class="fa-solid fa-hand-holding-heart fa-3x"></i>
+            </c:when>
+            <c:otherwise>
+             <i class="fa-solid fa-paper-plane fa-3x"></i>
+            </c:otherwise>
+          </c:choose>  
           </a>
         </div>
         <!--정모이름,편집버튼-->
         <div class="flex-box margin-left-160">
           <div class="margin-10 margin-top-20 font-s-30"> ${moimData.moimTitle}</div>
-          <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary">편집</button>
-          </div>
-          <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary">가입</button>
-          </div>
+
+             <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
+                  <div class="margin-10 margin-top-50">
+		            <button type="button" class="btn btn-primary" onclick="location.href='/somoim/moim/modify?id=${moimData.moimId}&test=2'">편집</button>
+		          </div>
+             </c:if>
+       
+            <c:if test="${empty res}">
+           <div class="margin-10 margin-top-50">
+            <button type="button" class="btn btn-primary" onclick="location.href='/somoim/moim/join?id=${moimData.moimId}&test=2'">가입</button>
+           </div>
+            </c:if>
           <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary">찜</button>
           </div>
@@ -172,9 +271,11 @@
          
          
           <!--작성버튼-->
+          <c:if test="${not empty res}">
           <div class="text-end margin-right-40">
-            <button class="btn btn-sm btn-primary" type="button">작성</button>
+            <button class="btn btn-sm btn-primary" type="button" onclick="location.href='/somoim/moim/board/add?id=${moimData.moimId}'">작성</button>
           </div>
+          </c:if>
           <!-- 페이지 -->
            <nav aria-label="Page navigation example ">
             <ul class="pagination justify-content-center">

@@ -81,7 +81,8 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 
 	@Override
 	public boolean modifyData(SomoimDTO dto) {
-		return false;
+		boolean result = dao.updateData(dto);
+		return result;
 	}
 
 	@Override

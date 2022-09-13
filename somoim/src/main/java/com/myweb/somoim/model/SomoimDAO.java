@@ -82,6 +82,7 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	
 	public boolean modifyImage(SomoimDTO dto) {
 		String mapperId = String.format(mapper, "updataImage");
+		System.out.println("DAO파일정보"+dto);
 		int res = session.update(mapperId, dto);
 		return res == 1 ? true : false;
 	}
@@ -91,7 +92,13 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	
 	@Override
 	public boolean updateData(SomoimDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "updateData");
+		System.out.println(dto);
+		int res = session.update(mapperId, dto);
+		
+		System.out.println("결과"+res);
+		return res == 1 ? true : false;
+		
 	}
 
 	@Override

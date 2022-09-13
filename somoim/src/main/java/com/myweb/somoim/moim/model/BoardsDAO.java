@@ -14,7 +14,6 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 
 	@Autowired
 	private SqlSession session ;
-	
 	private String mapper ="boardsMapper.%s";
 	
 	
@@ -57,6 +56,12 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean insertData(BoardsDTO dto) {
+		String mapperId = String.format(mapper, "insertData");
+		int  result = session.insert(mapperId,dto);
+		
+		if(result == 1) {
+			return true;
+		}
 		return false;
 	}
 
