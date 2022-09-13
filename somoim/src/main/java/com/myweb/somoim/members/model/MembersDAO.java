@@ -43,8 +43,10 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	}
 
 	@Override
-	public MembersDTO selectData(String s) {
-		return null;
+	public MembersDTO selectData(String memberId) {
+		String mapId = String.format(mapper, "selectData");
+		MembersDTO bookmarkData = session.selectOne(mapId,memberId);
+		return bookmarkData;
 	}
 
 	@Override
