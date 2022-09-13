@@ -30,42 +30,118 @@
     <!-- header -->
     <header class="container d-flex justify-content-center align-items-center rounded-3 shadow-sm bg-white">
       <h1 class="title">소모임</h1>
+      
       <i class="fa-solid fa-comments mx-2"></i>
     </header>
     <!-- // header -->
     <!-- main -->
     <main class="container pt-3 px-0">
-    
       <div class="row"> 
         <!-- left-menu -->
         <div class="col-md-3" > 
-          <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 738px; overflow-y: scroll"> 
+          <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 880px; overflow-y: scroll"> 
             <div class="row" >
               <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
-                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="0" end="8">
-     		 			 <div >
-             		 		<a href="#" class="service-items icon-green" data-value="${categoryList.categoryId}">
-          	        			<i class="fa-solid fa-dog"></i>
-                			</a>
-              			</div>
-              			<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
-              	</c:forEach>
-              </div>
-              <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
-                <c:forEach var="categoryList" items="${requestScope.datas}"  varStatus="status" begin="9" end="18">
-     		 			 <div >
-             		 		<a href="#" class="service-items icon-green" data-value="${categoryList.categoryId}">
-          	        			<i class="fa-solid fa-utensils"></i>
-                			</a>
-              			</div>
-          	        	<label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
-              	</c:forEach>
-              </div>
+             	
+             	<div id="cate_1" class="service-items icon-green">
+            		<input type="hidden"  value="1" />
+             		<i class="fa-solid fa-suitcase"></i>
+          		</div>
+          		 <span>아웃도어/여행</span>
+	        	<div  id="cate_2" class="service-items icon-green">
+	        		<input type="hidden"  value="2" />
+	            	<i class="fa-solid fa-person-swimming"></i>
+	          	</div>
+	          	<span>운동/스포츠</span>
+	          	<div  id="cate_3" class="service-items icon-green">
+	          		<input type="hidden"  value="3" />
+	            	<i class="fa-solid fa-book"></i>
+	          	</div>
+	          	<span>인문학/책/글</span>
+	          	<div  id="cate_4" class="service-items icon-green">
+	          		<input type="hidden"  value="4" />
+	            	<i class="fa-solid fa-language"></i>
+	          	</div>
+	          	<span>외국/언어</span>
+	          	<div  id="cate_5" class="service-items icon-green">
+	          		<input type="hidden"  value="5" />
+	            	<i class="fa-solid fa-masks-theater"></i>
+	          	</div>
+	          	<span>문화/공연/축제</span>
+	          	<div  id="cate_6" class="service-items icon-green">
+	          		<input type="hidden"  value="6" />
+	            	<i class="fa-solid fa-music"></i>
+	          	</div>
+	          	<span>음악/악기</span>
+	          	<div  id="cate_7" class="service-items icon-green">
+	          		<input type="hidden"  value="7" />
+            		<i class="fa-solid fa-palette"></i>
+          		</div>
+          		<span>공예/만들기</span>
+          		<div  id="cate_8" class="service-items icon-green">
+          			 <input type="hidden"  value="8" />
+           			 <i class="fa-solid fa-user-ninja"></i>
+          		</div>
+         		 <span>댄스/무용</span>
+         		 <div  id="cate_9" class="service-items icon-green">
+         		 	 <input type="hidden"  value="9" />
+          			 <i class="fa-solid fa-hands"></i>
+          		</div>
+          		<span>봉사활동</span>
+          	
+          	</div>	
+          	<div class="col-6 d-flex flex-column justify-content-center align-items-center" >
+          		
+          		<div  id="cate_10" class="service-items icon-green">
+          			<input type="hidden"  value="10" />
+            		<i class="fa-solid fa-handshake-simple"></i>
+          		</div>
+          		<span>사교/인맥</span>
+          		<div  id="cate_11" class="service-items icon-green">
+          			<input type="hidden"  value="11" />
+            		<i class="fa-solid fa-car" ></i>
+          		</div>
+          		<span>차/오토바이</span>
+          		<div  id="cate_12" class="service-items icon-green">
+          			<input type="hidden"  value="12" />
+            		<i class="fa-brands fa-youtube"></i>
+          		</div>
+          		<span>사진/영상</span>
+          		<div  id="cate_13" class="service-items icon-green">
+          			<input type="hidden"  value="13" />
+            		<i class="fa-solid fa-baseball-bat-ball"></i>
+          		</div>
+          		<span>야구관람</span>
+          		<div  id="cate_14" class="service-items icon-green">
+          			<input type="hidden"  value="14" />
+            		<i class="fa-solid fa-gamepad"></i>
+          		</div>
+          		<span>게임/오락</span>
+          		<div  id="cate_15" class="service-items icon-green">
+          			<input type="hidden"  value="15" />
+            		<i class="fa-solid fa-utensils"></i>
+          		</div>
+          		<span>요리/체조</span>
+          		<div  id="cate_16" class="service-items icon-green">
+          			<input type="hidden"  value="16" />
+            		<i class="fa-solid fa-dog"></i>
+          		</div>
+          		<span>반려동물</span>
+          		<div  id="cate_17" class="service-items icon-green">
+          			<input type="hidden"  value="17" />
+            		<i class="fa-solid fa-hand-holding-heart"></i>
+          		</div>
+          		<span>가족/결혼</span>
+          		<div  id="cate_18" class="service-items icon-green">
+          			<input type="hidden"  value="18" />
+            		<i class="fa-solid fa-paper-plane"></i>
+          		</div>
+          		<span>자유주제</span>
+        	</div>
             </div>
           </div>
         </div>
         <!-- // left-menu -->
-
         <!-- main-menu -->
       <div class="col-md-6">
           <div class="p-4 rounded-3 shadow-sm bg-white">
@@ -112,10 +188,9 @@
           </div>
         </div>
         <!-- // main-menu -->
- 
         <!-- right-menu -->
         <div class="col-md-3">
-          <div class="p-4 rounded-3 shadow-sm bg-white" style="height: 738px;">
+          <div class="p-4 rounded-3 shadow-sm bg-white" style="height: 880px;">
             <section class="user d-flex justify-content-between align-items-center pb-3">
               <div>
                 <img src="${img}/profile-image.png" class="rounded-circle" width="60" alt="profile-image">
@@ -147,10 +222,7 @@
 				      </button>
 				    </h2>
 				    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" >
-				      <div class="accordion-body">
-				         <a href="#"><p class="pb-3">가입 모임A</p></a>
-				         <a href="#"><p class="pb-3">가입 모임B</p></a>
-				         <a href="#"><p class="pb-3">가입 모임C</p></a>
+				      <div id="join_list" class="accordion-body">
 				      </div>
 				    </div>
 				  </div>
@@ -196,16 +268,17 @@
   </script>
   <script type="text/javascript">
   var main_page = 1;
+  var category_id = 0;
 function get_moim_list(page) {
 	main_page = page;
+	let _url = "./list?page=" + page + "&page_count=" + $('#page_count').val() + "&list_search=" + $('#list_search').val() + "&category_id=" + category_id;
 	$.ajax({
-		url: "./list?page=" + page + "&page_count=" + $('#page_count').val() +  "&list_search=" + $('#list_search').val(),
+		url: _url,
 		type: "GET",
 		dataType: "json",
 		success: function(res) {
 			let _html = '';
 			let _page = '';
-			console.log(res.datas);
 			for (var i=0 ; i < res.datas.length ; i++) {
 				_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=\'${path}/moim/meeting?id='+ res.datas[i].moimId +'\'">';
 				_html += '<div class="col-md-3">';
@@ -220,23 +293,25 @@ function get_moim_list(page) {
 			}
 			$('#m_list').html(_html);
 
-			for (var i=0 ; i < res.pager.pagelist.length ; i++) {
-				if (res.pager.c_page == res.pager.pagelist[i]) {
-
-				}
-				_page += '<button class="page-link " onclick="get_moim_list('+ res.pager.pagelist[i] +');">'+ res.pager.pagelist[i] +'</button>';
-			}
+			for (var i=0 ; i < res.pager.pagelist.length; i++) {
+				let add_class = '';
+					if (res.pager.c_page == res.pager.pagelist[i]) {
+						add_class = 'hover';
+					}
+					_page += '<button class="page-link '+ add_class +'" onclick="get_moim_list('+ res.pager.pagelist[i] +');">'+ res.pager.pagelist[i] +'</button>';
+					
+			}	
 			$('#p_page').attr('onclick', 'get_moim_list('+ res.pager.p_page +');');
 			if (res.pager.c_page == 1) {
 				$('#p_page').prop('disabled', true);
 				$('#p_btn').addClass('disabled');
-			}else{
+			} else {
 				$('#p_page').prop('disabled', false);
 				$('#p_btn').removeClass('disabled');
 			}
 			$('#n_page').attr('onclick', 'get_moim_list('+ res.pager.n_page +');');
 
-			if (res.pager.c_page == res.pager.pagelist.length) {
+			if (res.pager.is_npage == false) {
 				$('#n_page').prop('disabled', true);
 				$('#n_btn').addClass('disabled');
 			}else{
@@ -245,7 +320,6 @@ function get_moim_list(page) {
 			}
 			$('#page_list').html(_page);
 
-
 		},
 
 		error : function(XMLHttpRequest, textStatus, errorThrown){
@@ -253,8 +327,54 @@ function get_moim_list(page) {
 		}
 	})
 }
+
+function get_join_moim_list() {
+	$.ajax({
+		url:  "./join_list",
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			let _html = '';
+			for (var i=0 ; i < data.length ; i++) {
+				_html += ' <a href="/somoim/moim/meeting?id='+ data[i].moimId +'"><p class="pb-3">'+ data[i].moimTitle +'</p></a>';
+			}
+			$('#join_list').html(_html);
+		}
+	});
+}
+
+
 $(document).ready(function() {
+	let category = $(".service-items");
 	get_moim_list(1);
+	get_join_moim_list()
+
+	
+	$('.service-items').on('mouseover', function() {
+		$(this).addClass('hover');
+	});
+	$('.service-items').on('mouseout', function() {
+		$(this).removeClass('hover');
+	});
+	// 카테고리 서치
+	$('.service-items').on('click', function() {
+		_this = $(this);
+		let temp = _this.attr('id').split('_');
+		category_id = temp[1];		
+		if (_this.hasClass('selected') == false) {
+			_this.addClass('selected');	
+		} else {
+			_this.removeClass('selected');
+			category_id = 0;
+		}
+		$('.service-items').each(function() {
+			if (_this.children('input').val() != $(this).children('input').val()) {
+				$(this).removeClass('selected');
+			} 
+		});
+		get_moim_list(1);
+	});
+	
 	$('#page_count').on('change', function() {
 		get_moim_list(main_page);
 	});
@@ -268,6 +388,9 @@ $(document).ready(function() {
 			get_moim_list(1);
 		}
 	});
+	
+	
+
 
 });
 </script>

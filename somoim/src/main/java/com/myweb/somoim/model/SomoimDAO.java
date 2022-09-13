@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.myweb.somoim.common.abstracts.AbstractDAO;
+import com.myweb.somoim.participants.model.MoimParticipantsDAO;
+import com.myweb.somoim.participants.model.MoimParticipantsDTO;
 
 @Repository
 public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
@@ -22,20 +24,18 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	public List<SomoimDTO> selectAll() {
 		String mapperId = String.format(mapper, "selectAll");
 		List<SomoimDTO> datas = session.selectList(mapperId);
-		System.out.println(datas);
 		return datas;
 	}
 	
 	public List<SomoimDTO> selectAll(Map map) {
 		String mapperId = String.format(mapper, "selectAll");
 		List<SomoimDTO> datas = session.selectList(mapperId, map);
-		System.out.println(datas);
 		return datas;
 	}
 
-	public int selectAllCnt() {
+	public int selectAllCnt(Map map) {
 		String mapperId = String.format(mapper, "selectAllCnt");
-		int data = session.selectOne(mapperId);
+		int data = session.selectOne(mapperId, map);
 		return data;
 	}
 	@Override
@@ -52,7 +52,7 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	public SomoimDTO selectData(String s) {
 		return null;
 	}
-
+	
 	@Override
 	public SomoimDTO selectData(int id) {
 		String mapperId = String.format(mapper,"selectData");
@@ -80,6 +80,12 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 	}
 	
 	
+	public boolean insertDataSub(MoimParticipantsDTO dto) {
+		String mapperId = String.format(mapper, "insertDataSub");
+		int res = session.insert(mapperId, dto);
+		return res == 1 ? true : false;
+	}
+	
 	public boolean modifyImage(SomoimDTO dto) {
 		String mapperId = String.format(mapper, "updataImage");
 		int res = session.update(mapperId, dto);
@@ -104,6 +110,16 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 		return false;
 	}
 
+	public List<SomoimDTO> selectSubDatas(String memberId) {
+		String mapperId = String.format(mapper, "selectSubDatas");
+		List<SomoimDTO> data = session.selectList(mapperId,memberId);
+		return data;
+	}
+	public List<SomoimDTO> selectSubDatas_bmk(String moimIds) {
+		String mapperId = String.format(mapper, "selectSubDatas");
+		List<SomoimDTO> data = session.selectList(mapperId,moimIds);
+		return data;
+	}
 	
 
 	

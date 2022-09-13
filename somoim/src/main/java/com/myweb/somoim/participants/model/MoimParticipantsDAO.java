@@ -24,7 +24,7 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 	public List<MoimParticipantsDTO> selectDatas(String i) {
 		return null;
 	}
-
+	
 	@Override
 	public List<MoimParticipantsDTO> selectDatas(int id) {
 		String mapperId = String.format(mapper, "selectDatas");

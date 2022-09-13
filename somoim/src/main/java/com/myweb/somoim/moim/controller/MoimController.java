@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.json.simple.JSONObject;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myweb.somoim.common.model.PagingDTO;
@@ -34,6 +36,8 @@ import com.myweb.somoim.categorys.service.CategorysService;
 import com.myweb.somoim.common.model.LocationsDTO;
 import com.myweb.somoim.common.service.FileUploadService;
 import com.myweb.somoim.common.service.LocationsService;
+import com.myweb.somoim.members.model.MembersDTO;
+import com.myweb.somoim.members.service.MembersService;
 
 
 @Controller
@@ -62,6 +66,9 @@ public class MoimController {
 
 	@Autowired
 	private FileUploadService fileUploadService;
+	
+	@Autowired
+	private MembersService memberService;
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
 	public String add(Model model) {
@@ -74,24 +81,33 @@ public class MoimController {
 	
 	@RequestMapping(value = "/moim/add", method = RequestMethod.POST)
 	@ResponseBody
-	public String addBoard(Model model,
-			@RequestParam("locationId") int locationId
-		   ,@RequestParam String moimTitle
-		   ,@RequestParam String moimInfo
-		   ,@RequestParam int moimLimit
-		   ,@RequestParam int categoryId) {
+	public String addBoard(Model model,HttpSession session
+		   ,@RequestParam("locationId") int locationId
+		   ,@RequestParam() String moimTitle
+		   ,@RequestParam(required= false) String moimInfo
+		   ,@RequestParam(required= false, defaultValue="5")int moimLimit
+		   ,@RequestParam() int categoryId) {
 		JSONObject json = new JSONObject();
-
+		
 		SomoimDTO data = new SomoimDTO();
+		
 		data.setLocationId(locationId);
 		data.setMoimTitle(moimTitle);
-		data.setMoimInfo(moimInfo);
 		data.setMoimLimit(moimLimit);
+		data.setMoimInfo(moimInfo);
 		data.setMoimImagePath(null);
 		data.setCategoryId(categoryId);
-		System.out.println(data);
 		boolean result = SomoimService.addData(data);
-
+		MoimParticipantsDTO partData = new MoimParticipantsDTO();
+		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
+		partData.setMemberId(memData.getMemberId());
+		partData.setMoimId(data.getMoimId());
+		
+		boolean res = SomoimService.addDataSub(partData);
+		json.put("data", result);
+		if(result == false) {
+			json.put("message", "필수입력항목 누락");
+		}
 		return json.toJSONString();
 	}
 

@@ -48,16 +48,16 @@
 				<h4 class="mb-3">모임 개설</h4>
 					<form id="form1" class="needs-validation" method="post">
 						<div>
-							<label for="loction" class="form-label">지역</label>	
+							<label for="loction" class="form-label">지역&nbsp;<small style="font-size: 12px; color: red;">*필수</small></label>	
 								<select id ="location" name="locationId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-								  <option selected>지역 선택</option>
+								  <option selected value="">지역 선택</option>
 								  <c:forEach var="locList" items="${requestScope.locDatas}">
 								  	<option value="${locList.locationId}">${locList.locationName}</option>
 								  </c:forEach>
 								</select>
 					     	</div>
 				           	<div>
-				             	<h1 class="mb-3"> 관심사 선택</h1>
+				             	<h1 class="mb-3"> 관심사 선택&nbsp;<small style="font-size: 12px; color: red;">*필수</small></h1>
 				             	<p class="mb-3">
 								  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 								    관심 카테고리 더보기
@@ -66,19 +66,113 @@
 								<div class="collapse" id="collapseExample">
 									  <div class="card card-body mb-3" >
 				      					<section class="d-flex" >
-					              			<div class="col">
-					              				<c:forEach var="categoryList" items="${requestScope.cateDatas}">	
-					               		 		<div>
-						               		 	  <input class="form-check-input" type="radio" name="categoryId" value="${categoryList.categoryId}"> 
-						               		      <label class="form-check-label mt-1" for="categoryId">${categoryList.categoryName}</label>
-					               			   </div>
-					               		</c:forEach> 
-					                </div>
-				      		 </section>
+					              		  <div class="col">
+				              				<div class="row" >
+								              <div class="col-3 d-flex flex-column justify-content-center align-items-center" >
+								             	<div id="cate_1" class="service-items icon-green">
+								            		<input type="radio"  name="categoryId" value="1" style="display:none"/>
+								             		<i class="fa-solid fa-suitcase"></i>
+								          		</div>
+								          		 <span>아웃도어/여행</span>
+									        	<div  id="cate_2" class="service-items icon-green">
+									        		<input type="radio"  name="categoryId" value="2" style="display:none"/>
+									            	<i class="fa-solid fa-person-swimming"></i>
+									          	</div>
+									          	<span>운동/스포츠</span>
+									          	<div  id="cate_3" class="service-items icon-green">
+									          		<input type="radio"  name="categoryId" value="3" style="display:none" />
+									            	<i class="fa-solid fa-book"></i>
+									          	</div>
+									          	<span>인문학/책/글</span>
+									          	<div  id="cate_4" class="service-items icon-green">
+									          		<input type="radio"  name="categoryId" value="4" style="display:none"/>
+									            	<i class="fa-solid fa-language"></i>
+									          	</div>
+									          	<span>외국/언어</span>
+									          	<div  id="cate_5" class="service-items icon-green">
+									          		<input type="radio"  name="categoryId" value="5" style="display:none"/>
+									            	<i class="fa-solid fa-masks-theater"></i>
+									          	</div>
+									          	<span>문화/공연/축제</span>
+								          	</div>	
+								          	<div class="col-3 d-flex flex-column justify-content-center align-items-center" >
+									          	<div  id="cate_6" class="service-items icon-green">
+									          		<input type="radio"  name="categoryId" value="6"style="display:none"/>
+									            	<i class="fa-solid fa-music"></i>
+									          	</div>
+									          	<span>음악/악기</span>
+									          	<div  id="cate_7" class="service-items icon-green">
+									          		<input type="radio"  name="categoryId" value="7" style="display:none"/>
+								            		<i class="fa-solid fa-palette"></i>
+								          		</div>
+								          		<span>공예/만들기</span>
+								          		<div  id="cate_8" class="service-items icon-green">
+								          			 <input type="radio"  name="categoryId" value="8" style="display:none"/>
+								           			 <i class="fa-solid fa-user-ninja"></i>
+								          		</div>
+								         		 <span>댄스/무용</span>
+								         		 <div  id="cate_9" class="service-items icon-green">
+								         		 	 <input type="radio"  name="categoryId" value="9" style="display:none"/>
+								          			 <i class="fa-solid fa-hands"></i>
+								          		</div>
+								          		<span>봉사활동</span>
+								          		<div  id="cate_10" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="10" style="display:none"/>
+								            		<i class="fa-solid fa-handshake-simple"></i>
+								          		</div>
+								          		<span>사교/인맥</span>
+								          	</div>
+								          	<div class="col-3 d-flex flex-column justify-content-center align-items-center" >
+								          		<div  id="cate_11" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="11" style="display:none"/>
+								            		<i class="fa-solid fa-car" ></i>
+								          		</div>
+								          		<span>차/오토바이</span>
+								          		<div  id="cate_12" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="12" style="display:none"/>
+								            		<i class="fa-brands fa-youtube"></i>
+								          		</div>
+								          		<span>사진/영상</span>
+								          		<div  id="cate_13" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="13" style="display:none"/>
+								            		<i class="fa-solid fa-baseball-bat-ball"></i>
+								          		</div>
+								          		<span>야구관람</span>
+								          		<div  id="cate_14" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="14" style="display:none"/>
+								            		<i class="fa-solid fa-gamepad"></i>
+								          		</div>
+								          		<span>게임/오락</span>
+								          		<div  id="cate_15" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="15" style="display:none"/>
+								            		<i class="fa-solid fa-utensils"></i>
+								          		</div>
+								          		<span>요리/체조</span>
+								          	</div>	
+								          	<div class="col-3 d-flex flex-column justify-content-center align-items-center" >	
+								          		<div  id="cate_16" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="16" style="display:none"/>
+								            		<i class="fa-solid fa-dog"></i>
+								          		</div>
+								          		<span>반려동물</span>
+								          		<div  id="cate_17" class="service-items icon-green">
+								          			<input type="radio"  name="categoryId" value="17" style="display:none"/>
+								            		<i class="fa-solid fa-hand-holding-heart"></i>
+								          		</div>
+								          		<span>가족/결혼</span>
+								          			<input type="radio"  name="categoryId" value="18" style="display:none"/>
+								          		<div  id="cate_18" class="service-items icon-green">
+								            		<i class="fa-solid fa-paper-plane"></i>
+								          		</div>
+								          		<span>자유주제</span>
+								        	</div>
+								          </div>
+					                  </div>
+				      		   </section>
 				  			</div>
 						</div>
 				  			<div class="input-group mb-3">
-							  <span class="input-group-text" id="basic-addon1">모임명</span>
+							  <span class="input-group-text" id="basic-addon1">모임명&nbsp;<small style="font-size: 12px; color: red;">*필수</small></span>
 							  <input type="text" class="form-control" placeholder="모임 이름" name="moimTitle" aria-label="Username" aria-describedby="basic-addon1">
 							</div>
 							 <div class="input-group mb-3">
@@ -177,23 +271,70 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-  </script>
-  <script type="text/javascript">
-		function addData(){
-			var formData = $("#form1").serialize();
-			$.ajax({
-				url: "add",
-				type: "POST",
-				data: formData,
-				dataType: "json",
-				success: function(data) {
-					location.href = '/somoim';
-				}
-			})	
+ </script>
+<script type="text/javascript">
+  
+function addData(){
+	
+	if($('#location').val() == null || $('#location').val() == "" ) {
+		alert("지역을 선택하세요.");
+		return; 
+	}
+	if($('input[name="categoryId"]:checked').val() == null || $('input[name="categoryId"]:checked').val() == "" ){
+		alert("관심사를 선택하세요.");
+		return; 
+	}
+	if($('input[name="moimTitle"]').val() == null || $('input[name="moimTitle"]').val() == ""){
+		alert("모임명을 작성하세요.");
+		return;
+	}
+	var formData = $("#form1").serialize();
+	$.ajax({
+		url: "add",
+		type: "POST",
+		data: formData,
+		dataType: "json",
+		success: function(data) {
+			if(data.data){
+				location.href = '/somoim';
+			}else{
+				alert(data.message);
+			}	
 		}
-		function list() {
-			location.href = '/somoim';
+		
+	})	
+}
+
+function list() {
+	location.href = '/somoim';
+}
+
+$(document).ready(function() {	
+	
+	 $('.service-items').on('mouseover', function() {
+		$(this).addClass('hover');
+	 });
+	 $('.service-items').on('mouseout', function() {
+		$(this).removeClass('hover');
+	 });	
+		
+	 $('.service-items').on('click', function(){
+		_this = $(this)
+		_this.children('input').prop('checked', true);
+		if (_this.hasClass('selected') == false) {
+			_this.addClass('selected');	
+		} else {
+			_this.removeClass('selected');
+			category_id = 0;
 		}
-	</script>
+	$('.service-items').each(function() {
+		if (_this.children('input').val() != $(this).children('input').val()) {
+			$(this).removeClass('selected');
+		} 
+		});
+	 });
+});
+
+</script>
 </body>
 </html>

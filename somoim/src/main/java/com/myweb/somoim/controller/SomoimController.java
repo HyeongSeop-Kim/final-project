@@ -33,7 +33,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.myweb.somoim.categorys.model.CategorysDTO;
 import com.myweb.somoim.categorys.service.CategorysService;
 import com.myweb.somoim.common.model.PagingDTO;
+import com.myweb.somoim.members.model.MembersDTO;
+import com.myweb.somoim.members.service.MembersService;
 import com.myweb.somoim.model.SomoimDTO;
+import com.myweb.somoim.participants.model.MoimParticipantsDTO;
+import com.myweb.somoim.participants.service.MoimParticipantsService;
 import com.myweb.somoim.service.SomoimService;
 
 @Controller
@@ -48,10 +52,21 @@ public class SomoimController {
 	@Autowired
 	private CategorysService categoryService;
 
+	@Autowired
+	private	MoimParticipantsService moimParticipantsService;
+
+	@Autowired
+	private MembersService memberservice;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String moimMain(Model model) {
+	public String moimMain(Model model, HttpSession session) {
 		List<CategorysDTO> datas = categoryService.getAll();
 		model.addAttribute("datas", datas);
+
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		String memberId = membersData.getMemberId();
+		MembersDTO bookmarkData = memberservice.getData(memberId);
+
 		return "somoim_m";
 	}
 	
@@ -60,8 +75,9 @@ public class SomoimController {
 	@ResponseBody
 	public String moimList(@RequestParam(defaultValue="1", required=false) int page //현재페이지
 			, @RequestParam("page_count") int pageCount //한페이지에 몇개 게시물
-			, @RequestParam("list_search") String search) {
-		Map res_data = service.getAll(page, pageCount, search);
+			, @RequestParam("list_search") String search
+			, @RequestParam("category_id") int categoryId) {
+		Map res_data = service.getAll(page, pageCount, search, categoryId);
 		List datas = (List)res_data.get("datas"); // 가져온 데이터 리스트
 		PagingDTO pager = (PagingDTO)res_data.get("page_data"); // 가져온 페이징 객체
 		JSONArray data_arr = new JSONArray(); // 가져온 데이터 리스트를 넣는 배열
@@ -79,15 +95,46 @@ public class SomoimController {
 			data_arr.add(json);
 		}
 		page_obj.put("c_page", pager.getCurrentPageNumber());
-		page_obj.put("pagelist", pager.getPageNumberList());
+		page_obj.put("pagelist", pager.getPageList());
 		page_obj.put("n_page", pager.getNextPageNumber());
 		page_obj.put("p_page", pager.getPrevPageNumber());
+		page_obj.put("is_npage", pager.isNextPage());
+		page_obj.put("is_ppage", pager.isPrevPage());
 		rtn_data.put("datas", data_arr);
 		rtn_data.put("pager", page_obj);
 		return rtn_data.toJSONString();
 	}
 
-	
+	@RequestMapping(value = "/join_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String joinList( HttpSession session) {
+
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<SomoimDTO> participantsData = service.getDatas(membersData.getMemberId());
+		JSONArray join_datas = new JSONArray();
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
+
+	@RequestMapping(value = "/bookmark_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String bookMarkList( HttpSession session) {
+
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		MembersDTO bookmarkData = memberservice.getData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = service.getDatas_bmk(bookmarkData.getBookmark());
+
+		JSONArray join_datas = new JSONArray();
+
+		return join_datas.toJSONString();
+	}
+
+
 	@GetMapping(value="/userInfo") 
 	public String info() {
 		return "info/userInfo";
@@ -125,5 +172,5 @@ public class SomoimController {
 		session.setAttribute("loginData", membersDTO);
 		return jsonObject.toJSONString();
 	}
-
+	
 }

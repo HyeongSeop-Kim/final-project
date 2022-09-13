@@ -23,60 +23,94 @@
 	             , M.LOCATION_ID AS locationId
 	             , M.MOIM_CREATE_DATE AS moimCreateDate
 	             , L.LOCATION_NAME AS locationName
-	        FROM MOIM M
+	        FROM (SELECT * 
+	        		FROM MOIM
+	        	 ORDER BY MOIM_CREATE_DATE DESC) M
 	             LEFT JOIN LOCATIONS L
 	             ON M.LOCATION_ID = L.LOCATION_ID
 			WHERE 1 = 1
-	             <if test=' #{search_title} != "" '>
-	              AND M.MOIM_TITLE like '%'||#{search_title}||'%'
-	             </if>       	
+	             <if test=' search_title != "" '>
+	              AND UPPER(M.MOIM_TITLE) like UPPER('%'||#{search_title}||'%')
+	             </if>
+	              <if test=' category_id > 0 '>
+	              AND  M.CATEGORY_ID = #{category_id}
+	             </if> 
 	       	AND
-	       	<![CDATA[ ROWNUM <= #{num_end}]]>       
-             )
-        WHERE 
-        	<![CDATA[RNUM >= #{num_start}]]>    
-    </select>
-    <select id ="selectAllCnt" resultType="_int">
-      SELECT count(*) as cnt
-           FROM MOIM M
-    </select>
-   <select id ="selectData" resultType="somoimDTO">
-      SELECT  M.MOIM_ID  AS moimId
-             ,M.MOIM_TITLE AS moimTitle
-             ,M.MOIM_INFO  AS moimInfo
-             ,M.MOIM_LIMIT  AS moimLimit
-			 ,L.LOCATION_NAME AS locationName
-             ,M.MOIM_IMAGE_PATH  AS moimImagePath
-             ,M.LOCATION_ID  AS locationId
-           FROM MOIM M
-		   JOIN LOCATIONS L
-			 ON M.LOCATION_ID = L.LOCATION_ID
-          WHERE M.MOIM_ID = #{id}
-    </select>
-    <insert id="insertData" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
-        INSERT INTO MOIM(MOIM_ID
-                        , MOIM_TITLE
-                        , MOIM_INFO
-                        , MOIM_LIMIT
-                        , LOCATION_ID
-                        , MOIM_IMAGE_PATH
-                        , CATEGORY_ID
-                        , MOIM_CREATE_DATE)
-        VALUES(SQU_MOIM.NEXTVAL
-              , #{moimTitle}
-              , #{moimInfo}
-              , #{moimLimit}
-              , #{locationId}
-              , #{moimImagePath}
-              , #{categoryId}
-              , SYSDATE)
-    </insert>
-    
-        <update id="updataImage" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
+	       	<![CDATA[ ROWNUM <= #{num_end}]]>
+            )
+       WHERE 
+       	<![CDATA[RNUM >= #{num_start}]]>    
+   </select>
+   
+  <select id ="selectAllCnt" resultType="_int">
+     SELECT count(*) as cnt
+     FROM MOIM M
+     WHERE 1 = 1
+       <if test=' search_title != "" '>
+        AND UPPER(M.MOIM_TITLE) like UPPER('%'||#{search_title}||'%')
+       </if>
+        <if test=' category_id > 0 '>
+        AND  M.CATEGORY_ID = #{category_id}
+       </if>
+  </select>
+  <select id ="selectData" resultType="somoimDTO">
+     SELECT  M.MOIM_ID  AS moimId
+            ,M.MOIM_TITLE AS moimTitle
+            ,M.MOIM_INFO  AS moimInfo
+            ,M.MOIM_LIMIT  AS moimLimit
+		    ,L.LOCATION_NAME AS locationName
+            ,M.MOIM_IMAGE_PATH  AS moimImagePath
+            ,M.LOCATION_ID  AS locationId
+          FROM MOIM M
+	   JOIN LOCATIONS L
+		 ON M.LOCATION_ID = L.LOCATION_ID
+         WHERE M.MOIM_ID = #{id}
+   </select>
+   <insert id="insertData" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
+       INSERT INTO MOIM(MOIM_ID
+                       , MOIM_TITLE
+                       , MOIM_INFO
+                       , MOIM_LIMIT
+                       , LOCATION_ID
+                       , MOIM_IMAGE_PATH
+                       , CATEGORY_ID
+                       , MOIM_CREATE_DATE)
+       VALUES(SQU_MOIM.NEXTVAL
+             , #{moimTitle}
+             , #{moimInfo}
+             , #{moimLimit}
+             , #{locationId}
+             , #{moimImagePath}
+             , #{categoryId}
+             , SYSDATE)
+             <selectKey keyColumn="MOIM_ID" keyProperty="moimId" resultType="int" order="AFTER">
+            SELECT SQU_MOIM.currval
+            FROM dual
+        	</selectKey>
+   </insert>
+   <insert id="insertDataSub" parameterType="moimParticipantsDTO">
+ 		  INSERT INTO MOIM_PARTICIPANTS(MEMBER_ID
+ 		  	, MOIM_ID
+ 		  	, JOB_ID)
+ 		  VALUES(#{memberId}
+ 		  	, #{moimId}
+ 		  	, 1)
+   </insert>
+   <update id="updataImage" parameterType="somoimDTO"> <!-- 파일이름 , 네임 추가 -->
         UPDATE MOIM 
         SET MOIM_IMAGE_PATH= #{moimImagePath}
-      WHERE MOIM_ID = #{id};
-    </update>
-    
+     	WHERE MOIM_ID = #{id};
+   </update>
+    <select id="selectSubDatas" resultType="somoimDTO">
+   		SELECT M.MOIM_TITLE AS moimTitle
+	 		 , M.MOIM_ID AS moimId
+		  FROM MOIM M
+		  JOIN MOIM_PARTICIPANTS MP
+  			ON M.MOIM_ID = MP.MOIM_ID
+		 WHERE 1 = 1
+		  <if test=' memberId != null and memberId != ""'>
+		 	AND MP.MEMBER_ID = #{memberId}
+		  </if>
+   </select>
 </mapper>
 
