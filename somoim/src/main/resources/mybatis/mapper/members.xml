@@ -59,5 +59,12 @@
 		 		 AND MEMBER_NAME =  #{memberName}
 		 		 AND PHONE = #{phone}
 		</update>
+		<update id="updateCate" parameterType="memberDto">
+				UPDATE MEMBERS
+		  			 SET CATEGORY = #{category}
+		 		WHERE MEMBER_ID = #{memberId}
+		 		 AND MEMBER_NAME =  #{memberName}
+		 		 AND PHONE = #{phone}
+		</update>
 </mapper>
 

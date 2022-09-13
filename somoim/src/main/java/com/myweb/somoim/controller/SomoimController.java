@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.myweb.somoim.members.model.MembersDTO;
+import com.myweb.somoim.members.service.MembersService;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONArray;
@@ -41,7 +43,8 @@ public class SomoimController {
 	
 	@Autowired
 	private SomoimService service;
-	
+	@Autowired
+	private MembersService membersService;
 	@Autowired
 	private CategorysService categoryService;
 
@@ -95,18 +98,32 @@ public class SomoimController {
 
 		return "form/category";
 	}
-	
+
 	@RequestMapping(value = "startPage")
 	public String startPage() {
 		return "/form/startPage";
 	}
-	
-	
-//	@PostMapping(value = "/ajax/cate")
-//	@ResponseBody
-//	public String ajaxCategory(@RequestBody List<Map<String, Object>> param) throws Exception {
-//		System.out.println(param);
-//		return null;
-//	}
-	
+
+	@PostMapping(value = "/ajax/cate")
+	@ResponseBody
+	public String ajaxCategory(@RequestBody List<Map<String, Object>> param
+							   , HttpSession session , HttpServletRequest request) {
+		MembersDTO membersDTO = (MembersDTO) session.getAttribute("loginData");
+		String cateId = "";
+		for (Map<String, Object> data : param) {
+			String[] arr = data.get("id").toString().split("_");
+			if(cateId == null || cateId == "") {
+				cateId += arr[1];
+			} else {
+				cateId += "," + arr[1];
+			}
+		}
+		membersDTO.setCategory(cateId);
+		JSONObject jsonObject = new JSONObject();
+		boolean res = membersService.modifyCate(membersDTO); // loginData에서 가져온 정보와 cateId로 수정
+		jsonObject.put("res", res);
+		session.setAttribute("loginData", membersDTO);
+		return jsonObject.toJSONString();
+	}
+
 }

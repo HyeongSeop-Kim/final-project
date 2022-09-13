@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>    
+<%@ page import="java.util.*" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -129,9 +129,13 @@
               <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='userInfo'" >상세</button>
             </section>
             <section id="cate" class="d-flex justify-content-between align-items-center pb-3">
-           		<i id="cate_1" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i id="cate_2" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i id="cate_3" class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
+                <c:if test="${not empty sessionScope.loginData}">
+                    <script>
+                        window.onload = () => {
+                            addEventListener("DOMContentLoaded", printCate("${sessionScope.loginData.category}"));
+                        };
+                    </script>
+                </c:if>
               <button type="button" class="btn btn-primary btn-sm btn-blue" onclick="popCategory();">편집</button>
             </section>
             <section>
@@ -266,9 +270,8 @@ $(document).ready(function() {
 	});
 
 });
-
 </script>
-<script src="${path}/resources/js/category.js"></script>
+  <script src="${path}/resources/js/category.js"></script>
 </body>
 
 </html>
