@@ -103,7 +103,7 @@
         </div>
       </div>
       <button class="find-form__btn btn-light-gray" type="button" onclick="popClose();">취소</button>
-      <button class="find-form__btn btn-green" type="button" onclick="sendCategory();">확인</button>
+      <button class="find-form__btn btn-green" type="button" onclick="submitCategory();">확인</button>
     </div>
   </div>
 </section>

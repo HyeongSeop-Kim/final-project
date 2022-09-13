@@ -71,6 +71,12 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		return false;
 	}
 
+	public boolean updateCate(MembersDTO dto) {
+		String mapId = String.format(mapper, "updateCate");
+		int res = session.insert(mapId, dto);
+		return res == 1 ? true : false;
+	}
+
 	@Override
 	public boolean deleteData(MembersDTO dto) {
 		return false;

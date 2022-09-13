@@ -29,7 +29,6 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		if(data == null) {
 			return false;
 		}else {
-			System.out.println(data);
 			session.setAttribute("loginData", data);
 			return true;
 		}
@@ -78,6 +77,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		return false;
 	}
 
+	public boolean modifyCate(MembersDTO dto) {
+		boolean res = dao.updateCate(dto);
+		return res;
+	}
 	@Override
 	public boolean removeData(MembersDTO dto) {
 		return false;

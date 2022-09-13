@@ -1,3 +1,4 @@
+
 // 변수 선언
 let category;
 const items = document.querySelectorAll(".col-4 .service-items");
@@ -45,7 +46,8 @@ items.forEach( (item) => {
     });
 });
 
-function selectCntCheck() { // 선택된 관심사 갯수 확인 함수
+// 선택된 관심사 갯수 확인
+function selectCntCheck() {
     const cnt = document.querySelectorAll('.check-badge').length;
     return cnt;
 }
@@ -61,7 +63,8 @@ function modifyCategory(selectDatas) {  // DB 수정 확인 후 작동 하도록
 
     for(const data of selectDatas){
         const i = document.createElement('i');
-        const classList = 'icon-green service-sm-items ' + data
+        const classList = 'icon-green service-sm-items ' + data;
+
         i.setAttribute('class', classList);
         cate.insertBefore(i, cate.firstChild);
     }
@@ -76,44 +79,114 @@ function sendCategory() {
     let selectDatas = [];
 
     for(const data of document.querySelectorAll('.check-badge')) {
-        let selectData = data.previousElementSibling.classList.value
+        let selectData = data.previousElementSibling.classList.value;
         selectDatas.push(selectData);
     }
-    // submitCategory()
     opener.modifyCategory(selectDatas);
     window.close();
-
 }
 
 // 데이터 전송후 db저장
+function submitCategory() {
+    let selectDatas = [];
 
-// function submitCategory() {
-//     let selectDatas = [];
-//
-//     for(const data of document.querySelectorAll('.check-badge')) {
-//         let selectData = {};
-//         selectData = { 'id' : data.parentElement.getAttribute('id') };
-//         selectDatas.push(selectData);
-//     }
-//
-//     console.log(selectDatas);
-//     const jsonEncode = JSON.stringify(selectDatas);
-//     console.log(jsonEncode);
-//     $.ajax({
-//         type: "post",
-//         url: "ajax/cate",
-//         contentType: "application/json",
-//         data: jsonEncode,
-//         dataType: "json",
-//         success: (result) => {
-//             console.log('성공');
-//         },
-//         error: () => {
-//             console.log('실패');
-//         }
-//
-//     })
-// }
+    for(const data of document.querySelectorAll('.check-badge')) {
+        let selectData = {};
+        selectData = { 'id' : data.parentElement.getAttribute('id') };
+        selectDatas.push(selectData);
+    }
+
+    $.ajax({
+        type: "post",
+        url: "ajax/cate",
+        traditional: true,
+        contentType: "application/json",
+        data: JSON.stringify(selectDatas),
+        dataType: "json",
+        success: (msg) => {
+            if(msg.res) {
+                sendCategory();
+            } else {
+                alert("변경에 실패하였습니다.");
+            }
+        },
+        error: () => {
+            alert("변경에 실패하였습니다.");
+        }
+
+    });
+}
+
+// 개인정보창 관심사 보여주기
+function printCate(cateList) {
+    let arr = [];
+    arr = cateList.split(',');
+    const cate = document.querySelector('#cate');
+
+    for(const id of arr) {
+        let className = "";
+        switch (id) {
+            case '1' :
+                className = "fa-solid fa-suitcase ";
+                break;
+            case '2' :
+                className = "fa-solid fa-person-swimming ";
+                break;
+            case '3' :
+                className = "fa-solid fa-book ";
+                break;
+            case '4' :
+                className = "fa-solid fa-language ";
+                break;
+            case '5' :
+                className = "fa-solid fa-masks-theater ";
+                break;
+            case '6' :
+                className = "fa-solid fa-music ";
+                break;
+            case '7' :
+                className = "fa-solid fa-palette ";
+                break;
+            case '8' :
+                className = "fa-solid fa-user-ninja ";
+                break;
+            case '9' :
+                className = "fa-solid fa-hands ";
+                break;
+            case '10' :
+                className = "fa-solid fa-handshake-simple ";
+                break;
+            case '11' :
+                className = "fa-solid fa-car ";
+                break;
+            case '12' :
+                className = "fa-brands fa-youtube ";
+                break;
+            case '13' :
+                className = "fa-solid fa-baseball-bat-ball ";
+                break;
+            case '14' :
+                className = "fa-solid fa-gamepad ";
+                break;
+            case '15' :
+                className = "fa-solid fa-utensils ";
+                break;
+            case '16' :
+                className = "fa-solid fa-dog ";
+                break;
+            case '17' :
+                className = "fa-solid fa-hand-holding-heart ";
+                break;
+            case '18' :
+                className = "fa-solid fa-paper-plane ";
+                break;
+        }
+        const i = document.createElement('i');
+        const classList = className + 'icon-green service-sm-items'
+        i.setAttribute('class', classList);
+        cate.insertBefore(i, cate.firstChild);
+    }
+}
 
 
 // 팝업 띄우기

@@ -33,23 +33,23 @@
 					<input class="imgSelect" type="file" name="uploadImg" value="이미지 선택">
 				</div>
 				<!-- 이름, 생년월일, 거주지역 -->
-				<div class="simple-info">
-					<input class="name" type="text" value="홍길동" disabled>
-					<span class="material-icons"  style="font-size:40px; color: gray;">date_range</span><input class="birth" type="text" value="2000.06.25"  disabled>
-					<span class="material-icons" style="font-size:40px; color: gray;">room</span><input class="location" type="text" value="서울특별시" disabled>
+				<div>
+					<div class="simple-info">
+						<input class="name" type="text" value="${sessionScope.loginData.memberName}" disabled>
+						<span class="material-icons"  style="font-size:40px; color: gray;">date_range</span><input class="birth" type="text" value="${sessionScope.loginData.birth}"  disabled>
+						<span class="material-icons" style="font-size:40px; color: gray;">room</span><input class="location" type="text" value="${sessionScope.loginData.locationName}" disabled>
+					</div>
+					<!-- 카테고리 -->
+					<div id="cate" class="category-box">
+						<c:if test="${not empty sessionScope.loginData}">
+							<script>
+								window.onload = () => {
+									addEventListener("DOMContentLoaded", printCate("${sessionScope.loginData.category}"));
+								};
+							</script>
+						</c:if>
+					</div>
 				</div>
-				<!-- 카테고리 이미지 반복문으로 하나씩 추가되게끔? -->
-				 <section class="d-flex justify-content-between align-items-center pb-3 category-box">
-				 	<div class="category-img">
-	           			<i class="fa-solid fa-person-swimming icon-green service-sm-items category tage"></i>
-	           		</div>
-	           		<div class="category-img">
-	           			<i class="fa-solid fa-person-swimming icon-green service-sm-items category tage"></i>
-	           		</div>
-	           		<div class="category-img">
-	           			<i class="fa-solid fa-person-swimming icon-green service-sm-items category tage"></i>
-            		</div>
-            	</section>
 				<div class="imgSelect-box">
 					<!-- 아이콘 누르면 파일선택창 열리게 하고싶음-->
 					<button type="button" class="btn btn-secondary coverImage">커버 사진 변경</button>
@@ -209,5 +209,6 @@
 	            myInput.click();
 		 }
 	</script>
+	<script src="${path}/resources/js/category.js"></script>
 </body>
 </html>
