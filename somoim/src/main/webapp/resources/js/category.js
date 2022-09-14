@@ -1,6 +1,5 @@
 
 // 변수 선언
-let category;
 const items = document.querySelectorAll(".col-4 .service-items");
 
 // hover 기능
@@ -188,27 +187,27 @@ function printCate(cateList) {
     }
 }
 
-
-// 팝업 띄우기
-function popCategory(){
-    if (!category){       //최초 클릭이면 팝업을 띄운다
-        let popUrl = "category";
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
-        category = true;
-    }
-    else{           //최초 클릭이 아니면
-        if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-            Clip.focus();
-        }
-        else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
-            let popUrl = "category";
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
-            category = true;
-        }
-    }
-};
-
-// 팝업 닫기
-function popClose() {
-    window.close();
-}
+//
+// // 팝업 띄우기
+// function popCategory(){
+//     if (!category){       //최초 클릭이면 팝업을 띄운다
+//         let popUrl = "category";
+//         Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+//         category = true;
+//     }
+//     else{           //최초 클릭이 아니면
+//         if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
+//             Clip.focus();
+//         }
+//         else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
+//             let popUrl = "category";
+//             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+//             category = true;
+//         }
+//     }
+// };
+//
+// // 팝업 닫기
+// function popClose() {
+//     window.close();
+// }

@@ -166,9 +166,13 @@ public class SomoimController {
 		return "info/userInfo";
 	}
 
+	@GetMapping(value = "modProfile")
+	public String modProfile(){
+		return "info/modProfile";
+	}
+
 	@GetMapping(value = "category")
 	public String category(Locale locale, Model model) {
-
 		return "form/category";
 	}
 

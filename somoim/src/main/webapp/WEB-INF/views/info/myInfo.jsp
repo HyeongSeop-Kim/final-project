@@ -50,7 +50,7 @@
 
 				<div class="imgSelect-box">
 					<button type="button" id="infoImg-btn" class="btn btn-secondary coverImage">커버 사진 변경</button>
-					<button type="button" class="btn btn-secondary modify">프로필 편집</button>
+					<button type="button" class="btn btn-secondary modify" onclick="popModProfile();">프로필 편집</button>
 				</div>
 			</div>
 	</section>
@@ -162,5 +162,6 @@
 	</script>
 	<script src="${path}/resources/js/category.js"></script>
 	<script src="${path}/resources/js/info.js"></script>
+	<script src="${path}/resources/js/components/popup.js"></script>
 </body>
 </html>
