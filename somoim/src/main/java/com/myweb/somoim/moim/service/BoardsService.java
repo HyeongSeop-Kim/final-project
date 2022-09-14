@@ -29,8 +29,9 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 	}
 
 	@Override
-	public List<BoardsDTO> getDatas(String s) {
-		return null;
+	public List<BoardsDTO> getDatas(String id) {
+		List<BoardsDTO> datas = dao.selectDatas(id);
+		return datas;
 	}
 
 

@@ -31,8 +31,8 @@
 	 	 ,M.PHONE
 	 	 ,M.CATEGORY
 	 	 ,M.BOOKMARK
-	 	 ,M.MEMBER_IMAGE_PATH
-	 	 ,M.INFO_IMAGE_PATH
+	 	 ,M.MEMBER_IMAGE_PATH AS memberImagePath
+	 	 ,M.INFO_IMAGE_PATH AS infoImagePath
 	 	 ,M.LOCATION_ID AS locationId
 	 	 ,L.LOCATION_NAME  AS locationName
 				FROM MEMBERS M

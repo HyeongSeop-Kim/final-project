@@ -26,7 +26,22 @@ ON M.MEMBER_ID = S.MEMBER_ID
 WHERE B.MOIM_ID = #{id}
 ORDER BY B.BOARD_CREATE_DATE DESC
     </select>
-    
+
+    <select id ="selectWriteDatas" resultType="boardsDTO">
+        SELECT B.BOARD_ID AS boardId
+             , B.BOARD_TITLE AS boardTitle
+             , B.CONTENT AS content
+             , B.BOARD_CREATE_DATE AS boardCreateDate
+             , B."LIKE" AS "like"
+             , B.MOIM_ID AS moimId
+             , B.MEMBER_ID AS memberId
+             , M.MOIM_TITLE AS moimTitle
+          FROM BOARDS B
+          JOIN MOIM M
+            ON B.MOIM_ID = M.MOIM_ID
+         WHERE B.MEMBER_ID = #{id}
+    </select>
+
     <insert id="insertData" parameterType="boardsDTO" >
     INSERT INTO BOARDS VALUES (
                   SQU_BOARDS.NEXTVAL,

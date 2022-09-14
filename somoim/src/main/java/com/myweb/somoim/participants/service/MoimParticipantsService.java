@@ -28,8 +28,9 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 	}
 
 	@Override
-	public List<MoimParticipantsDTO> getDatas(String s) {
-		return null;
+	public List<MoimParticipantsDTO> getDatas(String id) {
+		List<MoimParticipantsDTO> data = dao.selectJoinMoimData(id);
+		return data;
 	}
 
 	

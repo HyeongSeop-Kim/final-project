@@ -114,6 +114,18 @@
       WHERE MOIM_ID = #{moimId}
    </update>
 
+    <update id="updateInfoImage" parameterType="memberDto">
+        UPDATE MEMBERS
+           SET INFO_IMAGE_PATH = #{infoImagePath}
+         WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <update id="updateProfileImage" parameterType="memberDto">
+        UPDATE MEMBERS
+        SET MEMBER_IMAGE_PATH = #{memberImagePath}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
     <select id="selectSubDatas" resultType="somoimDTO">
    		SELECT M.MOIM_TITLE AS moimTitle
 	 		 , M.MOIM_ID AS moimId
