@@ -3,6 +3,7 @@ package com.myweb.somoim.members.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,19 +58,26 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	}
 
 	@Override
-	public MembersDTO getData(String memberId) {
-		MembersDTO bookmarkData = dao.selectData(memberId);
-		
-		String[] bookmarkList = bookmarkData.getBookmark().split(",");
-		
-		
-		String bookmark = String.join("','",bookmarkList);
-	
-		bookmarkData.setBookmark(bookmark);
-		return bookmarkData;
+	public MembersDTO getData(String s) {
+		return null;
 	}
-	
-	
+
+	public List<String> getBmkData(String memberId)  {
+			MembersDTO bookmarkData = dao.selectData(memberId);
+		if(bookmarkData != null) {
+			List<String> bookmarkList = Arrays.asList(bookmarkData.getBookmark().split(","));
+			return bookmarkList;
+		}else {
+			MembersDTO data = new MembersDTO();
+			data.setBookmark("");
+			data.setMemberId(memberId);
+			boolean result = dao.updateBookmark(data);
+			List<String> nullBookmark =Arrays.asList(data.getBookmark());
+			return nullBookmark;
+		}
+	}
+
+
 	public boolean addBookmark(String memberId) {
 		MembersDTO bookmarkData = dao.selectData(memberId);
 		 if(bookmarkData != null) {
@@ -85,8 +93,8 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		 }
 		 return false;
 	}
-	
-	
+
+
 
 	@Override
 	public MembersDTO getData(MembersDTO dto) {
@@ -128,7 +136,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 
 	public MembersDTO selectFindPw(MembersDTO data) {
 		MembersDTO res = dao.selectFindPw(data);
-		
+
 		return res;
 	}
 

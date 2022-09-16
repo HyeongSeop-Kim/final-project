@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,23 +96,25 @@ public class MoimController {
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 
-	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); 
+	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);
 	SomoimDTO moimData = SomoimService.getData(id); //모임정보
-	
+
 
 	JSONObject json = new JSONObject();
-	
+
 	if(currentMemberCount >= moimData.getMoimLimit()) {
-		
-		
+
+
 		json.put("code",   "over");
 		json.put("message",   "정원이 이미 마감 되었습니다.");
         return json.toJSONString();
 	}else {
 		MoimParticipantsDTO dto = new MoimParticipantsDTO();
+
 		dto.setMoimId(id);
 		dto.setMemberId(membersDto.getMemberId());
-	   
+
+
 		boolean result = moimParticipantsService.addData(dto);
 		json.put("code",   "success");
 		json.put("message",   "가입이 완료되었습니다.");
@@ -119,13 +122,13 @@ public class MoimController {
 
 	 }
 
-		
+
 	}
-	
-	
 
 
-		
+
+
+
 
 
    @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
@@ -133,32 +136,32 @@ public class MoimController {
 			@RequestParam int id
 			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-	   
-		
-	   
+
+
+
 	     return "redirect:/moim/meeting?id="+id;
 
    }
-   
-   
+
+
    @RequestMapping(value = "/moim/bookmarkAdd", method = RequestMethod.GET)
    public String bookmarkAdd(Model model,
 			@RequestParam int id
 			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-	   
-	   
+
+
 	   MembersDTO data = memberService.getData(id);
-	   
+
 	 // boolean res = memberService.addBookmark(data);
-	   
-	  
-		
-	   
+
+
+
+
 	     return "redirect:/moim/meeting?id="+id;
 
- } 
-   
+ }
+
 
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.POST)
@@ -170,30 +173,70 @@ public class MoimController {
 		   ,@RequestParam(required= false, defaultValue="5")int moimLimit
 		   ,@RequestParam() int categoryId) {
 		JSONObject json = new JSONObject();
-
-		SomoimDTO data = new SomoimDTO();
-		data.setLocationId(locationId);
-		data.setMoimTitle(moimTitle);
-		data.setMoimLimit(moimLimit);
-		data.setMoimInfo(moimInfo);
-		data.setMoimImagePath(null);
-		data.setCategoryId(categoryId);
-
-		boolean result = SomoimService.addData(data);
-		MoimParticipantsDTO partData = new MoimParticipantsDTO();
 		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
-		partData.setMemberId(memData.getMemberId());
-		partData.setMoimId(data.getMoimId());
 
-		boolean res = SomoimService.addDataSub(partData);
-		json.put("data", result);
-		if(result == false) {
-			json.put("message", "필수입력항목 누락");
+		int memberCnt = SomoimService.getDataCnt(memData.getMemberId());
+		boolean chk = false;
+		if(memberCnt <= 5) {
+			SomoimDTO data = new SomoimDTO();
+			data.setLocationId(locationId);
+			data.setMoimTitle(moimTitle);
+			data.setMoimLimit(moimLimit);
+			data.setMoimInfo(moimInfo);
+			data.setMoimImagePath("/somoim/resources/img/moim/profile.png");
+			data.setCategoryId(categoryId);
+
+			boolean result = SomoimService.addData(data);
+
+			MoimParticipantsDTO partData = new MoimParticipantsDTO();
+		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
+			partData.setMemberId(memData.getMemberId());
+			partData.setMoimId(data.getMoimId());
+
+			boolean res = SomoimService.addDataSub(partData);
+			if (result == true && res == true) {
+				chk = true;
+			}
+			json.put("data", chk);
+		} else {
+			json.put("data", chk);
+			json.put("message", "가입가능한 모임 수를 초과하였습니다.");
 		}
 		return json.toJSONString();
 	}
 
+	@RequestMapping(value = "/moim/add/add_join_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String addJoinList( HttpSession session) {
 
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<SomoimDTO> participantsData = SomoimService.getDatas(membersData.getMemberId());
+		JSONArray join_datas = new JSONArray();
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
+
+	@RequestMapping(value = "/moim/add/add_bookmark_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String addBookMarkList( HttpSession session) {
+
+		JSONArray join_datas = new JSONArray();
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<String> bookmarkData = memberService.getBmkData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = SomoimService.getDatas_bmk(bookmarkData);
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
 
 
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
@@ -202,7 +245,6 @@ public class MoimController {
 			        ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 		SomoimDTO moimData = SomoimService.getData(id); //모임정보
-	
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
@@ -213,9 +255,9 @@ public class MoimController {
 		data.setMemberId(membersDto.getMemberId());
 		data.setMoimId(id);
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
-		
+
 		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재 정원확인
-		
+
 		if(currentMemberCount >= moimData.getMoimLimit() ) {
 			model.addAttribute("over" , "초과");
 		}
@@ -225,7 +267,7 @@ public class MoimController {
 		model.addAttribute("moimParticipants",moimParticipants);
 		model.addAttribute("meetingParticipants", meetingParticipants);
 		model.addAttribute("currentMemberCount", currentMemberCount);
-		
+
 		
 		return "moim/meeting";
 	}
@@ -258,7 +300,7 @@ public class MoimController {
 		if(currentMemberCount >= moimData.getMoimLimit() ) { //정원수 초과할경우 정원마감모임이라고 알려주기
 			model.addAttribute("over" , "초과");
 		}
-		
+
 		   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
            model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
@@ -367,8 +409,6 @@ public class MoimController {
 	  return "redirect:/moim/board?id="+id;
 	}
 
-	
-	
 
 
 
@@ -383,7 +423,7 @@ public class MoimController {
 
 
 		SomoimDTO data1 = SomoimService.getData(id);
-		
+
 
 	 data1.setMoimImagePath(request.getContextPath() + "/resources/img/moim/" + data1.getMoimId() + ".png");
 
@@ -395,7 +435,7 @@ public class MoimController {
 	file.transferTo(new File(realPath + "/img/moim/" + data1.getMoimId() + ".png"));	//실제로 업로드해주기
 
 	JSONObject json = new JSONObject();
-	
+
 	json.put("url",   request.getContextPath() + "/resources/img/moim/" + data1.getMoimId() + ".png");
 
 

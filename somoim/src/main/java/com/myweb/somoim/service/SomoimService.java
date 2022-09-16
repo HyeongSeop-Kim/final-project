@@ -59,14 +59,14 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 		return data;
 	}
 	
-	public List<SomoimDTO> getDatas_bmk(String moimIds) {
-		List<SomoimDTO> data = dao.selectSubDatas(moimIds);
+	public List<SomoimDTO> getDatas_bmk(List<String> moimIds) {
+		List<SomoimDTO> data = dao.selectSubDatas_bmk(moimIds);
 		return data;
 	}
-
-	public List<SomoimDTO> getBookmarkDatas(){
-		
-		return null;
+	
+	public int getDataCnt(String memberId) {
+		int count = dao.selectCnt(memberId);
+		return count;
 	}
 	
 	@Override
@@ -87,9 +87,6 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 
 	@Override
 	public boolean addData(SomoimDTO dto) {
-		int seq = dao.getNextSeq();
-		dto.setMoimId(seq);
-
 		boolean result = dao.insertData(dto);
 		return result;
 	}
