@@ -43,9 +43,9 @@ import com.myweb.somoim.service.SomoimService;
 
 @Controller
 public class SomoimController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SomoimController.class);
-	
+
 	@Autowired
 	private SomoimService service;
 	@Autowired
@@ -54,7 +54,7 @@ public class SomoimController {
 	private CategorysService categoryService;
 
 	@Autowired
-	private	MoimParticipantsService moimParticipantsService;
+	private MoimParticipantsService moimParticipantsService;
 
 	@Autowired
 	private MembersService memberservice;
@@ -64,27 +64,23 @@ public class SomoimController {
 		List<CategorysDTO> datas = categoryService.getAll();
 		model.addAttribute("datas", datas);
 
-		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
-		String memberId = membersData.getMemberId();
-		MembersDTO bookmarkData = memberservice.getData(memberId);
-
 		return "somoim_m";
 	}
-	
-// 리스트 뽑기	
+
+	// 리스트 뽑기
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public String moimList(@RequestParam(defaultValue="1", required=false) int page //현재페이지
+	public String moimList(@RequestParam(defaultValue = "1", required = false) int page //현재페이지
 			, @RequestParam("page_count") int pageCount //한페이지에 몇개 게시물
 			, @RequestParam("list_search") String search
 			, @RequestParam("category_id") int categoryId) {
 		Map res_data = service.getAll(page, pageCount, search, categoryId);
-		List datas = (List)res_data.get("datas"); // 가져온 데이터 리스트
-		PagingDTO pager = (PagingDTO)res_data.get("page_data"); // 가져온 페이징 객체
+		List datas = (List) res_data.get("datas"); // 가져온 데이터 리스트
+		PagingDTO pager = (PagingDTO) res_data.get("page_data"); // 가져온 페이징 객체
 		JSONArray data_arr = new JSONArray(); // 가져온 데이터 리스트를 넣는 배열
 		JSONObject page_obj = new JSONObject(); // 가져온 페이징 데이터를 넣는 객체
 		JSONObject rtn_data = new JSONObject(); // 결과값
-		for (SomoimDTO smoim : (List<SomoimDTO>)datas) {
+		for (SomoimDTO smoim : (List<SomoimDTO>) datas) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
 			json.put("moimTitle", smoim.getMoimTitle());
@@ -108,12 +104,12 @@ public class SomoimController {
 
 	@RequestMapping(value = "/join_list", method = RequestMethod.GET)
 	@ResponseBody
-	public String joinList( HttpSession session) {
+	public String joinList(HttpSession session) {
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
 		List<SomoimDTO> participantsData = service.getDatas(membersData.getMemberId());
 		JSONArray join_datas = new JSONArray();
-		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+		for (SomoimDTO smoim : (List<SomoimDTO>) participantsData) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
 			json.put("moimTitle", smoim.getMoimTitle());
@@ -124,13 +120,13 @@ public class SomoimController {
 
 	@RequestMapping(value = "/bookmark_list", method = RequestMethod.GET)
 	@ResponseBody
-	public String bookMarkList( HttpSession session) {
+	public String bookMarkList(HttpSession session) {
 
 		JSONArray join_datas = new JSONArray();
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
 		List<String> bookmarkData = memberservice.getBmkData(membersData.getMemberId());
 		List<SomoimDTO> participantsData = service.getDatas_bmk(bookmarkData);
-		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+		for (SomoimDTO smoim : (List<SomoimDTO>) participantsData) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
 			json.put("moimTitle", smoim.getMoimTitle());
@@ -158,7 +154,7 @@ public class SomoimController {
 		response.addCookie(cookie);
 		return join_datas.toJSONString();
 	}
-
+*/
 
 	@GetMapping(value="/userInfo") 
 	public String info() {
