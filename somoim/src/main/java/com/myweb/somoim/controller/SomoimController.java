@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.myweb.somoim.common.model.LocationsDTO;
 import com.myweb.somoim.common.service.FileUploadService;
+import com.myweb.somoim.common.service.LocationsService;
 import com.myweb.somoim.members.model.MembersDTO;
 import com.myweb.somoim.members.service.MembersService;
 import com.myweb.somoim.moim.model.BoardsDTO;
@@ -67,6 +69,10 @@ public class SomoimController {
 	private FileUploadService fileUploadService;
 	@Autowired
 	private MembersService memberservice;
+	@Autowired
+	private LocationsService locationsService;
+	@Autowired
+	private CategorysService categorysService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String moimMain(Model model, HttpSession session) {
@@ -161,13 +167,49 @@ public class SomoimController {
 		return "info/myInfo";
 	}
 
+	@RequestMapping(value = "infoMod", method = RequestMethod.POST)
+	public String addJoin(MembersDTO membersDTO, HttpSession session
+			,@RequestParam (required = false) String year
+			,@RequestParam (required = false) String month
+			,@RequestParam (required = false) String day
+			,@RequestParam (required = false) String memberName) {
+		String bitrhs = year+month+day;
+
+		membersDTO.setBirth(bitrhs);
+
+		MembersDTO data = new MembersDTO();
+		data.setMemberId(membersDTO.getMemberId());
+		data.setMemberName(membersDTO.getMemberName());
+		data.setPassword(membersDTO.getPassword());
+		data.setGender(membersDTO.getGender());
+		data.setBirth(membersDTO.getBirth());
+		data.setPhone(membersDTO.getPhone());
+		data.setCategory(membersDTO.getCategory());
+		data.setLocationId(membersDTO.getLocationId());
+
+		boolean result = membersService.modifyData(data);
+
+		if (result) {
+			MembersDTO loginData = membersService.getData((MembersDTO) session.getAttribute("loginData"));
+			session.setAttribute("loginData", loginData);
+			return "info/myInfo";
+		}else {
+			return "info/myInfo";
+		}
+	}
+
 	@GetMapping(value="/info/userInfo")
 	public String userInfo() {
 		return "info/userInfo";
 	}
 
-	@GetMapping(value = "modProfile")
-	public String modProfile(){
+	@GetMapping(value = "/info/modProfile")
+	public String modProfile(Model model){
+		List<LocationsDTO> locDatas = locationsService.getAll();
+		List<CategorysDTO> categorysDatas = categorysService.getAll();
+
+		model.addAttribute("categorysDatas",categorysDatas);
+		model.addAttribute("locDatas", locDatas);
 		return "info/modProfile";
 	}
 

@@ -70,7 +70,8 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 
 	@Override
 	public MembersDTO getData(MembersDTO dto) {
-		return null;
+		MembersDTO data = dao.selectData(dto);
+		return data;
 	}
 
 	@Override
@@ -82,8 +83,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	}
 
 	@Override
-	public boolean modifyData(MembersDTO dto) {
-		return false;
+	public boolean modifyData(MembersDTO data) {
+		boolean res = dao.updateData(data);
+
+		return res;
 	}
 
 	public boolean modifyCate(MembersDTO dto) {

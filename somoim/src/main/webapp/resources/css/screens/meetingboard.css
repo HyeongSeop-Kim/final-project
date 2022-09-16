@@ -226,3 +226,14 @@
 .ImgSelect{
 	display: none;
 }
+
+/*추가*/
+.hoverMem{
+	border-radius: 8px;
+	background-color: #669cec30;
+}
+
+.partList {
+	width: 100%;
+	padding: 1px;
+}

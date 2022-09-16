@@ -21,31 +21,34 @@
 	</header>
 	<section class="form-section">
 		<div class="form-container" >
-		<c:url  var="joinAddUrl" value="/addJoin"></c:url>
-			<form class="join-form " method="post" action="${joinAddUrl}">
+		<c:url  var="infoModUrl" value="/infoMod"></c:url>
+			<form class="join-form " method="post" action="${infoModUrl}">
 				<label class="join-form__label ">아이디</label>
-				<input class="join-form__input info__id" type="text" name="memberId" id="uId">
+				<input class="join-form__input info__id" type="text" name="memberId" id="uId" value="${sessionScope.loginData.memberId}"readonly>
 				<div class="error-id-msg"></div>
 				<label class="join-form__label">비밀번호</label>
-				<input class="join-form__input info__pw1" type="password" name="password" id="pw1">
+				<input class="join-form__input info__pw1" type="password" name="password" id="pw1" value="${sessionScope.loginData.password}"readonly>
 				<div class="error-pw1-msg"></div>
 				<label class="join-form__label">비밀번호 재확인</label>
-				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2">
+				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2" value="${sessionScope.loginData.password}"readonly>
 				<div class="error-pw2-msg"></div>	
 				<label class="join-form__label">이름</label>
-				<input class="join-form__input" type="text" name="memberName" id ="memberName">
+				<input class="join-form__input" type="text" name="memberName" id ="memberName" value="${sessionScope.loginData.memberName}"readonly>
 				<div class="error-name-msg"></div>
+				<c:set var="birthYear" value="${fn:substring(sessionScope.loginData.birth, 0, 4)}"></c:set>
+				<c:set var="birthMonth" value="${fn:substring(sessionScope.loginData.birth, 4, 6)}"></c:set>
+				<c:set var="birthDate" value="${fn:substring(sessionScope.loginData.birth, 6, 8)}"></c:set>
 				<label class="join-form__label">생년월일</label>
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
-					 <select class="join-form-inline__input" id="birth-year" name="year">
-				     	 <option disabled selected>출생 연도</option>
+					 <select class="join-form-inline__input" id="birth-year" name="year" readonly>
+				     	 <option value="${birthYear}" selected>${birthYear}</option>
 			    	</select>
-				    <select class="join-form-inline__input" id="birth-month" name="month">
-				      <option disabled selected>월</option>
+				    <select class="join-form-inline__input" id="birth-month" name="month" readonly>
+				      <option value="${birthMonth}" selected>${birthMonth}</option>
 				    	</select>
-				    <select class="join-form-inline__input" id="birth-day" name="day">
-				    	  <option disabled selected>일</option>
+				    <select class="join-form-inline__input" id="birth-day" name="day" readonly>
+						<option value="${birthDate}" selected>${birthDate}</option>
 			   	 </select>
 			   	 </div>
 				  <div class="error-msg"></div>
@@ -53,10 +56,12 @@
 				<div class="join-form-inline">
 					<div class="join-form-inline__div">
 						<label class="join-form__label">성별</label>
-						<select class="join-form__input" name="gender" id="gender">
-							<option disabled selected >성별</option>
-							<option value="M">남자</option>
-							<option value="F">여자</option>
+						<select class="join-form__input" name="gender" id="gender" readonly>
+							<option disabled selected>성별</option>
+							<option value="M" <c:if test="${sessionScope.loginData.gender eq 'M'}">
+								selected</c:if>>남자</option>
+							<option value="F" <c:if test="${sessionScope.loginData.gender eq 'F'}">
+								selected</c:if>>여자</option>
 						</select>
 					</div>
 					<div class="join-form-inline__div">
@@ -64,164 +69,43 @@
 						<select class="join-form__input" name="LocationId" id="location">
 							<option disabled selected>지역</option>
 								<c:forEach items="${locDatas}" var="locDto">
-									<option value="${locDto.locationId}">${locDto.locationName}</option>
+									<option value="${locDto.locationId}" <c:if test="${sessionScope.loginData.locationId eq locDto.locationId}">
+										selected</c:if>>${locDto.locationName}</option>
 								</c:forEach>
 						</select>
 					</div>
 				</div>
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호">
+				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" value="${sessionScope.loginData.phone}">
 			    <div class="error-phone-msg"></div>
 			
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
-			<div> 
+
+			<div>
 				<c:forEach items="${categorysDatas}" var="categoryDto" >
-					<div class="join-form_category_option">
-						<input value="${categoryDto.categoryId}" id="${categoryDto.categoryId}"type="checkbox" name="category" onclick="count_check(this);">
+					<c:set var="selList" value="${sessionScope.loginData.category}" />
+
+					<c:set var="id" value="${fn:split(selList, ',')}" />
+
+					<div id="cate" class="join-form_category_option">
+						<input value="${categoryDto.categoryId}" id="${categoryDto.categoryId}" type="checkbox" name="category" onclick="count_check(this);"
+						<c:forEach items="${id}" var="selId">
+						<c:if test="${categoryDto.categoryId eq selId}">
+							   checked
+						</c:if>
+						</c:forEach>>
 						<label for="${categoryDto.categoryId}">${categoryDto.categoryName} </label>
 					</div>
 				</c:forEach>
 			</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
+				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="수정"  >수정</button>
 				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
 			</form>
 		</div>
 	</section>
 </body>
+<script src="${path}/resources/js/components/popup.js"></script>
 <script type="text/javascript">
-	// 팝업창 닫기 
-	function popClose() {
-		window.close();
-	};
-	
-	// 유효성 검사 : 생년월일 년
-	const birthYearEl = document.querySelector('#birth-year')
-	// option 목록 생성 여부 확인
-	isYearOptionExisted = false;
-	birthYearEl.addEventListener('focus', function () {
-	  // year 목록 생성되지 않았을 때 (최초 클릭 시)
-	  if(!isYearOptionExisted) {
-	    isYearOptionExisted = true
-	    for(var i = 1940; i <= 2022; i++) {
-	      // option element 생성
-	      const YearOption = document.createElement('option')
-	      YearOption.setAttribute('value', i)
-	      YearOption.innerText = i
-	      // birthYearEl의 자식 요소로 추가
-	      this.appendChild(YearOption);
-	    }
-	  }
-	});
-	
-	// 유효성 검사 : 생년월일 월
-	const birthMonthEl = document.querySelector('#birth-month')
-	// option 목록 생성 여부 확인
-	isMonthOptionExisted = false;
-	birthMonthEl.addEventListener('focus', function () {
-	  // month 목록 생성되지 않았을 때 (최초 클릭 시)
-	  if(!isMonthOptionExisted) {
-	    isMonthOptionExisted = true
-	    for(var i = 1; i <= 12; i++) {
-	      // option element 생성
-	      const MonthOption = document.createElement('option')
-	     MonthOption.setAttribute('value', i)
-	      MonthOption.innerText = i
-	      // birthmonthEl의 자식 요소로 추가
-	      this.appendChild(MonthOption);
-	    }
-	  }
-	});
-	
-	// 유효성 검사 : 생년월일 일
-	const birthDayEl = document.querySelector('#birth-day')
-	// option 목록 생성 여부 확인
-	isDayOptionExisted = false;
-	birthDayEl.addEventListener('focus', function () {
-	  // Day 목록 생성되지 않았을 때 (최초 클릭 시)
-	  if(!isDayOptionExisted) {
-	    isDayOptionExisted = true
-	    for(var i = 1; i <= 31; i++) {
-	      const DayOption = document.createElement('option')
-	      DayOption.setAttribute('value', i)
-	      DayOption.innerText = i
-	      this.appendChild(DayOption);
-	    }
-	  }
-	});
-	
-	//유효 날짜 여부 확인 
-	// [year, month, day]
-	const birthArr = [-1, -1, -1]
-	const birthErrorMsgEl = 
-	  document.querySelector('#info__birth .error-msg')
-
-	birthYearEl.addEventListener('change', () => {
-	  birthArr[0] = birthYearEl.value
-	  // 유효 날짜 여부 확인
-	  checkBirthValid(birthArr)
-	});
-
-	birthMonthEl.addEventListener('change', () => {
-	  birthArr[1] = birthMonthEl.value
-	  checkBirthValid(birthArr)
-	});
-
-	birthDayEl.addEventListener('change', () => {
-	  birthArr[2] = birthDayEl.value
-	  checkBirthValid(birthArr)
-	});
-
-	/* 유효한 날짜인지 여부 확인 (윤년/평년) */
-	function checkBirthValid(birthArr) {
-	var account = 
-		
-	isBirthValid = true
-  
-	  y = birthArr[0]
-	  m = birthArr[1]
-	  d = birthArr[2]
-	  // 생년월일 모두 선택 완료 시
-	  if(y > 0 && m > 0 && d > 0) {
-	    if ((m == 4 || m == 6 || m == 9 || m == 11) && d == 31) { 
-	      isBirthValid = false
-	    }
-	    else if (m == 2) {
-	      if(((y % 4 == 0) && (y % 100 != 0)) || (y % 400 == 0)) { // 윤년
-	        if(d > 29) { // 윤년은 29일까지
-	          isBirthValid = false
-	        }
-	      } else { // 평년
-	        if(d > 28) { // 평년은 28일까지
-	          isBirthValid = false
-	        }
-	      }
-	    }
-	
-	    if(isBirthValid) { // 유효한 날짜
-	        birthErrorMsgEl.textContent = ""
-	        account.birth = birthArr.join('')
-	      } else { // 유효하지 않은 날짜
-	    	  birthErrorMsgEl.textContent = errMsg.birth     
-	    	  account.birth = null
-	      }
-	    }
-	  };
-	  /*** SECTION - ID ***/
-	  const idInputEl = document.querySelector('div form .info__id');
-	  const idErrorMsgEl = document.querySelector('div form  .error-id-msg')
-	  idInputEl.addEventListener('focusout', () => {
-	    const idRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
-	    if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
-	    	 idErrorMsgEl.textContent = errMsg.id.empty
-	    }else{
-		    if(idRegExp.test(idInputEl.value)) { // 유효성 검사 성공
-		      idErrorMsgEl.textContent = "";
-		    } else { // 유효성 검사 실패
-		      idErrorMsgEl.textContent = errMsg.id.invalid
-		    }
-		  }
-	    });
-	  
 	  /*** PW ***/
 	   // pwVal: 패스워드, pwReVal: 패스워드 재입력, isPwValid: 패스워드 유효 여부
 		let pwVal = "", pwReVal = "", isPwValid = false
@@ -264,8 +148,8 @@
 		    pwReErrorMsgEl.textContent = errMsg.pwRe.fail
 		  }
 		}
-	  
-	  /*** modile ***/
+
+	   /*** modile ***/
 	  const phoneInputEl = document.querySelector('div form .info__phone')
 	  const phoneErrorMsgEl = document.querySelector('div form .error-phone-msg')
 	  phoneInputEl.addEventListener('change', () => {
@@ -278,18 +162,11 @@
 	  });
 	  
 	  const errMsg = {
-			  id: { 
-			    invalid: "6~20자의 영문 소문자와 숫자만 사용 가능합니다",
-			    empty: "아이디를 입력해주세요",
-			    success: "사용 가능한 아이디입니다",
-			    fail: "사용할 수 없는 아이디입니다"
-			  },
 			  pw: "8~20자의 영문, 숫자, 특수문자를 모두 포함한 비밀번호를 입력해주세요",
 			  pwRe: {
 			    success: "비밀번호가 일치합니다",
 			    fail: "비밀번호가 일치하지 않습니다"
 			  },
-			  birth: "생년월일을 다시 확인해주세요",
 			  mobile: "‘-’ 제외 11자리를 입력해주세요" 
 			}
 	  function count_check(element) {
@@ -384,14 +261,14 @@
 			return false;
 		}
 	  
-	  alert('회원가입이 완료되었습니다.');
+	  alert('수정이 완료되었습니다.');
 	  
 	  form.submit();
 	  move();
 	  
 	  function move() {
 	  setTimeout(() => {
-		  window.opener.location.href="/somoim/login"
+		  window.opener.location.href="/somoim/info/myInfo"
 			    window.close();
 	}, 2);
 	}

@@ -18,8 +18,7 @@
 	<script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<section class="myPage" >	
-		<c:url var="myInfoUpdateUrl" value="/info" />
+	<section class="myPage" >
 		<div class="coverImg">
 			<img id="infoImg" class="title-img" src="${sessionScope.loginData.infoImagePath}" accept="image/*">
 			<input id="infoImg-input" class="imgSelect" type="file" name="uploadImg" value="이미지 선택">
@@ -34,8 +33,8 @@
 
 					<div class="simple-info">
 						<input class="name" type="text" value="${sessionScope.loginData.memberName}" disabled>
-						<span class="material-icons"  style="font-size:40px; color: gray;">date_range</span><input class="birth" type="text" value="${sessionScope.loginData.birth}"  disabled>
-						<span class="material-icons" style="font-size:40px; color: gray;">room</span><input class="location" type="text" value="${sessionScope.loginData.locationName}" disabled>
+						<span class="material-icons"  style="font-size:20px; color: gray;">date_range</span><input class="birth" type="text" value="${sessionScope.loginData.birth}"  disabled>
+						<span class="material-icons" style="font-size:20px; color: gray;">room</span><input class="location" type="text" value="${sessionScope.loginData.locationName}" disabled>
 					</div>
 					<!-- 카테고리 -->
 					<div id="cate" class="category-box">
@@ -49,8 +48,8 @@
 					</div>
 
 				<div class="imgSelect-box">
-					<button type="button" id="infoImg-btn" class="btn btn-secondary coverImage">커버 사진 변경</button>
-					<button type="button" class="btn btn-secondary modify" onclick="popModProfile();">프로필 편집</button>
+					<button type="button" id="infoImg-btn" class="btn btn-secondary coverImage" style="font-size: 13px">커버 사진 변경</button>
+					<button type="button" class="btn btn-secondary modify" style="font-size: 13px" onclick="popModProfile();">프로필 편집</button>
 				</div>
 			</div>
 	</section>
@@ -71,14 +70,14 @@
 						<c:if test = "${not empty moimDatas}">
 							<c:forEach items="${moimDatas}" var="moimData">
 							  <li class="pati-list" OnClick="location.href ='/somoim/moim/meeting?id=${moimData.moimId}'">
-								 <div class="section-container d-flex align-items-center p-3 rounded-3 pati-info">
+								 <div class="section-container d-flex pati-info">
 									<div class="col-md-3">
 									  <img src="${path}/resources/img/moim/${moimData.moimId}.png" class="rounded-circle moim-img" alt="profile-image" width="100">
 									</div>
 									<div class="col-md-9 moim-info">
-									  <p class="pb-2">${moimData.locationName}</p>
-									  <p class="pb-2">${moimData.moimTitle}</p>
-									  <p>현재 인원/${moimData.moimLimit}</p>
+									  <span class="moim-title">${moimData.moimTitle}</span>
+									  <span class="moim-loc">${moimData.locationName}</span>
+									  <span class="moim-part">현재 인원/${moimData.moimLimit}</span>
 									</div>
 								  </div>
 							  </li>
@@ -99,11 +98,23 @@
 						<c:if test="${not empty boardDatas}">
 							<c:forEach items="${boardDatas}" var="boardData">
 							  <li class="pati-list">
-								 <div class="section-container d-flex align-items-center p-3 rounded-3 pati-info" OnClick="location.href =''">
-									<div class="col-md-9 moim-info">
-									  <p class="pb-2">${boardData.boardTitle}</p>
-									  <p class="pb-2">${boardData.moimTitle}</p>
-									  <p>${boardData.boardCreateDate}</p>
+								 <div class="pati-info" OnClick="location.href =''">
+									<div class="info-board">
+									  <div class="info-board-title">
+										  <div>
+											<c:forEach items="${moimDatas}" var="moimData">
+											  <c:if test="${moimData.moimId eq boardData.moimId}">
+											    <img src="${path}/resources/img/moim/${moimData.moimId}.png" class="rounded-circle info-board-img" alt="profile-image" width="100">
+											  </c:if>
+											</c:forEach>
+											<span class="pb-2">${boardData.moimTitle}</span>
+										  </div>
+									  	<span>${boardData.boardCreateDate}</span>
+									  </div>
+									  <div class="info-board-content">
+										<span class="pb-2">${boardData.boardTitle}</span>
+										<span class="word-hidden">${boardData.content}</span>
+									  </div>
 									</div>
 								  </div>
 							  </li>
@@ -124,12 +135,12 @@
 		              <li class="comment-list">
 		              	<div class="section-container d-flex align-items-center p-3 rounded-3 pati-info">
 		              	<div class="comment-box">
+							<div class="comment">
+								<span>적의 침략은 저항할 수 있지만, 그 시대가 도래한 사상에는 저항할 수 없다.적의 침략은 저항할 수 있지만, 그 시대가 도래한 사상에는 저항할 수 없다.적의 침략은 저항할 수 있지만, 그 시대가 도래한 사상에는 저항할 수 없다.</span>
+							</div>
 			              	<div class="comment-info">
-			           			<span class="comment-name">홍길동</span>
+			           			<span class="comment-name">게시글 제목</span>
 			           			<span class="comment-date"><small>2022.08.28</small></span>
-			              	</div>
-			              	<div class="comment">
-			              		<span>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ</span>
 			              	</div>
 		              	</div>
 		              	</div>

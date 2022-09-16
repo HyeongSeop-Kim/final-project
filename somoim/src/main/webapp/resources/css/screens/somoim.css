@@ -88,7 +88,7 @@ footer .add-btn {
 
 .scroll::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: green; /* 스크롤바의 색상 */ 
+    background: #fae10070; /* 스크롤바의 색상 */
     border-radius: 10px;
 }
 

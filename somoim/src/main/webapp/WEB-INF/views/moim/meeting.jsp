@@ -331,7 +331,7 @@
           >
             <c:if test="${not empty moimParticipants}">
           <c:forEach items="${moimParticipants}" var="moimParticipants">
-            <div class="space-between margin-10">
+            <div class="partList space-between margin-10">
               <img
                 src="${img}/profile-image.png"
                 class="rounded-circle"
@@ -340,6 +340,7 @@
               />
               <div>${moimParticipants.jobName}</div>
               <div>${moimParticipants.memberName}</div>
+              <div id="${moimParticipants.memberId}" style="display: none"></div>
             </div>
             </c:forEach>
             </c:if>
@@ -353,6 +354,25 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+  <script>
+    let partList = document.querySelectorAll('.partList')
+
+    partList.forEach( (item) => {
+      item.addEventListener('mouseover', function(){  //  mouseover 시 hover 클래스 추가
+        item.classList.add('hoverMem');
+      });
+    });
+    partList.forEach( (item) => {
+      item.addEventListener('mouseout', function(){   //  mouseout 시 hover 클래스 삭제
+        item.classList.remove('hoverMem');
+      });
+    });
+    partiList.forEach( (item) => {  // 클릭시 user info로 이동하도록
+      item.addEventListener('click', () => {
+
+      })
+    })
+  </script>
 
   </body>
 </html>

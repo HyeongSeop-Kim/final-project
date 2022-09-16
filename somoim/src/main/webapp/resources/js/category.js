@@ -5,12 +5,12 @@ const items = document.querySelectorAll(".col-4 .service-items");
 // hover 기능
 items.forEach( (item) => {
     item.addEventListener('mouseover', function(){  //  mouseover 시 hover 클래스 추가
-        item.classList.add('hover');
+        item.classList.add('hoverIcon');
     });
 });
 items.forEach( (item) => {
-    item.addEventListener('mouseout', function(){   //  mouseout 시 hover 클래스 추가
-        item.classList.remove('hover');
+    item.addEventListener('mouseout', function(){   //  mouseout 시 hover 클래스 삭제
+        item.classList.remove('hoverIcon');
     });
 });
 
@@ -116,76 +116,110 @@ function submitCategory() {
     });
 }
 
+// categoryId와 관심사 매칭
+function matchCate(cateId) {
+    let className = "";
+    switch (cateId) {
+        case '1' :
+            className = "fa-solid fa-suitcase ";
+            break;
+        case '2' :
+            className = "fa-solid fa-person-swimming ";
+            break;
+        case '3' :
+            className = "fa-solid fa-book ";
+            break;
+        case '4' :
+            className = "fa-solid fa-language ";
+            break;
+        case '5' :
+            className = "fa-solid fa-masks-theater ";
+            break;
+        case '6' :
+            className = "fa-solid fa-music ";
+            break;
+        case '7' :
+            className = "fa-solid fa-palette ";
+            break;
+        case '8' :
+            className = "fa-solid fa-user-ninja ";
+            break;
+        case '9' :
+            className = "fa-solid fa-hands ";
+            break;
+        case '10' :
+            className = "fa-solid fa-handshake-simple ";
+            break;
+        case '11' :
+            className = "fa-solid fa-car ";
+            break;
+        case '12' :
+            className = "fa-brands fa-youtube ";
+            break;
+        case '13' :
+            className = "fa-solid fa-baseball-bat-ball ";
+            break;
+        case '14' :
+            className = "fa-solid fa-gamepad ";
+            break;
+        case '15' :
+            className = "fa-solid fa-utensils ";
+            break;
+        case '16' :
+            className = "fa-solid fa-dog ";
+            break;
+        case '17' :
+            className = "fa-solid fa-hand-holding-heart ";
+            break;
+        case '18' :
+            className = "fa-solid fa-paper-plane ";
+            break;
+    }
+    return className;
+}
+
 // 개인정보창 관심사 보여주기
 function printCate(cateList) {
+    const cate = document.querySelector('#cate');
     let arr = [];
     arr = cateList.split(',');
-    const cate = document.querySelector('#cate');
 
     for(const id of arr) {
-        let className = "";
-        switch (id) {
-            case '1' :
-                className = "fa-solid fa-suitcase ";
-                break;
-            case '2' :
-                className = "fa-solid fa-person-swimming ";
-                break;
-            case '3' :
-                className = "fa-solid fa-book ";
-                break;
-            case '4' :
-                className = "fa-solid fa-language ";
-                break;
-            case '5' :
-                className = "fa-solid fa-masks-theater ";
-                break;
-            case '6' :
-                className = "fa-solid fa-music ";
-                break;
-            case '7' :
-                className = "fa-solid fa-palette ";
-                break;
-            case '8' :
-                className = "fa-solid fa-user-ninja ";
-                break;
-            case '9' :
-                className = "fa-solid fa-hands ";
-                break;
-            case '10' :
-                className = "fa-solid fa-handshake-simple ";
-                break;
-            case '11' :
-                className = "fa-solid fa-car ";
-                break;
-            case '12' :
-                className = "fa-brands fa-youtube ";
-                break;
-            case '13' :
-                className = "fa-solid fa-baseball-bat-ball ";
-                break;
-            case '14' :
-                className = "fa-solid fa-gamepad ";
-                break;
-            case '15' :
-                className = "fa-solid fa-utensils ";
-                break;
-            case '16' :
-                className = "fa-solid fa-dog ";
-                break;
-            case '17' :
-                className = "fa-solid fa-hand-holding-heart ";
-                break;
-            case '18' :
-                className = "fa-solid fa-paper-plane ";
-                break;
-        }
+        let className = matchCate(id);
+
         const i = document.createElement('i');
         const classList = className + 'icon-green service-sm-items'
         i.setAttribute('class', classList);
+
         cate.insertBefore(i, cate.firstChild);
     }
 }
+
+// 관심사 전체 출력
+// function printAllCate(cateId) {
+//     const cate = document.querySelector('#cate');
+//     let allCateList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18";
+//     let arr = [];
+//     let cateArr = [];
+//     arr = allCateList.split(',');
+//     console.log(arr);
+//     cateArr = cateId.split(',');
+//
+//     for(const id of arr) {
+//         let className = matchCate(id);
+//         for(const selId of cateArr){
+//             if(id == selId){
+//                 className += "selected "
+//             }
+//         }
+//         const i = document.createElement('i');
+//         const classList = className + 'icon-green service-sm-items'
+//         i.setAttribute('class', classList);
+//
+//         cate.insertBefore(i, cate.firstChild);
+//     }
+//
+// }
 
 //
 // // 팝업 띄우기
