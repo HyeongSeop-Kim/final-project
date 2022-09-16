@@ -72,7 +72,7 @@
 							  <li class="pati-list" OnClick="location.href ='/somoim/moim/meeting?id=${moimData.moimId}'">
 								 <div class="section-container d-flex pati-info">
 									<div class="col-md-3">
-									  <img src="${path}/resources/img/moim/${moimData.moimId}.png" class="rounded-circle moim-img" alt="profile-image" width="100">
+									  <img src="${moimData.moimImagePath}" class="rounded-circle moim-img" alt="profile-image" width="100">
 									</div>
 									<div class="col-md-9 moim-info">
 									  <span class="moim-title">${moimData.moimTitle}</span>
@@ -104,7 +104,7 @@
 										  <div>
 											<c:forEach items="${moimDatas}" var="moimData">
 											  <c:if test="${moimData.moimId eq boardData.moimId}">
-											    <img src="${path}/resources/img/moim/${moimData.moimId}.png" class="rounded-circle info-board-img" alt="profile-image" width="100">
+											    <img src="${moimData.moimImagePath}" class="rounded-circle info-board-img" alt="profile-image" width="100">
 											  </c:if>
 											</c:forEach>
 											<span class="pb-2">${boardData.moimTitle}</span>
