@@ -9,8 +9,9 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
-	  								<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-   								 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+	 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+     <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<title>회원가입</title>
 </head>
 <body>
@@ -23,23 +24,26 @@
 		<div class="form-container" >
 		<c:url  var="joinAddUrl" value="/addJoin"></c:url>
 			<form class="join-form " method="post" action="${joinAddUrl}">
-				<label class="join-form__label ">아이디</label>
-				<input class="join-form__input info__id" type="text" name="memberId" id="uId">
+				<label class="join-form__label">아이디</label>
+				<div style="display: flex; justify-content:space-between; ">
+				<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId">
+					<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
+				</div>
 				<div class="error-id-msg"></div>
 				<label class="join-form__label">비밀번호</label>
-				<input class="join-form__input info__pw1" type="password" name="password" id="pw1">
+				<input class="join-form__input info__pw1" type="password" name="password" id="pw1" value="123!@#asd">
 				<div class="error-pw1-msg"></div>
 				<label class="join-form__label">비밀번호 재확인</label>
-				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2">
+				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2" value="123!@#asd">
 				<div class="error-pw2-msg"></div>	
 				<label class="join-form__label">이름</label>
-				<input class="join-form__input" type="text" name="memberName" id ="memberName">
+				<input class="join-form__input" type="text" name="memberName" id ="memberName" value="강승호">
 				<div class="error-name-msg"></div>
 				<label class="join-form__label">생년월일</label>
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
-					 <select class="join-form-inline__input" id="birth-year" name="year">
-				     	 <option disabled selected>출생 연도</option>
+					 <select class="join-form-inline__input" id="birth-year" name="year" >
+				     	 <option disabled selected value="">출생 연도</option>
 			    	</select>
 				    <select class="join-form-inline__input" id="birth-month" name="month">
 				      <option disabled selected>월</option>
@@ -54,7 +58,7 @@
 					<div class="join-form-inline__div">
 						<label class="join-form__label">성별</label>
 						<select class="join-form__input" name="gender" id="gender">
-							<option disabled selected >성별</option>
+							<option disabled selected" >성별</option>
 							<option value="M">남자</option>
 							<option value="F">여자</option>
 						</select>
@@ -70,9 +74,8 @@
 					</div>
 				</div>
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호">
+				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="01033333333">
 			    <div class="error-phone-msg"></div>
-			
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
 			<div> 
 				<c:forEach items="${categorysDatas}" var="categoryDto" >
@@ -211,15 +214,11 @@
 	  const idErrorMsgEl = document.querySelector('div form  .error-id-msg')
 	  idInputEl.addEventListener('focusout', () => {
 	    const idRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
-	    if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
-	    	 idErrorMsgEl.textContent = errMsg.id.empty
-	    }else{
 		    if(idRegExp.test(idInputEl.value)) { // 유효성 검사 성공
 		      idErrorMsgEl.textContent = "";
 		    } else { // 유효성 검사 실패
 		      idErrorMsgEl.textContent = errMsg.id.invalid
 		    }
-		  }
 	    });
 	  
 	  /*** PW ***/
@@ -315,6 +314,9 @@
 	  let pw1 = document.getElementById('pw1');
 	  let pw2 = document.getElementById('pw2');
 	  let memberName = document.getElementById('memberName');
+	  let Byear = document.getElementsByName("year");
+	  let Bmonth = document.getElementsByName("month");
+	  let Bday = document.getElementsByName("day");
 	  let gender = document.getElementById('gender');
 	  let location = document.getElementById('location');
 	  let phone = document.getElementById('pnum');
@@ -343,6 +345,31 @@
 		  memberName.focus();
 		  return false;
 	  }
+	  
+	  for(year of Byear){
+		  year.value;
+	  }
+	  
+	  if (year.value.trim() === "") {
+		alert("생년월일을 입력해주세요.")
+		return false;
+		}
+	  for(month of Bmonth){
+		  month.value;
+	  }
+	  
+	  if (month.value.trim() === "") {
+		alert("생년월일을 입력해주세요.")
+		return false;
+		}
+	  for(day of Bday){
+		  day.value;
+	  }
+	  
+	  if (day.value.trim() === "") {
+		alert("생년월일을 입력해주세요.")
+		return false;
+		}
 	  
 	  if(gender.value != 'M' && gender.value != 'F' ){
 		  alert("성별을 선택해주세요");
@@ -395,11 +422,25 @@
 			    window.close();
 	}, 2);
 	}
-		  
-	  }
-	  
-	
-	  
-	  
+}
+	  function findIdchk() {
+		  if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
+		    	 idErrorMsgEl.textContent = errMsg.id.empty
+		    }else{
+				$.ajax({
+					url: "./idChk",
+					method: "POST",
+				    data : {"memberId" :document.getElementById('uId').value},
+				    dataType : "json",
+				    success : function (data) {
+						if(data == 1){
+							alert("중복된 아이디 입니다.");
+						}else if(data == 0){
+							alert("사용가능한 아이디 입니다.");
+						}
+					}
+				})
+		    }
+	}
 </script>
 </html>

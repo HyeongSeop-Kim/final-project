@@ -1,5 +1,6 @@
 package com.myweb.somoim.login.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -107,6 +108,19 @@ public class LoginController {
 		return json.toJSONString();
 	}
  	
+	
+	@RequestMapping(value = "idChk",produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int idChk(MembersDTO membersDTO) throws Exception {
+		int result = membersService.idChk(membersDTO);
+		// 아이디 중복 체크 버튼 클릭 시 
+		// 아이디 중복 = 1
+		// 아이디 중복이 아니면 = 0
+		return result;
+	}
+	
+	
+	
 	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public String join(Locale locale, Model model) {
 		
@@ -120,17 +134,16 @@ public class LoginController {
 	
 	@RequestMapping(value = "addJoin", method = RequestMethod.POST)
 	public String addJoin(MembersDTO membersDTO
+			,HttpServletRequest request
 			,@RequestParam (required = false) String year
 			,@RequestParam (required = false) String month
 			,@RequestParam (required = false) String day
-			 ,@RequestParam (required = false) String memberName) {
-		System.out.println(membersDTO);
-		System.out.println(year+month+day);
-		System.out.println(memberName);
+			,@RequestParam (required = false) String memberName
+			,@RequestParam (required = false, defaultValue ="/resources/img/members/basicImg.png" ) String memberImagePath) {
 		
 		String bitrhs = year+month+day;
 		
-		membersDTO.setBirth(bitrhs);
+		String imagePath = request.getContextPath() + memberImagePath;
 		
 		MembersDTO data = new MembersDTO();
 		data.setMemberId(membersDTO.getMemberId());
@@ -141,6 +154,9 @@ public class LoginController {
 		data.setPhone(membersDTO.getPhone());
 		data.setCategory(membersDTO.getCategory());
 		data.setLocationId(membersDTO.getLocationId());
+		data.setMemberImagePath(imagePath);
+		
+		System.out.println("최종 이미지 패스 경로= " +data.getMemberImagePath());
 		
 		System.out.println(data);
 		
@@ -216,6 +232,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login/kakao/auth_code", method = RequestMethod.GET)
 	public String kakaoAuthCode(HttpSession SessionStatus
+			,HttpSession session
 			,String code, String error, String state
 			,@RequestParam(name="error_descripition",required = false)String Descripition) {
 			String tokenType = null, accessToken =null, refreshToken = null;
@@ -254,17 +271,45 @@ public class LoginController {
 					refreshToken = json.get("refresh_token").toString();
 					
 					refreshTokenExpiresIn = Long.valueOf(json.get("refresh_token_expires_in").toString());
-					    System.out.println(code);
-			            System.out.println("access_token : " + accessToken);
-		                System.out.println("refresh_token : " + refreshToken);
+					    System.out.println("[code] = " + code);
+			            System.out.println("[access_token] = " + accessToken);
+		                System.out.println("[refresh_token] = " + refreshToken);
+		                
+		                HashMap<String, Object> userInfo = membersService.getUserInfo(accessToken);
+		               
+		                System.out.println("-------카카오 로그인-------");
+		                System.out.println("##kakaoId## : " + userInfo.get("kakaoId"));
+		                System.out.println("##nickname## : " + userInfo.get("nickname"));
+		                System.out.println("##birthday## : " + userInfo.get("birthday"));
+		                System.out.println("##email## : " + userInfo.get("email"));
+		                
+		                session.setAttribute("accessToken", accessToken);
+		                
+		                
 				} catch (ParseException e) {
 				 e.printStackTrace();
 				}
 				
 			}
-			
-		return "redirect:/" ;
+		return "apiTest";
 	}
+	@RequestMapping(value="/kakaoLogout",method = RequestMethod.GET)
+	public String kakapLogout(HttpSession session) {
+	    membersService.kakaoLogout((String)session.getAttribute("access_Token"));
+	    session.removeAttribute("access_Token");
+	    return "apiTest";
+	}
+
 	
+	
+	@RequestMapping(value="naverLogin", method= RequestMethod.GET)
+    public String index() {
+        return "APIExamNaverLogin";
+    }
+
+    @RequestMapping(value="login/oauth2/code/naver", method=RequestMethod.GET)
+    public String loginPOSTNaver(HttpSession session) {
+        return "callback";
+    }
 	
 }

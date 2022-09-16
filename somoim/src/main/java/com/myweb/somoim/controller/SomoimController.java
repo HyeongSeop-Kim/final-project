@@ -64,8 +64,8 @@ public class SomoimController {
 		model.addAttribute("datas", datas);
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
-		String memberId = membersData.getMemberId();
-		MembersDTO bookmarkData = memberservice.getData(memberId);
+		//String memberId = membersData.getMemberId();
+		//MembersDTO bookmarkData = memberservice.getData(memberId);
 
 		return "somoim_m";
 	}

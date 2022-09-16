@@ -106,6 +106,13 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		return res;
 		
 	}
+
+
+	public int idchk(MembersDTO membersDTO) {
+		String mapId = String.format(mapper, "idChk");
+		int result = session.selectOne(mapId,membersDTO);
+		return result;
+	}
 	
 
 }

@@ -8,7 +8,6 @@
    		  FROM MEMBERS
  	     WHERE MEMBER_ID = #{memberId} 
 	</select>
-
 	<insert id="insertData" parameterType="memberDto">
 		INSERT INTO MEMBERS(
 		  MEMBER_ID
@@ -18,10 +17,10 @@
 		, BIRTH
 		, PHONE 
 		, CATEGORY 
-		, LOCATION_ID)
-     VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category},#{locationId})
+		, LOCATION_ID
+		, MEMBER_IMAGE_PATH)
+     VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category}, #{locationId}, #{memberImagePath})
 	</insert>
-	
 	<select id="selectLogin" parameterType="memberDto" resultType="memberDto">
 		SELECT M.MEMBER_ID AS memberId
 	 	 ,M.MEMBER_NAME AS memberName
@@ -31,7 +30,7 @@
 	 	 ,M.PHONE
 	 	 ,M.CATEGORY
 	 	 ,M.BOOKMARK
-	 	 ,M.MEMBER_IMAGE_PATH
+	 	 ,M.MEMBER_IMAGE_PATH AS memberImagePath
 	 	 ,M.INFO_IMAGE_PATH
 	 	 ,M.LOCATION_ID AS locationId
 	 	 ,L.LOCATION_NAME  AS locationName
@@ -40,6 +39,10 @@
 				  ON M.LOCATION_ID = L.LOCATION_ID
 				WHERE M.MEMBER_ID =#{memberId}
 				  AND M.PASSWORD = #{password}
+	</select>
+	<select id="idChk" resultType="int">
+		SELECT COUNT(*) FROM MEMBERS
+		WHERE MEMBER_ID = #{memberId}
 	</select>
 	<select id="selectFindId" parameterType="memberDto" resultType="memberDto">
    		SELECT M.MEMBER_ID AS memberId
