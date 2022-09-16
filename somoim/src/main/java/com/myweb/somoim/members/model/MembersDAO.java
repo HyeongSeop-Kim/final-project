@@ -106,6 +106,13 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		return res;
 		
 	}
+
+
+	public boolean updateBookmark(MembersDTO data) {
+		String mapId = String.format(mapper, "updateBookmark");
+		int result = session.update(mapId,data);
+		return result == 1 ? true : false;
+	}
 	
 
 }

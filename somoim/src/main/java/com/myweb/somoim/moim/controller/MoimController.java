@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,31 +87,23 @@ public class MoimController {
 	}
 	
 
-@RequestMapping(value = "/moim/join", method = RequestMethod.GET)
-
-	public String moimJoin(Model model,
-			@RequestParam int id
-			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
-			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-
-
-
-	MoimParticipantsDTO dto = new MoimParticipantsDTO();
-
-	dto.setMoimId(id);
-	dto.setMemberId(membersDto.getMemberId());
-
-
-	boolean result = moimParticipantsService.addData(dto);
-
-
-	if(test.equals("2")) {
-		if(result) {
-			 return "redirect:/moim/board?id="+id;
-		}
-	}        return "redirect:/moim/meeting?id="+id;
-
-
+	@RequestMapping(value = "/moim/join", method = RequestMethod.GET)
+		public String moimJoin(Model model,
+				@RequestParam int id
+				,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+				,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		MoimParticipantsDTO dto = new MoimParticipantsDTO();
+		dto.setMoimId(id);
+		dto.setMemberId(membersDto.getMemberId());
+	
+		boolean result = moimParticipantsService.addData(dto);
+	
+			if(test.equals("2")) {
+				if(result) {
+					return "redirect:/moim/board?id="+id;
+				}
+			}       
+			return "redirect:/moim/meeting?id="+id;
 		}
 
 
@@ -123,31 +116,70 @@ public class MoimController {
 		   ,@RequestParam(required= false, defaultValue="5")int moimLimit
 		   ,@RequestParam() int categoryId) {
 		JSONObject json = new JSONObject();
-
-		SomoimDTO data = new SomoimDTO();
-		data.setLocationId(locationId);
-		data.setMoimTitle(moimTitle);
-		data.setMoimLimit(moimLimit);
-		data.setMoimInfo(moimInfo);
-		data.setMoimImagePath(null);
-		data.setCategoryId(categoryId);
-
-		boolean result = SomoimService.addData(data);
-		MoimParticipantsDTO partData = new MoimParticipantsDTO();
 		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
-		partData.setMemberId(memData.getMemberId());
-		partData.setMoimId(data.getMoimId());
-
-		boolean res = SomoimService.addDataSub(partData);
-		json.put("data", result);
-		if(result == false) {
-			json.put("message", "필수입력항목 누락");
+		
+		int memberCnt = SomoimService.getDataCnt(memData.getMemberId());
+		boolean chk = false;
+		if(memberCnt <= 5) {
+			SomoimDTO data = new SomoimDTO();
+			data.setLocationId(locationId);
+			data.setMoimTitle(moimTitle);
+			data.setMoimLimit(moimLimit);
+			data.setMoimInfo(moimInfo);
+			data.setMoimImagePath("/somoim/resources/img/moim/profile.png");
+			data.setCategoryId(categoryId);
+	
+			boolean result = SomoimService.addData(data);
+			
+			MoimParticipantsDTO partData = new MoimParticipantsDTO();
+			partData.setMemberId(memData.getMemberId());
+			partData.setMoimId(data.getMoimId());
+			
+			boolean res = SomoimService.addDataSub(partData);
+			if (result == true && res == true) {
+				chk = true;
+			}
+			json.put("data", chk);
+		} else {
+			json.put("data", chk);
+			json.put("message", "가입가능한 모임 수를 초과하였습니다.");
 		}
 		return json.toJSONString();
 	}
 
+	@RequestMapping(value = "/moim/add/add_join_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String addJoinList( HttpSession session) {
 
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<SomoimDTO> participantsData = SomoimService.getDatas(membersData.getMemberId());
+		JSONArray join_datas = new JSONArray();
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
 
+	@RequestMapping(value = "/moim/add/add_bookmark_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String addBookMarkList( HttpSession session) {
+
+		JSONArray join_datas = new JSONArray();
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<String> bookmarkData = memberService.getBmkData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = SomoimService.getDatas_bmk(bookmarkData);
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
+	
 
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model

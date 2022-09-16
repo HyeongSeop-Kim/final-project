@@ -3,6 +3,7 @@ package com.myweb.somoim.members.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -56,16 +57,23 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	}
 
 	@Override
-	public MembersDTO getData(String memberId) {
-		MembersDTO bookmarkData = dao.selectData(memberId);
-		System.out.println("북마크 : " + bookmarkData);
-		String[] bookmarkList = bookmarkData.getBookmark().split(",");
-		System.out.println("북마크2 : " + bookmarkList[0]);
-		System.out.println("북마크3 : " + bookmarkList[0].toString());
-		String bookmark = String.join("','",bookmarkList);
-		System.out.println("북마크4 : " + bookmark);
-		bookmarkData.setBookmark(bookmark);
-		return bookmarkData;
+	public MembersDTO getData(String s) {
+		return null;
+	}
+
+	public List<String> getBmkData(String memberId)  {
+			MembersDTO bookmarkData = dao.selectData(memberId);
+		if(bookmarkData != null) {
+			List<String> bookmarkList = Arrays.asList(bookmarkData.getBookmark().split(","));
+			return bookmarkList;
+		}else {
+			MembersDTO data = new MembersDTO();
+			data.setBookmark("");
+			data.setMemberId(memberId);
+			boolean result = dao.updateBookmark(data);
+			List<String> nullBookmark =Arrays.asList(data.getBookmark());
+			return nullBookmark;
+		}
 	}
 
 	@Override

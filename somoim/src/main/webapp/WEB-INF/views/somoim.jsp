@@ -233,10 +233,7 @@
 				      </button>
 				    </h2>
 				    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" >
-				      <div class="accordion-body">
-				         <a href="#"><p class="pb-3">찜 한 모임A</p></a>
-				         <a href="#"><p class="pb-3">찜 한 모임B</p></a>
-				         <a href="#"><p class="pb-3">찜 한 모임C</p></a>
+				      <div id="bookmark_list" class="accordion-body">
 				      </div>
 				    </div>
 				  </div>
@@ -247,10 +244,7 @@
 				      </button>
 				    </h2>
 				    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" >
-				      <div class="accordion-body">
-				         <a href="#"><p class="pb-3">최근 본 모임A</p></a>
-				         <a href="#"><p class="pb-3">최근 본 모임B</p></a>
-				         <a href="#"><p class="pb-3">최근 본 모임C</p></a>     
+				      <div id="last_view_list" class="accordion-body">
 				      </div>
 				    </div>
 				  </div>
@@ -282,7 +276,7 @@ function get_moim_list(page) {
 			for (var i=0 ; i < res.datas.length ; i++) {
 				_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=\'${path}/moim/meeting?id='+ res.datas[i].moimId +'\'">';
 				_html += '<div class="col-md-3">';
-				_html += '<img src="${img}/profile-image.png" class="rounded-circle" alt="profile-image" width="100">';
+				_html += '<img src="'+res.datas[i].moimImagePath +'" class="rounded-circle" alt="profile-image" width="100">';
 				_html += '</div>';
 				_html += '<div class="col-md-9">';
 				_html += '<p class="pb-2">'+ res.datas[i].locationName +'</p>';
@@ -343,12 +337,72 @@ function get_join_moim_list() {
 	});
 }
 
+function get_bmk_moim_list() {
+	$.ajax({
+		url:  "./bookmark_list",
+		type: "GET",
+		dataType: "json",
+		success: function(data) {
+			let _html = '';
+			for (var i=0 ; i < data.length ; i++) {
+				_html += ' <a href="/somoim/moim/meeting?id='+ data[i].moimId +'"><p class="pb-3">'+ data[i].moimTitle +'</p></a>';
+			}
+			$('#bookmark_list').html(_html);
+		}
+	});
+}
+/*
+function setCookie(cookie_name, value, days) {
+	const exdate = new Date();
+	exdate.setDate(exdate.getDate() + days);
+	
+	const cookie_value = escape(value) + ((days == null)? ":';expires=' + exdate.toUTCString());
+	document.cookie = cookie_name + '=' + cookie_value;
+}
+
+function getCookie(cookie_name) {
+	const x, y;
+	const val = document.cookie.split(';');
+	
+	for(var i=0; i<val.length; i++){
+		x= val[i].substr(0, val[i].indexOf('='));
+		y= val[i].substr(val[i].indexOf('=') + 1);
+		x = x.replace(/^\s+|\s+$/g,'');
+	  if(x == cookie_name){
+		return unescape(y);
+	  } 	
+    }
+}
+
+function addCookie(id) {
+   var items = getCookie('productItems'); // 이미 저장된 값을 쿠키에서 가져오기
+   var maxItemNum = 5; // 최대 저장 가능한 아이템개수
+   var expire = 7; // 쿠키값을 저장할 기간
+   if (items) {
+     var itemArray = items.split(',');
+     if (itemArray.indexOf(id) != -1) {
+      // 이미 존재하는 경우 종료
+      console.log('Already exists.');
+     }
+     else {
+      // 새로운 값 저장 및 최대 개수 유지하기
+      itemArray.unshift(id);
+      if (itemArray.length > maxItemNum ) itemArray.length = 5;
+      items = itemArray.join(',');
+      setCookie('productItems', items, expire);
+     }
+   }
+   else {
+    setCookie('productItems', id, expire);
+   }
+}
+*/
 
 $(document).ready(function() {
 	let category = $(".service-items");
 	get_moim_list(1);
-	get_join_moim_list()
-
+	get_join_moim_list();
+	get_bmk_moim_list();
 	
 	$('.service-items').on('mouseover', function() {
 		$(this).addClass('hover');
@@ -393,6 +447,9 @@ $(document).ready(function() {
 
 
 });
+
+
+
 </script>
   <script src="${path}/resources/js/category.js"></script>
 </body>

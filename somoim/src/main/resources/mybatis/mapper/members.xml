@@ -6,9 +6,16 @@
 	<select id="selectData" parameterType="memberDto" resultType="memberDto">
 		SELECT BOOKMARK AS bookmark
    		  FROM MEMBERS
- 	     WHERE MEMBER_ID = #{memberId} 
+   		WHERE 1=1
+   		<if test='memberId != null and memberId != ""' >
+ 	     AND MEMBER_ID = #{memberId} 
+		</if>
 	</select>
-
+	<update id="updateBookmark" parameterType="memberDto">
+		UPDATE MEMBERS SET BOOKMARK = #{bookmark} WHERE MEMBER_ID = #{memberId}
+	</update>
+	
+	
 	<insert id="insertData" parameterType="memberDto">
 		INSERT INTO MEMBERS(
 		  MEMBER_ID
