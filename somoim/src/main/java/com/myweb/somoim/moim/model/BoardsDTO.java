@@ -12,8 +12,24 @@ public class BoardsDTO {
 	private int like;
 	private String memberName; //추가
 	private String jobName; //추가
-	
-	
+	private String moimTitle;
+
+	public Date getBoardCreateDate() {
+		return boardCreateDate;
+	}
+
+	public void setBoardCreateDate(Date boardCreateDate) {
+		this.boardCreateDate = boardCreateDate;
+	}
+
+	public String getMoimTitle() {
+		return moimTitle;
+	}
+
+	public void setMoimTitle(String moimTitle) {
+		this.moimTitle = moimTitle;
+	}
+
 	public int getMoimId() {
 		return moimId;
 	}
@@ -53,15 +69,7 @@ public class BoardsDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	public Date getCreateDate() {
-		return boardCreateDate;
-	}
-	
-	public void setCreateDate(Date createDate) {
-		this.boardCreateDate = createDate;
-	}
-	
+
 	public int getLike() {
 		return like;
 	}
@@ -89,7 +97,17 @@ public class BoardsDTO {
 
 	@Override
 	public String toString() {
-		return "BoardsDTO [moimId=" + moimId + ", boardId=" + boardId + ", memberId=" + memberId + ", boardTitle="
-				+ boardTitle + ", content=" + content + ", boardCreateDate=" + boardCreateDate + ", like=" + like + "]";
+		return "BoardsDTO{" +
+				"moimId=" + moimId +
+				", boardId=" + boardId +
+				", memberId='" + memberId + '\'' +
+				", boardTitle='" + boardTitle + '\'' +
+				", content='" + content + '\'' +
+				", boardCreateDate=" + boardCreateDate +
+				", like=" + like +
+				", memberName='" + memberName + '\'' +
+				", jobName='" + jobName + '\'' +
+				", moimTitle='" + moimTitle + '\'' +
+				'}';
 	}
 }

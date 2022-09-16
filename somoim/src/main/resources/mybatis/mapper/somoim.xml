@@ -4,16 +4,17 @@
   
 <mapper namespace="moimsMapper">
    <select id="selectCnt" resultType="_int">
-   	   SELECT COUNT(DISTINCT M.MOIM_ID) 
+   	   SELECT COUNT(DISTINCT M.MOIM_ID)
 		 FROM MOIM M
 		 JOIN MOIM_PARTICIPANTS MP
-		   ON M.MOIM_ID = MP.MOIM_ID 
+		   ON M.MOIM_ID = MP.MOIM_ID
 		WHERE MP.MEMBER_ID = #{memberId}
    </select>
    <select id="getNextSeq" resultType="_int">
        SELECT SQU_MOIM.NEXTVAL FROM DUAL
    </select>
    <select id="selectAll" resultType="somoimDTO" parameterType="Map">
+     
      SELECT RNUM
      	  , moimId, moimTitle, moimInfo
      	  , moimLimit, moimImagePath, categoryId
@@ -47,6 +48,7 @@
        WHERE
        	<![CDATA[RNUM >= #{num_start}]]>
   </select>
+
   <select id ="selectAllCnt" resultType="_int">
      SELECT count(*) as cnt
      FROM MOIM M
@@ -112,11 +114,25 @@
              ,MOIM_CREATE_DATE = SYSDATE
               WHERE MOIM_ID = #{moimId}
    </update>
+
    <update id="updateImage" parameterType="somoimDTO">
         UPDATE MOIM
         SET MOIM_IMAGE_PATH= #{moimImagePath}
       WHERE MOIM_ID = #{moimId}
    </update>
+
+    <update id="updateInfoImage" parameterType="memberDto">
+        UPDATE MEMBERS
+           SET INFO_IMAGE_PATH = #{infoImagePath}
+         WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <update id="updateProfileImage" parameterType="memberDto">
+        UPDATE MEMBERS
+        SET MEMBER_IMAGE_PATH = #{memberImagePath}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
    <select id="selectSubDatas" resultType="somoimDTO">
    		SELECT M.MOIM_TITLE AS moimTitle
 	 		 , M.MOIM_ID AS moimId
@@ -134,9 +150,9 @@
 		  FROM MOIM M
 		  JOIN MOIM_PARTICIPANTS MP
   			ON M.MOIM_ID = MP.MOIM_ID
-  		 WHERE 1=1	
+  		 WHERE 1=1
   		<if test='moimIds != null'>
-		  AND M.MOIM_ID IN 
+		  AND M.MOIM_ID IN
 		  <foreach collection="moimIds" item="item" index="index" separator="," open="(" close=")">
 		  #{item}
 		  </foreach>

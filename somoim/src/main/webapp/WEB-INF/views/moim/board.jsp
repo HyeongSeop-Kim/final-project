@@ -293,7 +293,7 @@
                       <span><small>${comment.memberName}</small></span>
                       <span class="margin-10"><small>${comment.jobName}</small></span>
                     </div>
-                    <span><small>${comment.createDate}</small></span>
+                    <span><small>${comment.boardCreateDate}</small></span>
                   </div>
                 </div>
                 <div class="card-body-position">

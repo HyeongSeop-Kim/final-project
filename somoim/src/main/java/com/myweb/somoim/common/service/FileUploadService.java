@@ -2,6 +2,7 @@ package com.myweb.somoim.common.service;
 
 
 
+import com.myweb.somoim.members.model.MembersDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +22,15 @@ public class FileUploadService {
 	public boolean modifyMoimImage(SomoimDTO data){
         boolean result = dao.modifyImage(data);
 		return result;
+	}
+	public boolean modifyInfoImage(MembersDTO data){
+		boolean result = dao.modifyInfoImage(data);
+		return result;
+	}
 
 
-}
-
-	
-	
+	public boolean modifyProfileImage(MembersDTO data) {
+		boolean result = dao.modifyProfileImage(data);
+		return result;
+	}
 }

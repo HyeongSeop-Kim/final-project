@@ -67,7 +67,7 @@
 				contentType: false, //Ajax로 파일업로드시 필요
 				success: function(data, status) {
 					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
-                    
+
 				}
      });
 
@@ -77,13 +77,13 @@
 
    <script type="text/javascript">
 
-   
+
   function limitCheck(moimId){
 	  	$.ajax({
     		url: "/somoim/moim/join",
     		type: "get",
     		data: {
-    			id:moimId 
+    			id:moimId
     		},
     		dataType: "json",
     		success: function(data){
@@ -101,13 +101,13 @@
 </script>
    <script type="text/javascript">
 
-   
+
   function bookmarkAdd(moimId){
 	  	$.ajax({
     		url: "/somoim/moim/bookmarkAdd",
     		type: "get",
     		data: {
-    			id:moimId 
+    			id:moimId
     		},
     		dataType: "json",
     		success: function(data){
@@ -268,7 +268,6 @@
               <li class="nav-item">
                 <a class="nav-link">채팅</a>
               </li>
-
             </ul>
           </div>
         </nav>
@@ -286,7 +285,6 @@
              <c:if test="${moimParticipants.jobId eq 1}">
           <div class="margin-10">
             <div class="space-between margin-10">
-            
               <img
                 src="${moimParticipants.memberImagePath}"
                 class="rounded-circle"
@@ -295,7 +293,6 @@
                 height="100"
                 border-radius="50%"
               />
-             
               <div>${moimParticipants.jobName}</div>
               <div>${moimParticipants.memberName}</div>
             </div>
@@ -393,7 +390,7 @@
           >
             <c:if test="${not empty moimParticipants}">
           <c:forEach items="${moimParticipants}" var="moimParticipants">
-            <div class="space-between margin-10 bottom-10">
+            <div class="partList space-between margin-10 bottom-10">
               <img
                 src="${moimParticipants.memberImagePath}"
                 class="rounded-circle"
@@ -404,6 +401,7 @@
               />
               <div>${moimParticipants.jobName}</div>
               <div>${moimParticipants.memberName}</div>
+              <div id="${moimParticipants.memberId}" style="display: none"></div>
             </div>
             </c:forEach>
             </c:if>
@@ -417,6 +415,25 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+  <script>
+    let partList = document.querySelectorAll('.partList')
+
+    partList.forEach( (item) => {
+      item.addEventListener('mouseover', function(){  //  mouseover 시 hover 클래스 추가
+        item.classList.add('hoverMem');
+      });
+    });
+    partList.forEach( (item) => {
+      item.addEventListener('mouseout', function(){   //  mouseout 시 hover 클래스 삭제
+        item.classList.remove('hoverMem');
+      });
+    });
+    partiList.forEach( (item) => {  // 클릭시 user info로 이동하도록
+      item.addEventListener('click', () => {
+
+      })
+    })
+  </script>
 
   </body>
 </html>

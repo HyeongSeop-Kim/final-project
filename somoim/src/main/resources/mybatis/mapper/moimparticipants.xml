@@ -21,6 +21,24 @@ SELECT B.MEMBER_NAME AS memberName
                         FROM MOIM_PARTICIPANTS P
                        WHERE P.MOIM_ID = #{id})
    </select>
+
+    <select id = "selectJoinMoim" resultType="moimParticipantsDTO">
+        SELECT B.MEMBER_NAME AS memberName
+             , B.MEMBER_ID AS memberId
+             , J.JOB_NAME AS JobName
+             , J.JOB_ID AS jobId
+             , M.MOIM_ID AS moimId
+          FROM MOIM M
+          JOIN MOIM_PARTICIPANTS P
+            ON M.MOIM_ID = P.MOIM_ID
+          JOIN MEMBERS B
+            ON B.MEMBER_ID = P.MEMBER_ID
+          JOIN JOBS J
+            ON P.JOB_ID = J.JOB_ID
+         WHERE B.MEMBER_ID IN (SELECT  P.MEMBER_ID
+                                 FROM MOIM_PARTICIPANTS P
+                                WHERE P.MEMBER_ID = #{id})
+    </select>
    
     <select id ="selectData" resultType="moimParticipantsDTO" parameterType="moimParticipantsDTO" >
   SELECT MEMBER_ID 	AS  memberId

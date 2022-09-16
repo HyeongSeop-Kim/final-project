@@ -53,7 +53,9 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Override
 	public MembersDTO selectData(MembersDTO dto) {
-		return null;
+		String mapId = String.format(mapper, "selectMemberData");
+		MembersDTO data = session.selectOne(mapId,dto);
+		return data;
 	}
 
 	@Override
@@ -71,8 +73,10 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	}
 
 	@Override
-	public boolean updateData(MembersDTO dto) {
-		return false;
+	public boolean updateData(MembersDTO data) {
+		String mapId = String.format(mapper, "updateData");
+		int res = session.insert(mapId, data);
+		return res == 1 ? true : false;
 	}
 
 	public boolean updateCate(MembersDTO dto) {
