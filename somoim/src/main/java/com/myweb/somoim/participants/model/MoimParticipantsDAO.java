@@ -46,9 +46,8 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 	@Override
 	public MoimParticipantsDTO selectData(MoimParticipantsDTO dto) {
 		String mapperId = String.format(mapper, "selectData");
-		System.out.println("dao 데이터확인" + dto);
 		MoimParticipantsDTO data = session.selectOne(mapperId,dto);
-		System.out.println("mapper실행결과" + data);
+		
 		return data;
 	}
 
@@ -82,6 +81,14 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 	@Override
 	public boolean deleteData(int id) {
 		return false;
+	}
+
+	public int currentMemberCount(int id) {
+		String mapperId = String.format(mapper, "selectcurrentMemberCount");
+		MoimParticipantsDTO data = session.selectOne(mapperId,id);
+		int res = data.getCurrentMemberCount();
+		
+		return res;
 	}
 
 }

@@ -8,6 +8,8 @@
    		  FROM MEMBERS
  	     WHERE MEMBER_ID = #{memberId} 
 	</select>
+	
+	
 
 	<insert id="insertData" parameterType="memberDto">
 		INSERT INTO MEMBERS(
@@ -72,5 +74,10 @@
 		 		 AND MEMBER_NAME =  #{memberName}
 		 		 AND PHONE = #{phone}
 		</update>
+		<update id="updateBookmark" parameterType="memberDto">
+		 UPDATE MEMBERS  
+         SET BOOKMARK = #{bookmark}
+         WHERE MEMBER_ID = 'TEST1'
+        </update>  
 </mapper>
 

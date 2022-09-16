@@ -10,10 +10,13 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>모임 상세페이지</title>
+    <title>${moimData.moimTitle}모임 입니다.</title>
+    <c:set var="path" value="${pageContext.request.contextPath}" />
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
     <c:url var="meetingimg" value="/resources/img"/>
+    <c:url var="resourcesUrl" value="/resources" />
+    
 
     <!-- Bootstrap CSS -->
     <link
@@ -35,53 +38,81 @@
     />
 
      <link rel="stylesheet" href="${cs}/styles.css" />
+     <script type="text/javascript" src="${resourcesUrl}/js/jquery-3.6.0.min.js"></script>
   </head>
   
   <script type="text/javascript">
-   window.onload = function() {
+  window.onload = function() {
 	   previewImage.addEventListener("click", function(e) {
 		   moimImageSelect.click();
 	    });
 	   
-   moimImageSelect.addEventListener("change" , ajaxImageUpload );
+  moimImageSelect.addEventListener("change" , ajaxImageUpload );
 
-}
-   
+} 
    function ajaxImageUpload(e){
-	        
-		    var file = e.target.files[0]; 
-		    var fData = new FormData(); //파일객체정보를 만들어서 추가해서 보내줄필요가잇음
-			fData.append("moimimage", file, file.name);  
-			fData.append("id","${moimData.moimId}"); // enctype="multipart/form-data" 형식으로 할떄는 FormData에 데이터 다 넣어줘야함!
-			$.ajax({      //Ajax사용시 jquery필요
-				type: "post",
-				enctype: "multipart/form-data",
-				url: "/somoim/moim/imageUpload",
-				data: fData,
-				processData: false, //Ajax로 파일업로드시 필요
-				contentType: false, //Ajax로 파일업로드시 필요
-				success: function(data, status) {
-					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
-				}
-     });
+       
+	    var file = e.target.files[0]; 
+	    var fData = new FormData(); //파일객체정보를 만들어서 추가해서 보내줄필요가잇음
+		fData.append("moimimage", file, file.name);  
+		fData.append("id","${moimData.moimId}"); // enctype="multipart/form-data" 형식으로 할떄는 FormData에 데이터 다 넣어줘야함!
+		$.ajax({      //Ajax사용시 jquery필요
+			type: "post",
+			enctype: "multipart/form-data",
+			url: "/somoim/moim/imageUpload",
+			data: fData,
+			dataType: "json",
+			processData: false, //Ajax로 파일업로드시 필요
+			contentType: false, //Ajax로 파일업로드시 필요
+			success: function(data, status) {
+				previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
+              
+			}
+});
 
 }
+</script>
 
+   <script type="text/javascript">
+
+   
+  function limitCheck(moimId){
+	  	$.ajax({
+    		url: "/somoim/moim/join",
+    		type: "get",
+    		data: {
+    			id:moimId 
+    		},
+    		dataType: "json",
+    		success: function(data){
+    			if(data.code === "over"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "success"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}
+    		}
+    	})
+    }
 
 </script>
   
   
 
   <body>
+    <c:url var="boardUrl" value="/moim/board/">
+		<c:param name="id" value="${moimData.moimId}">모임 입니다.</c:param>
+	</c:url>
     <!--이미지 사진박스-->
-       <header class="p-6">
+     <header class="p-6">
      <c:url var="moimUpdateImageUrl" value="/moim/imageUpload?id=${moimData.moimId}" />
      <form  action= "${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
       <div class="img-box img-box-size-1">
         <img id="previewImage"
           class="img-box-size-1 bora-20 shadow-sm width-100"
           alt="이미지 선택"
-          src="/somoim/resources/img/${moimData.moimId}.png"
+          src="${path}/resources/img/moim/${moimData.moimId}.png"
         /> 
         <input id="moimImageSelect"
           class="ImgSelect"
@@ -170,12 +201,18 @@
        
             <c:if test="${empty res}">
            <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary" onclick="location.href='/somoim/moim/join?id=${moimData.moimId}&test=2'">가입</button>
+            <button type="button" class="btn btn-primary" onclick="limitCheck(${moimData.moimId})" >가입</button>
            </div>
             </c:if>
           <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary">찜</button>
           </div>
+          <div class="margin-top-78 margin-left-223">
+            <div>현재 가입 인원수: ${currentMemberCount}명 / 정원수: ${moimData.moimLimit}명</div>
+          <c:if test="${not empty over}">
+            <div>현재 정원이 마감된 모임입니다. </div>
+          </c:if>
+         </div>
         </div>
       </div>
     </header>
@@ -333,13 +370,6 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript">
-      function coverImageSelect() {
-        const coverImgSelect = document.querySelector(".ImgSelect");
-        const coverImg = document.querySelector(".img-box");
 
-        coverImg.addEventListener("click", () => coverImgSelect.click());
-      }
-    </script>
   </body>
 </html>

@@ -52,21 +52,41 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 
 	@Override
 	public MembersDTO getData(int id) {
-		return null;
+		MembersDTO data = dao.selectData(id);
+		return data;
 	}
 
 	@Override
 	public MembersDTO getData(String memberId) {
 		MembersDTO bookmarkData = dao.selectData(memberId);
-		System.out.println("북마크 : " + bookmarkData);
+		
 		String[] bookmarkList = bookmarkData.getBookmark().split(",");
-		System.out.println("북마크2 : " + bookmarkList[0]);
-		System.out.println("북마크3 : " + bookmarkList[0].toString());
+		
+		
 		String bookmark = String.join("','",bookmarkList);
-		System.out.println("북마크4 : " + bookmark);
+	
 		bookmarkData.setBookmark(bookmark);
 		return bookmarkData;
 	}
+	
+	
+	public boolean addBookmark(String memberId) {
+		MembersDTO bookmarkData = dao.selectData(memberId);
+		 if(bookmarkData != null) {
+		    	String[] bookmarkList = bookmarkData.getBookmark().split(",");
+		    	if(!Arrays.asList(bookmarkList).contains(memberId)) {
+		    		int length = bookmarkList.length;
+		    		bookmarkList[length+1] = memberId;
+		    		String bookmark = String.join("','",bookmarkList);
+		    	  boolean	res = dao.updateBookmark(bookmark);
+		    	  return res;
+		    	}
+	         return false;
+		 }
+		 return false;
+	}
+	
+	
 
 	@Override
 	public MembersDTO getData(MembersDTO dto) {
@@ -108,7 +128,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 
 	public MembersDTO selectFindPw(MembersDTO data) {
 		MembersDTO res = dao.selectFindPw(data);
-		System.out.println("1111"+res);
+		
 		return res;
 	}
 

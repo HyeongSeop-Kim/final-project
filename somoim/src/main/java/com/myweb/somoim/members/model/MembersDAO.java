@@ -39,7 +39,9 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Override
 	public MembersDTO selectData(int id) {
-		return null;
+		String mapId = String.format(mapper, "selectMemberData");
+		MembersDTO data = session.selectOne(mapId,id);
+		return data;
 	}
 
 	@Override
@@ -100,10 +102,18 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	public MembersDTO selectFindPw(MembersDTO data) {
 		String mapId = String.format(mapper, "selectFindPw");
 		MembersDTO res = session.selectOne(mapId,data);
-		System.out.println("33333"+res);
+		
 		// 비밀번호 찾기 후 바로 업데이트 
 		session.update("memberMapper.updatePw",res);
 		return res;
+		
+	}
+
+
+	public boolean updateBookmark(String bookmark) { //북마트업데이트
+		String mapId = String.format(mapper, "updateBookmark");
+		int res = session.selectOne(mapId,bookmark);
+		return res == 1 ? true : false;
 		
 	}
 	

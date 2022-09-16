@@ -13,6 +13,8 @@ public class SomoimDTO {
 	private Date moimCreateDate;
 	private int categoryId;
 
+	
+
 
 	public int getCategoryId() {
 		return categoryId;
@@ -87,7 +89,7 @@ public class SomoimDTO {
 		this.locationName = locationName;
 	}
 	
-
+	
 
 	@Override
 	public String toString() {

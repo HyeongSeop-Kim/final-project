@@ -22,8 +22,31 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="${path}/resources/css/styles.css">
   <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
+  
   <title>소모임</title>
 </head>
+
+<script type="text/javascript">
+   function formCheck(form) {
+	   if(form.moimLimit.value < 5 || form.moimLimit.value > 300 ){
+		   var modal = new bootstrap.Modal(document.getElementById("errorModal"), {
+			      keyboard: false
+			});
+		   modal.show()
+		   return;
+		   
+	   }else if(form.moimLimit.value < ${currentMemberCount}){
+		   var modal2 = new bootstrap.Modal(document.getElementById("errorModal2"), {
+			      keyboard: false
+			});
+		   modal2.show()
+		   return;
+		   
+	   }
+	   form.submit();
+   }
+</script>
+
 
 <body>
   <div class="wrap p-5">
@@ -96,11 +119,11 @@
 								 	</div>
 								 	<div class="col input-group mb-3">
 				 					  	<span class="input-group-text" id="basic-addon1">정원(5~300명)</span>
-							 			 <input type="text" class="form-control" placeholder="정원수" name="moimLimit" aria-label="Username" aria-describedby="basic-addon1" value="${somoimDto.moimLimit}">
+							 			 <input type="text" class="form-control" placeholder="정원수" name="moimLimit" aria-label="Username" aria-describedby="basic-addon1" value="${somoimDto.moimLimit}" >
 								 	</div>
 							 	</section>
 							 	<div class="d-grid gap-2 col-5 mx-auto">
-				  					<button class="btn btn-primary" type="submit">수정</button>
+				  					<button class="btn btn-primary" type="button" onclick="formCheck(this.form);">수정</button>
 				  				</div>
 							</div>
 						</div>
@@ -176,6 +199,42 @@
         </div>
         <!-- // right-menu -->
 	</div>
+	       <!-- modal -->
+			<div class="modal fade" id="errorModal" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 정원수초과 -->
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title">입력 오류</h6>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						정원수는 최소 5명 ~ 최대 300명 사이로 설정할 수 있습니다. <br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		   <!-- modal2 -->
+			<div class="modal fade" id="errorModal2" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 현재멤버보다 적게 수정할떄 -->
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title">입력 오류</h6>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						현재 정원수는 ${currentMemberCount}명 입니다.<br>
+					    현재 정원수 이상 ~ 300 명 이하로 설정할 수 있습니다. <br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
     </main>
     <!-- // main -->
   </div>

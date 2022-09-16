@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,32 +87,78 @@ public class MoimController {
 	}
 	
 
-@RequestMapping(value = "/moim/join", method = RequestMethod.GET)
-
+	@GetMapping(value = "/moim/join", produces="application/json; charset=utf-8")
+	@ResponseBody
 	public String moimJoin(Model model,
 			@RequestParam int id
-			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 
+	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); 
+	SomoimDTO moimData = SomoimService.getData(id); //모임정보
+	
 
-	MoimParticipantsDTO dto = new MoimParticipantsDTO();
+	JSONObject json = new JSONObject();
+	
+	if(currentMemberCount >= moimData.getMoimLimit()) {
+		
+		
+		json.put("code",   "over");
+		json.put("message",   "정원이 이미 마감 되었습니다.");
+        return json.toJSONString();
+	}else {
+		MoimParticipantsDTO dto = new MoimParticipantsDTO();
+		dto.setMoimId(id);
+		dto.setMemberId(membersDto.getMemberId());
+	   
+		boolean result = moimParticipantsService.addData(dto);
+		json.put("code",   "success");
+		json.put("message",   "가입이 완료되었습니다.");
+        return json.toJSONString();
 
-	dto.setMoimId(id);
-	dto.setMemberId(membersDto.getMemberId());
+	 }
+
+		
+	}
+	
+	
 
 
-	boolean result = moimParticipantsService.addData(dto);
+		
 
 
-	if(test.equals("2")) {
-		if(result) {
-			 return "redirect:/moim/board?id="+id;
-		}
-	}        return "redirect:/moim/meeting?id="+id;
+   @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
+     public String moimBookMark(Model model,
+			@RequestParam int id
+			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+	   
+		
+	   
+	     return "redirect:/moim/meeting?id="+id;
 
+   }
+   
+   
+   @RequestMapping(value = "/moim/bookmarkAdd", method = RequestMethod.GET)
+   public String bookmarkAdd(Model model,
+			@RequestParam int id
+			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+	   
+	   
+	   MembersDTO data = memberService.getData(id);
+	   
+	 // boolean res = memberService.addBookmark(data);
+	   
+	  
+		
+	   
+	     return "redirect:/moim/meeting?id="+id;
 
-		}
+ } 
+   
 
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.POST)
@@ -155,6 +202,7 @@ public class MoimController {
 			        ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 		SomoimDTO moimData = SomoimService.getData(id); //모임정보
+	
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
@@ -165,12 +213,18 @@ public class MoimController {
 		data.setMemberId(membersDto.getMemberId());
 		data.setMoimId(id);
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
-
+		
+		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재 정원확인
+		
+		if(currentMemberCount >= moimData.getMoimLimit() ) {
+			model.addAttribute("over" , "초과");
+		}
 		model.addAttribute("res" , res); //로그인한 유저가 참가자인지 확인
 		model.addAttribute("moimData" , moimData);
 		model.addAttribute("meetingsData",meetingsData);
 		model.addAttribute("moimParticipants",moimParticipants);
 		model.addAttribute("meetingParticipants", meetingParticipants);
+		model.addAttribute("currentMemberCount", currentMemberCount);
 		
 		
 		return "moim/meeting";
@@ -200,12 +254,16 @@ public class MoimController {
 
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
 
-
+		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);  //현재 정원확인
+		if(currentMemberCount >= moimData.getMoimLimit() ) { //정원수 초과할경우 정원마감모임이라고 알려주기
+			model.addAttribute("over" , "초과");
+		}
+		
 		   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
            model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
 		   model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
-		
+		   model.addAttribute("currentMemberCount", currentMemberCount); //현재정원수
 		
 		return "moim/board";
 	}
@@ -219,12 +277,13 @@ public class MoimController {
 	SomoimDTO  somoimDto =	SomoimService.getData(id);
 	List<LocationsDTO> locList =  locationService.getAll();
 	List<CategorysDTO> categoryList =  categoryService.getAll();
-
+	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재정원알아오기
 
 	   model.addAttribute("test",test); //board,meeting 쪽으로 가기하기위한 구분
 	   model.addAttribute("locList" , locList);
 	   model.addAttribute("categoryList" , categoryList);
 	   model.addAttribute("somoimDto" , somoimDto);
+	   model.addAttribute("currentMemberCount", currentMemberCount);
 		return "moim/meetingmodify";
 	}
 
@@ -308,6 +367,8 @@ public class MoimController {
 	  return "redirect:/moim/board?id="+id;
 	}
 
+	
+	
 
 
 
@@ -322,20 +383,20 @@ public class MoimController {
 
 
 		SomoimDTO data1 = SomoimService.getData(id);
+		
 
-	 data1.setMoimImagePath(request.getServletContext().getRealPath("/resources/img/")+data1.getMoimId() + ".png");
+	 data1.setMoimImagePath(request.getContextPath() + "/resources/img/moim/" + data1.getMoimId() + ".png");
 
 
 	boolean res = fileUploadService.modifyMoimImage(data1); //업로드한이미지path를  DB에 저장
 
 
 	String realPath= request.getServletContext().getRealPath("/resources"); //실제로 파일업로드 할 곳 지정
-	file.transferTo(new File(realPath + "/img/" + data1.getMoimId() + ".png"));	//실제로 업로드해주기
+	file.transferTo(new File(realPath + "/img/moim/" + data1.getMoimId() + ".png"));	//실제로 업로드해주기
 
 	JSONObject json = new JSONObject();
-	//json.put("uploaded", 1); //하나의 파일업로드 되었다. //무조건1
-	//json.put("fileName", file.getOriginalFilename());//업로드한 파일이름
-	json.put("url", request.getContextPath() + "/resources/img/" + data1.getMoimId() + ".png");
+	
+	json.put("url",   request.getContextPath() + "/resources/img/moim/" + data1.getMoimId() + ".png");
 
 
 
