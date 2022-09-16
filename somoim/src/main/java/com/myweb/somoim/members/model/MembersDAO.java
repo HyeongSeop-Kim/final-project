@@ -12,21 +12,21 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Autowired
 	private SqlSession session;
-	
+
 	private String mapper = "memberMapper.%s";
-	
+
 	public MembersDTO selectLogin(MembersDTO data) {
 		String mapId = String.format(mapper, "selectLogin");
-		MembersDTO result = session.selectOne(mapId,data);
+		MembersDTO result = session.selectOne(mapId, data);
 		return result;
 	}
-	
-	
+
+
 	@Override
 	public List<MembersDTO> selectAll() {
 		return null;
 	}
-	
+
 	@Override
 	public List<MembersDTO> selectDatas(int i) {
 		return null;
@@ -40,14 +40,14 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	@Override
 	public MembersDTO selectData(int id) {
 		String mapId = String.format(mapper, "selectMemberData");
-		MembersDTO data = session.selectOne(mapId,id);
+		MembersDTO data = session.selectOne(mapId, id);
 		return data;
 	}
 
 	@Override
 	public MembersDTO selectData(String memberId) {
 		String mapId = String.format(mapper, "selectData");
-		MembersDTO bookmarkData = session.selectOne(mapId,memberId);
+		MembersDTO bookmarkData = session.selectOne(mapId, memberId);
 		return bookmarkData;
 	}
 
@@ -94,27 +94,26 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	public MembersDTO selectFindId(MembersDTO data) {
 		String mapId = String.format(mapper, "selectFindId");
-		MembersDTO res = session.selectOne(mapId,data);
+		MembersDTO res = session.selectOne(mapId, data);
 		return res;
 	}
 
 
 	public MembersDTO selectFindPw(MembersDTO data) {
 		String mapId = String.format(mapper, "selectFindPw");
-		MembersDTO res = session.selectOne(mapId,data);
+		MembersDTO res = session.selectOne(mapId, data);
 
 		// 비밀번호 찾기 후 바로 업데이트 
-		session.update("memberMapper.updatePw",res);
+		session.update("memberMapper.updatePw", res);
 		return res;
-		
+
 	}
-	
+
 
 	public boolean updateBookmark(MembersDTO data) {
 		String mapId = String.format(mapper, "updateBookmark");
-		int result = session.update(mapId,data);
+		int result = session.update(mapId, data);
 		return result == 1 ? true : false;
 	}
-
 
 }

@@ -86,8 +86,8 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		    		int length = bookmarkList.length;
 		    		bookmarkList[length+1] = memberId;
 		    		String bookmark = String.join("','",bookmarkList);
-		    	  boolean	res = dao.updateBookmark(bookmark);
-		    	  return res;
+//		    	  boolean	res = dao.updateBookmark(bookmark);		겹쳤음
+		    	  return false;
 		    	}
 	         return false;
 		 }

@@ -177,7 +177,7 @@ public class MoimController {
 
 		int memberCnt = SomoimService.getDataCnt(memData.getMemberId());
 		boolean chk = false;
-		if(memberCnt <= 5) {
+		if(memberCnt < 5) {
 			SomoimDTO data = new SomoimDTO();
 			data.setLocationId(locationId);
 			data.setMoimTitle(moimTitle);
@@ -189,7 +189,6 @@ public class MoimController {
 			boolean result = SomoimService.addData(data);
 
 			MoimParticipantsDTO partData = new MoimParticipantsDTO();
-		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
 			partData.setMemberId(memData.getMemberId());
 			partData.setMoimId(data.getMoimId());
 
