@@ -12,21 +12,21 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Autowired
 	private SqlSession session;
-
+	
 	private String mapper = "memberMapper.%s";
-
+	
 	public MembersDTO selectLogin(MembersDTO data) {
 		String mapId = String.format(mapper, "selectLogin");
 		MembersDTO result = session.selectOne(mapId, data);
 		return result;
 	}
-
-
+	
+	
 	@Override
 	public List<MembersDTO> selectAll() {
 		return null;
 	}
-
+	
 	@Override
 	public List<MembersDTO> selectDatas(int i) {
 		return null;
@@ -106,14 +106,21 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		// 비밀번호 찾기 후 바로 업데이트 
 		session.update("memberMapper.updatePw", res);
 		return res;
-
+		
 	}
-
+	
 
 	public boolean updateBookmark(MembersDTO data) {
 		String mapId = String.format(mapper, "updateBookmark");
 		int result = session.update(mapId, data);
 		return result == 1 ? true : false;
 	}
+
+	public int idchk(MembersDTO membersDTO) {
+		String mapId = String.format(mapper, "idChk");
+		int result = session.selectOne(mapId,membersDTO);
+		return result;
+	}
+
 
 }

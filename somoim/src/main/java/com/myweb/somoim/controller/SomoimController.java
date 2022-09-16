@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -64,7 +63,11 @@ public class SomoimController {
 	public String moimMain(Model model, HttpSession session) {
 		List<CategorysDTO> datas = categoryService.getAll();
 		model.addAttribute("datas", datas);
-	
+
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		String memberId = membersData.getMemberId();
+		MembersDTO bookmarkData = memberservice.getData(memberId);
+
 		return "somoim_m";
 	}
 	
@@ -135,24 +138,27 @@ public class SomoimController {
 		}
 		return join_datas.toJSONString();
 	}
-	
+
 	/*
 	@RequestMapping(value = "/last_view_list", method = RequestMethod.GET)
 	@ResponseBody
 	public String lastViewList(HttpSession session, HttpServletResponse response) {
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		MembersDTO bookmarkData = memberservice.getData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = service.getDatas_bmk(bookmarkData.getBookmark());
+
 		JSONArray join_datas = new JSONArray();
 		Cookie cookie = new Cookie("lastView", "lastView");
 		cookie.setDomain("localhost");
 		cookie.setPath("/");
-		
+
 		cookie.setMaxAge(30*60);
 		cookie.setSecure(true);
 		response.addCookie(cookie);
 		return join_datas.toJSONString();
 	}
-	*/
+
 
 	@GetMapping(value="/userInfo") 
 	public String info() {
