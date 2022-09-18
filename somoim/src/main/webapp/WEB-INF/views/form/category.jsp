@@ -109,6 +109,7 @@
 </section>
 </body>
 <script src="${path}/resources/js/category.js"></script>
+<script src="${path}/resources/js/components/popup.js"></script>
 <script type="text/javascript">
 
 </script>

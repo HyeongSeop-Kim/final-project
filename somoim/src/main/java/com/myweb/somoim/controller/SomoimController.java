@@ -1,6 +1,8 @@
 package com.myweb.somoim.controller;
 
 import java.awt.print.Pageable;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,12 +10,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import com.myweb.somoim.common.model.LocationsDTO;
+import com.myweb.somoim.common.service.FileUploadService;
+import com.myweb.somoim.common.service.LocationsService;
 import com.myweb.somoim.members.model.MembersDTO;
 import com.myweb.somoim.members.service.MembersService;
+import com.myweb.somoim.moim.model.BoardsDTO;
+import com.myweb.somoim.moim.service.BoardsService;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONArray;
@@ -27,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -51,21 +61,23 @@ public class SomoimController {
 	private MembersService membersService;
 	@Autowired
 	private CategorysService categoryService;
-
 	@Autowired
-	private	MoimParticipantsService moimParticipantsService;
-
+	private BoardsService boardsService;
+	@Autowired
+	private MoimParticipantsService moimParticipantsService;
+	@Autowired
+	private FileUploadService fileUploadService;
 	@Autowired
 	private MembersService memberservice;
+	@Autowired
+	private LocationsService locationsService;
+	@Autowired
+	private CategorysService categorysService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String moimMain(Model model, HttpSession session) {
 		List<CategorysDTO> datas = categoryService.getAll();
 		model.addAttribute("datas", datas);
-
-		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
-		//String memberId = membersData.getMemberId();
-		//MembersDTO bookmarkData = memberservice.getData(memberId);
 
 		return "somoim_m";
 	}
@@ -73,17 +85,17 @@ public class SomoimController {
 // 리스트 뽑기	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public String moimList(@RequestParam(defaultValue="1", required=false) int page //현재페이지
+	public String moimList(@RequestParam(defaultValue = "1", required = false) int page //현재페이지
 			, @RequestParam("page_count") int pageCount //한페이지에 몇개 게시물
 			, @RequestParam("list_search") String search
 			, @RequestParam("category_id") int categoryId) {
 		Map res_data = service.getAll(page, pageCount, search, categoryId);
-		List datas = (List)res_data.get("datas"); // 가져온 데이터 리스트
-		PagingDTO pager = (PagingDTO)res_data.get("page_data"); // 가져온 페이징 객체
+		List datas = (List) res_data.get("datas"); // 가져온 데이터 리스트
+		PagingDTO pager = (PagingDTO) res_data.get("page_data"); // 가져온 페이징 객체
 		JSONArray data_arr = new JSONArray(); // 가져온 데이터 리스트를 넣는 배열
 		JSONObject page_obj = new JSONObject(); // 가져온 페이징 데이터를 넣는 객체
 		JSONObject rtn_data = new JSONObject(); // 결과값
-		for (SomoimDTO smoim : (List<SomoimDTO>)datas) {
+		for (SomoimDTO smoim : (List<SomoimDTO>) datas) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
 			json.put("moimTitle", smoim.getMoimTitle());
@@ -107,12 +119,12 @@ public class SomoimController {
 
 	@RequestMapping(value = "/join_list", method = RequestMethod.GET)
 	@ResponseBody
-	public String joinList( HttpSession session) {
+	public String joinList(HttpSession session) {
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
 		List<SomoimDTO> participantsData = service.getDatas(membersData.getMemberId());
 		JSONArray join_datas = new JSONArray();
-		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+		for (SomoimDTO smoim : (List<SomoimDTO>) participantsData) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
 			json.put("moimTitle", smoim.getMoimTitle());
@@ -123,21 +135,103 @@ public class SomoimController {
 
 	@RequestMapping(value = "/bookmark_list", method = RequestMethod.GET)
 	@ResponseBody
-	public String bookMarkList( HttpSession session) {
+	public String bookMarkList(HttpSession session) {
+
+		JSONArray join_datas = new JSONArray();
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<String> bookmarkData = memberservice.getBmkData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = service.getDatas_bmk(bookmarkData);
+		for (SomoimDTO smoim : (List<SomoimDTO>) participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
+
+	/*
+	@RequestMapping(value = "/last_view_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String lastViewList(HttpSession session, HttpServletResponse response) {
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
 		MembersDTO bookmarkData = memberservice.getData(membersData.getMemberId());
 		List<SomoimDTO> participantsData = service.getDatas_bmk(bookmarkData.getBookmark());
 
 		JSONArray join_datas = new JSONArray();
+		Cookie cookie = new Cookie("lastView", "lastView");
+		cookie.setDomain("localhost");
+		cookie.setPath("/");
 
+		cookie.setMaxAge(30*60);
+		cookie.setSecure(true);
+		response.addCookie(cookie);
 		return join_datas.toJSONString();
 	}
+*/
 
+	@GetMapping(value="/info/myInfo")
+	public String myInfo(HttpSession session, Model model,  HttpServletRequest request) {
+		MembersDTO membersDTO = (MembersDTO) session.getAttribute("loginData");
+		List<MoimParticipantsDTO> partDatas = moimParticipantsService.getDatas(membersDTO.getMemberId());
+		List<SomoimDTO> moimDatas = new ArrayList<SomoimDTO>();
+		List<BoardsDTO> boardDatas = boardsService.getDatas(membersDTO.getMemberId());
 
-	@GetMapping(value="/userInfo") 
-	public String info() {
+		for (MoimParticipantsDTO data : partDatas) {
+			SomoimDTO moimData = service.getData(data.getMoimId());
+			moimDatas.add(moimData);
+		}
+		model.addAttribute("moimDatas", moimDatas);
+		model.addAttribute("boardDatas", boardDatas);
+
+		return "info/myInfo";
+	}
+
+	@RequestMapping(value = "infoMod", method = RequestMethod.POST)
+	public String addJoin(MembersDTO membersDTO, HttpSession session
+			,@RequestParam (required = false) String year
+			,@RequestParam (required = false) String month
+			,@RequestParam (required = false) String day
+			,@RequestParam (required = false) String memberName) {
+		String bitrhs = year+month+day;
+
+		membersDTO.setBirth(bitrhs);
+
+		MembersDTO data = new MembersDTO();
+		data.setMemberId(membersDTO.getMemberId());
+		data.setMemberName(membersDTO.getMemberName());
+		data.setPassword(membersDTO.getPassword());
+		data.setGender(membersDTO.getGender());
+		data.setBirth(membersDTO.getBirth());
+		data.setPhone(membersDTO.getPhone());
+		data.setCategory(membersDTO.getCategory());
+		data.setLocationId(membersDTO.getLocationId());
+
+		boolean result = membersService.modifyData(data);
+
+		if (result) {
+			MembersDTO loginData = membersService.getData((MembersDTO) session.getAttribute("loginData"));
+			session.setAttribute("loginData", loginData);
+			return "info/myInfo";
+		}else {
+			return "info/myInfo";
+		}
+	}
+
+	@GetMapping(value="/info/userInfo")
+	public String userInfo() {
 		return "info/userInfo";
+	}
+
+	@GetMapping(value = "/info/modProfile")
+	public String modProfile(Model model){
+		List<LocationsDTO> locDatas = locationsService.getAll();
+		List<CategorysDTO> categorysDatas = categorysService.getAll();
+
+		model.addAttribute("categorysDatas",categorysDatas);
+		model.addAttribute("locDatas", locDatas);
+		return "info/modProfile";
 	}
 
 	@GetMapping(value = "category")
@@ -173,4 +267,49 @@ public class SomoimController {
 		return jsonObject.toJSONString();
 	}
 	
+	@PostMapping(value = "/ajax/infoUpload")
+	@ResponseBody
+	public String ajaxInfoUpload(HttpServletRequest request, HttpSession session
+								 , @RequestParam("uploadImage") MultipartFile file) throws IOException {
+		MembersDTO membersDTO = (MembersDTO) session.getAttribute("loginData");
+		String realPath= request.getServletContext().getRealPath("/resources/img/info/");
+
+		membersDTO.setInfoImagePath(request.getContextPath() + "/resources/img/info/" + membersDTO.getMemberId() + ".png");
+
+		boolean res = fileUploadService.modifyInfoImage(membersDTO);
+
+		if(res) {
+			file.transferTo(new File(realPath + membersDTO.getMemberId() + ".png"));
+
+			JSONObject json = new JSONObject();
+			json.put("infoUrl", request.getContextPath() + "/resources/img/info/" + membersDTO.getMemberId() + ".png");
+
+			return json.toJSONString();
+		} else {
+			return null;
+		}
+	}
+
+	@PostMapping(value = "/ajax/profileUpload")
+	@ResponseBody
+	public String ajaxProfileUpload(HttpServletRequest request, HttpSession session
+			, @RequestParam("uploadImage") MultipartFile file) throws IOException {
+		MembersDTO membersDTO = (MembersDTO) session.getAttribute("loginData");
+		String realPath= request.getServletContext().getRealPath("/resources/img/members/");
+
+		membersDTO.setMemberImagePath(request.getContextPath() + "/resources/img/members/" + membersDTO.getMemberId() + ".png");
+
+		boolean res = fileUploadService.modifyProfileImage(membersDTO);
+
+		if(res) {
+			file.transferTo(new File(realPath + membersDTO.getMemberId() + ".png"));
+
+			JSONObject json = new JSONObject();
+			json.put("profileUrl", request.getContextPath() + "/resources/img/members/" + membersDTO.getMemberId() + ".png");
+
+			return json.toJSONString();
+		} else {
+			return null;
+		}
+	}
 }

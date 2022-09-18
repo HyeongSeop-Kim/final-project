@@ -6,8 +6,16 @@
 	<select id="selectData" parameterType="memberDto" resultType="memberDto">
 		SELECT BOOKMARK AS bookmark
    		  FROM MEMBERS
- 	     WHERE MEMBER_ID = #{memberId} 
+   		WHERE 1=1
+   		<if test='memberId != null and memberId != ""' >
+ 	     AND MEMBER_ID = #{memberId}
+		</if>
 	</select>
+	<update id="updateBookmark" parameterType="memberDto">
+		UPDATE MEMBERS SET BOOKMARK = #{bookmark} WHERE MEMBER_ID = #{memberId}
+	</update>
+
+
 	<insert id="insertData" parameterType="memberDto">
 		INSERT INTO MEMBERS(
 		  MEMBER_ID
@@ -21,6 +29,7 @@
 		, MEMBER_IMAGE_PATH)
      VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category}, #{locationId}, #{memberImagePath})
 	</insert>
+	
 	<select id="selectLogin" parameterType="memberDto" resultType="memberDto">
 		SELECT M.MEMBER_ID AS memberId
 	 	 ,M.MEMBER_NAME AS memberName
@@ -31,7 +40,7 @@
 	 	 ,M.CATEGORY
 	 	 ,M.BOOKMARK
 	 	 ,M.MEMBER_IMAGE_PATH AS memberImagePath
-	 	 ,M.INFO_IMAGE_PATH
+	 	 ,M.INFO_IMAGE_PATH AS infoImagePath
 	 	 ,M.LOCATION_ID AS locationId
 	 	 ,L.LOCATION_NAME  AS locationName
 				FROM MEMBERS M
@@ -79,5 +88,32 @@
 		 		 AND MEMBER_NAME =  #{memberName}
 		 		 AND PHONE = #{phone}
 		</update>
+	<update id="updateData" parameterType="memberDto">
+		UPDATE MEMBERS
+		   SET PASSWORD = #{password}
+			 , PHONE = #{phone}
+			 , CATEGORY = #{category}
+			 , LOCATION_ID = #{locationId}
+		 WHERE MEMBER_ID = #{memberId}
+		   AND MEMBER_NAME =  #{memberName}
+	</update>
+	<select id="selectMemberData" parameterType="memberDto" resultType="memberDto">
+		SELECT M.MEMBER_ID AS memberId
+			 ,M.MEMBER_NAME AS memberName
+			 ,M.PASSWORD AS password
+			 ,M.GENDER AS gender
+			 ,M.BIRTH AS birth
+			 ,M.PHONE AS phone
+			 ,M.CATEGORY AS category
+			 ,M.BOOKMARK as bookmark
+			 ,M.MEMBER_IMAGE_PATH AS memberImagePath
+			 ,M.INFO_IMAGE_PATH AS infoImagePath
+			 ,M.LOCATION_ID AS locationId
+			 ,L.LOCATION_NAME  AS locationName
+		FROM MEMBERS M
+				 JOIN LOCATIONS L
+					  ON M.LOCATION_ID = L.LOCATION_ID
+		WHERE M.MEMBER_ID =#{memberId}
+	</select>
 </mapper>
 

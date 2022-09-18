@@ -10,7 +10,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>${moimData.moimTitle}입니다.</title>
+    <title>${moimData.moimTitle}모임 입니다.</title>
     <c:set var="path" value="${pageContext.request.contextPath}" />
     <c:url var="cs" value="/resources/css"/>
     <c:url var="img" value="/resources/img/somoim"/>
@@ -62,18 +62,70 @@
 				enctype: "multipart/form-data",
 				url: "/somoim/moim/imageUpload",
 				data: fData,
+				dataType: "json",
 				processData: false, //Ajax로 파일업로드시 필요
 				contentType: false, //Ajax로 파일업로드시 필요
 				success: function(data, status) {
 					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
-                    console.log(previewImage.src);
+
 				}
      });
 
 }
 
+</script>
+
+   <script type="text/javascript">
+
+
+  function limitCheck(moimId){
+	  	$.ajax({
+    		url: "/somoim/moim/join",
+    		type: "get",
+    		data: {
+    			id:moimId
+    		},
+    		dataType: "json",
+    		success: function(data){
+    			if(data.code === "over"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+    			}else if(data.code === "success"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+    			}
+    		}
+    	})
+    }
 
 </script>
+   <script type="text/javascript">
+
+
+  function bookmarkAdd(moimId){
+	  	$.ajax({
+    		url: "/somoim/moim/bookmarkAdd",
+    		type: "get",
+    		data: {
+    			id:moimId
+    		},
+    		dataType: "json",
+    		success: function(data){
+    			if(data.code === "over"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+    			}else if(data.code === "success"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+    			}
+    		}
+    	})
+    }
+
+</script>
+
+
+
 
   <body>
     <c:url var="meetingUrl" value="/moim/meeting/">
@@ -88,7 +140,7 @@
         <img id="previewImage"
           class="img-box-size-1 bora-20 shadow-sm width-100"
           alt="이미지 선택"
-          src="${path}/resources/img/${moimData.moimId}.png"
+          src="${moimData.moimImagePath}"
         /> 
         <input id="moimImageSelect"
           class="ImgSelect"
@@ -176,15 +228,20 @@
              </c:if>
              
                     
-          
-           <c:if test="${empty res}">
+           <c:if test="${empty res && currentMemberCount < moimData.moimLimit}">
            <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary" onclick="location.href='/somoim/moim/join?id=${moimData.moimId}&test=1'">가입</button>
+            <button type="button" class="btn btn-primary" onclick="limitCheck(${moimData.moimId})" >가입</button>
            </div>
-            </c:if>
-          <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary">찜</button>
+           </c:if>
+          <div class="margin-10 margin-top-50 ">
+            <button type="button" class="btn btn-primary" onclick="location.href='/somoim/moim/bookmarkAdd?id=${sessionScope.loginData.memberId}'">찜</button>
           </div>
+          <div class="margin-top-78 margin-left-223">
+            <div>현재 가입 인원수: ${currentMemberCount}명 / 정원수: ${moimData.moimLimit}명</div>
+          <c:if test="${not empty over}">
+            <div>현재 정원이 마감된 모임입니다. </div>
+          </c:if>
+         </div>
         </div>
       </div>
     </header>
@@ -229,10 +286,12 @@
           <div class="margin-10">
             <div class="space-between margin-10">
               <img
-                src="${img}/profile-image.png"
+                src="${moimParticipants.memberImagePath}"
                 class="rounded-circle"
                 alt="profile-image"
                 width="100"
+                height="100"
+                border-radius="50%"
               />
               <div>${moimParticipants.jobName}</div>
               <div>${moimParticipants.memberName}</div>
@@ -331,15 +390,18 @@
           >
             <c:if test="${not empty moimParticipants}">
           <c:forEach items="${moimParticipants}" var="moimParticipants">
-            <div class="space-between margin-10">
+            <div class="partList space-between margin-10 bottom-10">
               <img
-                src="${img}/profile-image.png"
+                src="${moimParticipants.memberImagePath}"
                 class="rounded-circle"
                 alt="profile-image"
                 width="70"
+                height="70"
+                border-radius="50%"
               />
               <div>${moimParticipants.jobName}</div>
               <div>${moimParticipants.memberName}</div>
+              <div id="${moimParticipants.memberId}" style="display: none"></div>
             </div>
             </c:forEach>
             </c:if>
@@ -353,6 +415,25 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+  <script>
+    let partList = document.querySelectorAll('.partList')
+
+    partList.forEach( (item) => {
+      item.addEventListener('mouseover', function(){  //  mouseover 시 hover 클래스 추가
+        item.classList.add('hoverMem');
+      });
+    });
+    partList.forEach( (item) => {
+      item.addEventListener('mouseout', function(){   //  mouseout 시 hover 클래스 삭제
+        item.classList.remove('hoverMem');
+      });
+    });
+    partiList.forEach( (item) => {  // 클릭시 user info로 이동하도록
+      item.addEventListener('click', () => {
+
+      })
+    })
+  </script>
 
   </body>
 </html>

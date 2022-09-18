@@ -17,7 +17,7 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	
 	public MembersDTO selectLogin(MembersDTO data) {
 		String mapId = String.format(mapper, "selectLogin");
-		MembersDTO result = session.selectOne(mapId,data);
+		MembersDTO result = session.selectOne(mapId, data);
 		return result;
 	}
 	
@@ -39,19 +39,23 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	@Override
 	public MembersDTO selectData(int id) {
-		return null;
+		String mapId = String.format(mapper, "selectMemberData");
+		MembersDTO data = session.selectOne(mapId, id);
+		return data;
 	}
 
 	@Override
 	public MembersDTO selectData(String memberId) {
 		String mapId = String.format(mapper, "selectData");
-		MembersDTO bookmarkData = session.selectOne(mapId,memberId);
+		MembersDTO bookmarkData = session.selectOne(mapId, memberId);
 		return bookmarkData;
 	}
 
 	@Override
 	public MembersDTO selectData(MembersDTO dto) {
-		return null;
+		String mapId = String.format(mapper, "selectMemberData");
+		MembersDTO data = session.selectOne(mapId,dto);
+		return data;
 	}
 
 	@Override
@@ -69,8 +73,10 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	}
 
 	@Override
-	public boolean updateData(MembersDTO dto) {
-		return false;
+	public boolean updateData(MembersDTO data) {
+		String mapId = String.format(mapper, "updateData");
+		int res = session.insert(mapId, data);
+		return res == 1 ? true : false;
 	}
 
 	public boolean updateCate(MembersDTO dto) {
@@ -92,27 +98,34 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 
 	public MembersDTO selectFindId(MembersDTO data) {
 		String mapId = String.format(mapper, "selectFindId");
-		MembersDTO res = session.selectOne(mapId,data);
+		MembersDTO res = session.selectOne(mapId, data);
 		return res;
 	}
 
 
 	public MembersDTO selectFindPw(MembersDTO data) {
 		String mapId = String.format(mapper, "selectFindPw");
-		MembersDTO res = session.selectOne(mapId,data);
-		System.out.println("33333"+res);
+		MembersDTO res = session.selectOne(mapId, data);
+
 		// 비밀번호 찾기 후 바로 업데이트 
-		session.update("memberMapper.updatePw",res);
+		session.update("memberMapper.updatePw", res);
 		return res;
 		
 	}
+	
 
+	public boolean updateBookmark(MembersDTO data) {
+		String mapId = String.format(mapper, "updateBookmark");
+		int result = session.update(mapId, data);
+		return result == 1 ? true : false;
+	}
 
 	public int idchk(MembersDTO membersDTO) {
 		String mapId = String.format(mapper, "idChk");
 		int result = session.selectOne(mapId,membersDTO);
 		return result;
 	}
+
 
 
 	public int kakaoIdchk(MembersDTO membersDTO) {
@@ -122,6 +135,4 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		int result = session.selectOne(mapId,kakaoId);
 		return result;
 	}
-	
-
 }

@@ -7,6 +7,7 @@ public class MoimParticipantsDTO {
 	private String memberName;
 	private String JobName;
 	private String memberImagePath;
+	private int currentMemberCount;
 
 	public String getMemberId() {
 		return memberId;
@@ -55,9 +56,22 @@ public class MoimParticipantsDTO {
 	public void setMemberImagePath(String memberImagePath) {
 		this.memberImagePath = memberImagePath;
 	}
+	
+	public int getCurrentMemberCount() {
+		return currentMemberCount;
+	}
+
+	public void setCurrentMemberCount(int currentMemberCount) {
+		this.currentMemberCount = currentMemberCount;
+		
+	}
 
 	@Override
 	public String toString() {
-		return "MoimParticipantsDTO [memberId=" + memberId + ", jobId=" + jobId + ", moimId=" + moimId + "]";
+		return "MoimParticipantsDTO [memberId=" + memberId + ", jobId=" + jobId + ", moimId=" + moimId + ", memberName="
+				+ memberName + ", JobName=" + JobName + ", memberImagePath=" + memberImagePath + ", currentMemberCount="
+				+ currentMemberCount + "]";
 	}
+
+
 }

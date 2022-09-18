@@ -38,6 +38,12 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 		int data = session.selectOne(mapperId, map);
 		return data;
 	}
+	
+	public int selectCnt(String memberId) {
+		String mapperId = String.format(mapper, "selectCnt");
+		int count = session.selectOne(mapperId, memberId);
+		return count;
+	}
 	@Override
 	public List<SomoimDTO> selectDatas(int i) {
 		return null;
@@ -122,9 +128,12 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 		List<SomoimDTO> data = session.selectList(mapperId,memberId);
 		return data;
 	}
-	public List<SomoimDTO> selectSubDatas_bmk(String moimIds) {
-		String mapperId = String.format(mapper, "selectSubDatas");
-		List<SomoimDTO> data = session.selectList(mapperId,moimIds);
+	
+	public List<SomoimDTO> selectSubDatas_bmk(List<String> moimIds) {
+		String mapperId = String.format(mapper, "selectSubDatas_bmk");
+		Map<String, Object> map = new HashMap();
+		map.put("moimIds", moimIds);
+		List<SomoimDTO> data = session.selectList(mapperId,map);
 		return data;
 	}
 	

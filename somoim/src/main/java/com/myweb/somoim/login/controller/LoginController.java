@@ -123,7 +123,6 @@ public class LoginController {
 	
 	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public String join(Locale locale, Model model) {
-		
 		List<LocationsDTO> locDatas = locSerivce.getAll();
 		List<CategorysDTO> categorysDatas = categorysService.getAll();
 		

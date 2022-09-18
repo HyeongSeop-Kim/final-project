@@ -28,8 +28,9 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 	}
 
 	@Override
-	public List<MoimParticipantsDTO> getDatas(String s) {
-		return null;
+	public List<MoimParticipantsDTO> getDatas(String id) {
+		List<MoimParticipantsDTO> data = dao.selectJoinMoimData(id);
+		return data;
 	}
 
 	
@@ -46,7 +47,7 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 	@Override
 	public MoimParticipantsDTO getData(MoimParticipantsDTO dto) {
 		MoimParticipantsDTO data = dao.selectData(dto);
-		System.out.println("서비스쪽"+ data);
+		
 		return data;
 	}
 
@@ -70,6 +71,14 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 	@Override
 	public boolean removeData(int id) {
 		return false;
+	}
+
+
+	public int  getcurrentMemberCount(int id) {
+		
+		int  res = dao.currentMemberCount(id);
+		
+		return res ;
 	}
 
 }

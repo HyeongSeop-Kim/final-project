@@ -53,70 +53,17 @@
 	</section>
 </body>
 <script type="text/javascript">
-	var id;
-	var pw;
-	var join;
-function popId(){
- if (!id){       //최초 클릭이면 팝업을 띄운다
-	 let popUrl = "findId";	
-	Clip =window.open(popUrl, '_blank', 'width=500, height=600, location=no');
-	id = true;
- }
- else{           //최초 클릭이 아니면
-  if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-   Clip.focus();                        
-  }
-  else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
-	  let popUrl = "findId";	
-	  Clip =window.open(popUrl, '_blank', 'width=500, height=600');
-   id = true;
-  }
- }
-};
-function popPw(){
- if (!pw){       //최초 클릭이면 팝업을 띄운다
-	 let popUrl = "findPw";	
-	Clip =window.open(popUrl, '_blank', 'width=500, height=600 ');
-  pw = true;
- }
- else{           //최초 클릭이 아니면
-  if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-   Clip.focus();                        
-  }
-  else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
-	 let popUrl = "findPw";	
-	  Clip =window.open(popUrl, '_blank', 'width=500, height=600');
-   pw = true;
-  }
- }
-};
-function popJoin(){
- if (!join){       //최초 클릭이면 팝업을 띄운다
-	 let popUrl = "join";	
-	Clip =window.open(popUrl, '_blank', 'width=550, height=920');
-  join = true;
- }
- else{           //최초 클릭이 아니면
-  if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-   Clip.focus();                        
-  }
-  else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
-	 let popUrl = "join";	
-	  Clip =window.open(popUrl, '_blank', 'width=550, height=920');
-	  join = true;
-  }
- }
-};
-function naverLogin() {
-	var naverClick = document.getElementById("naver_id_login_anchor");
-	naverClick.click();
-}
+	function naverLogin() {
+		var naverClick = document.getElementById("naver_id_login_anchor");
+		naverClick.click();
+	}
 
-var naver_id_login = new naver_id_login("5ekGeZD6fZeanHE4nB88", "http://localhost/somoim");
-var state = naver_id_login.getUniqState();
-naver_id_login.setButton("white", 2,40);
-naver_id_login.setDomain("http://localhost");
-naver_id_login.setState(state);
-naver_id_login.init_naver_id_login();
+	var naver_id_login = new naver_id_login("5ekGeZD6fZeanHE4nB88", "http://localhost/somoim");
+	var state = naver_id_login.getUniqState();
+	naver_id_login.setButton("white", 2,40);
+	naver_id_login.setDomain("http://localhost");
+	naver_id_login.setState(state);
+	naver_id_login.init_naver_id_login();
 </script>
+<script src="${path}/resources/js/components/popup.js"></script>
 </html>

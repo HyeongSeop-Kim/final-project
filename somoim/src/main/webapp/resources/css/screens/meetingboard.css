@@ -79,6 +79,9 @@
 	position:absolute;
 }
 
+
+
+
 /*move*/
 
 .bottom-10{
@@ -106,6 +109,8 @@
 	left:24px;
 }
 
+
+
 /* margin*/
 
 
@@ -113,6 +118,13 @@
 	margin:10px;
 }
 
+.margin-left-600{
+	margin-left: 600px;
+}
+
+.margin-left-auto{
+	margin-left: auto;
+}
 .img-box{
 	margin:20px 150px 0px 150px;
 }
@@ -125,6 +137,10 @@
     margin-top:50px;
 }
 
+.margin-top-78{
+    margin-top:78px;
+}
+
 
 .nav-item a {
 	margin-right:30px;
@@ -133,10 +149,6 @@
 
 .margin-left-10{
 	margin-left:10px;
-}
-
-.margin-left-223{
-	margin-left:223px;
 }
 
 
@@ -148,7 +160,9 @@
 	margin-bottom:20px;
 }
 
-
+.margin-left-223{
+	margin-left:223px;
+}
 
 .info-box-mb div {
 	margin-bottom:3px;
@@ -225,4 +239,15 @@
 
 .ImgSelect{
 	display: none;
+}
+
+/*추가*/
+.hoverMem{
+	border-radius: 8px;
+	background-color: #669cec30;
+}
+
+.partList {
+	width: 100%;
+	padding: 1px;
 }

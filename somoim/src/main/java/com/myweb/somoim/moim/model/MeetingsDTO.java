@@ -50,10 +50,10 @@ public class MeetingsDTO {
 		this.meetingDate = meetingDate;
 	SimpleDateFormat dateFm = new SimpleDateFormat("yyyy MM dd E요일 HH mm");
 	String date = dateFm.format(meetingDate);
-	System.out.println("시간출력:" + date);
+	
 	String [] dateSplit = date.split(" ");
 	for (int i=0 ; i< dateSplit.length ;i++ ) {
-		System.out.println(dateSplit[i]);
+		
 	}
 	this.month = dateSplit[1];
 	this.day = dateSplit[2];

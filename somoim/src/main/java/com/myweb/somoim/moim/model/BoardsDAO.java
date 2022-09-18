@@ -30,8 +30,10 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 	}
 
 	@Override
-	public List<BoardsDTO> selectDatas(String s) {
-		return null;
+	public List<BoardsDTO> selectDatas(String id) {
+		String mapperId = String.format(mapper, "selectWriteDatas");
+		List<BoardsDTO> res = session.selectList(mapperId,id);
+		return res;
 	}
 	
 	@Override
