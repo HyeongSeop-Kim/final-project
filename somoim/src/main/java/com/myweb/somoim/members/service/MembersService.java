@@ -32,7 +32,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	private MembersDAO dao;
 	
 	
-	public MembersDTO getLogin(HttpSession session, MembersDTO membersDTO) {
+	public MembersDTO getLogin(MembersDTO membersDTO) {
 		MembersDTO data = new MembersDTO();
 		
 		data.setMemberId(membersDTO.getMemberId());
@@ -129,6 +129,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		int result = dao.idchk(membersDTO);
 		return result;
 	}
+	public int kakaoIdChk(MembersDTO membersDTO) {
+		int result = dao.kakaoIdchk(membersDTO);
+		return result;
+	}
 
 	public HashMap<String, Object> getUserInfo (String access_Token)  {
 	    
@@ -172,6 +176,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        userInfo.put("kakaoId", id);
 	        userInfo.put("nickname", nickname);
 	        userInfo.put("birthday", birthday);
+	        
+	        String[] emailId = email.split("@");
+	        System.out.println("카카오 이메일: @ 앞 아이디만 출력 : "  + emailId[0]);
+	        
 	        userInfo.put("email", email);
 	        
 	    } catch (IOException e) {
@@ -207,6 +215,8 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        e.printStackTrace();
 	    }
 	}
+
+
 
 
 }

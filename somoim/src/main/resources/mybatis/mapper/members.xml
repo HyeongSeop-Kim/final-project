@@ -44,6 +44,10 @@
 		SELECT COUNT(*) FROM MEMBERS
 		WHERE MEMBER_ID = #{memberId}
 	</select>
+	<select id="kakaoidChk" resultType="int">
+		SELECT COUNT(*)  FROM MEMBERS
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 	<select id="selectFindId" parameterType="memberDto" resultType="memberDto">
    		SELECT M.MEMBER_ID AS memberId
 				FROM MEMBERS M

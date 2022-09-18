@@ -113,6 +113,15 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		int result = session.selectOne(mapId,membersDTO);
 		return result;
 	}
+
+
+	public int kakaoIdchk(MembersDTO membersDTO) {
+		String mapId = String.format(mapper, "kakaoidChk");
+		String kakaoId = membersDTO.getMemberId();
+		System.out.println(kakaoId);
+		int result = session.selectOne(mapId,kakaoId);
+		return result;
+	}
 	
 
 }

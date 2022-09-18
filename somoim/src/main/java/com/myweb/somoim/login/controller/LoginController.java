@@ -146,7 +146,16 @@ public class LoginController {
 		String imagePath = request.getContextPath() + memberImagePath;
 		
 		MembersDTO data = new MembersDTO();
-		data.setMemberId(membersDTO.getMemberId());
+		
+		//카카오에서 로그인 후 추가 정보 입력시 @ -> 이메일 제거 후 id 값만저장 
+		if (membersDTO.getMemberId().contains("@")) {
+			String[] kakaoId = membersDTO.getMemberId().split("@");
+			data.setMemberId(kakaoId[0]);
+		}else {
+			// 회원가입 시 이메일이 없다면 받아온 데이터 그대로 dto 에 전달
+			data.setMemberId(membersDTO.getMemberId());
+		}
+		
 		data.setMemberName(membersDTO.getMemberName());
 		data.setPassword(membersDTO.getPassword());
 		data.setGender(membersDTO.getGender());
@@ -154,6 +163,7 @@ public class LoginController {
 		data.setPhone(membersDTO.getPhone());
 		data.setCategory(membersDTO.getCategory());
 		data.setLocationId(membersDTO.getLocationId());
+		data.setBirth(bitrhs);
 		data.setMemberImagePath(imagePath);
 		
 		System.out.println("최종 이미지 패스 경로= " +data.getMemberImagePath());
@@ -181,13 +191,13 @@ public class LoginController {
 			//기존의 loginData 란 세션 값이 존재한다면 제거
 			session.removeAttribute("loginData");   //기존 값 제거후 로그인
 		}
-		MembersDTO data = membersService.getLogin(session, membersDTO);
+		MembersDTO data = membersService.getLogin(membersDTO);
 		
 		
 		if(data !=null) {
 			// 로그인 성공
 			session.setAttribute("loginData", data);
-			
+			System.out.println("일반 로그인 데이터 확인 : " + data);
 			if (checkboxValue){
 				 Cookie cookie = new Cookie("loginCookie", session.getId());
 				 cookie.setPath("/");
@@ -208,108 +218,6 @@ public class LoginController {
 		return "somoim_m";
 	}
 	
-	@RequestMapping(value = "/login/kakao",method = RequestMethod.GET)
-	public String kakaoLogin() {
-		UriComponents kakaoAuthUri = UriComponentsBuilder.newInstance()
-				.scheme("https").host("kauth.kakao.com").path("/oauth/authoize")
-				.queryParam("client_id","9e97acd24d70a166f8d300fad1b72ab7" )
-				.queryParam("redirect_uri", "http://localhost/somoim/login/kakao/auth_code")
-				.queryParam("response_type", "code").build();
-		
-		RestTemplate rest = new RestTemplate();
-		
-		CloseableHttpClient httpCilent = HttpClientBuilder.create().disableRedirectHandling().build();
-		
-		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		
-		factory.setHttpClient(httpCilent);
-		rest.setRequestFactory(factory);
-		
-		ResponseEntity<String> restResponse = rest.getForEntity(kakaoAuthUri.toUriString(), String.class);
 	
-		return "redirect:" + restResponse.getHeaders().getLocation();
-	}
-	
-	@RequestMapping(value = "/login/kakao/auth_code", method = RequestMethod.GET)
-	public String kakaoAuthCode(HttpSession SessionStatus
-			,HttpSession session
-			,String code, String error, String state
-			,@RequestParam(name="error_descripition",required = false)String Descripition) {
-			String tokenType = null, accessToken =null, refreshToken = null;
-			long expiresIn = -1, refreshTokenExpiresIn = -1;
-			
-			if (error == null) {
-				UriComponents kakaoAuthUri = UriComponentsBuilder.newInstance()
-						.scheme("https").host("kauth.kakao.com").path("/oauth/token").build();
-				
-				HttpHeaders headers = new HttpHeaders();
-				headers.add("Content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=utf-8");
-				
-				MultiValueMap<String, String> param = new LinkedMultiValueMap<String, String>();
-				param.add("grant_type", "authorization_code");
-				param.add("client_id","9e97acd24d70a166f8d300fad1b72ab7" );
-				param.add("redirect_uri", "http://localhost/somoim/login/kakao/auth_code");
-				param.add("code",code);
-				
-				HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String,String>>(param,headers);
-				
-				RestTemplate rest = new RestTemplate();
-				rest.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-				
-				ResponseEntity<String> restResponse = rest.postForEntity(kakaoAuthUri.toUriString(), entity, String.class);
-				
-				JSONParser jsonParser = new JSONParser();
-				try {
-					JSONObject json = (JSONObject)jsonParser.parse(restResponse.getBody());
-					
-					tokenType = json.get("token_type").toString();
-					
-					accessToken = json.get("access_token").toString();
-					
-					expiresIn = Long.valueOf(json.get("expires_in").toString());
-					
-					refreshToken = json.get("refresh_token").toString();
-					
-					refreshTokenExpiresIn = Long.valueOf(json.get("refresh_token_expires_in").toString());
-					    System.out.println("[code] = " + code);
-			            System.out.println("[access_token] = " + accessToken);
-		                System.out.println("[refresh_token] = " + refreshToken);
-		                
-		                HashMap<String, Object> userInfo = membersService.getUserInfo(accessToken);
-		               
-		                System.out.println("-------카카오 로그인-------");
-		                System.out.println("##kakaoId## : " + userInfo.get("kakaoId"));
-		                System.out.println("##nickname## : " + userInfo.get("nickname"));
-		                System.out.println("##birthday## : " + userInfo.get("birthday"));
-		                System.out.println("##email## : " + userInfo.get("email"));
-		                
-		                session.setAttribute("accessToken", accessToken);
-		                
-		                
-				} catch (ParseException e) {
-				 e.printStackTrace();
-				}
-				
-			}
-		return "apiTest";
-	}
-	@RequestMapping(value="/kakaoLogout",method = RequestMethod.GET)
-	public String kakapLogout(HttpSession session) {
-	    membersService.kakaoLogout((String)session.getAttribute("access_Token"));
-	    session.removeAttribute("access_Token");
-	    return "apiTest";
-	}
-
-	
-	
-	@RequestMapping(value="naverLogin", method= RequestMethod.GET)
-    public String index() {
-        return "APIExamNaverLogin";
-    }
-
-    @RequestMapping(value="login/oauth2/code/naver", method=RequestMethod.GET)
-    public String loginPOSTNaver(HttpSession session) {
-        return "callback";
-    }
 	
 }

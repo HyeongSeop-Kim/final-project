@@ -26,8 +26,14 @@
   		<c:if test="${empty sessionScope.loginData}">
 				<%@ include file="./form/startPage.jsp"  %>
 		</c:if>
+  			<c:if test="${not empty sessionScope.kakaoDatas}}">
+				<%@ include file="./form/startPage.jsp"  %>
+			</c:if>
 		<c:if test="${not empty sessionScope.loginData}">
 				<%@ include file="./somoim.jsp"  %>
+		</c:if>
+		<c:if test="${not empty sessionScope.kakaoDatas}}">
+					<%@ include file="./somoim.jsp"  %>
 		</c:if>
 </body>
 
