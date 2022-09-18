@@ -71,8 +71,9 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	}
 
 	@Override
-	public MembersDTO getData(String s) {
-		return null;
+	public MembersDTO getData(String id) {
+		MembersDTO data = dao.selectMemData(id);
+		return data;
 	}
 
 	public List<String> getBmkData(String memberId)  {

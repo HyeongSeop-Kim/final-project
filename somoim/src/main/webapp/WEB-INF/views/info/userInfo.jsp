@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>마이페이지</title>
+	<title>${userInfo.memberName}님의 페이지</title>
 	<link rel="stylesheet" type="text/css" href="${path}/resources/css/styles.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -20,36 +20,31 @@
 <body>
 <section class="myPage" >
 	<div class="coverImg">
-		<img id="infoImg" class="title-img" src="${sessionScope.loginData.infoImagePath}" accept="image/*">
+		<img id="infoImg" class="title-img" src="${userInfo.infoImagePath}" accept="image/*">
 		<input id="infoImg-input" class="imgSelect" type="file" name="uploadImg" value="이미지 선택">
 	</div>
 	<!--프로필 사진 -->
 	<div class="simple-info-box">
 		<div class="profile-user-img">
-			<img id="profileImg" class="profile"  src="${sessionScope.loginData.memberImagePath}" accept="image/*">
+			<img id="profileImg" class="profile"  src="${userInfo.memberImagePath}" accept="image/*">
 			<input id="profileImg-input" class="imgSelect" type="file" name="uploadImg" value="이미지 선택">
 		</div>
 		<!-- 이름, 생년월일, 거주지역 -->
 
 		<div class="simple-info">
-			<input class="name" type="text" value="${sessionScope.loginData.memberName}" disabled>
-			<span class="material-icons"  style="font-size:20px; color: gray;">date_range</span><input class="birth" type="text" value="${sessionScope.loginData.birth}"  disabled>
-			<span class="material-icons" style="font-size:20px; color: gray;">room</span><input class="location" type="text" value="${sessionScope.loginData.locationName}" disabled>
+			<input class="name" type="text" value="${userInfo.memberName}" disabled>
+			<span class="material-icons"  style="font-size:20px; color: gray;">date_range</span><input class="birth" type="text" value="${userInfo.birth}"  disabled>
+			<span class="material-icons" style="font-size:20px; color: gray;">room</span><input class="location" type="text" value="${userInfo.locationName}" disabled>
 		</div>
 		<!-- 카테고리 -->
 		<div id="cate" class="category-box">
-			<c:if test="${not empty sessionScope.loginData}">
+			<c:if test="${not empty userInfo}">
 				<script>
 					window.onload = () => {
-						addEventListener("DOMContentLoaded", printCate("${sessionScope.loginData.category}"));
+						addEventListener("DOMContentLoaded", printCate("${userInfo.category}"));
 					};
 				</script>
 			</c:if>
-		</div>
-
-		<div class="imgSelect-box">
-			<button type="button" id="infoImg-btn" class="btn btn-secondary coverImage" style="font-size: 13px">커버 사진 변경</button>
-			<button type="button" class="btn btn-secondary modify" style="font-size: 13px" onclick="popModProfile();">프로필 편집</button>
 		</div>
 	</div>
 </section>
@@ -172,7 +167,5 @@
 <script type="text/javascript">
 </script>
 <script src="${path}/resources/js/category.js"></script>
-<script src="${path}/resources/js/info.js"></script>
-<script src="${path}/resources/js/components/popup.js"></script>
 </body>
 </html>

@@ -220,7 +220,23 @@ public class SomoimController {
 	}
 
 	@GetMapping(value="/info/userInfo")
-	public String userInfo() {
+	public String userInfo(HttpSession session, Model model,
+						   @RequestParam (required = false) String id) {
+		if(((MembersDTO)session.getAttribute("loginData")).getMemberId().equals(id)) {
+			return "redirect:/info/myInfo";
+		}
+		MembersDTO membersDTO = membersService.getData(id);
+		List<MoimParticipantsDTO> partDatas = moimParticipantsService.getDatas(membersDTO.getMemberId());
+		List<SomoimDTO> moimDatas = new ArrayList<SomoimDTO>();
+		List<BoardsDTO> boardDatas = boardsService.getDatas(membersDTO.getMemberId());
+
+		for (MoimParticipantsDTO data : partDatas) {
+			SomoimDTO moimData = service.getData(data.getMoimId());
+			moimDatas.add(moimData);
+		}
+		model.addAttribute("moimDatas", moimDatas);
+		model.addAttribute("boardDatas", boardDatas);
+		model.addAttribute("userInfo", membersDTO);
 		return "info/userInfo";
 	}
 
