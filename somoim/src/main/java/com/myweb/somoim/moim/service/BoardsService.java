@@ -69,7 +69,8 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 
 }

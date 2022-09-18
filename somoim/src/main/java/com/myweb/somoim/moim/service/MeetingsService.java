@@ -69,7 +69,8 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 	
 

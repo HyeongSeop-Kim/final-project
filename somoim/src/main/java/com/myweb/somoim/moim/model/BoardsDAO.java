@@ -79,6 +79,9 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean deleteData(int id) {
-		return false;
+		String mapperId = String.format(mapper, "deleteData");
+		int  result = session.insert(mapperId, id);
+
+		return result > 0 ? true : false;
 	}
 }

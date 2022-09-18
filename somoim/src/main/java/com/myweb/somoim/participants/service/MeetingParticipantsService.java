@@ -64,7 +64,8 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 
 }

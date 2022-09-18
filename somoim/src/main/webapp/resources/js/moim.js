@@ -13,6 +13,6 @@ partList.forEach( (item) => {
 partList.forEach( (item) => {  // 클릭시 해당 유저정보창으로 이동
     item.addEventListener('click', () => {
         const userId = item.lastElementChild.getAttribute("id");
-        location.href = "${path}/info/userInfo?id=" + userId;
+        location.href = "/somoim/info/userInfo?id=" + userId;
     });
 });

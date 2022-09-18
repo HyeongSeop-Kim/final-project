@@ -76,7 +76,9 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 
 	@Override
 	public boolean updateData(MoimParticipantsDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "updateJob");
+		int result = session.update(mapperId, dto);
+		return result == 1 ? true : false;
 	}
 
 	@Override
@@ -86,7 +88,10 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 
 	@Override
 	public boolean deleteData(int id) {
-		return false;
+		String mapperId = String.format(mapper, "deleteData");
+		int result = session.update(mapperId, id);
+
+		return result > 0 ? true : false;
 	}
 
 	public int currentMemberCount(int id) {

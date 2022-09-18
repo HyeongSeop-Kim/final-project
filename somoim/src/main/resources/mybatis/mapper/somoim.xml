@@ -158,5 +158,9 @@
 		  </foreach>
 		</if>
    </select>
+   <delete id="deleteMoimData" parameterType="_int">
+       DELETE FROM MOIM
+             WHERE MOIM_ID = #{id}
+   </delete>
 </mapper>
 

@@ -73,7 +73,10 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipants
 
 	@Override
 	public boolean deleteData(int id) {
-		return false;
+		String mapperId = String.format(mapper, "deleteData");
+		int res = session.delete(mapperId, id);
+
+		return res > 0 ? true : false;
 	}
 
 }

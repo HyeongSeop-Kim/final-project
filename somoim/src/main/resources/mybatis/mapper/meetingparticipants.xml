@@ -15,10 +15,10 @@
                      ON P.MEMBER_ID = MEM.MEMBER_ID
        WHERE P.MOIM_ID = #{id}
    </select>
-    
-
-
-  
+    <delete id = "deleteData" parameterType="_int">
+        DELETE FROM MEETINGS_PARTICIPANTS
+              WHERE MOIM_ID = #{id}
+    </delete>
 
 </mapper>
 

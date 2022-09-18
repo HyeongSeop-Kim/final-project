@@ -60,7 +60,8 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 
 	@Override
 	public boolean modifyData(MoimParticipantsDTO dto) {
-		return false;
+		boolean result = dao.updateData(dto);
+		return result;
 	}
 
 	@Override
@@ -70,7 +71,8 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 
 

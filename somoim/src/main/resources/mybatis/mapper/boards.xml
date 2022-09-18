@@ -53,6 +53,9 @@ ORDER BY B.BOARD_CREATE_DATE DESC
                   #{memberId})
     </insert>
     
-
+    <delete id="deleteData" parameterType="_int">
+        DELETE FROM BOARDS
+              WHERE MOIM_ID = #{id}
+    </delete>
 </mapper>
 

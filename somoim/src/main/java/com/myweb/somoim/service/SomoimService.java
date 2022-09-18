@@ -110,7 +110,8 @@ public class SomoimService extends AbstractService<List<SomoimDTO>, SomoimDTO>{
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 
 	

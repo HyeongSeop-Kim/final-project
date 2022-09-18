@@ -18,9 +18,9 @@
        WHERE MEETINGS.MOIM_ID = #{id}
     </select>
     
-
-
-  
-
+    <delete id = "deleteData" parameterType="_int">
+        DELETE FROM MEETINGS
+              WHERE MOIM_ID = #{id}
+    </delete>
 </mapper>
 

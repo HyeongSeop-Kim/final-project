@@ -1,5 +1,6 @@
 let category;
 let prof;
+let modjob;
 var id;
 var pw;
 var join;
@@ -64,7 +65,7 @@ function popJoin(){
 // 관심사 선택 팝업
 function popCategory(){
     if (!category){
-        let popUrl = "category";
+        let popUrl = "/somoim/category";
         Clip =window.open(popUrl, '_blank', 'width=550, height=900');
         category = true;
     }
@@ -73,7 +74,7 @@ function popCategory(){
             Clip.focus();
         }
         else{
-            let popUrl = "category";
+            let popUrl = "/somoim/category";
             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
             category = true;
         }
@@ -93,6 +94,24 @@ function popModProfile(){
         }
         else{
             let popUrl = "modProfile";
+            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            prof = true;
+        }
+    }
+};
+
+function popModJob(param){
+    if (!prof){
+        let popUrl = "modJob?id=" + param;
+        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        prof = true;
+    }
+    else{
+        if(!Clip.closed && Clip){
+            Clip.focus();
+        }
+        else{
+            let popUrl = "modJob?id=" + param;
             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
             prof = true;
         }
