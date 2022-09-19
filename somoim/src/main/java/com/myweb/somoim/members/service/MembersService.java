@@ -207,11 +207,8 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        userInfo.put("kakaoId", id);
 	        userInfo.put("nickname", nickname);
 	        userInfo.put("birthday", birthday);
-	        
-	        String[] emailId = email.split("@");
-	        System.out.println("카카오 이메일: @ 앞 아이디만 출력 : "  + emailId[0]);
-	        
 	        userInfo.put("email", email);
+	        
 	        
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
@@ -245,6 +242,19 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
 	    }
+	}
+
+	public MembersDTO kakaogetLogin(HashMap<String, Object> userInfo) {
+		MembersDTO data = new MembersDTO();
+		
+		data.setMemberId((String) userInfo.get("email"));
+		data.setLoginType((String) userInfo.get("loginType"));
+		
+		System.out.println("#########카카오 로그인 데이터 확인합니다########## : " + data);
+		
+		data = dao.kakaoselectLogin(data);
+		
+		return data;
 	}
 
 

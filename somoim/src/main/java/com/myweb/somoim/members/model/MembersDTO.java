@@ -14,9 +14,17 @@ public class MembersDTO {
 	private String bookmark;
 	private String memberImagePath;
 	private String infoImagePath;
+	private String loginType;
+		
 	
 	
 	
+	public String getLoginType() {
+		return loginType;
+	}
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
 	public String getLocationName() {
 		return LocationName;
 	}
@@ -94,7 +102,8 @@ public class MembersDTO {
 		return "MembersDTO [memberId=" + memberId + ", memberName=" + memberName + ", password=" + password
 				+ ", gender=" + gender + ", birth=" + birth + ", phone=" + phone + ", LocationId=" + LocationId
 				+ ", LocationName=" + LocationName + ", category=" + category + ", bookmark=" + bookmark
-				+ ", memberImagePath=" + memberImagePath + ", infoImagePath=" + infoImagePath + "]";
+				+ ", memberImagePath=" + memberImagePath + ", infoImagePath=" + infoImagePath + ", loginType="
+				+ loginType + "]";
 	}
 
 	

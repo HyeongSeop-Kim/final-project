@@ -20,7 +20,11 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		MembersDTO result = session.selectOne(mapId, data);
 		return result;
 	}
-	
+	public MembersDTO kakaoselectLogin(MembersDTO data) {
+		String mapId = String.format(mapper, "kakaoselectLogin");
+		MembersDTO result = session.selectOne(mapId, data);
+		return result;
+	}
 	
 	@Override
 	public List<MembersDTO> selectAll() {
@@ -135,4 +139,7 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		int result = session.selectOne(mapId,kakaoId);
 		return result;
 	}
+
+
+
 }

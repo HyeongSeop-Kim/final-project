@@ -1,8 +1,16 @@
 package com.myweb.somoim.login.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,7 +46,11 @@ import com.myweb.somoim.members.model.MembersDTO;
 import com.myweb.somoim.members.service.MembersService;
 
 @Controller
-public class KakaoLoginController {
+public class ApiLoginController {
+	
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	
 	
 	@Autowired
 	private LocationsService locSerivce;
@@ -49,6 +61,12 @@ public class KakaoLoginController {
 	@Autowired
 	private MembersService membersService;
 	
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
+	
+	
 	@RequestMapping(value = "kakaoAddJoin", method = RequestMethod.POST)
 	public String kakaoAddJoin(MembersDTO membersDTO
 			,HttpServletRequest request
@@ -58,7 +76,8 @@ public class KakaoLoginController {
 			,@RequestParam (required = false) String month
 			,@RequestParam (required = false) String day
 			,@RequestParam (required = false) String memberName
-			,@RequestParam (required = false, defaultValue ="/resources/img/members/basicImg.png" ) String memberImagePath) {
+			,@RequestParam (required = false, defaultValue ="/resources/img/members/basicImg.png" ) String memberImagePath
+			,@RequestParam (required = false) String loginType) {
 		
 		String bitrhs = year+month+day;
 		
@@ -84,6 +103,8 @@ public class KakaoLoginController {
 		data.setLocationId(membersDTO.getLocationId());
 		data.setBirth(bitrhs);
 		data.setMemberImagePath(imagePath);
+		// 카카오 로그인 컨트롤를 통한 회원가입의 loginType --> kakao
+		data.setLoginType(loginType);
 		
 		System.out.println("최종 이미지 패스 경로= " +data.getMemberImagePath());
 		
@@ -95,6 +116,7 @@ public class KakaoLoginController {
 			//기존의 loginData 란 세션 값이 존재한다면 제거
 			session.removeAttribute("loginData");   //기존 값 제거후 로그인
 		}
+		
 		MembersDTO kakaodata = membersService.getLogin(membersDTO);
 		
 		
@@ -197,13 +219,7 @@ public class KakaoLoginController {
 		                System.out.println("##birthday## : " + userInfo.get("birthday"));
 		                System.out.println("##email## : " + userInfo.get("email"));
 		                
-		                String kakaoUserId = (String) userInfo.get("email");
-		                String[] kakaoId = kakaoUserId.split("@");
-		                System.out.println(kakaoId[0]);
-		                
-		                userInfo.put("email", kakaoId[0]);
-		                
-		                
+		                userInfo.put("loginType", "kakao");
 		                List<LocationsDTO> locDatas = locSerivce.getAll();
 		        		List<CategorysDTO> categorysDatas = categorysService.getAll();
 		        		
@@ -211,14 +227,19 @@ public class KakaoLoginController {
 		        		model.addAttribute("locDatas", locDatas);
 		                model.addAttribute("userInfo", userInfo);
 		                
+		                MembersDTO loginInfoChk = membersService.kakaogetLogin(userInfo);
 		                
-		                
+		                System.out.println("카카로 로그인 시 데이터 베이스에 id + 로그인 타입이 있다면 바로 로그인 실행");
+		                System.out.println(loginInfoChk);
+		                if (loginInfoChk != null) {
+						   session.setAttribute("loginData", loginInfoChk);
+						   return "redirect:/";
+						}
 		                
 		                
 				} catch (ParseException e) {
 				 e.printStackTrace();
 				}
-				
 			}
 		return "apiTest";
 	}
@@ -226,18 +247,16 @@ public class KakaoLoginController {
 	public String kakapLogout(HttpSession session) {
 	    membersService.kakaoLogout((String)session.getAttribute("accessToken"));
 	    session.removeAttribute("accessToken");
-	    return "apiTest";
+	    return "redirect:/";
 	}
-
+	// 네이버 로그인창 호출
+	@RequestMapping(value = "login/naver", method = {RequestMethod.GET, RequestMethod.POST})
+	public String getNaverAuthUrl(HttpSession session
+			,Model model){
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버 로그인 url:" +  naverAuthUrl);
+	    model.addAttribute("urlNaver", naverAuthUrl);
+	    return "login";
+	}
 	
-	
-	@RequestMapping(value="naverLogin", method= RequestMethod.GET)
-    public String index() {
-        return "APIExamNaverLogin";
-    }
-
-    @RequestMapping(value="login/oauth2/code/naver", method=RequestMethod.GET)
-    public String loginPOSTNaver(HttpSession session) {
-        return "callback";
-    }
 }

@@ -164,6 +164,8 @@ public class LoginController {
 		data.setLocationId(membersDTO.getLocationId());
 		data.setBirth(bitrhs);
 		data.setMemberImagePath(imagePath);
+		// 일반 로그인 컨트롤를 통한 회원가입의 loginType --> somoim
+		data.setLoginType("somoim");
 		
 		System.out.println("최종 이미지 패스 경로= " +data.getMemberImagePath());
 		

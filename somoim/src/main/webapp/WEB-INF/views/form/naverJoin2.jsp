@@ -42,7 +42,6 @@
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
 						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${userInfo.email}" >
-						<input style="display: none"  class="join-form__input info__id" name="accessToken"value="${userInfo.loginType}"  >
 							<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>	
