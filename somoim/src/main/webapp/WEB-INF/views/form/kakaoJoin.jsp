@@ -29,19 +29,20 @@
 	</header>
 	<section class="form-section">
 		<div class="form-container" >
-		<c:url  var="joinAddUrl" value="/addJoin"></c:url>
-			<form class="join-form " method="post" action="${joinAddUrl}">
+		<c:url  var="joinKakaoAddUrl" value="/kakaoAddJoin"></c:url>
+			<form class="join-form " method="post" action="${joinKakaoAddUrl}">
 			<c:if test="${empty userInfo}">
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
-					<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId">
+					<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" >
 						<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>
 				<c:if test="${not empty userInfo}">
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
-						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${userInfo.email}">
+						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${userInfo.email}" >
+						<input style="display: none"  class="join-form__input info__id" name="accessToken"value="${userInfo.loginType}"  >
 							<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>	
@@ -65,7 +66,7 @@
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
 					 <select class="join-form-inline__input" id="birth-year" name="year" >
-				     	 <option disabled selected value="0" >출생년도</option>
+				     	 <option value="0" >출생 연도</option>
 			    	</select>
 				    <select class="join-form-inline__input" id="birth-month" name="month">
 				      <option disabled selected value="0">월</option>
@@ -231,6 +232,12 @@
 	      }
 	    }
 	  };
+	  
+	     var idresult = '3';
+	     // 아이디 중복 체크 확인 3 == 중복체크 하지 않음
+	     //					      1 == 중복체크 함 / 아이디 사용가능
+	     //					      2 == 중복체크 함 / 중복된 아이디로 사용 불가능
+	  
 	  /*** SECTION - ID ***/
 	  const idInputEl = document.querySelector('div form .info__id');
 	  const idErrorMsgEl = document.querySelector('div form  .error-id-msg')
@@ -242,10 +249,9 @@
 		      idErrorMsgEl.textContent = errMsg.id.invalid
 		    }
 	    });
-	  
 	  /*** PW ***/
 	   // pwVal: 패스워드, pwReVal: 패스워드 재입력, isPwValid: 패스워드 유효 여부
-		let pwVal = "", pwReVal = "", isPwValid = false
+		let pwVal = "", pwReVal = "", isPwValid = false, isPw2Valid = false
 		const pwInputEl = document.querySelector('div form .info__pw1')
 		const pwErrorMsgEl = document.querySelector('div form .error-pw1-msg')
 		pwInputEl.addEventListener('change', () => {
@@ -277,6 +283,7 @@
 		  }
 		  else if(pwVal === pwReVal) { // 비밀번호 재입력 일치
 		    if(isPwValid)
+		    isPw2Valid = true;
 		    pwReErrorMsgEl.style.color = "green"
 		    pwReErrorMsgEl.textContent = errMsg.pwRe.success
 		  }
@@ -285,6 +292,8 @@
 		    pwReErrorMsgEl.textContent = errMsg.pwRe.fail
 		  }
 		}
+	  
+	
 	  
 	  /*** modile ***/
 	  const phoneInputEl = document.querySelector('div form .info__phone')
@@ -313,6 +322,8 @@
 			  birth: "생년월일을 다시 확인해주세요",
 			  mobile: "‘-’ 제외 11자리를 입력해주세요" 
 			}
+	  
+
 	  function count_check(element) {
 			var chkBox = document.getElementsByName('category');
 			//카테고리 name 값을 부르고
@@ -330,12 +341,27 @@
 				return false;
 			}
 		 }
-	
-     var idresult = '3';
-     // 아이디 중복 체크 확인 3 == 중복체크 하지 않음
-     //					      1 == 중복체크 함 / 아이디 사용가능
-     //					      2 == 중복체크 함 / 중복된 아이디로 사용 불가능
-	  
+	  function findIdchk() {
+		  if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
+		    	 idErrorMsgEl.textContent = errMsg.id.empty
+		    }else{
+				$.ajax({
+					url: "${path}/kakaoIdChk",
+					method: "POST",
+				    data : {"memberId" :document.getElementById('uId').value},
+				    dataType : "json",
+				    success : function (data) {
+						if(data == 1){
+							alert("중복된 아이디 입니다.");
+							idresult = '2';
+						}else if(data == 0){
+							alert("사용가능한 아이디 입니다.");
+							idresult = '1';
+						}
+					}
+				})
+		    }
+	}
 	function formCheck(form) {
 	  let uid = document.getElementById('uId');
 	  let pw1 = document.getElementById('pw1');
@@ -348,12 +374,14 @@
 	  let location = document.getElementById('location');
 	  let phone = document.getElementById('pnum');
 	  let category = document.getElementById('category');
-
+	  
 	  if(uid.value === undefined || uid.value.trim() === ""){
 		  alert("아이디를 입력해주세요.");
 		  uid.focus();
 		  return false;
 	  }
+	  
+	  
 	  if(pw1.value === undefined || pw1.value.trim() === ""){
 		  alert("비밀번호를 입력해주세요.");
 		  pw1.focus();
@@ -365,7 +393,6 @@
 		  pw2.focus();
 		  return false;
 	  }
-	  
 	  
 	  if(memberName.value === undefined || memberName.value.trim() === ""){
 		  alert("이름을 입력해주세요.");
@@ -414,7 +441,7 @@
 		  phone.focus();
 		  return false;
 	  }
-	  
+	  //id
 	  if(idresult == '2'){
 		  alert("사용할수 없는 아이디 입니다. 확인해주세요.")
 		  return false;
@@ -422,6 +449,20 @@
 		  alert("아이디 중복체크를 하지 않았습니다. 확인해주세요.")
 		  return false;
 	  }
+	  
+	  //pw
+	  if(isPwValid == false ){
+		  alert("8~20자의 영문, 숫자, 특수문자를 모두 포함한 비밀번호를 입력해주세요");
+		  return false;
+	  }else if(isPwValid == false && isPw2Valid == false){
+		  alert("비밀번호를 다시 한번 확인해주세요.")
+		  return false;
+	  }
+	  
+	  
+	  
+	  
+	  
 	  // 관심분야
 	  let is_checked = [];
 	  
@@ -449,35 +490,7 @@
 	  alert('회원가입이 완료되었습니다.');
 	  
 	  form.submit();
-	  move();
-	  
-	  function move() {
-	  setTimeout(() => {
-		  window.opener.location.href="/somoim/login"
-			    window.close();
-	}, 2);
-	}
 }
-	  function findIdchk() {
-		  if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
-		    	 idErrorMsgEl.textContent = errMsg.id.empty
-		    }else{
-				$.ajax({
-					url: "./idChk",
-					method: "POST",
-				    data : {"memberId" :document.getElementById('uId').value},
-				    dataType : "json",
-				    success : function (data) {
-						if(data == 1){
-							alert("중복된 아이디 입니다.");
-							idresult = '2';
-						}else if(data == 0){
-							alert("사용가능한 아이디 입니다.");
-							idresult = '1';
-						}
-					}
-				})
-		    }
-	}
+
 </script>
 </html>

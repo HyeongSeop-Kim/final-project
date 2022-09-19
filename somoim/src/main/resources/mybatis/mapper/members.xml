@@ -26,8 +26,9 @@
 		, PHONE 
 		, CATEGORY 
 		, LOCATION_ID
-		, MEMBER_IMAGE_PATH)
-     VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category}, #{locationId}, #{memberImagePath})
+		, MEMBER_IMAGE_PATH
+		, LOGIN_TYPE)
+     VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category}, #{locationId}, #{memberImagePath}, #{loginType})
 	</insert>
 	
 	<select id="selectLogin" parameterType="memberDto" resultType="memberDto">
@@ -42,6 +43,7 @@
 	 	 ,M.MEMBER_IMAGE_PATH AS memberImagePath
 	 	 ,M.INFO_IMAGE_PATH AS infoImagePath
 	 	 ,M.LOCATION_ID AS locationId
+	 	 ,M.LOGIN_TYPE AS loginType
 	 	 ,L.LOCATION_NAME  AS locationName
 				FROM MEMBERS M
 				JOIN LOCATIONS L
@@ -49,8 +51,32 @@
 				WHERE M.MEMBER_ID =#{memberId}
 				  AND M.PASSWORD = #{password}
 	</select>
+	<select id="kakaoselectLogin" parameterType="memberDto" resultType="memberDto">
+		SELECT M.MEMBER_ID AS memberId
+	 	 ,M.MEMBER_NAME AS memberName
+	 	 ,M.PASSWORD
+	 	 ,M.GENDER
+	 	 ,M.BIRTH
+	 	 ,M.PHONE
+	 	 ,M.CATEGORY
+	 	 ,M.BOOKMARK
+	 	 ,M.MEMBER_IMAGE_PATH AS memberImagePath
+	 	 ,M.INFO_IMAGE_PATH AS infoImagePath
+	 	 ,M.LOCATION_ID AS locationId
+	 	 ,M.LOGIN_TYPE AS loginType
+	 	 ,L.LOCATION_NAME  AS locationName
+				FROM MEMBERS M
+				JOIN LOCATIONS L
+				  ON M.LOCATION_ID = L.LOCATION_ID
+				WHERE M.MEMBER_ID =#{memberId}
+				  AND M.LOGIN_TYPE = #{loginType}
+	</select>
 	<select id="idChk" resultType="int">
 		SELECT COUNT(*) FROM MEMBERS
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	<select id="kakaoidChk" resultType="int">
+		SELECT COUNT(*)  FROM MEMBERS
 		WHERE MEMBER_ID = #{memberId}
 	</select>
 	<select id="selectFindId" parameterType="memberDto" resultType="memberDto">

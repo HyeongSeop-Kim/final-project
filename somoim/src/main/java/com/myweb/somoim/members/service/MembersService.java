@@ -35,7 +35,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	private MembersDAO dao;
 	
 	
-	public MembersDTO getLogin(HttpSession session, MembersDTO membersDTO) {
+	public MembersDTO getLogin(MembersDTO membersDTO) {
 		MembersDTO data = new MembersDTO();
 		
 		data.setMemberId(membersDTO.getMemberId());
@@ -210,6 +210,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		int result = dao.idchk(membersDTO);
 		return result;
 	}
+	public int kakaoIdChk(MembersDTO membersDTO) {
+		int result = dao.kakaoIdchk(membersDTO);
+		return result;
+	}
 
 	public HashMap<String, Object> getUserInfo (String access_Token)  {
 	    
@@ -255,6 +259,7 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        userInfo.put("birthday", birthday);
 	        userInfo.put("email", email);
 	        
+	        
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
@@ -288,6 +293,21 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        e.printStackTrace();
 	    }
 	}
+
+	public MembersDTO kakaogetLogin(HashMap<String, Object> userInfo) {
+		MembersDTO data = new MembersDTO();
+		
+		data.setMemberId((String) userInfo.get("email"));
+		data.setLoginType((String) userInfo.get("loginType"));
+		
+		System.out.println("#########카카오 로그인 데이터 확인합니다########## : " + data);
+		
+		data = dao.kakaoselectLogin(data);
+		
+		return data;
+	}
+
+
 
 
 }
