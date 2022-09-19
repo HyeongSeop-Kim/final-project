@@ -58,6 +58,12 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		return data;
 	}
 
+	public MembersDTO selectMemData(String id) {
+		String mapId = String.format(mapper, "selectMemData");
+		MembersDTO data = session.selectOne(mapId, id);
+		return data;
+	}
+
 	@Override
 	public int getNextSeq() {
 		String mapId = String.format(mapper, "getNextSeq");

@@ -28,7 +28,7 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 	}
 
 	@Override
-	public List<MeetingsDTO> selectDatas(int id){ //새로 만든메서드
+	public List<MeetingsDTO> selectDatas(int id){
 		String mapperId = String.format(mapper,"selectDatas");
 		List<MeetingsDTO> data =  session.selectList(mapperId,id);
 		return data;
@@ -51,12 +51,16 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 
 	@Override
 	public int getNextSeq() {
-		return 0;
+		String mapperId = String.format(mapper, "getNextSeq");
+		int seq = session.selectOne(mapperId);
+		return seq;
 	}
 
 	@Override
 	public boolean insertData(MeetingsDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "insertData");
+		int res = session.insert(mapperId, dto);
+		return res == 1 ? true : false;
 	}
 
 	@Override
@@ -71,7 +75,10 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 
 	@Override
 	public boolean deleteData(int id) {
-		return false;
+		String mapperId = String.format(mapper, "deleteData");
+		int res = session.delete(mapperId, id);
+
+		return res == 1 ? true : false;
 	}
 
 }

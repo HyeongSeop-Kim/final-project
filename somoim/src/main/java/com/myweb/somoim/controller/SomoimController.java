@@ -200,11 +200,6 @@ public class SomoimController {
 		}
 	}
 
-	@GetMapping(value="/info/userInfo")
-	public String userInfo() {
-		return "info/userInfo";
-	}
-
 	@GetMapping(value = "/info/modProfile")
 	public String modProfile(Model model){
 		List<LocationsDTO> locDatas = locationsService.getAll();

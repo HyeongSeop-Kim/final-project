@@ -1,5 +1,7 @@
 let category;
 let prof;
+let modjob;
+let addmeeting;
 var id;
 var pw;
 var join;
@@ -64,7 +66,7 @@ function popJoin(){
 // 관심사 선택 팝업
 function popCategory(){
     if (!category){
-        let popUrl = "category";
+        let popUrl = "/somoim/category";
         Clip =window.open(popUrl, '_blank', 'width=550, height=900');
         category = true;
     }
@@ -73,7 +75,7 @@ function popCategory(){
             Clip.focus();
         }
         else{
-            let popUrl = "category";
+            let popUrl = "/somoim/category";
             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
             category = true;
         }
@@ -95,6 +97,42 @@ function popModProfile(){
             let popUrl = "modProfile";
             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
             prof = true;
+        }
+    }
+};
+
+function popModJob(param){
+    if (!prof){
+        let popUrl = "modJob?id=" + param;
+        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        modjob = true;
+    }
+    else{
+        if(!Clip.closed && Clip){
+            Clip.focus();
+        }
+        else{
+            let popUrl = "modJob?id=" + param;
+            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            modjob = true;
+        }
+    }
+};
+
+function popAddMeeting(param){
+    if (!prof){
+        let popUrl = "addMeeting?id=" + param;
+        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        addmeeting = true;
+    }
+    else{
+        if(!Clip.closed && Clip){
+            Clip.focus();
+        }
+        else{
+            let popUrl = "addMeeting?id=" + param;
+            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            addmeeting = true;
         }
     }
 };

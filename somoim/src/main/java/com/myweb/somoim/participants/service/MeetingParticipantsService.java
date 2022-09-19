@@ -49,7 +49,8 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 
 	@Override
 	public boolean addData(MeetingParticipantsDTO dto) {
-		return false;
+		boolean result = dao.insertData(dto);
+		return result;
 	}
 
 	@Override
@@ -64,7 +65,8 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 
 }

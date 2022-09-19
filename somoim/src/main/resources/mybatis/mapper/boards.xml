@@ -63,7 +63,7 @@ ORDER BY B.BOARD_CREATE_DATE DESC
     ,MEMBER_ID  AS  memberId
     FROM BOARDS WHERE MOIM_ID = ${moimId} AND BOARD_ID = ${boardId}
     </select>
-    
+
       <select id="selectData" parameterType="boardsDTO" resultType="boardsDTO" >
      SELECT BOARD_ID AS boardId
     ,BOARD_TITLE AS boardTitle
@@ -74,12 +74,16 @@ ORDER BY B.BOARD_CREATE_DATE DESC
     ,MEMBER_ID  AS  memberId
     FROM BOARDS WHERE BOARD_ID = ${boardId}
     </select>
-    
-   <delete id="deleteData" parameterType="_int" >
-    DELETE FROM BOARDS  WHERE BOARD_ID =#{id}
-   </delete>
-    
-    
 
+   <delete id="deleteData" parameterType="_int" >
+    DELETE FROM BOARDS  WHERE BOARD_ID = #{id}
+   </delete>
+
+
+
+    <delete id="deleteBoardsData" parameterType="_int">
+        DELETE FROM BOARDS
+              WHERE MOIM_ID = #{id}
+    </delete>
 </mapper>
 

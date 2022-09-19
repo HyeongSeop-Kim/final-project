@@ -73,5 +73,16 @@ SELECT B.MEMBER_NAME AS memberName
    VALUES (#{memberId}, #{moimId}, 3)
    
    </insert>
-   
+
+    <update id="updateJob" parameterType="moimParticipantsDTO">
+        UPDATE MOIM_PARTICIPANTS
+           SET JOB_ID = #{jobId}
+         WHERE MOIM_ID = #{moimId}
+           AND MEMBER_ID = #{memberId}
+    </update>
+
+    <delete id="deleteData" parameterType="_int">
+        DELETE FROM MOIM_PARTICIPANTS
+              WHERE MOIM_ID = #{id}
+    </delete>
 </mapper>

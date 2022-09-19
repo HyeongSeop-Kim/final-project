@@ -7,23 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import oracle.jdbc.proxy.annotation.Post;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myweb.somoim.common.model.PagingDTO;
@@ -52,7 +49,7 @@ import com.myweb.somoim.members.service.MembersService;
 public class MoimController {
 	
 	@Autowired
-	private SomoimService SomoimService;
+	private SomoimService somoimService;
 
 	@Autowired
 	private BoardsService boardsService;
@@ -103,8 +100,8 @@ public class MoimController {
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 
-	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재정원알아오기
-	SomoimDTO moimData = SomoimService.getData(id); //모임정보
+	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);
+	SomoimDTO moimData = somoimService.getData(id); //모임정보
 
 
 	int memberJoinMoimCount =  moimParticipantsService.getMemberJoinMoimCount(membersDto.getMemberId()); //멤버가 가입한 모임수알아오기
@@ -134,7 +131,7 @@ public class MoimController {
 
 		dto.setMoimId(id);
 		dto.setMemberId(membersDto.getMemberId());
-        boolean result = moimParticipantsService.addData(dto);
+		boolean result = moimParticipantsService.addData(dto);
 		json.put("code",   "success");
 		json.put("message",   "가입이 완료되었습니다.");
         return json.toJSONString();
@@ -229,7 +226,7 @@ public class MoimController {
 		JSONObject json = new JSONObject();
 		MembersDTO memData = (MembersDTO) session.getAttribute("loginData");
 
-		int memberCnt = SomoimService.getDataCnt(memData.getMemberId());
+		int memberCnt = somoimService.getDataCnt(memData.getMemberId());
 		boolean chk = false;
 		if(memberCnt < 5) {
 			SomoimDTO data = new SomoimDTO();
@@ -240,13 +237,13 @@ public class MoimController {
 			data.setMoimImagePath("/somoim/resources/img/moim/profile.png");
 			data.setCategoryId(categoryId);
 
-			boolean result = SomoimService.addData(data);
+			boolean result = somoimService.addData(data);
 
 			MoimParticipantsDTO partData = new MoimParticipantsDTO();
 			partData.setMemberId(memData.getMemberId());
 			partData.setMoimId(data.getMoimId());
 
-			boolean res = SomoimService.addDataSub(partData);
+			boolean res = somoimService.addDataSub(partData);
 			if (result == true && res == true) {
 				chk = true;
 			}
@@ -263,7 +260,7 @@ public class MoimController {
 	public String addJoinList( HttpSession session) {
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
-		List<SomoimDTO> participantsData = SomoimService.getDatas(membersData.getMemberId());
+		List<SomoimDTO> participantsData = somoimService.getDatas(membersData.getMemberId());
 		JSONArray join_datas = new JSONArray();
 		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
 			JSONObject json = new JSONObject();
@@ -281,7 +278,7 @@ public class MoimController {
 		JSONArray join_datas = new JSONArray();
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
 		List<String> bookmarkData = memberService.getBmkData(membersData.getMemberId());
-		List<SomoimDTO> participantsData = SomoimService.getDatas_bmk(bookmarkData);
+		List<SomoimDTO> participantsData = somoimService.getDatas_bmk(bookmarkData);
 		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
@@ -329,7 +326,7 @@ public class MoimController {
 			        ,@RequestParam int id
 			        ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
-		SomoimDTO moimData = SomoimService.getData(id); //모임정보
+		SomoimDTO moimData = somoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
@@ -342,6 +339,10 @@ public class MoimController {
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
 
 		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재 정원확인
+
+		for(MeetingsDTO a : meetingsData){
+			System.out.println(a);
+		}
 
 		if(currentMemberCount >= moimData.getMoimLimit() ) {
 			model.addAttribute("over" , "초과");
@@ -370,7 +371,7 @@ public class MoimController {
 			            ,@RequestParam(defaultValue="1", required=false) int page
 			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
-		SomoimDTO moimData = SomoimService.getData(id);//모임정보
+		SomoimDTO moimData = somoimService.getData(id);//모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 
@@ -450,7 +451,7 @@ public class MoimController {
             ,@RequestParam String test
             ,@SessionAttribute("loginData") MembersDTO membersDto) {
 
-	SomoimDTO  somoimDto =	SomoimService.getData(id);
+	SomoimDTO  somoimDto =	somoimService.getData(id);
 	List<LocationsDTO> locList =  locationService.getAll();
 	List<CategorysDTO> categoryList =  categoryService.getAll();
 	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재정원알아오기
@@ -461,6 +462,17 @@ public class MoimController {
 	   model.addAttribute("somoimDto" , somoimDto);
 	   model.addAttribute("currentMemberCount", currentMemberCount);
 		return "moim/meetingmodify";
+	}
+
+	@GetMapping(value = "/moim/remove")
+	public String removeMoim(@RequestParam int id){
+		boolean removeMeetingPart = meetingParticipantsService.removeData(id);
+		boolean removeMeeting = meetingsService.removeData(id);
+		boolean removeMoimPart = moimParticipantsService.removeData(id);
+		boolean removeBoard = boardsService.removeData(id);
+		boolean removeMoim = somoimService.removeData(id);
+
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/moim/update", method = RequestMethod.POST)
@@ -487,7 +499,7 @@ public class MoimController {
 		data.setCategoryId(categoryId);
 
 
-		boolean result = SomoimService.modifyData(data);
+		boolean result = somoimService.modifyData(data);
 
 
 		if(test.equals("2")) {
@@ -497,13 +509,6 @@ public class MoimController {
 		return "redirect:/moim/meeting?id="+id;
 
 		}
-
-
-
-
-
-
-
 
    @RequestMapping(value = "/moim/board/add", method = RequestMethod.GET)
 
@@ -516,8 +521,6 @@ public class MoimController {
 
 		return "moim/boardadd";
 	}
-
-
 
 
 
@@ -623,7 +626,7 @@ public class MoimController {
 
 
 
-		SomoimDTO data1 = SomoimService.getData(id);
+		SomoimDTO data1 = somoimService.getData(id);
 
 
 	 data1.setMoimImagePath(request.getContextPath() + "/resources/img/moim/" + data1.getMoimId() + ".png");
@@ -644,5 +647,97 @@ public class MoimController {
 		return json.toJSONString();
 	}
 
+	@GetMapping(value="/info/userInfo")
+	public String userInfo(HttpSession session, Model model,
+						   @RequestParam (required = false) String id) {
+		if(((MembersDTO)session.getAttribute("loginData")).getMemberId().equals(id)) {
+			return "redirect:/info/myInfo";
+		}
+		MembersDTO membersDTO = memberService.getData(id);
+		List<MoimParticipantsDTO> partDatas = moimParticipantsService.getDatas(membersDTO.getMemberId());
+		List<SomoimDTO> moimDatas = new ArrayList<SomoimDTO>();
+		List<BoardsDTO> boardDatas = boardsService.getDatas(membersDTO.getMemberId());
 
+		for (MoimParticipantsDTO data : partDatas) {
+			SomoimDTO moimData = somoimService.getData(data.getMoimId());
+			moimDatas.add(moimData);
+		}
+		model.addAttribute("moimDatas", moimDatas);
+		model.addAttribute("boardDatas", boardDatas);
+		model.addAttribute("userInfo", membersDTO);
+		return "info/userInfo";
+	}
+
+	@GetMapping(value = "/moim/modJob")
+	public String modJob(HttpServletRequest request
+			,@RequestParam int id
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+
+		request.setAttribute("moimParticipants",moimParticipants);
+		return "form/modJob";
+	}
+
+	@GetMapping(value = "/moim/addMeeting")
+	public String addMeeting(HttpServletRequest request
+			,@RequestParam int id
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+		return "form/addMeeting";
+	}
+
+	@PostMapping(value = "/moim/addMeeting")
+	public String addMeeting(MeetingsDTO meetingsDTO
+			, HttpSession session
+			, @RequestParam (required = false) String month
+			, @RequestParam (required = false) String day) {
+		LocalDate now = LocalDate.now();
+		String year = String.valueOf(now.getYear());
+		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+		Date date = java.sql.Date.valueOf(meetingDate);
+		int meetingId = meetingsService.getNextSeq();
+		meetingsDTO.setMeetingDate(date);
+		meetingsDTO.setMeetingId(meetingId);
+
+		meetingsService.addData(meetingsDTO);
+
+		MeetingParticipantsDTO meetingParticipantsDTO = new MeetingParticipantsDTO();
+		meetingParticipantsDTO.setMeetingId(meetingsDTO.getMeetingId());
+		meetingParticipantsDTO.setMoimId(meetingsDTO.getMoimId());
+		meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
+
+		meetingParticipantsService.addData(meetingParticipantsDTO);
+		return null;
+//		boolean result = meetingsService.addData(data);
+//
+//		if (result) {
+//			return "form/join";
+//		}else {
+//			return "form/join";
+//		}
+	}
+
+	@PostMapping(value = "/moim/ajax/modJob")
+	@ResponseBody
+	public String ajaxModJob(HttpServletRequest request
+			, @RequestBody List<Map<String, Object>> param) {
+		JSONObject jsonObject = new JSONObject();
+
+		for (Map<String, Object> data : param) {
+			MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+
+			moimParticipantsDTO.setMoimId(Integer.parseInt(data.get("moimId").toString()));
+			moimParticipantsDTO.setMemberId(data.get("memberId").toString());
+			moimParticipantsDTO.setJobId(Integer.parseInt(data.get("job").toString()));
+
+			boolean result = moimParticipantsService.modifyData(moimParticipantsDTO);
+
+			if(!result) {
+				jsonObject.put("res", false);
+				return jsonObject.toJSONString();
+			}
+		}
+		jsonObject.put("res", true);
+		return jsonObject.toJSONString();
+	}
 }

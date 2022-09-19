@@ -91,4 +91,10 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 		}
 		return false;
 	}
+	public boolean deleteBoardsData(int id) {
+		String mapperId = String.format(mapper, "deleteBoardsData");
+		int  result = session.insert(mapperId, id);
+
+		return result > 0 ? true : false;
+	}
 }

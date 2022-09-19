@@ -8,6 +8,7 @@
        SELECT MEETING_ID AS meetingId
             , MEETING_TITLE AS meetingTitle
             , MEETING_DATE AS meetingDate
+            , MEETING_TIME AS meetingTime
             , MEETING_PLACE AS meetingPlace
             , MEETING_PRICE AS meetingPrice
             , MEETING_LIMIT AS meetingLimit
@@ -17,10 +18,35 @@
            ON MEETINGS.MOIM_ID = MOIM.MOIM_ID
        WHERE MEETINGS.MOIM_ID = #{id}
     </select>
+
+    <select id="getNextSeq" resultType="_int">
+        SELECT SQU_MEETINGS.NEXTVAL FROM DUAL
+    </select>
+
+    <insert id="insertData" parameterType="meetingsDTO">
+        INSERT INTO MEETINGS( MEETING_ID
+                            , MEETING_TITLE
+                            , MEETING_DATE
+                            , MEETING_TIME
+                            , MEETING_PLACE
+                            , MEETING_PRICE
+                            , MEETING_LIMIT
+                            , MEETING_CREATE_DATE
+                            , MOIM_ID)
+             VALUES ( #{meetingId}
+                    , #{meetingTitle}
+                    , #{meetingDate}
+                    , #{meetingTime}
+                    , #{meetingPlace}
+                    , #{meetingPrice}
+                    , #{meetingLimit}
+                    , SYSDATE
+                    , #{moimId})
+    </insert>
     
-
-
-  
-
+    <delete id = "deleteData" parameterType="_int">
+        DELETE FROM MEETINGS
+              WHERE MOIM_ID = #{id}
+    </delete>
 </mapper>
 

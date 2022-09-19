@@ -120,7 +120,10 @@ public class SomoimDAO extends AbstractDAO<List<SomoimDTO>, SomoimDTO> {
 
 	@Override
 	public boolean deleteData(int id) {
-		return false;
+		String mapperId = String.format(mapper, "deleteMoimData");
+		int res = session.delete(mapperId, id);
+
+		return res == 1 ? true : false;
 	}
 
 	public List<SomoimDTO> selectSubDatas(String memberId) {
