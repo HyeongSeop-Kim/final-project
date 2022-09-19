@@ -1,6 +1,7 @@
 let category;
 let prof;
 let modjob;
+let addmeeting;
 var id;
 var pw;
 var join;
@@ -104,7 +105,7 @@ function popModJob(param){
     if (!prof){
         let popUrl = "modJob?id=" + param;
         Clip =window.open(popUrl, '_blank', 'width=550, height=900');
-        prof = true;
+        modjob = true;
     }
     else{
         if(!Clip.closed && Clip){
@@ -113,7 +114,25 @@ function popModJob(param){
         else{
             let popUrl = "modJob?id=" + param;
             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
-            prof = true;
+            modjob = true;
+        }
+    }
+};
+
+function popAddMeeting(param){
+    if (!prof){
+        let popUrl = "addMeeting?id=" + param;
+        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        addmeeting = true;
+    }
+    else{
+        if(!Clip.closed && Clip){
+            Clip.focus();
+        }
+        else{
+            let popUrl = "addMeeting?id=" + param;
+            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            addmeeting = true;
         }
     }
 };

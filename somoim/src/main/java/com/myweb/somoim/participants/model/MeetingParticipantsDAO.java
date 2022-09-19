@@ -58,7 +58,10 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipants
 
 	@Override
 	public boolean insertData(MeetingParticipantsDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "insertData");
+		int res = session.insert(mapperId, dto);
+
+		return res == 1 ? true : false;
 	}
 
 	@Override

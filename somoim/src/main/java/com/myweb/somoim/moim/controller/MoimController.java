@@ -2,6 +2,10 @@ package com.myweb.somoim.moim.controller;
 
 
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -244,6 +248,10 @@ public class MoimController {
 
 		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재 정원확인
 
+		for(MeetingsDTO a : meetingsData){
+			System.out.println(a);
+		}
+
 		if(currentMemberCount >= moimData.getMoimLimit() ) {
 			model.addAttribute("over" , "초과");
 		}
@@ -458,6 +466,45 @@ public class MoimController {
 
 		request.setAttribute("moimParticipants",moimParticipants);
 		return "form/modJob";
+	}
+
+	@GetMapping(value = "/moim/addMeeting")
+	public String addMeeting(HttpServletRequest request
+			,@RequestParam int id
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+		return "form/addMeeting";
+	}
+
+	@PostMapping(value = "/moim/addMeeting")
+	public String addMeeting(MeetingsDTO meetingsDTO
+			, HttpSession session
+			, @RequestParam (required = false) String month
+			, @RequestParam (required = false) String day) {
+		LocalDate now = LocalDate.now();
+		String year = String.valueOf(now.getYear());
+		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+		Date date = java.sql.Date.valueOf(meetingDate);
+		int meetingId = meetingsService.getNextSeq();
+		meetingsDTO.setMeetingDate(date);
+		meetingsDTO.setMeetingId(meetingId);
+
+		meetingsService.addData(meetingsDTO);
+
+		MeetingParticipantsDTO meetingParticipantsDTO = new MeetingParticipantsDTO();
+		meetingParticipantsDTO.setMeetingId(meetingsDTO.getMeetingId());
+		meetingParticipantsDTO.setMoimId(meetingsDTO.getMoimId());
+		meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
+
+		meetingParticipantsService.addData(meetingParticipantsDTO);
+		return null;
+//		boolean result = meetingsService.addData(data);
+//
+//		if (result) {
+//			return "form/join";
+//		}else {
+//			return "form/join";
+//		}
 	}
 
 	@PostMapping(value = "/moim/ajax/modJob")

@@ -19,7 +19,10 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 	@Autowired
 	private MeetingsDAO dao;
 
-
+	public int getNextSeq() {
+		int seq = dao.getNextSeq();
+		return  seq;
+	}
 
 	@Override
 	public List<MeetingsDTO> getAll() {
@@ -54,7 +57,8 @@ public class MeetingsService extends AbstractService<List<MeetingsDTO>, Meetings
 
 	@Override
 	public boolean addData(MeetingsDTO dto) {
-		return false;
+		boolean result = dao.insertData(dto);
+		return result;
 	}
 
 	@Override

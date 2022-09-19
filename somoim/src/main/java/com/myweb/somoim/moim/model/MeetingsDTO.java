@@ -7,6 +7,7 @@ public class MeetingsDTO {
 	private int meetingId;
 	private String meetingTitle;
 	private Date meetingDate;
+	private String meetingTime;
 	private String meetingPlace;
 	private int meetingPrice;
 	private int meetingLimit;
@@ -18,6 +19,13 @@ public class MeetingsDTO {
 	private String minute;
 	private Date meetingCreateDate;
 
+	public String getMeetingTime() {
+		return meetingTime;
+	}
+
+	public void setMeetingTime(String meetingTime) {
+		this.meetingTime = meetingTime;
+	}
 	public Date getMeetingCreateDate() {
 		return meetingCreateDate;
 	}
@@ -136,10 +144,23 @@ public class MeetingsDTO {
 		this.minute = minute;
 	}
 
-	@Override //수정해야함
+	@Override
 	public String toString() {
-		return "MeetingsDTO [meetingId=" + meetingId + ", meetingTitle=" + meetingTitle + ", meetingDate=" + meetingDate
-				+ ", meetingPlace=" + meetingPlace + ", meetingPrice=" + meetingPrice + ", meetingLimit=" + meetingLimit
-				+ ", moimId=" + moimId + "]";
+		return "MeetingsDTO{" +
+				"meetingId=" + meetingId +
+				", meetingTitle='" + meetingTitle + '\'' +
+				", meetingDate=" + meetingDate +
+				", meetingTime='" + meetingTime + '\'' +
+				", meetingPlace='" + meetingPlace + '\'' +
+				", meetingPrice=" + meetingPrice +
+				", meetingLimit=" + meetingLimit +
+				", moimId=" + moimId +
+				", month='" + month + '\'' +
+				", day='" + day + '\'' +
+				", dayOfW='" + dayOfW + '\'' +
+				", hour='" + hour + '\'' +
+				", minute='" + minute + '\'' +
+				", meetingCreateDate=" + meetingCreateDate +
+				'}';
 	}
 }

@@ -340,7 +340,7 @@
                            style="font-size:14px; color: gray;">favorite</span>&nbsp;&nbsp;${meetingsData.meetingTitle}
                 </div>
                 <div><span class="material-icons"
-                           style="font-size:14px; color: gray;">date_range</span>&nbsp;&nbsp;${meetingsData.month}.${meetingsData.day} ${meetingsData.hour}:${meetingsData.minute}
+                           style="font-size:14px; color: gray;">date_range</span>&nbsp;&nbsp;${meetingsData.month}.${meetingsData.day} ${meetingsData.meetingTime}
                 </div>
                 <div><span class="material-icons"
                            style="font-size:14px; color: gray;">room</span>&nbsp;&nbsp;${meetingsData.meetingPlace}
@@ -391,7 +391,7 @@
       </c:if>
       <!--개설버튼-->
       <div class="p-15">
-        <div class="flex-box space-between">
+        <div id="addMeeting" class="flex-box space-between" onclick="popAddMeeting(${param.id});">
           <div class="bc-wh shadow-sm date-bs psi-r">
             <i class="bi bi-plus-lg font-s-50 psi-a left-24 top-20"></i>
           </div>
@@ -455,6 +455,6 @@
 ></script>
 <script src="${path}/resources/js/moim.js"></script>
 <script src="${path}/resources/js/components/popup.js"></script>
-
+<script src="${path}/resources/js/meeting.js"></script>
 </body>
 </html>
