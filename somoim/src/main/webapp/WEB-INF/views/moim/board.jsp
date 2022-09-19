@@ -40,6 +40,8 @@
      <link rel="stylesheet" href="${cs}/styles.css" />
      <script type="text/javascript" src="${resourcesUrl}/js/jquery-3.6.0.min.js"></script>
   </head>
+
+
   
   <script type="text/javascript">
   window.onload = function() {
@@ -76,7 +78,7 @@
    <script type="text/javascript">
 
    
-  function limitCheck(moimId){
+  function joinCheck(moimId){
 	  	$.ajax({
     		url: "/somoim/moim/join",
     		type: "get",
@@ -85,11 +87,80 @@
     		},
     		dataType: "json",
     		success: function(data){
-    			if(data.code === "over"){
+    			if(data.code === "alreadyJoinMember"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "over"){
     				alert(data.message);
     				location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
     			}else if(data.code === "success"){
         			alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "joinCountover"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}
+    		}
+    	})
+    }
+
+</script>
+ <script type="text/javascript">
+
+
+  function bookmarkAdd(moimId,memberId){  //북마크추가
+	  	$.ajax({
+    		url: "/somoim/moim/bookmarkAdd",
+    		type: "get",
+    		data: {
+    			id:moimId,
+    			memberId:memberId
+    		},
+    		dataType: "json",
+    		success: function(data){
+    			if(data.code === "bookmarkover"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "alreadybookmark"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "bookmarked"){
+    				alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "error"){
+    				alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}
+    		}
+    	})
+    }
+
+</script>
+
+ <script type="text/javascript">
+
+
+  function bookmarkDelete(moimId,memberId){ //북마크 삭제
+	  	$.ajax({
+    		url: "/somoim/moim/bookmarkDelete",
+    		type: "get",
+    		data: {
+    			id:moimId,
+    			memberId:memberId
+    		},
+    		dataType: "json",
+    		success: function(data){
+    			if(data.code === "deletebookmark"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "alreadybookmarkdelete"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "nodetabookmark"){
+    				alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+    			}else if(data.code === "error"){
+    				alert(data.message);
         			location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
     			}
     		}
@@ -114,6 +185,7 @@
           alt="이미지 선택"
           src="${path}/resources/img/moim/${moimData.moimId}.png"
         /> 
+        <c:if test="${res.jobId eq 1}">
         <input id="moimImageSelect"
           class="ImgSelect"
           type="file"
@@ -122,6 +194,7 @@
           multiple
           
         />
+         </c:if>
       </div>
       </form>
       <div class="margin-bottom-20 flex-box margin-left-223">
@@ -201,12 +274,21 @@
        
             <c:if test="${empty res}">
            <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary" onclick="limitCheck(${moimData.moimId})" >가입</button>
+            <button type="button" class="btn btn-primary" onclick="joinCheck(${moimData.moimId})" >가입</button>
            </div>
             </c:if>
-          <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary">찜</button>
+          <c:choose>
+          <c:when test="${bookmarkcheck eq 1 }">
+          <div class="margin-10 margin-top-50 ">
+            <button type="button" class="btn btn-primary" onclick="bookmarkDelete(${moimData.moimId},'${sessionScope.loginData.memberId}')">찜 해제</button>
           </div>
+          </c:when>
+          <c:otherwise>
+          <div class="margin-10 margin-top-50 ">
+            <button type="button" class="btn btn-primary" onclick="bookmarkAdd(${moimData.moimId},'${sessionScope.loginData.memberId}')" >찜</button>
+          </div>
+          </c:otherwise>
+          </c:choose>
           <div class="margin-top-78 margin-left-223">
             <div>현재 가입 인원수: ${currentMemberCount}명 / 정원수: ${moimData.moimLimit}명</div>
           <c:if test="${not empty over}">
@@ -286,7 +368,7 @@
             <c:forEach items="${paging.pageData}" var="comment"> <!-- 요기서부터 페이징으로 나눈 데이터 출력시켜주는 코드 --> 
           <div class="mb-3 container-1">
             <div class="mb-1">
-              <div class="card border-light">
+              <div class="card border-light" onclick="location.href='/somoim/moim/boardDetail?id=${moimData.moimId}&boardId=${comment.boardId}'">
                 <div class="card-header">
                   <div class="d-flex justify-content-between">
                     <div>

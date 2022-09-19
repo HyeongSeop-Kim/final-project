@@ -111,5 +111,7 @@
 					  ON M.LOCATION_ID = L.LOCATION_ID
 		WHERE M.MEMBER_ID =#{memberId}
 	</select>
+
+	
 </mapper>
 

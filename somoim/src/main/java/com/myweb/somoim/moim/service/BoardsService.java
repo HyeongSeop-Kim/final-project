@@ -37,7 +37,8 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public BoardsDTO getData(int id) {
-		return null;
+		BoardsDTO data = dao.selectData(id);
+		return data;
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public BoardsDTO getData(BoardsDTO dto) {
-		return null;
+		BoardsDTO data = dao.selectData(dto);
+		return data;
 	}
 
 	@Override
@@ -69,7 +71,8 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean removeData(int id) {
-		return false;
+		boolean result = dao.deleteData(id);
+		return result;
 	}
 
 }

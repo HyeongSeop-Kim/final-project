@@ -39,6 +39,9 @@ SELECT B.MEMBER_NAME AS memberName
                                  FROM MOIM_PARTICIPANTS P
                                 WHERE P.MEMBER_ID = #{id})
     </select>
+    
+
+    
    
     <select id ="selectData" resultType="moimParticipantsDTO" parameterType="moimParticipantsDTO" >
   SELECT MEMBER_ID 	AS  memberId
@@ -52,6 +55,18 @@ SELECT B.MEMBER_NAME AS memberName
    FROM MOIM_PARTICIPANTS P
    WHERE P.MOIM_ID = #{id}
    </select>
+   
+   	
+	<select id= "selectMemberJoinMoimCount" resultType="moimParticipantsDTO">
+    SELECT COUNT(*) AS memberJoinMoimCount
+    FROM MOIM_PARTICIPANTS
+    WHERE MEMBER_ID = #{id}
+    </select>
+	
+   <select id= "selectAlreadyJoinMember" parameterType="Map" resultType="_int">
+	SELECT COUNT(*) FROM MOIM_PARTICIPANTS   WHERE MOIM_ID =#{id} AND  MEMBER_ID = #{memberId}
+   </select>
+   
    
    <insert id="insertData" parameterType="moimParticipantsDTO">
    INSERT INTO MOIM_PARTICIPANTS 

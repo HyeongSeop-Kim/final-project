@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="commentsMapper">
+  
+    
+    <select id="selectDatas" parameterType="map"  resultType="commentsDTO" >
+    SELECT BOARD_ID AS boardId
+          ,CONTENT AS content
+          ,CONTENT_CREATE_DATE AS contentCreateDate
+          ,MOIM_ID AS moimId
+          ,MEMBER_ID AS memberId
+           FROM BOARD_COMMENT 
+           WHERE MOIM_ID = #{id} AND BOARD_ID = #{boardId}
+           ORDER BY CONTENT_CREATE_DATE DESC
+    </select>
+    
+    <insert id="insertData" parameterType="commentsDTO" >
+    INSERT INTO BOARD_COMMENT VALUES (SQU_COMMENT.NEXTVAL, #{boardId}, #{content}, SYSDATE,#{moimId},#{memberId})
+    </insert>
+    
+    
+    <delete id="deleteData" parameterType="_int" >
+    DELETE FROM BOARD_COMMENT WHERE BOARD_ID =#{id}
+   </delete>
+
+</mapper>
+

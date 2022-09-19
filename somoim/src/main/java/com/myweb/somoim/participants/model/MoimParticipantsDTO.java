@@ -8,6 +8,7 @@ public class MoimParticipantsDTO {
 	private String JobName;
 	private String memberImagePath;
 	private int currentMemberCount;
+	private int memberJoinMoimCount;
 
 	public String getMemberId() {
 		return memberId;
@@ -63,6 +64,15 @@ public class MoimParticipantsDTO {
 
 	public void setCurrentMemberCount(int currentMemberCount) {
 		this.currentMemberCount = currentMemberCount;
+		
+	}
+	
+	public int getMemberJoinMoimCount() {
+		return memberJoinMoimCount;
+	}
+
+	public void setMemberJoinMoimCount(int memberJoinMoimCount) {
+		this.memberJoinMoimCount = memberJoinMoimCount;
 		
 	}
 

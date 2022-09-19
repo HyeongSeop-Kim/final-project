@@ -27,24 +27,53 @@
 </head>
 
 <script type="text/javascript">
+
+
    function formCheck(form) {
-	   if(form.moimLimit.value < 5 || form.moimLimit.value > 300 ){
-		   var modal = new bootstrap.Modal(document.getElementById("errorModal"), {
+	   
+
+	   if($('#location').val() == null || $('#location').val() == "" ) {
+		   var modal1 = new bootstrap.Modal(document.getElementById("errorModal1"), {
 			      keyboard: false
 			});
-		   modal.show()
+		   modal1.show()
 		   return;
-		   
-	   }else if(form.moimLimit.value < ${currentMemberCount}){
+	   }
+	   if($('input[name="categoryId"]:checked').val() == null || $('input[name="categoryId"]:checked').val() == "" ){
 		   var modal2 = new bootstrap.Modal(document.getElementById("errorModal2"), {
 			      keyboard: false
 			});
 		   modal2.show()
 		   return;
+	   }
+	   if($('input[name="moimTitle"]').val() == null || $('input[name="moimTitle"]').val() == ""){
+		   var modal3 = new bootstrap.Modal(document.getElementById("errorModal3"), {
+			      keyboard: false
+			});
+		   modal3.show()
+		   return;
+	   }
+
+	   
+	    if(form.moimLimit.value < 5 || form.moimLimit.value > 300 ){
+		   var modal4 = new bootstrap.Modal(document.getElementById("errorModal4"), {
+			      keyboard: false
+			});
+		   modal4.show()
+		   return;
+		   
+	   }else if(form.moimLimit.value < ${currentMemberCount}){
+		   var modal5 = new bootstrap.Modal(document.getElementById("errorModal5"), {
+			      keyboard: false
+			});
+		   modal5.show()
+		   return;
 		   
 	   }
 	   form.submit();
    }
+   
+
 </script>
 
 
@@ -71,7 +100,7 @@
 				<h4 class="mb-3">모임 편집</h4>
 					<form id="form1" class="needs-validation" action="/somoim/moim/update?id=${somoimDto.moimId}&test=${test}" method="post">
 						<div>
-							<label for="loction" class="form-label">지역</label>	
+							<label for="loction" class="form-label">지역&nbsp;<small style="font-size: 12px; color: red;">*필수</small></label>	
 								<select id ="location" name="locationId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" >
 								  <option value="${somoimDto.locationId}" selected>${somoimDto.locationName}</option>
 								  
@@ -84,7 +113,7 @@
 								</select>
 					     	</div>
 				           	<div>
-				             	<h1 class="mb-3"> 관심사 선택</h1>
+				             	<h1 class="mb-3"> 관심사 선택&nbsp;<small style="font-size: 12px; color: red;">*필수</small></h1>
 				             	<p class="mb-3">
 								  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 								    관심 카테고리 더보기
@@ -106,7 +135,7 @@
 				  			</div>
 						</div>
 				  			<div class="input-group mb-3">
-							  <span class="input-group-text" id="basic-addon1">모임명</span>
+							  <span class="input-group-text" id="basic-addon1">모임명&nbsp;<small style="font-size: 12px; color: red;">*필수</small></span>
 							  <input type="text" class="form-control" placeholder="모임 이름" name="moimTitle" aria-label="Username" aria-describedby="basic-addon1" value="${somoimDto.moimTitle}">
 							</div>
 							 <div class="input-group mb-3">
@@ -199,12 +228,67 @@
         </div>
         <!-- // right-menu -->
 	</div>
-	       <!-- modal -->
-			<div class="modal fade" id="errorModal" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 정원수초과 -->
+		       <!-- modal -->
+			<div class="modal fade" id="errorModal1" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 정원수초과 -->
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h6 class="modal-title">입력 오류</h6>
+						<h6 class="modal-title">지역 입력 오류</h6>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						지역을 선택하세요.<br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+			       <!-- moda2 -->
+			<div class="modal fade" id="errorModal2" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 정원수초과 -->
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title">관심사 입력 오류</h6>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						관심사를 선택하세요. <br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+			       <!-- moda3 -->
+			<div class="modal fade" id="errorModal3" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 정원수초과 -->
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title">모임명 입력 오류</h6>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						모임명을 작성하세요. <br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	
+	       <!-- modal4 -->
+			<div class="modal fade" id="errorModal4" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 정원수초과 -->
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title">정원 입력 오류</h6>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
@@ -217,12 +301,12 @@
 			</div>
 		</div>
 		
-		   <!-- modal2 -->
-			<div class="modal fade" id="errorModal2" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 현재멤버보다 적게 수정할떄 -->
+		   <!-- modal5 -->
+			<div class="modal fade" id="errorModal5" tabindex="-1"  aria-hidden="true">  <!-- 모달띄우기 현재멤버보다 적게 수정할떄 -->
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h6 class="modal-title">입력 오류</h6>
+						<h6 class="modal-title">정원 입력 오류</h6>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">

@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,9 +74,14 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 
 	@Override
 	public MembersDTO getData(String s) {
-		return null;
+		MembersDTO data = dao.selectData(s);
+		return data;
 	}
 
+
+	
+	
+	
 	public List<String> getBmkData(String memberId)  {
 			MembersDTO bookmarkData = dao.selectData(memberId);
 		if(bookmarkData != null) {
@@ -89,24 +96,66 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 			return nullBookmark;
 		}
 	}
+	
+	
+	public int checkBookMarkData(String memberId , int id) { //북마크체크 , 갯수확인
+		MembersDTO data = dao.selectData(memberId);
+		String str = data.getBookmark();
+		List<String> arrayList = Arrays.asList(str.split(","));
+	
+		if(!arrayList.isEmpty()) { // 북마크 값이 null이 아니면
+			if(arrayList.contains(Integer.toString(id))) { //--> 모임아이디로 찜기록확인 
+			    return 1; 
+			}else if(arrayList.size()>=5) {//--->5개이상 체크 
+				System.out.println("2");
+				return 2; 
+			}else if(!arrayList.contains(Integer.toString(id))) {
+				return 4;
+			}
+	    } 
+		return 3; //null일경우 
+	  }
 
-
-	public boolean addBookmark(String memberId) {
-		MembersDTO bookmarkData = dao.selectData(memberId);
-		 if(bookmarkData != null) {
-		    	String[] bookmarkList = bookmarkData.getBookmark().split(",");
-		    	if(!Arrays.asList(bookmarkList).contains(memberId)) {
-		    		int length = bookmarkList.length;
-		    		bookmarkList[length+1] = memberId;
-		    		String bookmark = String.join("','",bookmarkList);
-//		    	  boolean	res = dao.updateBookmark(bookmark);		겹쳤음
-		    	  return false;
-		    	}
-	         return false;
-		 }
-		 return false;
+	
+	public boolean addBookmark(String memberId , int id) { //북마크추가
+		MembersDTO data = dao.selectData(memberId);
+		String str = data.getBookmark();
+		String [] strarr = str.split(",");
+		
+		List<String> arrayList = new ArrayList<String>(Arrays.asList(strarr)); 
+		arrayList.add(Integer.toString(id)); // 모임아이디 추가하기 
+		
+	
+		String bookmark = String.join(",",arrayList);
+	
+		
+		data.setMemberId(memberId);; //북마크 MembersDTO에 저장
+		data.setBookmark(bookmark); //북마크 MembersDTO에 저장
+	    boolean res = dao.updateBookmark(data);
+		return res;
+		    
+	   
+		
 	}
 
+	
+	public boolean deleteBookmark(String memberId, int id) { //북마크삭제
+		MembersDTO data = dao.selectData(memberId);
+		String str = data.getBookmark();
+		String [] strarr = str.split(",");
+		
+		List<String> arrayList = new ArrayList<String>(Arrays.asList(strarr)); 
+		arrayList.remove(Integer.toString(id)); // 모임아이디 추가하기 
+		
+	
+		String bookmark = String.join(",",arrayList);
+	
+		
+		data.setMemberId(memberId);; //북마크 MembersDTO에 저장
+		data.setBookmark(bookmark); //북마크 MembersDTO에 저장
+	    boolean res = dao.updateBookmark(data);
+		return res;
+	}
 
 
 	@Override
@@ -238,6 +287,8 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        e.printStackTrace();
 	    }
 	}
+
+	
 
 
 }

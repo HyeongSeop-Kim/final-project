@@ -3,8 +3,10 @@ package com.myweb.somoim.moim.controller;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,8 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.myweb.somoim.common.model.PagingDTO;
 import com.myweb.somoim.model.SomoimDTO;
 import com.myweb.somoim.moim.model.BoardsDTO;
+import com.myweb.somoim.moim.model.CommentsDTO;
 import com.myweb.somoim.moim.model.MeetingsDTO;
 import com.myweb.somoim.moim.service.BoardsService;
+import com.myweb.somoim.moim.service.CommentsService;
 import com.myweb.somoim.moim.service.MeetingsService;
 import com.myweb.somoim.participants.model.MeetingParticipantsDTO;
 import com.myweb.somoim.participants.model.MoimParticipantsDTO;
@@ -76,6 +80,9 @@ public class MoimController {
 
 	@Autowired
 	private LocationsService locationService;
+	
+	@Autowired
+	private CommentsService commentsService;
 
 
 	@RequestMapping(value = "/moim/add", method = RequestMethod.GET)
@@ -96,26 +103,38 @@ public class MoimController {
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 
-	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);
+	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재정원알아오기
 	SomoimDTO moimData = SomoimService.getData(id); //모임정보
 
-
+	
+	int memberJoinMoimCount =  moimParticipantsService.getMemberJoinMoimCount(membersDto.getMemberId()); //멤버가 가입한 모임수알아오기
+   
+	
+	Map map = new HashMap();
+	map.put("id", id); 
+	map.put("memberId", membersDto.getMemberId());
+	
+	boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+    		
 	JSONObject json = new JSONObject();
-
-	if(currentMemberCount >= moimData.getMoimLimit()) {
-
-
-		json.put("code",   "over");
+	if(memberAlreadyJoin) { //로그인유저가 이미 가입한 모임인경우
+		json.put("code",   "alreadyJoinMember");
+		json.put("message",   "이미 가입한 모임입니다.");
+        return json.toJSONString();
+	}else if(currentMemberCount >= moimData.getMoimLimit()) { //모임 정원이 마감된 경우
+        json.put("code",   "over");
 		json.put("message",   "정원이 이미 마감 되었습니다.");
         return json.toJSONString();
-	}else {
-		MoimParticipantsDTO dto = new MoimParticipantsDTO();
+	}else if(memberJoinMoimCount >= 5 ) { //로그인한 멤버가 모임5개가 넘는경우
+	    json.put("code",   "joinCountover");
+		json.put("message",   "가입 가능한 모임수를 초과했습니다. 가입 가능한 모임수는 5개 입니다.");
+	    return json.toJSONString();
+	}else {  //가입
+		MoimParticipantsDTO dto = new MoimParticipantsDTO(); 
 
 		dto.setMoimId(id);
 		dto.setMemberId(membersDto.getMemberId());
-
-
-		boolean result = moimParticipantsService.addData(dto);
+        boolean result = moimParticipantsService.addData(dto);
 		json.put("code",   "success");
 		json.put("message",   "가입이 완료되었습니다.");
         return json.toJSONString();
@@ -125,40 +144,92 @@ public class MoimController {
 
 	}
 
+//
+//   @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
+//     public String moimBookMark(Model model,
+//			@RequestParam int id
+//			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+//			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+//
+//
+//
+//	     return "redirect:/moim/meeting?id="+id;  /////////
+//
+//   }
 
 
-
-
-
-
-   @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
-     public String moimBookMark(Model model,
-			@RequestParam int id
-			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
-			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-
-
-
-	     return "redirect:/moim/meeting?id="+id;
-
-   }
-
-
-   @RequestMapping(value = "/moim/bookmarkAdd", method = RequestMethod.GET)
+   @GetMapping(value = "/moim/bookmarkAdd", produces="application/json; charset=utf-8")
+   @ResponseBody
    public String bookmarkAdd(Model model,
-			@RequestParam int id
+		    @RequestParam int id,
+			@RequestParam String memberId
 			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+	   
+	   JSONObject json = new JSONObject();
 
+	   int res = memberService.checkBookMarkData(memberId,id);
+	   if(res == 1) {
+		   json.put("code",   "alreadybookmark");
+		   json.put("message",   "이미 찜한 모임입니다.");
+		   return json.toJSONString();
+	   }else if(res == 2 ) {
+		   json.put("code",   "bookmarkover");
+		   json.put("message",   "찜 가능한 모임수를 초과 하였습니다. 찜은 5개까지 가능합니다.");
+		   return json.toJSONString();
+	   }else if(res == 4) {
+		   boolean res1 = memberService.addBookmark(memberId,id);
+			   if(res1) {
+			   json.put("code",   "bookmarked");
+			   json.put("message",   "찜 되었습니다.");
+			   return json.toJSONString();   
+			   }
+			   
+	   }
 
-	   MembersDTO data = memberService.getData(id);
+	   json.put("code",   "error");
+	   json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
+	   return json.toJSONString(); 
+	
+    
 
-	 // boolean res = memberService.addBookmark(data);
+ }
+   
+   @GetMapping(value = "/moim/bookmarkDelete", produces="application/json; charset=utf-8")
+   @ResponseBody
+   public String bookmarkDelete(Model model,
+		    @RequestParam int id,
+			@RequestParam String memberId
+			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+	   
+	   JSONObject json = new JSONObject();
 
+	   int res = memberService.checkBookMarkData(memberId,id);
+	   
+	   if(res == 1) { 
+		   boolean res1 = memberService.deleteBookmark(memberId,id); //삭제기능넣어줘야함
+		   if(res1) {
+			   json.put("code",   "deletebookmark");
+			   json.put("message",   "찜이 해제 되었습니다.");
+			   return json.toJSONString();
+			}
+		 }else if(res == 4 ) {
+		   json.put("code",   "alreadybookmarkdelete");
+		   json.put("message",   "이미 찜이 해제 되었습니다.");
+		   return json.toJSONString();
+	     }
+		 else if(res == 3 ) {
+			   json.put("code",   "nodetabookmark");
+			   json.put("message",   "찜 기록이 존재하지않습니다.");
+			   return json.toJSONString();
+		   }
 
-
-
-	     return "redirect:/moim/meeting?id="+id;
+	   json.put("code",   "error");
+	   json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
+	   return json.toJSONString(); 
+	
+    
 
  }
 
@@ -260,6 +331,13 @@ public class MoimController {
 		if(currentMemberCount >= moimData.getMoimLimit() ) {
 			model.addAttribute("over" , "초과");
 		}
+		
+		int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
+		if(bookmarkcheck == 1 ) {
+			model.addAttribute("bookmarkcheck" , bookmarkcheck);
+		}
+		
+		
 		model.addAttribute("res" , res); //로그인한 유저가 참가자인지 확인
 		model.addAttribute("moimData" , moimData);
 		model.addAttribute("meetingsData",meetingsData);
@@ -300,6 +378,12 @@ public class MoimController {
 			model.addAttribute("over" , "초과");
 		}
 
+		int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
+		if(bookmarkcheck == 1 ) {
+			model.addAttribute("bookmarkcheck" , bookmarkcheck);
+		}
+		
+		
 		   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
            model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
@@ -308,6 +392,42 @@ public class MoimController {
 		
 		return "moim/board";
 	}
+	
+	
+	@RequestMapping(value = "/moim/boardDetail", method = RequestMethod.GET)
+	public String boarDetail(Model model
+			            ,@RequestParam int id
+			            ,@RequestParam int boardId
+			            ,@RequestParam(defaultValue="1", required=false) int page
+			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		
+		BoardsDTO boardDto = new BoardsDTO(); //board가져오기
+		boardDto.setBoardId(boardId);
+		boardDto.setMoimId(id);
+		BoardsDTO data =  boardsService.getData(boardDto);
+		
+		
+		Map map = new HashMap();   //comments list가져오기
+		map.put("id", id); //가져온 데이터에 키와 벨류값을 지정
+		map.put("boardId", boardId);
+		List datas = commentsService.getDatas(map);
+		
+		int pageCount = 5;
+		
+		PagingDTO paging = new PagingDTO (datas,page,pageCount);
+		
+		
+		
+
+	
+		model.addAttribute("data",data);//boardId로 정보받아오기
+		model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
+		
+		
+		return "moim/boarddetail";
+	}
+	
+	
 	
 	@RequestMapping(value = "/moim/modify", method = RequestMethod.GET)
 	public String modify(Model model
@@ -382,6 +502,8 @@ public class MoimController {
 		return "moim/boardadd";
 	}
 
+   
+   
 
 
 	@RequestMapping(value = "/moim/board/add", method = RequestMethod.POST)
@@ -408,7 +530,72 @@ public class MoimController {
 	  return "redirect:/moim/board?id="+id;
 	}
 
+	
+	@GetMapping(value = "/moim/board/delete", produces="application/json; charset=utf-8")
+	@ResponseBody
+	   public String BoardDelete(Model model,
+			    @RequestParam int bid
+				,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		   
+		System.out.println("여기로 넘어오나");
+		   JSONObject json = new JSONObject();
 
+		   BoardsDTO data = boardsService.getData(bid);
+		  
+		   
+		   if(data == null) { 
+			       json.put("code",   "alreadyDelete");
+				   json.put("message",   "이미 삭제된 게시물 입니다.");
+				   return json.toJSONString();
+				}else  {
+					System.out.println("코멘트삭제1");
+				boolean result = commentsService.removeData(bid);  //코멘트 먼저 삭제
+				System.out.println("코멘트삭제하러");
+				boolean res = boardsService.removeData(bid);
+			    if(res) {
+			    	json.put("code",   "success");
+					json.put("message",   "게시물이 삭제되었습니다.");
+					return json.toJSONString();
+			    }else {
+			    	json.put("code",   "error");
+					json.put("message",   "알 수 없는 에러가 발생했습니다.");
+					return json.toJSONString();
+			    }
+			 }
+	
+	 }
+
+	
+	
+
+	@RequestMapping(value = "/moim/board/comment/add", method = RequestMethod.POST)
+
+	public String commentAdd(Model model,
+			@RequestParam int id
+			,@RequestParam int bid
+			,@RequestParam String content
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+	
+
+	  CommentsDTO commentsDto = new CommentsDTO();
+	  commentsDto.setMoimId(id);
+	  commentsDto.setBoardId(bid);
+	  commentsDto.setContent(content);
+	  commentsDto.setMemberId(membersDto.getMemberId());
+	 
+
+	  boolean result = commentsService.addData(commentsDto);
+	  
+
+	  if(result) {
+		  return "redirect:/moim/boardDetail?id="+id+"&boardId="+bid;
+	  }
+
+	  return "redirect:/moim/boardDetail?id="+id+"&boardId="+bid;
+	}
+
+	
+	
 
 
 

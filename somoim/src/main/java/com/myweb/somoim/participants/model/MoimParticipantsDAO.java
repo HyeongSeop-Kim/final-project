@@ -1,6 +1,7 @@
 package com.myweb.somoim.participants.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,21 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 		int res = data.getCurrentMemberCount();
 		
 		return res;
+	}
+
+	public int memberJoinMoimCount(String memberId) {
+		String mapperId = String.format(mapper, "selectMemberJoinMoimCount");
+		MoimParticipantsDTO data = session.selectOne(mapperId,memberId);
+	    return data.getMemberJoinMoimCount();
+	}
+
+	public boolean selectAlreadyJoinMember(Map map) {
+		String mapperId = String.format(mapper, "selectAlreadyJoinMember");
+		int data = session.selectOne(mapperId,map);
+	    if(data == 1) {
+	    	return true;
+	    }
+	    return false;
 	}
 
 }

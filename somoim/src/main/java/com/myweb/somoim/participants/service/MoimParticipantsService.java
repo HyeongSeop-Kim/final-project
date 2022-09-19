@@ -1,6 +1,7 @@
 package com.myweb.somoim.participants.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,11 +75,21 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 	}
 
 
-	public int  getcurrentMemberCount(int id) {
-		
+	public int  getcurrentMemberCount(int id) { //현재가입한 멤버수 알아오기
 		int  res = dao.currentMemberCount(id);
-		
 		return res ;
+	}
+
+
+	public int getMemberJoinMoimCount(String memberId) { //로그인한 유저의 가입 모임수 알아오기
+		int  res = dao.memberJoinMoimCount(memberId);
+		return res ;
+	}
+
+
+	public boolean getMemberAlreadyJoin(Map map) {
+		boolean res = dao.selectAlreadyJoinMember(map);
+		return res;
 	}
 
 }

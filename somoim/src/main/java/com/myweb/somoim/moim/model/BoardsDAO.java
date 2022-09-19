@@ -37,8 +37,10 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 	}
 	
 	@Override
-	public BoardsDTO selectData(int id) {
-		return null;
+	public BoardsDTO selectData(int id) { //boardId로 데이터 가져오기
+		String mapperId = String.format(mapper, "selectData");
+	    BoardsDTO data = session.selectOne(mapperId,id);
+		return data;
 	}
 
 	@Override
@@ -47,8 +49,10 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 	}
 
 	@Override
-	public BoardsDTO selectData(BoardsDTO dto) {
-		return null;
+	public BoardsDTO selectData(BoardsDTO dto) { //board 상세정보가져오기
+		String mapperId = String.format(mapper, "selectBoardData");
+	    BoardsDTO data = session.selectOne(mapperId,dto);
+		return data;
 	}
 
 	@Override
@@ -79,6 +83,12 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean deleteData(int id) {
+		String mapperId = String.format(mapper, "deleteData");
+		int  result = session.delete(mapperId,id);
+		
+		if(result == 1) {
+			return true;
+		}
 		return false;
 	}
 }

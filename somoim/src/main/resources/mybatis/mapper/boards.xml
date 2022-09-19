@@ -53,6 +53,33 @@ ORDER BY B.BOARD_CREATE_DATE DESC
                   #{memberId})
     </insert>
     
+    <select id="selectBoardData" parameterType="boardsDTO" resultType="boardsDTO" >
+     SELECT BOARD_ID AS boardId
+    ,BOARD_TITLE AS boardTitle
+    ,CONTENT AS content
+    ,BOARD_CREATE_DATE AS boardCreateDate
+    ,"LIKE" AS  "like"
+    ,MOIM_ID AS moimId
+    ,MEMBER_ID  AS  memberId
+    FROM BOARDS WHERE MOIM_ID = ${moimId} AND BOARD_ID = ${boardId}
+    </select>
+    
+      <select id="selectData" parameterType="boardsDTO" resultType="boardsDTO" >
+     SELECT BOARD_ID AS boardId
+    ,BOARD_TITLE AS boardTitle
+    ,CONTENT AS content
+    ,BOARD_CREATE_DATE AS boardCreateDate
+    ,"LIKE" AS  "like"
+    ,MOIM_ID AS moimId
+    ,MEMBER_ID  AS  memberId
+    FROM BOARDS WHERE BOARD_ID = ${boardId}
+    </select>
+    
+   <delete id="deleteData" parameterType="_int" >
+    DELETE FROM BOARDS  WHERE BOARD_ID =#{id}
+   </delete>
+    
+    
 
 </mapper>
 
