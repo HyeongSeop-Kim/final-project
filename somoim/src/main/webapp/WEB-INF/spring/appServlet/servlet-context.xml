@@ -56,7 +56,7 @@
 		<beans:property name="maxUploadSizePerFile" value="5242880"></beans:property>
 		<beans:property name="maxInMemorySize" value="15728640"></beans:property>
 	</beans:bean>
-	<beans:bean id ="naverLoginBO" class="com.myweb.somoim.login.controller.NaverLoginBO"></beans:bean>
+<!--	<beans:bean id ="naverLoginBO" class="com.myweb.somoim.login.controller.NaverLoginBO"></beans:bean>-->
 	
 	<interceptors>
 		<interceptor>

@@ -48,7 +48,7 @@ import com.myweb.somoim.members.service.MembersService;
 @Controller
 public class ApiLoginController {
 	
-	private NaverLoginBO naverLoginBO;
+//	private NaverLoginBO naverLoginBO;
 	private String apiResult = null;
 	
 	
@@ -61,10 +61,10 @@ public class ApiLoginController {
 	@Autowired
 	private MembersService membersService;
 	
-	@Autowired
-	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
-		this.naverLoginBO = naverLoginBO;
-	}
+//	@Autowired
+//	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+//		this.naverLoginBO = naverLoginBO;
+//	}
 	
 	
 	@RequestMapping(value = "kakaoAddJoin", method = RequestMethod.POST)
@@ -84,16 +84,8 @@ public class ApiLoginController {
 		String imagePath = request.getContextPath() + memberImagePath;
 		
 		MembersDTO data = new MembersDTO();
-		
-		//카카오에서 로그인 후 추가 정보 입력시 @ -> 이메일 제거 후 id 값만저장 
-		if (membersDTO.getMemberId().contains("@")) {
-			String[] kakaoId = membersDTO.getMemberId().split("@");
-			data.setMemberId(kakaoId[0]);
-		}else {
-			// 회원가입 시 이메일이 없다면 받아온 데이터 그대로 dto 에 전달
-			data.setMemberId(membersDTO.getMemberId());
-		}
-		
+
+		data.setMemberId(membersDTO.getMemberId());
 		data.setMemberName(membersDTO.getMemberName());
 		data.setPassword(membersDTO.getPassword());
 		data.setGender(membersDTO.getGender());
@@ -104,6 +96,7 @@ public class ApiLoginController {
 		data.setBirth(bitrhs);
 		data.setMemberImagePath(imagePath);
 		// 카카오 로그인 컨트롤를 통한 회원가입의 loginType --> kakao
+		System.out.println(loginType);
 		data.setLoginType(loginType);
 		
 		System.out.println("최종 이미지 패스 경로= " +data.getMemberImagePath());
@@ -250,13 +243,13 @@ public class ApiLoginController {
 	    return "redirect:/";
 	}
 	// 네이버 로그인창 호출
-	@RequestMapping(value = "login/naver", method = {RequestMethod.GET, RequestMethod.POST})
-	public String getNaverAuthUrl(HttpSession session
-			,Model model){
-	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-	    System.out.println("네이버 로그인 url:" +  naverAuthUrl);
-	    model.addAttribute("urlNaver", naverAuthUrl);
-	    return "login";
-	}
+//	@RequestMapping(value = "login/naver", method = {RequestMethod.GET, RequestMethod.POST})
+//	public String getNaverAuthUrl(HttpSession session
+//			,Model model){
+//	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+//	    System.out.println("네이버 로그인 url:" +  naverAuthUrl);
+//	    model.addAttribute("urlNaver", naverAuthUrl);
+//	    return "login";
+//	}
 	
 }
