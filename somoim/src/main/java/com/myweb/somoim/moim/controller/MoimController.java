@@ -125,12 +125,6 @@ public class MoimController {
 
 	}
 
-
-
-
-
-
-
    @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
      public String moimBookMark(Model model,
 			@RequestParam int id
@@ -236,7 +230,39 @@ public class MoimController {
 		}
 		return join_datas.toJSONString();
 	}
+	
+	@RequestMapping(value = "/moim/modify/modify_join_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String modifyJoinList( HttpSession session) {
 
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<SomoimDTO> participantsData = SomoimService.getDatas(membersData.getMemberId());
+		JSONArray join_datas = new JSONArray();
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
+
+	@RequestMapping(value = "/moim/modify/modify_bookmark_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String modifyBookMarkList( HttpSession session) {
+
+		JSONArray join_datas = new JSONArray();
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<String> bookmarkData = memberService.getBmkData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = SomoimService.getDatas_bmk(bookmarkData);
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
 
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model
