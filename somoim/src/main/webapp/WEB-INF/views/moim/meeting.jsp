@@ -289,9 +289,6 @@
           <c:otherwise>
       <div class="margin-10 margin-top-50 ">
             <button type="button" class="btn btn-primary" onclick="bookmarkAdd(${moimData.moimId},'${sessionScope.loginData.memberId}')" >찜</button>
-        <button type="button" class="btn btn-primary"
-                onclick="location.href='/somoim/moim/bookmarkAdd?id=${sessionScope.loginData.memberId}'">찜
-        </button>
       </div>
           </c:otherwise>
           </c:choose>

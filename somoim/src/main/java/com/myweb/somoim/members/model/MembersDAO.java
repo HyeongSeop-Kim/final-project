@@ -59,7 +59,7 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	}
 
 	public MembersDTO selectMemData(String id) {
-		String mapId = String.format(mapper, "selectMemData");
+		String mapId = String.format(mapper, "selectMemberData");
 		MembersDTO data = session.selectOne(mapId, id);
 		return data;
 	}

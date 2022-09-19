@@ -75,4 +75,9 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 		return result;
 	}
 
+	public boolean removeBoardsData(int id) {
+		boolean result = dao.deleteBoardsData(id);
+		return result;
+	}
+
 }

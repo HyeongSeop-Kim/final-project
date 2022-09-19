@@ -113,7 +113,6 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 			}else if(!arrayList.contains(Integer.toString(id))) {
 				return 4;
 			}
-	         return false;
 	    }
 		return 3; //null일경우
 	  }

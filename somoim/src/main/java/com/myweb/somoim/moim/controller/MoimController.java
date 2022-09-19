@@ -2,11 +2,7 @@ package com.myweb.somoim.moim.controller;
 
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -293,7 +289,7 @@ public class MoimController {
 	public String modifyJoinList( HttpSession session) {
 
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
-		List<SomoimDTO> participantsData = SomoimService.getDatas(membersData.getMemberId());
+		List<SomoimDTO> participantsData = somoimService.getDatas(membersData.getMemberId());
 		JSONArray join_datas = new JSONArray();
 		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
 			JSONObject json = new JSONObject();
@@ -311,7 +307,7 @@ public class MoimController {
 		JSONArray join_datas = new JSONArray();
 		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
 		List<String> bookmarkData = memberService.getBmkData(membersData.getMemberId());
-		List<SomoimDTO> participantsData = SomoimService.getDatas_bmk(bookmarkData);
+		List<SomoimDTO> participantsData = somoimService.getDatas_bmk(bookmarkData);
 		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
 			JSONObject json = new JSONObject();
 			json.put("moimId", smoim.getMoimId());
@@ -469,7 +465,7 @@ public class MoimController {
 		boolean removeMeetingPart = meetingParticipantsService.removeData(id);
 		boolean removeMeeting = meetingsService.removeData(id);
 		boolean removeMoimPart = moimParticipantsService.removeData(id);
-		boolean removeBoard = boardsService.removeData(id);
+		boolean removeBoard = boardsService.removeBoardsData(id);
 		boolean removeMoim = somoimService.removeData(id);
 
 		return "redirect:/";
@@ -653,7 +649,7 @@ public class MoimController {
 		if(((MembersDTO)session.getAttribute("loginData")).getMemberId().equals(id)) {
 			return "redirect:/info/myInfo";
 		}
-		MembersDTO membersDTO = memberService.getData(id);
+		MembersDTO membersDTO = memberService.getMemData(id);
 		List<MoimParticipantsDTO> partDatas = moimParticipantsService.getDatas(membersDTO.getMemberId());
 		List<SomoimDTO> moimDatas = new ArrayList<SomoimDTO>();
 		List<BoardsDTO> boardDatas = boardsService.getDatas(membersDTO.getMemberId());
