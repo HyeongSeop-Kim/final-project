@@ -144,41 +144,40 @@ public class MoimController {
 
 	}
 
-   @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
-     public String moimBookMark(Model model,
-			@RequestParam int id
-			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+	@GetMapping(value = "/moim/bookmarkAdd", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String bookmarkAdd(Model model,
+							  @RequestParam int id,
+							  @RequestParam String memberId
+							  //,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
-	   JSONObject json = new JSONObject();
+		JSONObject json = new JSONObject();
 
-	   int res = memberService.checkBookMarkData(memberId,id);
-	   if(res == 1) {
-		   json.put("code",   "alreadybookmark");
-		   json.put("message",   "이미 찜한 모임입니다.");
-		   return json.toJSONString();
-	   }else if(res == 2 ) {
-		   json.put("code",   "bookmarkover");
-		   json.put("message",   "찜 가능한 모임수를 초과 하였습니다. 찜은 5개까지 가능합니다.");
-		   return json.toJSONString();
-	   }else if(res == 4) {
-		   boolean res1 = memberService.addBookmark(memberId,id);
-			   if(res1) {
-			   json.put("code",   "bookmarked");
-			   json.put("message",   "찜 되었습니다.");
-			   return json.toJSONString();
-			   }
+		int res = memberService.checkBookMarkData(memberId,id);
+		if(res == 1) {
+			json.put("code",   "alreadybookmark");
+			json.put("message",   "이미 찜한 모임입니다.");
+			return json.toJSONString();
+		}else if(res == 2 ) {
+			json.put("code",   "bookmarkover");
+			json.put("message",   "찜 가능한 모임수를 초과 하였습니다. 찜은 5개까지 가능합니다.");
+			return json.toJSONString();
+		}else if(res == 4) {
+			boolean res1 = memberService.addBookmark(memberId,id);
+			if(res1) {
+				json.put("code",   "bookmarked");
+				json.put("message",   "찜 되었습니다.");
+				return json.toJSONString();
+			}
 
-	   }
+		}
 
-	   json.put("code",   "error");
-	   json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
-	   return json.toJSONString();
+		json.put("code",   "error");
+		json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
+		return json.toJSONString();
 
-
-
- }
-
+	}
    @GetMapping(value = "/moim/bookmarkDelete", produces="application/json; charset=utf-8")
    @ResponseBody
    public String bookmarkDelete(Model model,
