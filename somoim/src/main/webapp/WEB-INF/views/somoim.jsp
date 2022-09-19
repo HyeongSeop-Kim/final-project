@@ -39,7 +39,7 @@
       <div class="row"> 
         <!-- left-menu -->
         <div class="col-md-3" > 
-          <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 880px; overflow-y: scroll"> 
+          <div class="p-4 rounded-3 shadow-sm bg-white scroll "style="height: 1005px; overflow-y: scroll"> 
             <div class="row" >
               <div class="col-6 d-flex flex-column justify-content-center align-items-center" >
              	
@@ -190,7 +190,7 @@
         <!-- // main-menu -->
         <!-- right-menu -->
         <div class="col-md-3">
-          <div class="p-4 rounded-3 shadow-sm bg-white" style="height: 880px;">
+          <div class="p-4 rounded-3 shadow-sm bg-white" style="height: 1005px;">
             <section class="user d-flex justify-content-between align-items-center pb-3">
               <div>
                 <img src="${img}/profile-image.png" class="rounded-circle" width="60" alt="profile-image">
@@ -274,9 +274,9 @@ function get_moim_list(page) {
 			let _html = '';
 			let _page = '';
 			for (var i=0 ; i < res.datas.length ; i++) {
-				_html += '<div class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=\'${path}/moim/meeting?id='+ res.datas[i].moimId +'\'">';
+				_html += '<div id="moim_list" class="section-container d-flex align-items-center p-3 rounded-3" onclick="location.href=\'${path}/moim/meeting?id='+ res.datas[i].moimId +'\'">';
 				_html += '<div class="col-md-3">';
-				_html += '<img src="'+res.datas[i].moimImagePath +'" class="rounded-circle" alt="profile-image" width="100">';
+				_html += '<img src="'+res.datas[i].moimImagePath +'" class="rounded-circle" alt="profile-image" width="100" height="100">';
 				_html += '</div>';
 				_html += '<div class="col-md-9">';
 				_html += '<p class="pb-2">'+ res.datas[i].locationName +'</p>';
@@ -351,52 +351,6 @@ function get_bmk_moim_list() {
 		}
 	});
 }
-/*
-function setCookie(cookie_name, value, days) {
-	const exdate = new Date();
-	exdate.setDate(exdate.getDate() + days);
-	
-	const cookie_value = escape(value) + ((days == null)? ":';expires=' + exdate.toUTCString());
-	document.cookie = cookie_name + '=' + cookie_value;
-}
-
-function getCookie(cookie_name) {
-	const x, y;
-	const val = document.cookie.split(';');
-	
-	for(var i=0; i<val.length; i++){
-		x= val[i].substr(0, val[i].indexOf('='));
-		y= val[i].substr(val[i].indexOf('=') + 1);
-		x = x.replace(/^\s+|\s+$/g,'');
-	  if(x == cookie_name){
-		return unescape(y);
-	  } 	
-    }
-}
-
-function addCookie(id) {
-   var items = getCookie('productItems'); // 이미 저장된 값을 쿠키에서 가져오기
-   var maxItemNum = 5; // 최대 저장 가능한 아이템개수
-   var expire = 7; // 쿠키값을 저장할 기간
-   if (items) {
-     var itemArray = items.split(',');
-     if (itemArray.indexOf(id) != -1) {
-      // 이미 존재하는 경우 종료
-      console.log('Already exists.');
-     }
-     else {
-      // 새로운 값 저장 및 최대 개수 유지하기
-      itemArray.unshift(id);
-      if (itemArray.length > maxItemNum ) itemArray.length = 5;
-      items = itemArray.join(',');
-      setCookie('productItems', items, expire);
-     }
-   }
-   else {
-    setCookie('productItems', id, expire);
-   }
-}
-*/
 
 $(document).ready(function() {
 	let category = $(".service-items");
@@ -442,9 +396,6 @@ $(document).ready(function() {
 			get_moim_list(1);
 		}
 	});
-	
-	
-
 
 });
 

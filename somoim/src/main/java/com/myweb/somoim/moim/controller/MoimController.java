@@ -80,7 +80,7 @@ public class MoimController {
 
 	@Autowired
 	private LocationsService locationService;
-	
+
 	@Autowired
 	private CommentsService commentsService;
 
@@ -106,16 +106,16 @@ public class MoimController {
 	int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재정원알아오기
 	SomoimDTO moimData = SomoimService.getData(id); //모임정보
 
-	
+
 	int memberJoinMoimCount =  moimParticipantsService.getMemberJoinMoimCount(membersDto.getMemberId()); //멤버가 가입한 모임수알아오기
-   
-	
+
+
 	Map map = new HashMap();
-	map.put("id", id); 
+	map.put("id", id);
 	map.put("memberId", membersDto.getMemberId());
-	
+
 	boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
-    		
+
 	JSONObject json = new JSONObject();
 	if(memberAlreadyJoin) { //로그인유저가 이미 가입한 모임인경우
 		json.put("code",   "alreadyJoinMember");
@@ -130,7 +130,7 @@ public class MoimController {
 		json.put("message",   "가입 가능한 모임수를 초과했습니다. 가입 가능한 모임수는 5개 입니다.");
 	    return json.toJSONString();
 	}else {  //가입
-		MoimParticipantsDTO dto = new MoimParticipantsDTO(); 
+		MoimParticipantsDTO dto = new MoimParticipantsDTO();
 
 		dto.setMoimId(id);
 		dto.setMemberId(membersDto.getMemberId());
@@ -144,28 +144,12 @@ public class MoimController {
 
 	}
 
-//
-//   @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
-//     public String moimBookMark(Model model,
-//			@RequestParam int id
-//			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
-//			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-//
-//
-//
-//	     return "redirect:/moim/meeting?id="+id;  /////////
-//
-//   }
-
-
-   @GetMapping(value = "/moim/bookmarkAdd", produces="application/json; charset=utf-8")
-   @ResponseBody
-   public String bookmarkAdd(Model model,
-		    @RequestParam int id,
-			@RequestParam String memberId
-			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
+   @RequestMapping(value = "/moim/bookmark", method = RequestMethod.GET)
+     public String moimBookMark(Model model,
+			@RequestParam int id
+			,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-	   
+
 	   JSONObject json = new JSONObject();
 
 	   int res = memberService.checkBookMarkData(memberId,id);
@@ -182,19 +166,19 @@ public class MoimController {
 			   if(res1) {
 			   json.put("code",   "bookmarked");
 			   json.put("message",   "찜 되었습니다.");
-			   return json.toJSONString();   
+			   return json.toJSONString();
 			   }
-			   
+
 	   }
 
 	   json.put("code",   "error");
 	   json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
-	   return json.toJSONString(); 
-	
-    
+	   return json.toJSONString();
+
+
 
  }
-   
+
    @GetMapping(value = "/moim/bookmarkDelete", produces="application/json; charset=utf-8")
    @ResponseBody
    public String bookmarkDelete(Model model,
@@ -202,12 +186,12 @@ public class MoimController {
 			@RequestParam String memberId
 			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-	   
+
 	   JSONObject json = new JSONObject();
 
 	   int res = memberService.checkBookMarkData(memberId,id);
-	   
-	   if(res == 1) { 
+
+	   if(res == 1) {
 		   boolean res1 = memberService.deleteBookmark(memberId,id); //삭제기능넣어줘야함
 		   if(res1) {
 			   json.put("code",   "deletebookmark");
@@ -227,9 +211,9 @@ public class MoimController {
 
 	   json.put("code",   "error");
 	   json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
-	   return json.toJSONString(); 
-	
-    
+	   return json.toJSONString();
+
+
 
  }
 
@@ -308,6 +292,38 @@ public class MoimController {
 		return join_datas.toJSONString();
 	}
 
+	@RequestMapping(value = "/moim/modify/modify_join_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String modifyJoinList( HttpSession session) {
+
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<SomoimDTO> participantsData = SomoimService.getDatas(membersData.getMemberId());
+		JSONArray join_datas = new JSONArray();
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
+
+	@RequestMapping(value = "/moim/modify/modify_bookmark_list", method = RequestMethod.GET)
+	@ResponseBody
+	public String modifyBookMarkList( HttpSession session) {
+
+		JSONArray join_datas = new JSONArray();
+		MembersDTO membersData = (MembersDTO) session.getAttribute("loginData");
+		List<String> bookmarkData = memberService.getBmkData(membersData.getMemberId());
+		List<SomoimDTO> participantsData = SomoimService.getDatas_bmk(bookmarkData);
+		for (SomoimDTO smoim : (List<SomoimDTO>)participantsData) {
+			JSONObject json = new JSONObject();
+			json.put("moimId", smoim.getMoimId());
+			json.put("moimTitle", smoim.getMoimTitle());
+			join_datas.add(json);
+		}
+		return join_datas.toJSONString();
+	}
 
 	@RequestMapping(value = "/moim/meeting", method = RequestMethod.GET)
 	public String board(Model model
@@ -331,13 +347,13 @@ public class MoimController {
 		if(currentMemberCount >= moimData.getMoimLimit() ) {
 			model.addAttribute("over" , "초과");
 		}
-		
+
 		int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
 		if(bookmarkcheck == 1 ) {
 			model.addAttribute("bookmarkcheck" , bookmarkcheck);
 		}
-		
-		
+
+
 		model.addAttribute("res" , res); //로그인한 유저가 참가자인지 확인
 		model.addAttribute("moimData" , moimData);
 		model.addAttribute("meetingsData",meetingsData);
@@ -382,8 +398,8 @@ public class MoimController {
 		if(bookmarkcheck == 1 ) {
 			model.addAttribute("bookmarkcheck" , bookmarkcheck);
 		}
-		
-		
+
+
 		   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
            model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
@@ -393,42 +409,42 @@ public class MoimController {
 		return "moim/board";
 	}
 	
-	
+
 	@RequestMapping(value = "/moim/boardDetail", method = RequestMethod.GET)
 	public String boarDetail(Model model
 			            ,@RequestParam int id
 			            ,@RequestParam int boardId
 			            ,@RequestParam(defaultValue="1", required=false) int page
 			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
-		
+
 		BoardsDTO boardDto = new BoardsDTO(); //board가져오기
 		boardDto.setBoardId(boardId);
 		boardDto.setMoimId(id);
 		BoardsDTO data =  boardsService.getData(boardDto);
-		
-		
+
+
 		Map map = new HashMap();   //comments list가져오기
 		map.put("id", id); //가져온 데이터에 키와 벨류값을 지정
 		map.put("boardId", boardId);
 		List datas = commentsService.getDatas(map);
-		
-		int pageCount = 5;
-		
-		PagingDTO paging = new PagingDTO (datas,page,pageCount);
-		
-		
-		
 
-	
+		int pageCount = 5;
+
+		PagingDTO paging = new PagingDTO (datas,page,pageCount);
+
+
+
+
+
 		model.addAttribute("data",data);//boardId로 정보받아오기
 		model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
-		
-		
+
+
 		return "moim/boarddetail";
 	}
-	
-	
-	
+
+
+
 	@RequestMapping(value = "/moim/modify", method = RequestMethod.GET)
 	public String modify(Model model
 			,@RequestParam int id
@@ -502,8 +518,8 @@ public class MoimController {
 		return "moim/boardadd";
 	}
 
-   
-   
+
+
 
 
 	@RequestMapping(value = "/moim/board/add", method = RequestMethod.POST)
@@ -530,20 +546,20 @@ public class MoimController {
 	  return "redirect:/moim/board?id="+id;
 	}
 
-	
+
 	@GetMapping(value = "/moim/board/delete", produces="application/json; charset=utf-8")
 	@ResponseBody
 	   public String BoardDelete(Model model,
 			    @RequestParam int bid
 				,@SessionAttribute("loginData") MembersDTO membersDto ) {
-		   
+
 		System.out.println("여기로 넘어오나");
 		   JSONObject json = new JSONObject();
 
 		   BoardsDTO data = boardsService.getData(bid);
-		  
-		   
-		   if(data == null) { 
+
+
+		   if(data == null) {
 			       json.put("code",   "alreadyDelete");
 				   json.put("message",   "이미 삭제된 게시물 입니다.");
 				   return json.toJSONString();
@@ -562,11 +578,11 @@ public class MoimController {
 					return json.toJSONString();
 			    }
 			 }
-	
+
 	 }
 
-	
-	
+
+
 
 	@RequestMapping(value = "/moim/board/comment/add", method = RequestMethod.POST)
 
@@ -575,17 +591,17 @@ public class MoimController {
 			,@RequestParam int bid
 			,@RequestParam String content
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-	
+
 
 	  CommentsDTO commentsDto = new CommentsDTO();
 	  commentsDto.setMoimId(id);
 	  commentsDto.setBoardId(bid);
 	  commentsDto.setContent(content);
 	  commentsDto.setMemberId(membersDto.getMemberId());
-	 
+
 
 	  boolean result = commentsService.addData(commentsDto);
-	  
+
 
 	  if(result) {
 		  return "redirect:/moim/boardDetail?id="+id+"&boardId="+bid;
@@ -594,8 +610,8 @@ public class MoimController {
 	  return "redirect:/moim/boardDetail?id="+id+"&boardId="+bid;
 	}
 
-	
-	
+
+
 
 
 

@@ -145,14 +145,12 @@
 		 </if>
    </select>
    <select id="selectSubDatas_bmk" resultType="somoimDTO">
-   		SELECT M.MOIM_TITLE AS moimTitle
-	 		 , M.MOIM_ID AS moimId
-		  FROM MOIM M
-		  JOIN MOIM_PARTICIPANTS MP
-  			ON M.MOIM_ID = MP.MOIM_ID
+   		SELECT MOIM_TITLE AS moimTitle
+	 		 , MOIM_ID AS moimId
+		  FROM MOIM
   		 WHERE 1=1
-  		<if test='moimIds != null'>
-		  AND M.MOIM_ID IN
+  		<if test='moimIds != null' >
+		  AND MOIM_ID IN
 		  <foreach collection="moimIds" item="item" index="index" separator="," open="(" close=")">
 		  #{item}
 		  </foreach>

@@ -187,10 +187,7 @@
 				      </button>
 				    </h2>
 				    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" >
-				      <div class="accordion-body">
-				         <a href="#"><p class="pb-3">가입 모임A</p></a>
-				         <a href="#"><p class="pb-3">가입 모임B</p></a>
-				         <a href="#"><p class="pb-3">가입 모임C</p></a>
+				      <div id="modify_join_list" class="accordion-body">
 				      </div>
 				    </div>
 				  </div>
@@ -201,10 +198,7 @@
 				      </button>
 				    </h2>
 				    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" >
-				      <div class="accordion-body">
-				         <a href="#"><p class="pb-3">찜 한 모임A</p></a>
-				         <a href="#"><p class="pb-3">찜 한 모임B</p></a>
-				         <a href="#"><p class="pb-3">찜 한 모임C</p></a>
+				      <div id="modify_bookmark_list" class="accordion-body">
 				      </div>
 				    </div>
 				  </div>
@@ -341,6 +335,41 @@
 		function list() {
 			location.href = '/somoim';
 		}
+		
+		function get_modify_join_moim_list() {
+			$.ajax({
+				url:  "./modify/modify_join_list",
+				type: "GET",
+				dataType: "json",
+				success: function(data) {
+					let _html = '';
+					for (var i=0 ; i < data.length ; i++) {
+						_html += ' <a href="/somoim/moim/meeting?id='+ data[i].moimId +'"><p class="pb-3">'+ data[i].moimTitle +'</p></a>';
+					}
+					$('#modify_join_list').html(_html);
+				}
+			});
+		}
+
+		function get_modify_bmk_moim_list() {
+			$.ajax({
+				url:  "./modify/modify_bookmark_list",
+				type: "GET",
+				dataType: "json",
+				success: function(data) {
+					let _html = '';
+					for (var i=0 ; i < data.length ; i++) {
+						_html += ' <a href="/somoim/moim/meeting?id='+ data[i].moimId +'"><p class="pb-3">'+ data[i].moimTitle +'</p></a>';
+					}
+					$('#modify_bookmark_list').html(_html);
+				}
+			});
+		}
+		
+		$(document).ready(function() {	
+			get_modify_join_moim_list();
+			get_modify_bmk_moim_list();
+		});
 	</script>
 </body>
 </html>
