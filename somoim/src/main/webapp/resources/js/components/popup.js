@@ -2,6 +2,7 @@ let category;
 let prof;
 let modjob;
 let addmeeting;
+let modmeeting;
 var id;
 var pw;
 var join;
@@ -102,7 +103,7 @@ function popModProfile(){
 };
 
 function popModJob(param){
-    if (!prof){
+    if (!modjob){
         let popUrl = "modJob?id=" + param;
         Clip =window.open(popUrl, '_blank', 'width=550, height=900');
         modjob = true;
@@ -120,7 +121,7 @@ function popModJob(param){
 };
 
 function popAddMeeting(param){
-    if (!prof){
+    if (!addmeeting){
         let popUrl = "addMeeting?id=" + param;
         Clip =window.open(popUrl, '_blank', 'width=550, height=900');
         addmeeting = true;
@@ -133,6 +134,24 @@ function popAddMeeting(param){
             let popUrl = "addMeeting?id=" + param;
             Clip =window.open(popUrl, '_blank', 'width=550, height=900');
             addmeeting = true;
+        }
+    }
+};
+
+function popModMeeting(meetingId, moimId){
+    if (!modmeeting){
+        let popUrl = "modMeeting?meetingId=" + meetingId + "&moimId=" + moimId;
+        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        modmeeting = true;
+    }
+    else{
+        if(!Clip.closed && Clip){
+            Clip.focus();
+        }
+        else{
+            let popUrl = "modMeeting?meetingId=" + meetingId + "&moimId=" + moimId;
+            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            modmeeting = true;
         }
     }
 };

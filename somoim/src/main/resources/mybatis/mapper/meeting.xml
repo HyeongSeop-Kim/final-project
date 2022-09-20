@@ -19,6 +19,21 @@
        WHERE MEETINGS.MOIM_ID = #{id}
     </select>
 
+    <select id ="selectData" resultType="meetingsDTO" parameterType="_int">
+        SELECT MEETING_ID AS meetingId
+             , MEETING_TITLE AS meetingTitle
+             , MEETING_DATE AS meetingDate
+             , MEETING_TIME AS meetingTime
+             , MEETING_PLACE AS meetingPlace
+             , MEETING_PRICE AS meetingPrice
+             , MEETING_LIMIT AS meetingLimit
+             , MOIM.MOIM_ID AS moimId
+        FROM MEETINGS
+                 JOIN MOIM
+                      ON MEETINGS.MOIM_ID = MOIM.MOIM_ID
+        WHERE MEETING_ID = #{id}
+    </select>
+
     <select id="getNextSeq" resultType="_int">
         SELECT SQU_MEETINGS.NEXTVAL FROM DUAL
     </select>
@@ -43,10 +58,25 @@
                     , SYSDATE
                     , #{moimId})
     </insert>
-    
+
+    <update id="updateData" parameterType="meetingsDTO">
+        UPDATE MEETINGS
+           SET MEETING_TITLE = #{meetingTitle}
+             , MEETING_DATE = #{meetingDate}
+             , MEETING_TIME = #{meetingTime}
+             , MEETING_PLACE = #{meetingPlace}
+             , MEETING_PRICE = #{meetingPrice}
+             , MEETING_LIMIT = #{meetingLimit}
+         WHERE MEETING_ID = #{meetingId}
+    </update>
+
     <delete id = "deleteData" parameterType="_int">
         DELETE FROM MEETINGS
               WHERE MOIM_ID = #{id}
+    </delete>
+    <delete id = "deleteMeetingData" parameterType="_int">
+        DELETE FROM MEETINGS
+        WHERE MEETING_ID = #{id}
     </delete>
 </mapper>
 

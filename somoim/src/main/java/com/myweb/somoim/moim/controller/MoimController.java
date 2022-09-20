@@ -462,7 +462,7 @@ public class MoimController {
 
 	@GetMapping(value = "/moim/remove")
 	public String removeMoim(@RequestParam int id){
-		boolean removeMeetingPart = meetingParticipantsService.removeData(id);
+		boolean removeMeetingPart = meetingParticipantsService.removeDatas(id);
 		boolean removeMeeting = meetingsService.removeData(id);
 		boolean removeMoimPart = moimParticipantsService.removeData(id);
 		boolean removeBoard = boardsService.removeBoardsData(id);
@@ -653,14 +653,23 @@ public class MoimController {
 		List<MoimParticipantsDTO> partDatas = moimParticipantsService.getDatas(membersDTO.getMemberId());
 		List<SomoimDTO> moimDatas = new ArrayList<SomoimDTO>();
 		List<BoardsDTO> boardDatas = boardsService.getDatas(membersDTO.getMemberId());
+		List<CommentsDTO> commentsDatas = commentsService.getDatas(membersDTO.getMemberId());
+		List<BoardsDTO> boardsId = new ArrayList<BoardsDTO>();
 
 		for (MoimParticipantsDTO data : partDatas) {
 			SomoimDTO moimData = somoimService.getData(data.getMoimId());
 			moimDatas.add(moimData);
 		}
+		for (CommentsDTO data : commentsDatas) {
+			BoardsDTO boardId = boardsService.getData(data.getBoardId());
+			boardsId.add(boardId);
+		}
 		model.addAttribute("moimDatas", moimDatas);
 		model.addAttribute("boardDatas", boardDatas);
 		model.addAttribute("userInfo", membersDTO);
+		model.addAttribute("commentsDatas", commentsDatas);
+		model.addAttribute("boardsId", boardsId);
+
 		return "info/userInfo";
 	}
 
@@ -713,6 +722,34 @@ public class MoimController {
 //		}
 	}
 
+	@GetMapping(value = "/moim/modMeeting")
+	public String modMeeting(Model model
+			,@RequestParam int meetingId
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		MeetingsDTO meetingData = meetingsService.getData(meetingId);
+		model.addAttribute("meetingData", meetingData);
+
+		return "form/modMeeting";
+	}
+
+	@PostMapping(value = "/moim/modMeeting")
+	public String modMeeting(MeetingsDTO modData
+			, HttpSession session
+			, @RequestParam (required = false) String month
+			, @RequestParam (required = false) String day) {
+		LocalDate now = LocalDate.now();
+		String year = String.valueOf(now.getYear());
+		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+		Date date = java.sql.Date.valueOf(meetingDate);
+
+		modData.setMeetingDate(date);
+
+		boolean res = meetingsService.modifyData(modData);
+
+		return null;
+
+	}
+
 	@PostMapping(value = "/moim/ajax/modJob")
 	@ResponseBody
 	public String ajaxModJob(HttpServletRequest request
@@ -734,6 +771,57 @@ public class MoimController {
 			}
 		}
 		jsonObject.put("res", true);
+		return jsonObject.toJSONString();
+	}
+
+	@PostMapping(value = "/moim/ajax/meetingPart")
+	@ResponseBody
+	public String ajaxMeetingPart(@RequestBody Map<String, Object> param) {
+		String memberId = param.get("memberId").toString();
+		int moimId = Integer.parseInt(param.get("moimId").toString());
+		int meetingId = Integer.parseInt(param.get("meetingId").toString());
+		JSONObject jsonObject = new JSONObject();
+		boolean res = false;
+
+		MeetingParticipantsDTO meetingParticipantsData = new MeetingParticipantsDTO();
+		meetingParticipantsData.setMoimId(moimId);
+		meetingParticipantsData.setMemberId(memberId);
+		meetingParticipantsData.setMeetingId(meetingId);
+		MeetingParticipantsDTO meetingParticipantsDTO = meetingParticipantsService.getData(meetingParticipantsData);
+
+		if(meetingParticipantsDTO == null) {
+			res = meetingParticipantsService.addData(meetingParticipantsData);
+			jsonObject.put("msg", "참가 신청이 완료되었습니다.");
+		} else {
+			res = meetingParticipantsService.removeData(meetingParticipantsDTO);
+			jsonObject.put("msg", "참가 신청이 취소되었습니다.");
+		}
+		if(!res) {
+			jsonObject.replace("msg", "참가 신청 중 오류가 발생했습니다.");
+		}
+		return jsonObject.toJSONString();
+	}
+
+	@PostMapping(value = "/moim/ajax/removeMeeting")
+	@ResponseBody
+	public String ajaxRemoveMeeting(@RequestBody Map<String, Object> param) {
+		int meetingId = Integer.parseInt(param.get("meetingId").toString());
+		JSONObject jsonObject = new JSONObject();
+		boolean res = false;
+
+		MeetingsDTO meetingsDTO = meetingsService.getData(meetingId);
+
+		if(meetingsDTO == null) {
+			jsonObject.put("msg", "해당 정모를 찾을 수 없습니다.");
+		} else {
+			res = meetingParticipantsService.removeMeetingDatas(meetingId)
+				&& meetingsService.removeMeetingData(meetingsDTO.getMeetingId());
+
+			jsonObject.put("msg", "삭제가 완료되었습니다.");
+		}
+		if(!res) {
+			jsonObject.replace("msg", "정모 삭제 중 오류가 발생했습니다.");
+		}
 		return jsonObject.toJSONString();
 	}
 }

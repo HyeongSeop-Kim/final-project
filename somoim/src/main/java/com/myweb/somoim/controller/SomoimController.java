@@ -23,7 +23,9 @@ import com.myweb.somoim.common.service.LocationsService;
 import com.myweb.somoim.members.model.MembersDTO;
 import com.myweb.somoim.members.service.MembersService;
 import com.myweb.somoim.moim.model.BoardsDTO;
+import com.myweb.somoim.moim.model.CommentsDTO;
 import com.myweb.somoim.moim.service.BoardsService;
+import com.myweb.somoim.moim.service.CommentsService;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONArray;
@@ -74,6 +76,8 @@ public class SomoimController {
 	private LocationsService locationsService;
 	@Autowired
 	private CategorysService categorysService;
+	@Autowired
+	private CommentsService commentsService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String moimMain(Model model, HttpSession session) {
@@ -158,13 +162,21 @@ public class SomoimController {
 		List<MoimParticipantsDTO> partDatas = moimParticipantsService.getDatas(membersDTO.getMemberId());
 		List<SomoimDTO> moimDatas = new ArrayList<SomoimDTO>();
 		List<BoardsDTO> boardDatas = boardsService.getDatas(membersDTO.getMemberId());
+		List<CommentsDTO> commentsDatas = commentsService.getDatas(membersDTO.getMemberId());
+		List<BoardsDTO> boardsId = new ArrayList<BoardsDTO>();
 
 		for (MoimParticipantsDTO data : partDatas) {
 			SomoimDTO moimData = service.getData(data.getMoimId());
 			moimDatas.add(moimData);
 		}
+		for (CommentsDTO data : commentsDatas) {
+			BoardsDTO boardId = boardsService.getData(data.getBoardId());
+			boardsId.add(boardId);
+		}
 		model.addAttribute("moimDatas", moimDatas);
 		model.addAttribute("boardDatas", boardDatas);
+		model.addAttribute("commentsDatas", commentsDatas);
+		model.addAttribute("boardsId", boardsId);
 
 		return "info/myInfo";
 	}

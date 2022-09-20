@@ -98,7 +98,7 @@
 						<c:if test="${not empty boardDatas}">
 							<c:forEach items="${boardDatas}" var="boardData">
 							  <li class="pati-list">
-								 <div class="pati-info" OnClick="location.href =''">
+								 <div class="pati-info" OnClick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
 									<div class="info-board">
 									  <div class="info-board-title">
 										  <div>
@@ -132,32 +132,27 @@
 		          </div>
 		          <div class="card-body scroll" style="overflow-y: scroll">
 		            <ul class="list-unstyled mt-3 mb-4">
+									<c:if test="${not empty commentsDatas}">
+									<c:forEach items="${commentsDatas}" var="commentsData">
 		              <li class="comment-list">
-		              	<div class="section-container d-flex align-items-center p-3 rounded-3 pati-info">
+		              	<div class="section-container d-flex align-items-center p-3 rounded-3 pati-info" OnClick="location.href ='/somoim/moim/boardDetail?id=${commentsData.moimId}&boardId=${commentsData.boardId}'">
 		              	<div class="comment-box">
 							<div class="comment">
-								<span>적의 침략은 저항할 수 있지만, 그 시대가 도래한 사상에는 저항할 수 없다.적의 침략은 저항할 수 있지만, 그 시대가 도래한 사상에는 저항할 수 없다.적의 침략은 저항할 수 있지만, 그 시대가 도래한 사상에는 저항할 수 없다.</span>
+								<span>${commentsData.content}</span>
 							</div>
 			              	<div class="comment-info">
-			           			<span class="comment-name">게시글 제목</span>
-			           			<span class="comment-date"><small>2022.08.28</small></span>
+										<c:forEach items="${boardsId}" var="boardId">
+											<c:if test="${commentsData.boardId eq boardId.boardId}">
+			           			<span class="comment-name">${boardId.boardTitle}</span>
+											</c:if>
+										</c:forEach>
+			           			<span class="comment-date"><small>${commentsData.contentCreateDate}</small></span>
 			              	</div>
 		              	</div>
 		              	</div>
 		              </li>
-		               <li class="comment-list">
-		              	<div class="section-container d-flex align-items-center p-3 rounded-3 pati-info">
-		              	<div class="comment-box">
-			              	<div class="comment-info">
-			           			<span class="comment-name">홍길동</span>
-			           			<span class="comment-date"><small>2022.08.28</small></span>
-			              	</div>
-			              	<div class="comment">
-			              		<span>화이팅!!</span>
-			              	</div>
-		              	</div>
-		              	</div>
-		              </li>
+									</c:forEach>
+									</c:if>
 		            </ul>
 		          </div>
 		        </div>

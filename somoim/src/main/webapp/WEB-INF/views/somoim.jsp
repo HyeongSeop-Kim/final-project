@@ -202,7 +202,7 @@
                 </c:if>
               </div>
               <div style="display: flex; flex-direction: column; align-items: center;">
-              	<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info/myInfo'" style="margin-bottom: 5px;">상세</button>
+              	<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='/somoim/info/myInfo'" style="margin-bottom: 5px;">상세</button>
             	<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='logout'" >로그아웃</button>
              </div>
             </section>

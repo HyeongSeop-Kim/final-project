@@ -23,6 +23,11 @@ public class CommentsService {
 		return datas;
 	}
 
+	public List<CommentsDTO> getDatas(String id) {  //추가메서드
+		List<CommentsDTO> datas = dao.selectDatas(id);
+		return datas;
+	}
+
 
 	public boolean addData(CommentsDTO commentsDto) {
 		boolean res = dao.insert(commentsDto);

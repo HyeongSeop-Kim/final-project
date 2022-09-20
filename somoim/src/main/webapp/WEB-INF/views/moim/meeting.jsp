@@ -406,6 +406,7 @@
                 <div><span class="material-icons"
                            style="font-size:14px; color: gray;">groups</span>&nbsp;&nbsp;${meetingsData.meetingLimit}
                 </div>
+                <span id="${meetingsData.meetingId}"></span>
               </div>
               <!--정모모임1 가입멤버 아코디언박스-->
               <div class="moim-colecter">
@@ -414,7 +415,7 @@
                     <button class="accordion-button" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapse${status.count}"
                             aria-expanded="true" aria-controls="collapse${status.count}">
-                      가입 멤버
+                      정모 멤버
                     </button>
                   </h2>
                   <div id="collapse${status.count}" class="accordion-collapse collapse"
@@ -438,6 +439,22 @@
                     </div>
                   </div>
                 </div>
+                <c:if test="${not empty meetingParticipants}">
+                <c:set var="partChk" value="false" />
+                <c:forEach items="${meetingParticipants}" var="meetingParticipants">
+                  <c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId && meetingParticipants.memberId eq sessionScope.loginData.memberId}">
+                    <button type="button" onclick="meetingPart('${sessionScope.loginData.memberId}', ${param.id}, ${meetingsData.meetingId});">취소</button>
+                    <c:set var="partChk" value="true" />
+                  </c:if>
+                </c:forEach>
+                </c:if>
+                    <c:if test="${not partChk}">
+                    <button type="button" onclick="meetingPart('${sessionScope.loginData.memberId}', ${param.id}, ${meetingsData.meetingId});">참가</button>
+                    </c:if>
+                <c:if test="${res.jobId eq 1 || res.jobId eq 2}">
+                  <button type="button" onclick="popModMeeting(${meetingsData.meetingId}, ${param.id});">수정</button>
+                  <button type="button" onclick="removeMeeting('${param.id}', ${meetingsData.meetingId});">삭제</button>
+                </c:if>
               </div>
             </div>
           </div>
@@ -511,5 +528,8 @@
 <script src="${path}/resources/js/moim.js"></script>
 <script src="${path}/resources/js/components/popup.js"></script>
 <script src="${path}/resources/js/meeting.js"></script>
+<script>
+
+</script>
 </body>
 </html>

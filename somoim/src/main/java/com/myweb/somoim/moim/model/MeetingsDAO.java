@@ -36,7 +36,9 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 
 	@Override
 	public MeetingsDTO selectData(int id) {
-		return null;
+		String mapperId = String.format(mapper,"selectData");
+		MeetingsDTO data =  session.selectOne(mapperId,id);
+		return data;
 	}
 
 	@Override
@@ -65,7 +67,9 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 
 	@Override
 	public boolean updateData(MeetingsDTO dto) {
-		return false;
+		String mapperId = String.format(mapper, "updateData");
+		int res = session.update(mapperId, dto);
+		return res == 1 ? true : false;
 	}
 
 	@Override
@@ -78,7 +82,13 @@ public class MeetingsDAO extends AbstractDAO<List<MeetingsDTO>, MeetingsDTO>{
 		String mapperId = String.format(mapper, "deleteData");
 		int res = session.delete(mapperId, id);
 
-		return res == 1 ? true : false;
+		return res > 0 ? true : false;
 	}
 
+	public boolean deleteMeetingData(int id) {
+		String mapperId = String.format(mapper, "deleteMeetingData");
+		int res = session.delete(mapperId, id);
+
+		return res == 1 ? true : false;
+	}
 }

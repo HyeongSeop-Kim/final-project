@@ -17,8 +17,10 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-
- <link rel="stylesheet" href="${path}/resources/css/styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+				integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+				crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="${path}/resources/css/styles.css">
   <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
   
   <title>상세 게시판</title>
@@ -187,14 +189,19 @@
                 <p class="pb-1">홍길동</p>
                 <p>서울특별시</p>
               </div>
-              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info'" >수정</button>
+							<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='/somoim/info/myInfo'" style="margin-bottom: 5px;">상세</button>
+							<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='/somoim/logout'" >로그아웃</button>
             </section>
-            <section class="d-flex justify-content-between align-items-center pb-3">
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-              <button type="button" class="btn btn-primary btn-sm btn-blue" >수정</button>
-            </section>
+						<section id="cate" class="d-flex justify-content-between align-items-center pb-3">
+							<c:if test="${not empty sessionScope.loginData}">
+								<script>
+									window.onload = () => {
+										addEventListener("DOMContentLoaded", printCate("${sessionScope.loginData.category}"));
+									};
+								</script>
+							</c:if>
+							<button type="button" class="btn btn-primary btn-sm btn-blue" onclick="popCategory();">편집</button>
+						</section>
             <section>
 	        <div class="accordion" id="accordionExample">
 				  <div class="accordion-item">
@@ -281,10 +288,8 @@
 					form.submit(); //아니면 submit하기
 				}
 			}
-			
-
-		
-		
 	</script>
+	<script src="${path}/resources/js/category.js"></script>
+	<script src="${path}/resources/js/components/popup.js"></script>
 </body>
 </html>
