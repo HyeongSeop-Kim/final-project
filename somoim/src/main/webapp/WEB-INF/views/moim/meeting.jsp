@@ -24,17 +24,9 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous"
   />
-  <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
-  />
-  <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="${cs}/styles.css"/>
   <script type="text/javascript" src="${resourcesUrl}/js/jquery-3.6.0.min.js"></script>
@@ -175,263 +167,198 @@
 <c:url var="meetingUrl" value="/moim/meeting/">
   <c:param name="id" value="${moimData.moimId}">모임 입니다.</c:param>
 </c:url>
-<!--이미지 사진박스-->
-
-<header class="p-6">
-  <c:url var="moimUpdateImageUrl" value="/moim/imageUpload?id=${moimData.moimId}"/>
+<div class="logo">Somoim.</div>
+<!-- 유저정보 -->
+<header class="header">
+  <!-- info image -->
   <form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
-    <div class="img-box img-box-size-1">
-      <img id="previewImage"
-           class="img-box-size-1 bora-20 shadow-sm width-100"
-           alt="이미지 선택"
-           src="${moimData.moimImagePath}"
-      />
+    <div class="header-img">
+        <img id="previewImage"
+             class="header-img__img"
+             alt="이미지 선택"
+             src="${moimData.moimImagePath}"
+        />
         <c:if test="${res.jobId eq 1}">
-      <input id="moimImageSelect"
-             class="ImgSelect"
-             type="file"
-             value="이미지 선택"
-             name="moimimage"
-             multiple
-
-      />
+          <input id="moimImageSelect"
+                 class="hidden"
+                 type="file"
+                 value="이미지 선택"
+                 name="moimimage"
+                 multiple
+          />
         </c:if>
     </div>
   </form>
-  <div class="margin-bottom-20 flex-box margin-left-223">
-    <!--아이콘-->
-    <div class="psi-r">
-      <a
-              href="#"
-              class="category-box-120 icon-green psi-a bottom-10 left-24"
-      >
-        <c:choose>
-          <c:when test="${moimData.categoryId eq 1 }">
-            <i class="fa-solid fa-suitcase fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 2 }">
-            <i class="fa-solid fa-person-swimming fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 3}">
-            <i class="fa-solid fa-book fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 4}">
-            <i class="fa-solid fa-language fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 5}">
-            <i class="fa-solid fa-masks-theater fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 6}">
-            <i class="fa-solid fa-music fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 7}">
-            <i class="fa-solid fa-palette fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 8}">
-            <i class="fa-solid fa-user-ninja fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 9}">
-            <i class="fa-solid fa-hands fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 10}">
-            <i class="fa-solid fa-handshake-simple  fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 11}">
-            <i class="fa-solid fa-car fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 12}">
-            <i class="fa-brands fa-youtube fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 13}">
-            <i class="fa-solid fa-baseball-bat-ball fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 14}">
-            <i class="fa-solid fa-gamepad fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 15}">
-            <i class="fa-solid fa-utensils fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 16}">
-            <i class="fa-solid fa-dog fa-3x"></i>
-          </c:when>
-          <c:when test="${moimData.categoryId eq 17}">
-            <i class="fa-solid fa-hand-holding-heart fa-3x"></i>
-          </c:when>
-          <c:otherwise>
-            <i class="fa-solid fa-paper-plane fa-3x"></i>
-          </c:otherwise>
-        </c:choose>
-      </a>
-    </div>
-    <!--정모이름,편집버튼-->
-    <div class="flex-box margin-left-160">
-      <div class="margin-10 margin-top-20 font-s-30">${moimData.moimTitle}</div>
 
-      <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
-        <div class="margin-10 margin-top-50">
-          <button type="button" class="btn btn-primary"
-                  onclick="location.href='/somoim/moim/modify?id=${moimData.moimId}&test=1'">편집
-          </button>
-        </div>
-      </c:if>
-
-      <c:if test="${empty res && currentMemberCount < moimData.moimLimit}">
-        <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary" onclick="joinCheck(${moimData.moimId})" >가입</button>
-        </div>
-      </c:if>
-          <c:choose>
-          <c:when test="${bookmarkcheck eq 1 }">
-          <div class="margin-10 margin-top-50 ">
-            <button type="button" class="btn btn-primary" onclick="bookmarkDelete(${moimData.moimId},'${sessionScope.loginData.memberId}')">찜 해제</button>
-          </div>
-          </c:when>
-          <c:otherwise>
-      <div class="margin-10 margin-top-50 ">
-            <button type="button" class="btn btn-primary" onclick="bookmarkAdd(${moimData.moimId},'${sessionScope.loginData.memberId}')" >찜</button>
+  <!-- 소모임 정보 -->
+  <div class="header-info-box">
+    <!-- 관심사 아이콘-->
+    <div class="header-info-img">
+      <div class="header-info-img__cate icon--circle">
+      <c:choose>
+        <c:when test="${moimData.categoryId eq 1 }">
+          <i class="fa-solid fa-suitcase"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 2 }">
+          <i class="fa-solid fa-person-swimming"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 3}">
+          <i class="fa-solid fa-book"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 4}">
+          <i class="fa-solid fa-language"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 5}">
+          <i class="fa-solid fa-masks-theater"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 6}">
+          <i class="fa-solid fa-music"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 7}">
+          <i class="fa-solid fa-palette"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 8}">
+          <i class="fa-solid fa-user-ninja"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 9}">
+          <i class="fa-solid fa-hands"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 10}">
+          <i class="fa-solid fa-handshake-simple"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 11}">
+          <i class="fa-solid fa-car"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 12}">
+          <i class="fa-brands fa-youtube"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 13}">
+          <i class="fa-solid fa-baseball-bat-ball"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 14}">
+          <i class="fa-solid fa-gamepad"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 15}">
+          <i class="fa-solid fa-utensils"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 16}">
+          <i class="fa-solid fa-dog"></i>
+        </c:when>
+        <c:when test="${moimData.categoryId eq 17}">
+          <i class="fa-solid fa-hand-holding-heart"></i>
+        </c:when>
+        <c:otherwise>
+          <i class="fa-solid fa-paper-plane"></i>
+        </c:otherwise>
+      </c:choose>
       </div>
-          </c:otherwise>
-          </c:choose>
-      <c:if test="${res.jobId eq 1}"> <!-- 모임장만 삭제버튼보이게하기 -->
-        <div class="margin-10 margin-top-50">
-          <button type="button" class="btn btn-primary"
-                  data-bs-toggle="modal" data-bs-target="#removeModal">삭제
-          </button>
-        </div>
-      </c:if>
+    </div>
 
-      <div class="margin-top-78 margin-left-223">
-        <div>현재 가입 인원수: ${currentMemberCount}명 / 정원수: ${moimData.moimLimit}명</div>
+    <!-- 상세 정보 -->
+    <div class="header-info-detail">
+      <div class="header-info__column">
+					<span class="header-info-title">
+            ${moimData.moimTitle}
+          </span>
+      </div>
+      <div class="header-info__column">
+        <div class="icon__location">${moimData.locationName}</div>
+        <span>${categoryName}</span>
+        <span>현재 ${currentMemberCount} / 정원 ${moimData.moimLimit}</span>
         <c:if test="${not empty over}">
-          <div>현재 정원이 마감된 모임입니다.</div>
+          <span class="moim-limit-msg">현재 정원이 마감된 모임입니다.</span>
         </c:if>
       </div>
+    </div>
+
+    <div class="header-info-btn">
+      <div class="headerinfo-btn__flex">
+        <div>
+          <c:choose>
+            <c:when test="${bookmarkcheck eq 1 }">
+                <button type="button" class="btn--icon btn--icon--big" onclick="bookmarkDelete(${moimData.moimId},'${sessionScope.loginData.memberId}')"><i class="fa-solid fa-heart"></i></button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn--icon btn--icon--big" onclick="bookmarkAdd(${moimData.moimId},'${sessionScope.loginData.memberId}')" ><i class="fa-regular fa-heart"></i></button>
+            </c:otherwise>
+          </c:choose>
+        </div>
+      <c:if test="${empty res && currentMemberCount < moimData.moimLimit}">
+          <button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
+      </c:if>
     </div>
   </div>
 </header>
 <!--헤더 밑에 전부 메인박스-->
-
-<main class="mainbox p-30">
-  <!--네비게이션바-->
-  <div>
-    <nav
-            class="navbar navbar-expand-lg navbar-light"
-            style="background-color: #eff1f3"
-    >
-      <div class="container-fluid">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" onclick="location.href='/somoim/moim/meeting?id=${moimData.moimId}'">모임</a>
-          </li>
-          <li class="nav-item" onclick="location.href='/somoim/moim/board?id=${moimData.moimId}'">
-            <a class="nav-link">게시판</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">사진첩</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">채팅</a>
-          </li>
-        </ul>
-      </div>
+<main class="main">
+  <!-- 작성글 섹션 -->
+  <section class="col-8">
+    <nav class="section__nav">
+      <ul id="navList" class="nav__list">
+        <li class="nav__btn nav__selected" onclick="location.href='/somoim/moim/meeting?id=${moimData.moimId}'">
+          정모
+        </li>
+        <li class="nav__btn" onclick="location.href='/somoim/moim/board?id=${moimData.moimId}'">
+          게시판
+        </li>
+      </ul>
     </nav>
-  </div>
-  <!--모임정보,모임게시판,모임멤버,버튼, 페이지 전체박스-->
-  <section class="flex-box pt-3 px-0 p-3">
-    <div class="col-md-3 bc-wh shadow-sm">
-      <!-- 모임정보박스 -->
-      <div class="margin-10 p-15">
-        <div class="center p-6 bc-wg">모임정보</div>
-      </div>
-      <!-- 모임장정보 -->
-      <c:if test="${not empty moimParticipants}">
-        <c:forEach items="${moimParticipants}" var="moimParticipants">
-          <c:if test="${moimParticipants.jobId eq 1}">
-            <div class="margin-10">
-              <div class="space-between margin-10">
-                <img
-                        src="${moimParticipants.memberImagePath}"
-                        class="rounded-circle"
-                        alt="profile-image"
-                        width="100"
-                        height="100"
-                        border-radius="50%"
-                />
-                <div>${moimParticipants.jobName}</div>
-                <div>${moimParticipants.memberName}</div>
-              </div>
-            </div>
-          </c:if>
-        </c:forEach>
-      </c:if>
-      <!-- 모임인포 -->
-      <div
-              class="p-4 rounded-3 shadow-sm bg-white scroll"
-              style="height: 640px; overflow-y: scroll"
-      >
-        <div class="margin-10">
-          <div class="center p-6">
-            ${moimData.moimInfo}
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--정모게시판 박스-->
-    <div class="col-md-6 bc-wh shadow-sm p-15">
-      <div class="center margin-10 p-6 bc-wg">정모</div>
-
-      <!--정모모임 반복출력-->
+    <div class="main-box">
       <c:if test="${not empty meetingsData}">
         <c:forEach items="${meetingsData}" var="meetingsData" varStatus="status">
-          <div class="p-15">
-            <div class="flex-box space-between">
-              <div class="bc-wh shadow-sm date-bs p-6 psi-r">
-                <div class="psi-a top-20 left-24 font_s_10">${meetingsData.dayOfW}</div>
-                <div class="psi-a top-40 left-28 font-s-30">${meetingsData.day}</div>
+          <div class="main-box__meeting">
+            <div class="meeting-date-box">
+              <div class="meeting-date">
+                <div class="meeting-day">${meetingsData.day}</div>
+                <div class="meeting-dow"><div>${meetingsData.dayOfW}</div></div>
               </div>
-              <div class="info-box-mb">
-
-                <div><span class="material-icons"
-                           style="font-size:14px; color: gray;">favorite</span>&nbsp;&nbsp;${meetingsData.meetingTitle}
-                </div>
-                <div><span class="material-icons"
-                           style="font-size:14px; color: gray;">date_range</span>&nbsp;&nbsp;${meetingsData.month}.${meetingsData.day} ${meetingsData.meetingTime}
-                </div>
-                <div><span class="material-icons"
-                           style="font-size:14px; color: gray;">room</span>&nbsp;&nbsp;${meetingsData.meetingPlace}
-                </div>
-                <div><span class="material-icons"
-                           style="font-size:14px; color: gray;">money</span>&nbsp;&nbsp;${meetingsData.meetingPrice}
-                </div>
-                <div><span class="material-icons"
-                           style="font-size:14px; color: gray;">groups</span>&nbsp;&nbsp;${meetingsData.meetingLimit}
-                </div>
-                <span id="${meetingsData.meetingId}"></span>
+              <div class="meeting-part-btn">
+                <c:if test="${not empty meetingParticipants}">
+                  <c:set var="partChk" value="false" />
+                  <c:forEach items="${meetingParticipants}" var="meetingParticipants">
+                    <c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId && meetingParticipants.memberId eq sessionScope.loginData.memberId}">
+                      <button type="button" class="btn--round btn--w100p btn--purple" onclick="meetingPart('${sessionScope.loginData.memberId}', ${param.id}, ${meetingsData.meetingId});">취소</button>
+                      <c:set var="partChk" value="true" />
+                    </c:if>
+                  </c:forEach>
+                </c:if>
+                <c:if test="${not partChk}">
+                  <button type="button" class="btn--round btn--w100p btn--purple" onclick="meetingPart('${sessionScope.loginData.memberId}', ${param.id}, ${meetingsData.meetingId});">참가하기</button>
+                </c:if>
               </div>
-              <!--정모모임1 가입멤버 아코디언박스-->
-              <div class="moim-colecter">
-                <div class="accordion-item width">
-                  <h2 class="accordion-header" id="heading${status.count}">
-                    <button class="accordion-button" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapse${status.count}"
-                            aria-expanded="true" aria-controls="collapse${status.count}">
-                      정모 멤버
-                    </button>
-                  </h2>
-                  <div id="collapse${status.count}" class="accordion-collapse collapse"
-                       aria-labelledby="heading${status.count}">
-                    <!--스크롤박스-->
-                    <div class="p-4 rounded-3 shadow-sm bg-white scroll"
-                         style="height: 200px; overflow-y: scroll">
+            </div>
+            <div class="meeting-info-box">
+              <div class="meeting-info">
+                <div>
+                  <div class="meeting-info__icon"><i class="fa-solid fa-heart"></i></div>
+                  <span>${meetingsData.meetingTitle}</span>
+                </div>
+                <div>
+                  <div class="meeting-info__icon"><i class="fa-solid fa-clock"></i></div>
+                  <span>${meetingsData.month}.${meetingsData.day} ${meetingsData.meetingTime}</span>
+                </div>
+                <div>
+                  <div class="meeting-info__icon"><i class="fa-solid fa-location-dot"></i></div>
+                  <span>${meetingsData.meetingPlace}</span>
+                </div>
+                <div>
+                  <div class="meeting-info__icon"><i class="fa-solid fa-money-check-dollar"></i></div>
+                  <span>${meetingsData.meetingPrice}원</span>
+                </div>
+                <div>
+                  <div class="meeting-info__icon"><i class="fa-solid fa-user"></i></div>
+                  <span>정원 ${meetingsData.meetingLimit}명</span>
+                  <div class="dropdown__meeting">
+                    <div id="dropdownBtn" class="dropdown-btn">
+                      <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                    <div id="dropdownContent" class="hidden dropdown-content scroll scroll-h85">
                       <c:if test="${not empty meetingParticipants}">
                         <c:forEach items="${meetingParticipants}" var="meetingParticipants">
                           <c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId}">
-                            <div class="accordion-body">
-                              <div class="flex-box margin-bottom-20">
-                                <img src="${img}/profile-image.png" class="rounded-circle"
-                                     alt="profile-image" width="40"/>
-                                <div class="center margin-left-10">${meetingParticipants.memberName}</div>
-                              </div>
+                            <div class="meeting-part">
+                                <img src="${meetingParticipants.memberImagePath}" class="icon--circle icon--circle--small"/>
+                                <div>${meetingParticipants.memberName}</div>
                             </div>
                           </c:if>
                         </c:forEach>
@@ -439,87 +366,140 @@
                     </div>
                   </div>
                 </div>
-                <c:if test="${not empty meetingParticipants}">
-                <c:set var="partChk" value="false" />
-                <c:forEach items="${meetingParticipants}" var="meetingParticipants">
-                  <c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId && meetingParticipants.memberId eq sessionScope.loginData.memberId}">
-                    <button type="button" onclick="meetingPart('${sessionScope.loginData.memberId}', ${param.id}, ${meetingsData.meetingId});">취소</button>
-                    <c:set var="partChk" value="true" />
+                <span id="${meetingsData.meetingId}"></span>
+              </div>
+              <div class="meeting-info-btn">
+                  <c:if test="${res.jobId eq 1 || res.jobId eq 2}">
+                    <button type="button" class="btn--icon" onclick="popModMeeting(${meetingsData.meetingId}, ${param.id});"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn--icon" onclick="removeMeeting('${param.id}', ${meetingsData.meetingId});"><i class="fa-solid fa-x"></i></button>
                   </c:if>
-                </c:forEach>
-                </c:if>
-                    <c:if test="${not partChk}">
-                    <button type="button" onclick="meetingPart('${sessionScope.loginData.memberId}', ${param.id}, ${meetingsData.meetingId});">참가</button>
-                    </c:if>
-                <c:if test="${res.jobId eq 1 || res.jobId eq 2}">
-                  <button type="button" onclick="popModMeeting(${meetingsData.meetingId}, ${param.id});">수정</button>
-                  <button type="button" onclick="removeMeeting('${param.id}', ${meetingsData.meetingId});">삭제</button>
-                </c:if>
               </div>
             </div>
           </div>
-          <hr class="container-1"/>
         </c:forEach>
       </c:if>
-      <!--개설버튼-->
-      <div class="p-15">
-        <div id="addMeeting" class="flex-box space-between" onclick="popAddMeeting(${param.id});">
-          <div class="bc-wh shadow-sm date-bs psi-r">
-            <i class="bi bi-plus-lg font-s-50 psi-a left-24 top-20"></i>
-          </div>
+      <c:if test="${res.jobId eq 1 || res.jobId eq 2}">
+        <div class="meeting-btn">
+          <button type="button" class="btn--round btn--w100p btn--purple" onclick="popAddMeeting(${param.id});">
+            <i class="fa-solid fa-plus"></i> 정모 만들기
+          </button>
+        </div>
+      </c:if>
+    </div>
+  </section>
+  <section class="col-3">
+    <!-- 모임 정보 -->
+    <div class="side-box">
+      <div class="side-box-title">
+        <span>모임 정보</span>
+        <div>
+          <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
+            <button type="button" class="btn--letter"
+                    onclick="location.href='/somoim/moim/modify?id=${moimData.moimId}&test=1'">편집
+            </button>
+          </c:if>
+          <c:if test="${res.jobId eq 1}"> <!-- 모임장만 삭제버튼보이게하기 -->
+            <button type="button" class="btn--letter"
+                    data-bs-toggle="modal" data-bs-target="#removeModal">삭제
+            </button>
+          </c:if>
         </div>
       </div>
-      <hr class="container-1"/>
-    </div>
-
-    <!--모임멤버박스-->
-    <div class="col-md-3 bc-wh shadow-sm p-15">
-      <div class="center margin-10 p-6 bc-wg">모임멤버</div>
-      <!--스크롤박스-->
-      <div
-              class="p-4 rounded-3 shadow-sm bg-white scroll"
-              style="height: 770px; overflow-y: scroll"
-      >
-        <c:if test="${not empty moimParticipants}">
-          <c:forEach items="${moimParticipants}" var="moimParticipants">
-            <div class="partList space-between margin-10 bottom-10">
-              <img
-                      src="${moimParticipants.memberImagePath}"
-                      class="rounded-circle"
-                      alt="profile-image"
-                      width="70"
-                      height="70"
-                      border-radius="50%"
-              />
-              <div>${moimParticipants.jobName}</div>
-              <div>${moimParticipants.memberName}</div>
-              <div id="${moimParticipants.memberId}" style="display: none"></div>
-            </div>
-          </c:forEach>
-          <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
-            <div class="margin-10">
-              <button type="button" class="btn btn-primary" onclick="popModJob(${moimData.moimId});">편집</button>
+      <c:if test="${not empty moimParticipants}">
+        <c:forEach items="${moimParticipants}" var="moimParticipants">
+          <c:if test="${moimParticipants.jobId eq 1}">
+            <div class="moim-member-info">
+              <div class="moim-member__img">
+                <img
+                    src="${moimParticipants.memberImagePath}"
+                    class="icon--circle icon--circle__member"
+                />
+              </div>
+              <div class="moim-member-detail">
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.jobName}</span>
+                </div>
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.memberName}</span>
+                  <span class="icon__location icon__location--small">
+                      ${moimParticipants.locationName}
+                  </span>
+                </div>
+              </div>
             </div>
           </c:if>
-        </c:if>
+        </c:forEach>
+      </c:if>
+      <span class="moim-info__span">모임소개</span>
+      <div class="moim-info">
+        ${moimData.moimInfo}
       </div>
     </div>
-    <div class="modal fade" id="removeModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            정말로 모임을 삭제하시겠습니까?
-          </div>
-          <div class="modal-footer">
-            <button type="button" data-bs-dismiss="modal" onclick="location.href='remove?id=${param.id}'">확인</button>
-            <button type="button" data-bs-dismiss="modal" aria-label="Close">취소</button>
-          </div>
-        </div>
+    <!-- 모임장정보 -->
+
+    <!-- 모임 멤버 -->
+    <div class="side-box">
+      <div class="side-box-title">
+        <span>모임 멤버</span>
+        <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
+            <button type="button" class="btn--letter" onclick="popModJob(${moimData.moimId});">편집</button>
+        </c:if>
+      </div>
+      <div class="side-box-main scroll scroll-h340">
+        <c:if test="${not empty moimParticipants}">
+          <c:forEach items="${moimParticipants}" var="moimParticipants">
+            <div class="moim-member-info">
+              <div class="moim-member__img">
+                <img
+                    src="${moimParticipants.memberImagePath}"
+                    class="icon--circle icon--circle__member"
+                />
+              </div>
+              <div class="moim-member-detail">
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.jobName}</span>
+                </div>
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.memberName}</span>
+                  <span class="icon__location icon__location--small">
+                      ${moimParticipants.locationName}
+                  </span>
+                </div>
+              </div>
+              <div id="${moimParticipants.memberId}" class="hidden"></div>
+            </div>
+          </c:forEach>
+        </c:if>
       </div>
     </div>
   </section>
 </main>
-
+<div class="modal fade" id="removeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        정말로 모임을 삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-bs-dismiss="modal" onclick="location.href='remove?id=${param.id}'">확인</button>
+        <button type="button" data-bs-dismiss="modal" aria-label="Close">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    const navList = document.querySelectorAll('#navList li');
+    navList.forEach( (list) => {
+        list.addEventListener('mouseover', () => {  //  mouseover 시 hover 클래스 추가
+            list.classList.add('nav__hover');
+        });
+    });
+    navList.forEach( (list) => {
+        list.addEventListener('mouseout', () => {   //  mouseout 시 hover 클래스 삭제
+            list.classList.remove('nav__hover');
+        });
+    });
+</script>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

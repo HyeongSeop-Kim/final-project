@@ -13,11 +13,22 @@
     font-size: 4rem;
 }
 
+.icon--circle__member {
+    width: 6rem;
+    height: 6rem;
+}
+
+.icon--circle--small {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 0.5rem;
+}
+
 .icon--circle__cate:nth-child(2n) {
     background-color: #707070;
 }
 
-.icon__locaion {
+.icon__location {
     display: flex;
     width: 5.2rem;
     height: 3.4rem;
@@ -30,7 +41,7 @@
     align-items: center;
 }
 
-.icon__locaion--small {
+.icon__location--small {
     width: 4.2rem;
     height: 2.8rem;
     border-radius: 2.1rem;

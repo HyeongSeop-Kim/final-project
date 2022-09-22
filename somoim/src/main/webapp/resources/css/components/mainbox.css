@@ -1,0 +1,29 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    width: 144rem;
+    margin: 8.3rem auto 0 auto;
+}
+
+.main-box__board, .main-box__comment {
+    border: 1px solid var(--border-line__grey);
+    border-radius: 1rem;
+    background-color: #f7f7f7;
+    padding: 3rem;
+    margin-bottom: 2.4rem;
+}
+
+.main-box__board:hover,
+.main-box__comment:hover{
+    filter: brightness(80%);
+}
+
+.main-box__meeting {
+    display: flex;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border-line__grey);
+}
+
+.main-box__meeting:first-of-type {
+    border: none;
+}

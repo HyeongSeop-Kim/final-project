@@ -32,7 +32,8 @@ public class CategorysService extends AbstractService<List<CategorysDTO>, Catego
 
 	@Override
 	public CategorysDTO getData(int id) {
-		return null;
+		CategorysDTO data = dao.selectData(id);
+		return data;
 	}
 
 	@Override

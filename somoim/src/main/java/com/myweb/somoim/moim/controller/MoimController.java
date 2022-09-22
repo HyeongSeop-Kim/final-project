@@ -334,6 +334,9 @@ public class MoimController {
 		data.setMoimId(id);
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
 
+		CategorysDTO categorysDTO = categoryService.getData(moimData.getCategoryId());  // 카테고리 정보
+		String categoryName = categorysDTO.getCategoryName();
+
 		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id); //현재 정원확인
 
 		for(MeetingsDTO a : meetingsData){
@@ -352,6 +355,7 @@ public class MoimController {
 
 		model.addAttribute("res" , res); //로그인한 유저가 참가자인지 확인
 		model.addAttribute("moimData" , moimData);
+		model.addAttribute("categoryName" , categoryName);
 		model.addAttribute("meetingsData",meetingsData);
 		model.addAttribute("moimParticipants",moimParticipants);
 		model.addAttribute("meetingParticipants", meetingParticipants);

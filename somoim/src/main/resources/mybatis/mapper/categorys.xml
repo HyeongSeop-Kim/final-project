@@ -8,5 +8,11 @@
 	 		 ,CATEGORY_NAME AS categoryName
 			 FROM CATEGORYS
 	</select>
+	<select id="selectData" resultType="categoryDto">
+		SELECT CATEGORY_ID AS categoryId
+			 ,CATEGORY_NAME AS categoryName
+		FROM CATEGORYS
+		WHERE CATEGORY_ID = #{id}
+	</select>
 </mapper>
 

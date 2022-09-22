@@ -20,41 +20,41 @@
 <body>
 	<div class="logo">Somoim.</div>
   <!-- 유저정보 -->
-	<header class="info-header">
+	<header class="header">
 		<!-- info image -->
-		<div class="info-img">
-			<img id="infoImg" class="info-img__img" src="${sessionScope.loginData.infoImagePath}" accept="image/*">
+		<div class="header-img">
+			<img id="infoImg" class="header-img__img" src="${sessionScope.loginData.infoImagePath}" accept="image/*">
 			<input id="infoImgSelect" class="hidden" type="file" name="uploadImg" value="이미지 선택">
 		</div>
 		<!-- 프로필 -->
-		<div class="info-prof-box">
+		<div class="header-info-box">
 			<!-- 프로필 이미지 -->
-			<div class="info-prof-img">
-				<img id="profImg" class="info-prof-img__img icon--circle"  src="${sessionScope.loginData.memberImagePath}" accept="image/*">
+			<div class="header-info-img">
+				<img id="profImg" class="header-info-img__img icon--circle"  src="${sessionScope.loginData.memberImagePath}" accept="image/*">
 				<input id="profImgInput" class="hidden" type="file" name="uploadImg" value="이미지 선택">
 			</div>
 
 			<!-- 이름, 생년월일, 거주지역 -->
-			<div class="info-prof-detail">
-				<div class="info-prof__column">
-					<span class="info-prof-name">
+			<div class="header-info-detail">
+				<div class="header-info__column">
+					<span class="header-info-title">
 						${sessionScope.loginData.memberName}
 					</span>
 				</div>
-				<div class="info-prof__column">
-					<div class="icon__locaion">${sessionScope.loginData.locationName}</div>
+				<div class="header-info__column">
+					<div class="icon__location">${sessionScope.loginData.locationName}</div>
 					<span class="material-icons">date_range</span>
 					<span>${sessionScope.loginData.birth}</span>
 				</div>
 			</div>
 
-			<div class="info-prof-modify">
+			<div class="header-info-btn">
 				<button type="button" class="btn--round btn--w216 btn--purple" onclick="popModProfile();"><i class="fa-solid fa-pen"></i>프로필 편집</button>
 			</div>
 		</div>
 	</header>
 
-	<main class="info-main">
+	<main class="main">
 		<!-- 작성글 섹션 -->
 		<section class="col-8">
 			<nav class="section__nav">
@@ -67,10 +67,10 @@
 					</li>
 				</ul>
 			</nav>
-			<div id="infoBoard" class="info-main-box">
+			<div id="infoBoard" class="main-box">
 				<c:if test="${not empty boardDatas}">
 					<c:forEach items="${boardDatas}" var="boardData">
-						<div class="info-main-box__board" onclick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
+						<div class="main-box__board" onclick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
 							<div class="info-board-moim-title">
 								<c:forEach items="${moimDatas}" var="moimData">
 									<c:if test="${moimData.moimId eq boardData.moimId}">
@@ -94,10 +94,10 @@
 					</c:forEach>
 				</c:if>
 			</div>
-			<div id="infoComment" class="info-main-box hidden">
+			<div id="infoComment" class="main-box hidden">
 				<c:if test="${not empty commentsDatas}">
 					<c:forEach items="${commentsDatas}" var="commentsData">
-				<div class="info-main-box__comment">
+				<div class="main-box__comment">
 					<div class="info-comment">
 						<span class="info-comment-content content-hidden">${commentsData.content}</span>
 						<span class="info-comment-date">${commentsData.contentCreateDate}</span>
@@ -155,7 +155,7 @@
 											<span class="side-box-moim-part">1/${moimData.moimLimit}</span>
 										</div>
 										<div class="side-box-list__low-column">
-											<span class="icon__locaion icon__locaion--small">${moimData.locationName}</span>
+											<span class="icon__location icon__location--small">${moimData.locationName}</span>
 										</div>
 									</div>
 								</div>
@@ -168,10 +168,6 @@
 	</main>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  	
-  	
-	<script type="text/javascript">
-	</script>
 	<script src="${path}/resources/js/components/navigation.js"></script>
 	<script src="${path}/resources/js/category.js"></script>
 	<script src="${path}/resources/js/info.js"></script>
