@@ -70,7 +70,7 @@
 			<div id="infoBoard" class="main-box">
 				<c:if test="${not empty boardDatas}">
 					<c:forEach items="${boardDatas}" var="boardData">
-						<div class="main-box__board" onclick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
+						<div class="main-box__info-board" onclick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
 							<div class="info-board-moim-title">
 								<c:forEach items="${moimDatas}" var="moimData">
 									<c:if test="${moimData.moimId eq boardData.moimId}">
@@ -97,7 +97,7 @@
 			<div id="infoComment" class="main-box hidden">
 				<c:if test="${not empty commentsDatas}">
 					<c:forEach items="${commentsDatas}" var="commentsData">
-				<div class="main-box__comment">
+				<div class="main-box__info-comment">
 					<div class="info-comment">
 						<span class="info-comment-content content-hidden">${commentsData.content}</span>
 						<span class="info-comment-date">${commentsData.contentCreateDate}</span>

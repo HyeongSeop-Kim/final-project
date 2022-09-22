@@ -426,6 +426,7 @@
                   </span>
                 </div>
               </div>
+              <div id="${moimParticipants.memberId}" class="hidden"></div>
             </div>
           </c:if>
         </c:forEach>

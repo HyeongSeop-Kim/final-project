@@ -68,13 +68,14 @@
     font-weight: 700;
 }
 
-.header-info__column:last-child span {
+.header-info__column:last-child>span {
     display: block;
     color: #666666;
     font-size: 2.4rem;
     font-weight: 400;
     margin-left: 2rem;
 }
+
 .header-info__column .material-icons {
     margin-left: 2rem;
     margin-right: 0.5rem;
@@ -100,4 +101,8 @@
 }
 .headerinfo-btn__flex button:last-child {
     margin-left: 2.5rem;
+}
+
+.moim-limit {
+    color: black;
 }

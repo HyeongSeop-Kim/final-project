@@ -23,14 +23,15 @@
 .btn--w216 {
     width: 21.6rem;
 }
+
 .btn--letter {
     border: none;
     font-size: 1.5rem;
-    color: #666666;
+    color: #999999;
     background-color: transparent;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid #666666;
 }
+
 .btn--w100p {
     width: 100%;
 }
@@ -45,7 +46,6 @@
     color: var(--purple);
     font-size: 4.8rem;
 }
-
 
 .btn--purple {
     background-color: var(--purple);

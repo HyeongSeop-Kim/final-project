@@ -5,7 +5,7 @@
     margin: 8.3rem auto 0 auto;
 }
 
-.main-box__board, .main-box__comment {
+.main-box__info-board, .main-box__info-comment {
     border: 1px solid var(--border-line__grey);
     border-radius: 1rem;
     background-color: #f7f7f7;
@@ -13,8 +13,8 @@
     margin-bottom: 2.4rem;
 }
 
-.main-box__board:hover,
-.main-box__comment:hover{
+.main-box__info-board:hover,
+.main-box__info-comment:hover{
     filter: brightness(80%);
 }
 
@@ -26,4 +26,11 @@
 
 .main-box__meeting:first-of-type {
     border: none;
+}
+
+.main-box__board {
+    border: 1px solid var(--border-line__grey);
+    border-radius: 1rem;
+    padding: 3rem;
+    margin-bottom: 2.4rem;
 }

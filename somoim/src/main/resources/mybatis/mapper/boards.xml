@@ -14,6 +14,7 @@ SELECT B.BOARD_ID AS boardId
              ,B.MEMBER_ID AS memberId
              ,M.MEMBER_NAME AS memberName
              ,S.JOB_NAME AS jobName
+             ,M.MEMBER_IMAGE_PATH AS memberImagePath
 FROM (SELECT *
       FROM MOIM_PARTICIPANTS P
       JOIN JOBS J 

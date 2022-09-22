@@ -417,6 +417,25 @@ public class MoimController {
 			            ,@RequestParam(defaultValue="1", required=false) int page
 			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
+		SomoimDTO moimData = somoimService.getData(id);//모임정보
+		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+
+		MoimParticipantsDTO part = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
+		part.setMemberId(membersDto.getMemberId());
+		part.setMoimId(id);
+
+		MoimParticipantsDTO res = moimParticipantsService.getData(part);
+
+		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);  //현재 정원확인
+		if(currentMemberCount >= moimData.getMoimLimit() ) { //정원수 초과할경우 정원마감모임이라고 알려주기
+			model.addAttribute("over" , "초과");
+		}
+
+		int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
+		if(bookmarkcheck == 1 ) {
+			model.addAttribute("bookmarkcheck" , bookmarkcheck);
+		}
+
 		BoardsDTO boardDto = new BoardsDTO(); //board가져오기
 		boardDto.setBoardId(boardId);
 		boardDto.setMoimId(id);
@@ -433,11 +452,12 @@ public class MoimController {
 		PagingDTO paging = new PagingDTO (datas,page,pageCount);
 
 
-
-
-
 		model.addAttribute("data",data);//boardId로 정보받아오기
 		model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
+		model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
+		model.addAttribute("moimData" , moimData); //모임정보
+		model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
+		model.addAttribute("currentMemberCount", currentMemberCount); //현재정원수
 
 
 		return "moim/boarddetail";

@@ -19,6 +19,7 @@
 .nav__hover {
     color: var(--purple);
     border-bottom: 2px solid var(--purple);
+    cursor: pointer;
 }
 
 .nav__selected {
