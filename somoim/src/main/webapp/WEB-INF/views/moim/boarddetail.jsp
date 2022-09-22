@@ -27,7 +27,163 @@
 </head>
 
   <script type="text/javascript">
+		window.onload = function () {
+			previewImage.addEventListener("click", function (e) {
+				moimImageSelect.click();
+			});
 
+			moimImageSelect.addEventListener("change", ajaxImageUpload);
+
+		}
+
+		function ajaxImageUpload(e) {
+
+			var file = e.target.files[0];
+			var fData = new FormData(); //파일객체정보를 만들어서 추가해서 보내줄필요가잇음
+			fData.append("moimimage", file, file.name);
+			fData.append("id", "${moimData.moimId}"); // enctype="multipart/form-data" 형식으로 할떄는 FormData에 데이터 다 넣어줘야함!
+			$.ajax({      //Ajax사용시 jquery필요
+				type: "post",
+				enctype: "multipart/form-data",
+				url: "/somoim/moim/imageUpload",
+				data: fData,
+				dataType: "json",
+				processData: false, //Ajax로 파일업로드시 필요
+				contentType: false, //Ajax로 파일업로드시 필요
+				success: function (data, status) {
+					previewImage.src = data.url; //Ajax를통해 알아온경로로 너의src속성을바꿔라
+
+				}
+			});
+
+		}
+	</script>
+<script type="text/javascript">
+
+
+	function joinCheck(moimId){
+		$.ajax({
+			url: "/somoim/moim/join",
+			type: "get",
+			data: {
+				id:moimId
+			},
+			dataType: "json",
+			success: function(data){
+				if(data.code === "alreadyJoinMember"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "over"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "success"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "joinCountover"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+
+				}
+			}
+		})
+	}
+
+</script>
+
+<script type="text/javascript">
+
+
+	function leaveCheck(moimId){
+		$.ajax({
+			url: "/somoim/moim/leave",
+			type: "get",
+			data: {
+				id:moimId
+			},
+			dataType: "json",
+			success: function(data){
+				if(data.code === "bossMember"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "success"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "alreadyleaveMember"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+
+				}
+			}
+		})
+	}
+
+</script>
+
+<script type="text/javascript">
+
+
+	function bookmarkAdd(moimId,memberId){  //북마크추가
+		$.ajax({
+			url: "/somoim/moim/bookmarkAdd",
+			type: "get",
+			data: {
+				id:moimId,
+				memberId:memberId
+			},
+			dataType: "json",
+			success: function(data){
+				if(data.code === "bookmarkover"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "alreadybookmark"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "bookmarked"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "error"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}
+			}
+		})
+	}
+
+</script>
+
+<script type="text/javascript">
+
+
+	function bookmarkDelete(moimId,memberId){ //북마크 삭제
+		$.ajax({
+			url: "/somoim/moim/bookmarkDelete",
+			type: "get",
+			data: {
+				id:moimId,
+				memberId:memberId
+			},
+			dataType: "json",
+			success: function(data){
+				if(data.code === "deletebookmark"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "alreadybookmarkdelete"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "nodetabookmark"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}else if(data.code === "error"){
+					alert(data.message);
+					location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+				}
+			}
+		})
+	}
+
+</script>
+
+<script>
    
   function deleteBoard(boardId){
 	  	$.ajax({
@@ -239,9 +395,8 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-							<div class="mb-1 border-bottom border-2 border-secondary">
-								<p>${data.content}</p>
 		</div>
+
 
 		<!-- 상세 정보 -->
 		<div class="header-info-detail">
@@ -272,11 +427,17 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<c:if test="${empty res && currentMemberCount < moimData.moimLimit}">
-					<button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
-				</c:if>
+				<c:choose>
+					<c:when test="${empty res && currentMemberCount < moimData.moimLimit}">
+						<button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
+					</c:when>
+					<c:when test="${currentMemberCount <= moimData.moimLimit}">
+						<button type="button" class="btn--round btn--purple btn--w216" onclick="leaveCheck(${moimData.moimId})">탈퇴하기</button>
+					</c:when>
+				</c:choose>
 			</div>
 		</div>
+	</div>
 	</div>
 </header>
 

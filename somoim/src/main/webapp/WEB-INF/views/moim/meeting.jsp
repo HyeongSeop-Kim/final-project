@@ -316,23 +316,14 @@
         </div>
         <c:choose>
           <c:when test="${empty res && currentMemberCount < moimData.moimLimit}">
-          <button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
+            <button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
           </c:when>
-          <c:when test="${currentMemberCount < moimData.moimLimit}">
+          <c:when test="${currentMemberCount <= moimData.moimLimit}">
             <button type="button" class="btn--round btn--purple btn--w216" onclick="leaveCheck(${moimData.moimId})">탈퇴하기</button>
           </c:when>
         </c:choose>
-
-            <div class="margin-10 margin-top-50">
-              <button type="button" class="btn btn-primary" onclick="joinCheck(${moimData.moimId})" >가입</button>
-            </div>
-
-
-            <div class="margin-10 margin-top-50">
-              <button type="button" class="btn btn-primary" onclick="leaveCheck(${moimData.moimId})" >탈퇴</button>
-            </div>
-
     </div>
+  </div>
   </div>
 </header>
 <!--헤더 밑에 전부 메인박스-->
