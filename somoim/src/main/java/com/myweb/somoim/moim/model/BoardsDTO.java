@@ -13,6 +13,15 @@ public class BoardsDTO {
 	private String memberName; //추가
 	private String jobName; //추가
 	private String moimTitle;
+	private String memberImagePath;
+
+	public String getMemberImagePath() {
+		return memberImagePath;
+	}
+
+	public void setMemberImagePath(String memberImagePath) {
+		this.memberImagePath = memberImagePath;
+	}
 
 	public Date getBoardCreateDate() {
 		return boardCreateDate;

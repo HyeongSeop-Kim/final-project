@@ -1,52 +1,56 @@
-// 유효성 검사 : 생년월일 월
-const meetingMonthEl = document.querySelector('#meetingMonth')
+// 유효성 검사 : 월
+const meetingMonthEl = document.querySelector('#meetingMonth');
+// 유효성 검사 : 일
+const meetingDayEl = document.querySelector('#meetingDay');
 // option 목록 생성 여부 확인
-isMonthOptionExisted = false;
-meetingMonthEl.addEventListener('focus', function () {
-    // month 목록 생성되지 않았을 때 (최초 클릭 시)
-    if(!isMonthOptionExisted) {
-        isMonthOptionExisted = true
-        for(var i = 1; i <= 12; i++) {
-            // option element 생성
-            const MonthOption = document.createElement('option')
-            MonthOption.setAttribute('value', i)
-            MonthOption.innerText = i
-            // meetingmonthEl의 자식 요소로 추가
-            this.appendChild(MonthOption);
+// isMonthOptionExisted = false;
+// meetingMonthEl.addEventListener('DOMContentLoaded', function () {
+//     // month 목록 생성되지 않았을 때 (최초 클릭 시)
+//     if(!isMonthOptionExisted) {
+//         isMonthOptionExisted = true
+//         for(var i = 1; i <= 12; i++) {
+//             // option element 생성
+//             const MonthOption = document.createElement('option')
+//             MonthOption.setAttribute('value', i)
+//             MonthOption.innerText = i
+//             if(meetingMonthEl.firstElementChild.value == i) {
+//                 MonthOption.selected = 'selected';
+//             }
+//             // meetingmonthEl의 자식 요소로 추가
+//             this.appendChild(MonthOption);
+//         }
+//     }
+// });
+$(document).ready( ()=> {
+    for (let i = 1; i <= 12; i++) {
+        $("<option>").text(i).appendTo($("#meetingMonth"));
+        $("#meetingMonth option:last-child").val(i);
+        if($("#meetingMonth option:first-child").attr('id') == i) {
+            $("#meetingMonth option:last-child").prop('selected', 'selected').change();
         }
     }
-});
-
-// 유효성 검사 : 생년월일 일
-const meetingDayEl = document.querySelector('#meetingDay')
-// option 목록 생성 여부 확인
-isDayOptionExisted = false;
-meetingDayEl.addEventListener('focus', function () {
-    // Day 목록 생성되지 않았을 때 (최초 클릭 시)
-    if(!isDayOptionExisted) {
-        isDayOptionExisted = true
-        for(var i = 1; i <= 31; i++) {
-            const DayOption = document.createElement('option')
-            DayOption.setAttribute('value', i)
-            DayOption.innerText = i
-            this.appendChild(DayOption);
+    for (let i = 1; i <= 31; i++) {
+        $("<option>").text(i).appendTo($("#meetingDay"));
+        $("#meetingDay option:last-child").val(i);
+        if($("#meetingDay option:first-child").attr('id') == i) {
+            $("#meetingDay option:last-child").prop('selected', 'selected').change();
         }
     }
 });
 
 //유효 날짜 여부 확인
 // [year, month, day]
-const meetingArr = [-1, -1, -1]
+const meetingArr = [-1, -1]
 const meetingErrorMsgEl =
     document.querySelector('#info__meeting .error-msg')
 
 meetingMonthEl.addEventListener('change', () => {
-    meetingArr[1] = meetingMonthEl.value
+    meetingArr[0] = meetingMonthEl.value
     checkMeetingValid(meetingArr)
 });
 
 meetingDayEl.addEventListener('change', () => {
-    meetingArr[2] = meetingDayEl.value
+    meetingArr[1] = meetingDayEl.value
     checkMeetingValid(meetingArr)
 });
 
@@ -58,8 +62,8 @@ function checkMeetingValid(meetingArr) {
         isMeetingValid = true
 
     y = date.getFullYear();
-    m = meetingArr[1]
-    d = meetingArr[2]
+    m = meetingArr[0]
+    d = meetingArr[1]
     // 생년월일 모두 선택 완료 시
     if(y > 0 && m > 0 && d > 0) {
         if ((m == 4 || m == 6 || m == 9 || m == 11) && d == 31) {
@@ -81,8 +85,9 @@ function checkMeetingValid(meetingArr) {
             meetingErrorMsgEl.textContent = ""
             account.meeting = meetingArr.join('')
         } else { // 유효하지 않은 날짜
-            meetingErrorMsgEl.textContent = errMsg.meeting
-            account.meeting = null
+            meetingDayEl[meetingDayEl.options.selectedIndex].selected = false;
+            meetingDayEl[0].selected = true;
+            alert('유효하지 않은 날짜 입니다.');
         }
     }
 };
@@ -113,7 +118,7 @@ function formCheck(form, moimId) {
         day.value;
     }
 
-    if (day.value.trim() === "") {
+    if (day.value.trim() === "" || day.value.trim() === "일") {
         alert("정모 날짜를 입력해주세요.")
         return false;
     }
@@ -151,4 +156,44 @@ function formCheck(form, moimId) {
             window.close();
         }, 2);
     }
+}
+
+function meetingPart(memberId, moimId, meetingId) {
+    let sendData = { 'memberId' : memberId
+        , 'moimId' : moimId
+        , 'meetingId' : meetingId};
+    $.ajax({
+        type: "post",
+        url: "/somoim/moim/ajax/meetingPart",
+        traditional: true,
+        contentType: "application/json",
+        data: JSON.stringify(sendData),
+        dataType: "json",
+        success: (msg) => {
+            alert(msg.msg);
+            location.reload();
+        },
+        error: () => {
+            alert("참가 신청 중 오류가 발생하였습니다.");
+        }
+    });
+}
+
+function removeMeeting(moimId, meetingId) {
+    let sendData = { 'meetingId' : meetingId};
+    $.ajax({
+        type: "post",
+        url: "/somoim/moim/ajax/removeMeeting",
+        traditional: true,
+        contentType: "application/json",
+        data: JSON.stringify(sendData),
+        dataType: "json",
+        success: (msg) => {
+            alert(msg.msg);
+            location.reload();
+        },
+        error: () => {
+            alert("정모 삭제 중 오류가 발생하였습니다.");
+        }
+    });
 }

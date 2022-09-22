@@ -16,6 +16,17 @@
            WHERE MOIM_ID = #{id} AND BOARD_ID = #{boardId}
            ORDER BY CONTENT_CREATE_DATE DESC
     </select>
+
+    <select id="selectWriteDatas" resultType="commentsDTO" >
+        SELECT BOARD_ID AS boardId
+             ,CONTENT AS content
+             ,CONTENT_CREATE_DATE AS contentCreateDate
+             ,MOIM_ID AS moimId
+             ,MEMBER_ID AS memberId
+        FROM BOARD_COMMENT
+        WHERE MEMBER_ID = #{id}
+        ORDER BY CONTENT_CREATE_DATE DESC
+    </select>
     
         <select id="selectData"  resultType="commentsDTO" >
     SELECT COMMENT_ID  AS commentId

@@ -35,7 +35,9 @@ public class CategorysDAO extends AbstractDAO<List<CategorysDTO>, CategorysDTO> 
 
 	@Override
 	public CategorysDTO selectData(int id) {
-		return null;
+		String mapperId = String.format(mapper, "selectData");
+		CategorysDTO data = session.selectOne(mapperId, id);
+		return data;
 	}
 
 	@Override

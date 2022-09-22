@@ -202,6 +202,7 @@
                 </c:if>
               </div>
               <div style="display: flex; flex-direction: column; align-items: center;">
+              	<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='/somoim/info/myInfo'" style="margin-bottom: 5px;">상세</button>
               	<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info/myInfo'" style="margin-bottom: 5px;">상세</button>
             	<c:if test="${empty sessionScope.loginData}">
             		<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='logout'" >로그아웃</button>
@@ -265,10 +266,10 @@
     <!-- // main -->
   </div>
   
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
- integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</script>
-<script type="text/javascript">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+  </script>
+  <script type="text/javascript">
   let main_page = 1;
   let category_id = 0;
 function get_moim_list(page) {

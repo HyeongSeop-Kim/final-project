@@ -188,7 +188,7 @@ function printCate(cateList) {
         let className = matchCate(id);
 
         const i = document.createElement('i');
-        const classList = className + 'icon-green service-sm-items'
+        const classList = className + 'icon--circle icon--circle__cate'
         i.setAttribute('class', classList);
 
         cate.insertBefore(i, cate.firstChild);

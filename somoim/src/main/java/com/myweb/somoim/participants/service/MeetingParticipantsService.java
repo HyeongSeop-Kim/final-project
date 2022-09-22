@@ -44,7 +44,8 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 
 	@Override
 	public MeetingParticipantsDTO getData(MeetingParticipantsDTO dto) {
-		return null;
+		MeetingParticipantsDTO data = dao.selectData(dto);
+		return data;
 	}
 
 	@Override
@@ -60,12 +61,22 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 
 	@Override
 	public boolean removeData(MeetingParticipantsDTO dto) {
-		return false;
+		boolean result = dao.deleteData(dto);
+		return result;
 	}
 
 	@Override
 	public boolean removeData(int id) {
-		boolean result = dao.deleteData(id);
+		return false;
+	}
+
+	public boolean removeDatas(int id) {
+		boolean result = dao.deleteDatas(id);
+		return result;
+	}
+
+	public boolean removeMeetingDatas(int id) {
+		boolean result = dao.deleteMeetingDatas(id);
 		return result;
 	}
 

@@ -24,6 +24,11 @@ public class CommentsDAO {
 		return datas;
 		
 	}
+	public List<CommentsDTO> selectDatas(String id) {
+		String mapperId = String.format(mapper, "selectWriteDatas");
+		List<CommentsDTO> datas = session.selectList(mapperId, id);
+		return datas;
+	}
 
 	
 

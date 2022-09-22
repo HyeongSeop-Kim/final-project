@@ -201,254 +201,183 @@
 
 
 
-
 <body>
 <c:url var="boardUrl" value="/moim/board/">
   <c:param name="id" value="${moimData.moimId}">모임 입니다.</c:param>
 </c:url>
-<!--이미지 사진박스-->
-<header class="p-6">
-  <c:url var="moimUpdateImageUrl" value="/moim/imageUpload?id=${moimData.moimId}"/>
+<div class="logo">Somoim.</div>
+<!-- 유저정보 -->
+<header class="header">
+  <!-- info image -->
   <form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
-    <div class="img-box img-box-size-1">
+    <div class="header-img">
       <img id="previewImage"
-           class="img-box-size-1 bora-20 shadow-sm width-100"
+           class="header-img__img"
            alt="이미지 선택"
-           src="${path}/resources/img/moim/${moimData.moimId}.png"
+           src="${moimData.moimImagePath}"
       />
-        <c:if test="${res.jobId eq 1}">
-      <input id="moimImageSelect"
-             class="ImgSelect"
-             type="file"
-             value="이미지 선택"
-             name="moimimage"
-             multiple
-
-      />
-         </c:if>
+      <c:if test="${res.jobId eq 1}">
+        <input id="moimImageSelect"
+               class="hidden"
+               type="file"
+               value="이미지 선택"
+               name="moimimage"
+               multiple
+        />
+      </c:if>
     </div>
   </form>
-  <div class="margin-bottom-20 flex-box margin-left-223">
-    <!--아이콘-->
-    <div class="psi-r">
-      <a
-              href="#"
-              class="category-box-120 icon-green psi-a bottom-10 left-24"
-      >
+
+  <!-- 소모임 정보 -->
+  <div class="header-info-box">
+    <!-- 관심사 아이콘-->
+    <div class="header-info-img">
+      <div class="header-info-img__cate icon--circle">
         <c:choose>
           <c:when test="${moimData.categoryId eq 1 }">
-            <i class="fa-solid fa-suitcase fa-3x"></i>
+            <i class="fa-solid fa-suitcase"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 2 }">
-            <i class="fa-solid fa-person-swimming fa-3x"></i>
+            <i class="fa-solid fa-person-swimming"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 3}">
-            <i class="fa-solid fa-book fa-3x"></i>
+            <i class="fa-solid fa-book"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 4}">
-            <i class="fa-solid fa-language fa-3x"></i>
+            <i class="fa-solid fa-language"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 5}">
-            <i class="fa-solid fa-masks-theater fa-3x"></i>
+            <i class="fa-solid fa-masks-theater"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 6}">
-            <i class="fa-solid fa-music fa-3x"></i>
+            <i class="fa-solid fa-music"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 7}">
-            <i class="fa-solid fa-palette fa-3x"></i>
+            <i class="fa-solid fa-palette"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 8}">
-            <i class="fa-solid fa-user-ninja fa-3x"></i>
+            <i class="fa-solid fa-user-ninja"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 9}">
-            <i class="fa-solid fa-hands fa-3x"></i>
+            <i class="fa-solid fa-hands"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 10}">
-            <i class="fa-solid fa-handshake-simple  fa-3x"></i>
+            <i class="fa-solid fa-handshake-simple"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 11}">
-            <i class="fa-solid fa-car fa-3x"></i>
+            <i class="fa-solid fa-car"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 12}">
-            <i class="fa-brands fa-youtube fa-3x"></i>
+            <i class="fa-brands fa-youtube"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 13}">
-            <i class="fa-solid fa-baseball-bat-ball fa-3x"></i>
+            <i class="fa-solid fa-baseball-bat-ball"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 14}">
-            <i class="fa-solid fa-gamepad fa-3x"></i>
+            <i class="fa-solid fa-gamepad"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 15}">
-            <i class="fa-solid fa-utensils fa-3x"></i>
+            <i class="fa-solid fa-utensils"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 16}">
-            <i class="fa-solid fa-dog fa-3x"></i>
+            <i class="fa-solid fa-dog"></i>
           </c:when>
           <c:when test="${moimData.categoryId eq 17}">
-            <i class="fa-solid fa-hand-holding-heart fa-3x"></i>
+            <i class="fa-solid fa-hand-holding-heart"></i>
           </c:when>
           <c:otherwise>
-            <i class="fa-solid fa-paper-plane fa-3x"></i>
+            <i class="fa-solid fa-paper-plane"></i>
           </c:otherwise>
         </c:choose>
-      </a>
-    </div>
-    <!--정모이름,편집버튼-->
-    <div class="flex-box margin-left-160">
-      <div class="margin-10 margin-top-20 font-s-30"> ${moimData.moimTitle}</div>
-
-      <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
-        <div class="margin-10 margin-top-50">
-          <button type="button" class="btn btn-primary"
-                  onclick="location.href='/somoim/moim/modify?id=${moimData.moimId}&test=2'">편집
-          </button>
-        </div>
-      </c:if>
-
-      <c:choose>
-      <c:when test="${empty res && currentMemberCount < moimData.moimLimit}">
-        <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary" onclick="joinCheck(${moimData.moimId})" >가입</button>
-        </div>
-      </c:when>
-      <c:when test="${currentMemberCount < moimData.moimLimit}">
-        <div class="margin-10 margin-top-50">
-            <button type="button" class="btn btn-primary" onclick="leaveCheck(${moimData.moimId})" >탈퇴</button>
-        </div>
-      </c:when>
-      </c:choose>
-      
-      
-          <c:choose>
-          <c:when test="${bookmarkcheck eq 1 }">
-          <div class="margin-10 margin-top-50 ">
-            <button type="button" class="btn btn-primary" onclick="bookmarkDelete(${moimData.moimId},'${sessionScope.loginData.memberId}')">찜 해제</button>
-          </div>
-          </c:when>
-          <c:otherwise>
-          <div class="margin-10 margin-top-50 ">
-            <button type="button" class="btn btn-primary" onclick="bookmarkAdd(${moimData.moimId},'${sessionScope.loginData.memberId}')" >찜</button>
       </div>
-          </c:otherwise>
-          </c:choose>
-      <c:if test="${res.jobId eq 1}"> <!-- 모임장만 삭제버튼보이게하기 -->
-        <div class="margin-10 margin-top-50">
-          <button type="button" class="btn btn-primary"
-                  data-bs-toggle="modal" data-bs-target="#removeModal">삭제
-          </button>
-        </div>
-      </c:if>
-      <div class="margin-top-78 margin-left-223">
-        <div>현재 가입 인원수: ${currentMemberCount}명 / 정원수: ${moimData.moimLimit}명</div>
+    </div>
+
+    <!-- 상세 정보 -->
+    <div class="header-info-detail">
+      <div class="header-info__column">
+					<span class="header-info-title">
+            ${moimData.moimTitle}
+          </span>
+      </div>
+      <div class="header-info__column">
+        <div class="icon__location">${moimData.locationName}</div>
+        <span>${categoryName}</span>
+        <span style="color: black">현재 ${currentMemberCount} / 정원 ${moimData.moimLimit}</span>
         <c:if test="${not empty over}">
-          <div>현재 정원이 마감된 모임입니다.</div>
+          <span class="moim-limit-msg">현재 정원이 마감된 모임입니다.</span>
         </c:if>
+        </div>
+    </div>
+
+    <div class="header-info-btn">
+      <div class="headerinfo-btn__flex">
+        <div>
+          <c:choose>
+            <c:when test="${bookmarkcheck eq 1 }">
+              <button type="button" class="btn--icon btn--icon--big" onclick="bookmarkDelete(${moimData.moimId},'${sessionScope.loginData.memberId}')"><i class="fa-solid fa-heart"></i></button>
+            </c:when>
+            <c:otherwise>
+              <button type="button" class="btn--icon btn--icon--big" onclick="bookmarkAdd(${moimData.moimId},'${sessionScope.loginData.memberId}')" ><i class="fa-regular fa-heart"></i></button>
+            </c:otherwise>
+          </c:choose>
+        </div>
+        <c:choose>
+          <c:when test="${empty res && currentMemberCount < moimData.moimLimit}">
+            <button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
+          </c:when>
+          <c:when test="{currentMemberCount < moimData.moimLimit}">
+            <button type="button" class="btn--round btn--purple btn--w216" onclick="leaveCheck(${moimData.moimId})">탈퇴하기</button>
+          </c:when>
+        </c:choose>
       </div>
     </div>
   </div>
 </header>
-
 <!--헤더 밑에 전부 메인박스-->
-<main class="mainbox p-30">
-  <!--네비게이션바-->
-  <div>
-    <nav
-            class="navbar navbar-expand-lg navbar-light"
-            style="background-color: #eff1f3"
-    >
-      <div class="container-fluid">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" onclick="location.href='/somoim/moim/meeting?id=${moimData.moimId}'">모임</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" onclick="location.href='/somoim/moim/board?id=${moimData.moimId}'">게시판</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">사진첩</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">채팅</a>
-          </li>
-        </ul>
-      </div>
+<main class="main">
+  <!-- 작성글 섹션 -->
+  <section class="col-8">
+    <nav class="section__nav">
+      <ul id="navList" class="nav__list">
+        <li class="nav__btn" onclick="location.href='/somoim/moim/meeting?id=${moimData.moimId}'">
+          정모
+        </li>
+        <li class="nav__btn nav__selected" onclick="location.href='/somoim/moim/board?id=${moimData.moimId}'">
+          게시판
+        </li>
+      </ul>
     </nav>
-  </div>
-  <!--모임정보,모임게시판,모임멤버,버튼, 페이지 전체박스-->
-  <section class="flex-box pt-3 px-0 p-3">
-    <!-- 모임정보박스 -->
-    <div class="col-md-3 bc-wh shadow-sm">
-      <div class="margin-10 p-15">
-        <div class="center p-6 bc-wg">모임정보</div>
-      </div>
-      <!-- 모임장정보 -->
-      <c:forEach items="${moimParticipants}" var="moimParticipants">
-        <c:if test="${moimParticipants.jobId eq 1}">
-          <div class="margin-10">
-            <div class="space-between margin-10">
-              <img
-                      src="${moimParticipants.memberImagePath}"
-                      class="rounded-circle"
-                      alt="profile-image"
-                      width="100"
-                      height="100"
-                      border-radius="50%"
-              />
-              <div>${moimParticipants.jobName}</div>
-              <div>${moimParticipants.memberName}</div>
-            </div>
-          </div>
-        </c:if>
-      </c:forEach>
-      <!-- 모임인포 -->
-      <div
-              class="p-4 rounded-3 shadow-sm bg-white scroll"
-              style="height: 640px; overflow-y: scroll"
-      >
-        <div class="margin-10">
-          <div class="center p-6">
-            ${moimData.moimInfo}
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--모임게시글 박스-->
-    <div class="col-md-6 bc-wh shadow-sm p-15 p-3">
-      <div class="center margin-10 p-6 bc-wg">모임게시글</div>
+    <div class="main-box">
       <!--첫번째 게시글 박스-->
       <c:forEach items="${paging.pageData}" var="comment"> <!-- 요기서부터 페이징으로 나눈 데이터 출력시켜주는 코드 -->
-        <div class="mb-3 container-1">
-          <div class="mb-1">
-              <div class="card border-light" onclick="location.href='/somoim/moim/boardDetail?id=${moimData.moimId}&boardId=${comment.boardId}'">
-              <div class="card-header">
-                <div class="d-flex justify-content-between">
-                  <div>
-                    <span><small>${comment.memberName}</small></span>
-                    <span class="margin-10"><small>${comment.jobName}</small></span>
-                  </div>
-                  <span><small>${comment.boardCreateDate}</small></span>
-                </div>
-              </div>
-              <div class="card-body-position">
-                <input type="hidden" value="${comment.boardId}"/>
-                <p class="card-text word-hidden">${comment.content }</p>
-              </div>
+        <div class="main-box__board" onclick="location.href='/somoim/moim/boardDetail?id=${moimData.moimId}&boardId=${comment.boardId}'">
+          <div class="board-title">
+              ${comment.boardTitle}
+          </div>
+          <div class="board-header">
+            <div class="board-writer-img">
+              <img
+                  src="${comment.memberImagePath}"
+                  class="icon--circle icon--circle__member"
+              />
             </div>
+            <div class="board-writer">
+              <span>${comment.memberName}</span>
+              <span>${comment.boardCreateDate}</span>
+            </div>
+          </div>
+          <div class="board-content">
+            <input type="hidden" value="${comment.boardId}"/>
+            <p class="content-hidden">${comment.content }</p>
+          </div>
+          <div class="board-footer">
+            <span><i class="fa-regular fa-message"></i></span>
+            <span>댓글 1</span>
           </div>
         </div>
       </c:forEach>
-
-
-      <!--작성버튼-->
-      <c:if test="${not empty res}">
-        <div class="text-end margin-right-40">
-          <button class="btn btn-sm btn-primary" type="button"
-                  onclick="location.href='/somoim/moim/board/add?id=${moimData.moimId}'">작성
-          </button>
-        </div>
-      </c:if>
       <!-- 페이지 -->
-      <nav aria-label="Page navigation example ">
+      <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <c:url var="boardUrl" value="/moim/board">
             <c:param name="id" value="${moimData.moimId}"></c:param> <!-- /board/detail?id="게시물아이디" 가 출력됨 -->
@@ -458,7 +387,6 @@
               <a class="page-link" href="${boardUrl}&page=${paging.prevPageNumber}">prev</a>
             </li>
           </c:if>
-
           <c:forEach items="${paging.getPageNumberList(paging.currentPageNumber - 2 , paging.currentPageNumber + 2)}"
                      var="num">
             <li class="page-item ${paging.currentPageNumber eq num ? 'active' : ''}"> <!-- active 넣으면 활성화됨 -->
@@ -472,46 +400,122 @@
           </c:if>
         </ul>
       </nav>
-    </div>
-
-
-    <!--모임멤버박스-->
-    <div class="col-md-3 bc-wh shadow-sm p-15">
-      <div class="center margin-10 p-6 bc-wg">모임멤버</div>
-      <!--스크롤박스-->
-      <div
-              class="p-4 rounded-3 shadow-sm bg-white scroll"
-              style="height: 770px; overflow-y: scroll"
-      >
+      <!--작성버튼-->
+      <c:if test="${not empty res}">
+      <div class="text-end margin-right-40">
+        <button class="btn btn-sm btn-primary" type="button"
+                onclick="location.href='/somoim/moim/board/add?id=${moimData.moimId}'">작성
+        </button>
+      </div>
+      </c:if>
+  </section>
+  <section class="col-3">
+    <!-- 모임 정보 -->
+    <div class="side-box">
+      <div class="side-box-title">
+        <span>모임 정보</span>
+        <div>
+          <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
+            <button type="button" class="btn--letter"
+                    onclick="location.href='/somoim/moim/modify?id=${moimData.moimId}&test=1'">편집
+            </button>
+          </c:if>
+          <c:if test="${res.jobId eq 1}"> <!-- 모임장만 삭제버튼보이게하기 -->
+            <button type="button" class="btn--letter"
+                    data-bs-toggle="modal" data-bs-target="#removeModal">삭제
+            </button>
+          </c:if>
+        </div>
+      </div>
+      <c:if test="${not empty moimParticipants}">
         <c:forEach items="${moimParticipants}" var="moimParticipants">
-          <div class="space-between margin-10">
-            <img
+          <c:if test="${moimParticipants.jobId eq 1}">
+            <div class="moim-member-info">
+              <div class="moim-member__img">
+                <img
                     src="${moimParticipants.memberImagePath}"
-                    class="rounded-circle"
-                    alt="profile-image"
-                    width="70"
-                    height="70"
-                    border-radius="50%"
-            />
-            <div>${moimParticipants.jobName}</div>
-            <div>${moimParticipants.memberName }</div>
-            <div id="${moimParticipants.memberId}" style="display: none"></div>
-          </div>
+                    class="icon--circle icon--circle__member"
+                />
+              </div>
+              <div class="moim-member-detail">
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.jobName}</span>
+                </div>
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.memberName}</span>
+                  <span class="icon__location icon__location--small">
+                      ${moimParticipants.locationName}
+                  </span>
+                </div>
+              </div>
+              <div id="${moimParticipants.memberId}" class="hidden"></div>
+            </div>
+          </c:if>
         </c:forEach>
+      </c:if>
+      <span class="moim-info__span">모임소개</span>
+      <div class="moim-info">
+        ${moimData.moimInfo}
+      </div>
+    </div>
+    <!-- 모임장정보 -->
+
+    <!-- 모임 멤버 -->
+    <div class="side-box">
+      <div class="side-box-title">
+        <span>모임 멤버</span>
         <c:if test="${res.jobId eq 1}"> <!-- 모임장만 편집버튼보이게하기 -->
-          <div class="margin-10">
-            <button type="button" class="btn btn-primary" onclick="popModJob(${moimData.moimId});">편집</button>
-          </div>
+          <button type="button" class="btn--letter" onclick="popModJob(${moimData.moimId});">편집</button>
+        </c:if>
+      </div>
+      <div class="side-box-main scroll scroll-h340">
+        <c:if test="${not empty moimParticipants}">
+          <c:forEach items="${moimParticipants}" var="moimParticipants">
+            <div class="moim-member-info">
+              <div class="moim-member__img">
+                <img
+                    src="${moimParticipants.memberImagePath}"
+                    class="icon--circle icon--circle__member"
+                />
+              </div>
+              <div class="moim-member-detail">
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.jobName}</span>
+                </div>
+                <div class="moim-member-detail__row">
+                  <span>${moimParticipants.memberName}</span>
+                  <span class="icon__location icon__location--small">
+                      ${moimParticipants.locationName}
+                  </span>
+                </div>
+              </div>
+              <div id="${moimParticipants.memberId}" class="hidden"></div>
+            </div>
+          </c:forEach>
         </c:if>
       </div>
     </div>
   </section>
 </main>
+<div class="modal fade" id="removeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        정말로 모임을 삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-bs-dismiss="modal" onclick="location.href='remove?id=${param.id}'">확인</button>
+        <button type="button" data-bs-dismiss="modal" aria-label="Close">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"
 ></script>
+<script src="${path}/resources/js/components/navigation.js"></script>
 <script src="${path}/resources/js/moim.js"></script>
 <script src="${path}/resources/js/components/popup.js"></script>
 </body>

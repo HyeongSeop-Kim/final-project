@@ -238,19 +238,260 @@
 	
 }
 
-/*display*/
-
-.ImgSelect{
-	display: none;
+/* 정모 ---------------------------------------------------------- */
+.meeting-date {
+	background-color: #f7f7f7;
+	width: 21.6rem;
+	height: 12rem;
+	border-radius: 1rem;
+	margin-right: 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem 3rem;
+}
+.meeting-day {
+	font-size: 6rem;
+	font-weight: 900;
+}
+.meeting-dow {
+	height: 4.5rem;
+	display: flex;
+	align-items: end;
+	font-size: 2rem;
+}
+.meeting-info-box {
+	height: 26rem;
+	flex: 1;
+	display: flex;
+	justify-content: space-between;
+	border: 1px solid var(--border-line__grey);
+	border-radius: 1rem;
+	font-size: 1.6rem;
+	font-weight: 400;
+	padding: 3rem;
 }
 
-/*추가*/
-.hoverMem{
-	border-radius: 8px;
+.meeting-info>div {
+	display: flex;
+	text-align: center;
+	margin-top: 2rem;
+}
+
+.meeting-info>div:first-child {
+	margin-top: 0;
+}
+
+
+.meeting-info>div:first-child span {
+	font-weight: 500;
+}
+
+.meeting-info__icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 2.4rem;
+	height: 2.4rem;
+	margin-right: 2rem;
+}
+
+.meeting-info-btn {
+
+}
+
+.meeting-info-btn button {
+	font-size: 1.6rem;
+	color: #666666;
+	margin-left: 2rem;
+}
+
+.meeting-part {
+	display: flex;
+	align-items: center;
+	margin: 0 1rem 0.5rem 0;
+}
+
+.meeting-part-btn {
+	margin: 1rem 2rem 0 0;
+}
+
+.meeting-btn {
+	margin-top: 3rem;
+	font-size: 1.4rem;
+	font-weight: 400;
+}
+
+.dropdown__meeting {
+
+}
+
+.dropdown-btn {
+	margin: 0 0 1rem 1rem;
+	text-align: left;
+}
+
+.dropdown-btn:hover {
+	cursor: pointer;
+}
+
+.dropdown-content {
+	background-color: #eeeeee;
+	border-radius: 0.5rem;
+	padding: 0.5rem
+}
+
+/* 소모임 정보 및 멤버 ------------------------------------------------------*/
+.moim-info__span {
+	font-size: 1.4rem;
+	font-weight: 400;
+	color: #666666;
+}
+
+.moim-member-info {
+	display: flex;
+	margin-bottom: 3rem;
+}
+
+.moim-member-info:hover {
+	border-radius: 0.8rem;
 	background-color: #669cec30;
+	cursor: pointer;
 }
 
-.partList {
-	width: 100%;
-	padding: 1px;
+.moim-member__img {
+	margin-right: 1rem;
+}
+
+.moim-member-detail {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 0.4rem 0;
+}
+
+.moim-member-detail__row {
+	display: flex;
+	font-size: 1.6rem;
+	font-weight: 400;
+	align-items: center;
+}
+
+.moim-member-detail__row:first-child {
+	color: var(--purple);
+}
+
+.moim-member-detail__row:last-child>span {
+	margin-right: 1rem;
+}
+
+.moim-member-detail__row:last-child {
+	font-weight: 500;
+}
+
+.moim-member-detail__row span {
+	margin-right: 0.5rem;
+}
+
+.moim-info {
+	margin-top: 1rem;
+	font-size: 1.6rem;
+	line-height: 1.5;
+}
+
+
+/* board ----------------------------------------------------------- */
+.board-header {
+	display: flex;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid var(--border-line__grey);
+	margin-bottom: 4rem;
+}
+
+.board-title {
+	font-size: 3rem;
+	font-weight: 700;
+	margin-bottom: 1.5rem;
+}
+
+.board-writer-img,
+.comment-writer-img {
+	margin-right: 1.5rem;
+}
+
+.board-writer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 1rem 0;
+}
+
+.board-writer span:first-child {
+	font-size: 1.6rem;
+	font-weight: 700;
+}
+
+.board-writer span:last-child {
+	font-size: 1.4rem;
+	font-weight: 500;
+	color: #999999;
+}
+
+.board-content {
+	font-size: 2rem;
+	margin-bottom: 4rem;
+	line-height: 1.5;
+}
+
+.board-footer {
+	padding-bottom: 3rem;
+}
+
+.board-footer>span {
+	margin-right: 0.5rem;
+}
+
+.board-footer__detail>span:hover {
+	cursor: pointer;
+}
+
+.comment-box {
+	padding-top: 3rem;
+	border-top: 1px solid var(--border-line__grey);
+}
+
+.comment-info {
+	display: flex;
+	margin-bottom: 2rem;
+}
+
+.comment-content {
+	display: flex;
+	flex-direction: column;
+	margin-top: 1rem;
+}
+
+.comment-content>span {
+	margin-bottom: 2rem;
+	font-size: 1.6rem;
+	font-weight: 400;
+}
+
+.comment-content>span:first-child {
+	font-weight: 700;
+}
+
+.comment-content>span:nth-child(2) {
+	line-height: 1.5;
+}
+
+.comment-footer {
+	display: flex;
+	font-size: 1.4rem;
+	font-weight: 400;
+	color: #999999;
+}
+
+.comment-footer>span {
+	margin-right: 1rem;
 }

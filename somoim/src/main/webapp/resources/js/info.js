@@ -1,13 +1,11 @@
 // info, member 이미지 div, img 선택
-const infoImgSelect = document.querySelector('#infoImg-input');
+const infoImgSelect = document.querySelector('#infoImgSelect');
 const infoImg = document.querySelector('#infoImg');
-const infoImgBtn = document.querySelector('#infoImg-btn');
-const profileImgSelect = document.querySelector('#profileImg-input');
-const profileImg = document.querySelector('#profileImg');
+const profileImgSelect = document.querySelector('#profImgInput');
+const profileImg = document.querySelector('#profImg');
 
 
 infoImg.addEventListener('click', (e) => infoImgSelect.click());
-infoImgBtn.addEventListener('click', (e) => infoImgSelect.click());
 infoImgSelect.addEventListener("change", infoImageUpload);
 
 profileImg.addEventListener('click', (e) => profileImgSelect.click());

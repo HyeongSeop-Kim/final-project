@@ -23,6 +23,11 @@ public class CommentsService {
 		return datas;
 	}
 
+	public List<CommentsDTO> getDatas(String id) {  //추가메서드
+		List<CommentsDTO> datas = dao.selectDatas(id);
+		return datas;
+	}
+
 
 	public CommentsDTO getData(int id) {  //댓글 존재확인
 		CommentsDTO data = dao.selectData(id);

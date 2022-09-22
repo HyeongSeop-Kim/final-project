@@ -79,14 +79,19 @@
                 <p class="pb-1">홍길동</p>
                 <p>서울특별시</p>
               </div>
-              <button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='info'" >수정</button>
+							<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='/somoim/info/myInfo'" style="margin-bottom: 5px;">상세</button>
+							<button type="button" class="btn btn-primary btn-sm btn-blue border-0" onclick="location.href='/somoim/logout'" >로그아웃</button>
             </section>
-            <section class="d-flex justify-content-between align-items-center pb-3">
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-           		<i class="fa-solid fa-person-swimming icon-green service-sm-items"></i>
-              <button type="button" class="btn btn-primary btn-sm btn-blue">편집</button>
-            </section>
+						<section id="cate" class="d-flex justify-content-between align-items-center pb-3">
+							<c:if test="${not empty sessionScope.loginData}">
+								<script>
+									window.onload = () => {
+										addEventListener("DOMContentLoaded", printCate("${sessionScope.loginData.category}"));
+									};
+								</script>
+							</c:if>
+							<button type="button" class="btn btn-primary btn-sm btn-blue" onclick="popCategory();">편집</button>
+						</section>
             <section>
 	        <div class="accordion" id="accordionExample">
 				  <div class="accordion-item">
@@ -190,5 +195,7 @@
 			get_board_bmk_moim_list()
 		});
 	</script>
+	<script src="${path}/resources/js/category.js"></script>
+	<script src="${path}/resources/js/components/popup.js"></script>
 </body>
 </html>

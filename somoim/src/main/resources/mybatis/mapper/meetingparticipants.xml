@@ -16,6 +16,16 @@
        WHERE P.MOIM_ID = #{id}
    </select>
 
+    <select id ="selectData" parameterType="meetingParticipantsDTO" resultType="meetingParticipantsDTO">
+        SELECT MEMBER_ID AS memberId
+             , MEETING_ID AS meetingId
+             , MOIM_ID AS moimId
+        FROM MEETINGS_PARTICIPANTS
+        WHERE MOIM_ID = #{moimId}
+          AND MEMBER_ID = #{memberId}
+          AND MEETING_ID = #{meetingId}
+    </select>
+
     <insert id = "insertData" parameterType="meetingParticipantsDTO">
         INSERT INTO MEETINGS_PARTICIPANTS( MEETING_ID
                                          , MEMBER_ID
@@ -25,9 +35,21 @@
                     , #{moimId} )
     </insert>
 
-    <delete id = "deleteData" parameterType="_int">
+    <delete id = "deleteData" parameterType="meetingParticipantsDTO">
+        DELETE FROM MEETINGS_PARTICIPANTS
+         WHERE MOIM_ID = #{moimId}
+           AND MEMBER_ID = #{memberId}
+           AND MEETING_ID = #{meetingId}
+    </delete>
+
+    <delete id = "deleteDatas" parameterType="_int">
         DELETE FROM MEETINGS_PARTICIPANTS
               WHERE MOIM_ID = #{id}
+    </delete>
+
+    <delete id = "deleteMeetingDatas" parameterType="_int">
+        DELETE FROM MEETINGS_PARTICIPANTS
+        WHERE MEETING_ID = #{id}
     </delete>
 
 </mapper>

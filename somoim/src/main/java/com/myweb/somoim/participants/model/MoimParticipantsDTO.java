@@ -7,8 +7,17 @@ public class MoimParticipantsDTO {
 	private String memberName;
 	private String JobName;
 	private String memberImagePath;
+	private String locationName;
 	private int currentMemberCount;
 	private int memberJoinMoimCount;
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
 
 	public String getMemberId() {
 		return memberId;
