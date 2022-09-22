@@ -24,18 +24,40 @@ public class CommentsService {
 	}
 
 
+	public CommentsDTO getData(int id) {  //댓글 존재확인
+		CommentsDTO data = dao.selectData(id);
+		return data;
+	}
+	
+	
 	public boolean addData(CommentsDTO commentsDto) {
 		boolean res = dao.insert(commentsDto);
 		return res;
 	}
 
 
-	public boolean removeData(int id) {
-		System.out.println("코멘트삭제2");
+	public boolean removeData(int id) { //코멘트전체삭제
+		
 		boolean res = dao.delete(id);
 		return res;
 		
 	}
+
+
+	public boolean removeComment(int cid) { //특정코멘트만삭제
+		boolean res = dao.deleteComment(cid);
+		return res;
+	
+	}
+
+
+	public boolean modifyComment(CommentsDTO commentsDto) { //코멘트수정
+		boolean res = dao.updateComment(commentsDto);
+		return res;
+	}
+
+
+	
 
 
 }

@@ -36,8 +36,9 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 
 	
 	@Override
-	public MoimParticipantsDTO getData(int id) {
-		return null;
+	public MoimParticipantsDTO getData(int id) { 
+		MoimParticipantsDTO data = dao.selectData(id);
+		return data;
 	}
 
 	@Override
@@ -70,6 +71,12 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 		return false;
 	}
 
+	public boolean removeData(Map map) {
+		boolean result = dao.deleteData(map);
+		return result;
+	
+	}
+	
 	@Override
 	public boolean removeData(int id) {
 		boolean result = dao.deleteData(id);
@@ -93,5 +100,8 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 		boolean res = dao.selectAlreadyJoinMember(map);
 		return res;
 	}
+
+
+	
 
 }

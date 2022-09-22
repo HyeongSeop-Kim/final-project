@@ -75,6 +75,14 @@ ORDER BY B.BOARD_CREATE_DATE DESC
     FROM BOARDS WHERE BOARD_ID = ${boardId}
     </select>
 
+   <update id="updateData" parameterType="boardsDTO" >
+     UPDATE BOARDS  
+        SET BOARD_TITLE = #{boardTitle}
+           ,CONTENT = #{content}
+      WHERE BOARD_ID = #{boardId}
+   </update>
+
+
    <delete id="deleteData" parameterType="_int" >
     DELETE FROM BOARDS  WHERE BOARD_ID = #{id}
    </delete>

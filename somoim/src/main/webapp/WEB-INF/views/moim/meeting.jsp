@@ -105,6 +105,37 @@
     }
 
 </script>
+
+<script type="text/javascript">
+
+
+  function leaveCheck(moimId){
+	  	$.ajax({
+    		url: "/somoim/moim/leave",
+    		type: "get",
+    		data: {
+    			id:moimId
+    		},
+    		dataType: "json",
+    		success: function(data){
+    			if(data.code === "bossMember"){
+    				alert(data.message);
+    				location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+    			}else if(data.code === "success"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+    			}else if(data.code === "alreadyleaveMember"){
+    				alert(data.message);
+        			location.href = "/somoim/moim/meeting?id="+ ${moimData.moimId};
+
+    			}
+    		}
+    	})
+    }
+
+</script>
+
+
 <script type="text/javascript">
 
 
@@ -275,11 +306,20 @@
         </div>
       </c:if>
 
-      <c:if test="${empty res && currentMemberCount < moimData.moimLimit}">
+      <c:choose>
+      <c:when test="${empty res && currentMemberCount < moimData.moimLimit}">
         <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary" onclick="joinCheck(${moimData.moimId})" >가입</button>
         </div>
-      </c:if>
+      </c:when>
+      <c:otherwise>
+        <div class="margin-10 margin-top-50">
+            <button type="button" class="btn btn-primary" onclick="leaveCheck(${moimData.moimId})" >탈퇴</button>
+        </div>
+      </c:otherwise>
+      </c:choose>
+      
+      
           <c:choose>
           <c:when test="${bookmarkcheck eq 1 }">
           <div class="margin-10 margin-top-50 ">

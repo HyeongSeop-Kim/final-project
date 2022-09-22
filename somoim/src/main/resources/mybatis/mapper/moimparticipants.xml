@@ -68,6 +68,13 @@ SELECT B.MEMBER_NAME AS memberName
    </select>
    
    
+   <select id="selectMoimBoss" resultType="moimParticipantsDTO">
+   SELECT MEMBER_ID AS memberId
+   FROM MOIM_PARTICIPANTS 
+   WHERE MOIM_ID = #{id} AND JOB_ID = 1
+   </select>
+   
+   
    <insert id="insertData" parameterType="moimParticipantsDTO">
    INSERT INTO MOIM_PARTICIPANTS 
    VALUES (#{memberId}, #{moimId}, 3)
@@ -85,4 +92,9 @@ SELECT B.MEMBER_NAME AS memberName
         DELETE FROM MOIM_PARTICIPANTS
               WHERE MOIM_ID = #{id}
     </delete>
+    
+    <delete id="deleteMember" parameterType="map">
+    DELETE FROM MOIM_PARTICIPANTS WHERE MEMBER_ID = #{memberId} AND MOIM_ID = #{id}
+    </delete>
+    
 </mapper>

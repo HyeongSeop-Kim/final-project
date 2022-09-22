@@ -25,6 +25,17 @@ public class CommentsDAO {
 		
 	}
 
+	
+
+	public CommentsDTO selectData(int id) { //댓글존재확인
+		String mapperId = String.format(mapper, "selectData");
+		System.out.println("댓글존재확인" + id);
+		CommentsDTO datas = session.selectOne(mapperId,id);
+		System.out.println("결과확인"+ datas);
+		return datas;
+		
+	}
+	
 
     public boolean insert(CommentsDTO commentsDto) {
     	String mapperId = String.format(mapper, "insertData");
@@ -35,11 +46,26 @@ public class CommentsDAO {
 
 	public boolean delete(int id) {
 		String mapperId = String.format(mapper, "deleteData");
-		System.out.println("코멘트삭제3");
-		int res = session.delete(mapperId,id);
-		System.out.println("코멘트삭제결과 DAO ="+ res);
-		return res == 1 ? true : false;
+	    int res = session.delete(mapperId,id);
+	    return res == 1 ? true : false;
 		
 	}
+
+
+    public boolean deleteComment(int id) { //특정코멘트삭제
+		String mapperId = String.format(mapper, "deleteCommentData");
+	    int res = session.delete(mapperId,id);
+	    return res == 1 ? true : false;
+	}
+
+
+
+	public boolean updateComment(CommentsDTO commentsDto) { //코멘트수정
+		String mapperId = String.format(mapper, "updateCommentData");
+	    int res = session.delete(mapperId,commentsDto);
+	    return res == 1 ? true : false;
+	}
+
+
 
 }

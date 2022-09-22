@@ -136,6 +136,57 @@ public class MoimController {
 
 
 	}
+	
+	
+	
+	@GetMapping(value = "/moim/leave", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String moimLeave(Model model,
+			 @RequestParam int id
+			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		
+		JSONObject json = new JSONObject();
+
+	
+
+	Map map = new HashMap();
+	map.put("id", id);
+	map.put("memberId", membersDto.getMemberId());
+	
+	boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map); //가입했던유저인지 먼저확인
+	
+	
+	MoimParticipantsDTO BossData = moimParticipantsService.getData(id); //모임장확인
+	
+
+
+	if(memberAlreadyJoin) {
+		if(BossData.getMemberId().equals(membersDto.getMemberId())) { //로그인한 유저가 모임장인지 확인
+			json.put("code",   "bossMember");
+			json.put("message",   "모임장은 탈퇴할 수 없습니다. 다른 멤버에게 모임장 권한을 위임하세요.");
+	        return json.toJSONString();
+		}else {
+			
+			moimParticipantsService.removeData(map);  //탈퇴처리
+			json.put("code",   "success");
+			json.put("message",   "탈퇴 되었습니다.");
+	        return json.toJSONString();
+		
+	     }
+	}else {
+		json.put("code",   "alreadyleaveMember");
+		json.put("message",   "이미 탈퇴한 멤버입니다.");
+        return json.toJSONString();
+		
+	}
+
+      
+
+	 }
+
+
+	
+	
 
 	@GetMapping(value = "/moim/bookmarkAdd", produces="application/json; charset=utf-8")
 	@ResponseBody
@@ -405,6 +456,72 @@ public class MoimController {
 		return "moim/board";
 	}
 	
+	
+	@RequestMapping(value = "/moim/board/modify", method = RequestMethod.GET) //수정화면 
+	public String boardModify(Model model
+			            ,@RequestParam int id
+			            ,@RequestParam int boardId
+			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+		BoardsDTO data =  boardsService.getData(boardId);//존재하는 게시글인지 확인 
+  
+		
+		if(data == null) { 
+			  model.addAttribute("id",id);
+			  model.addAttribute("data",data);  
+			
+		}else {
+			  model.addAttribute("data",data);
+				
+		}
+      
+
+
+		return "moim/boardmodify";
+	}
+
+
+	
+	  @PostMapping(value = "/moim/board/modify" , produces="application/json; charset=utf-8") //게시글수정
+	  @ResponseBody
+	  public String boarModify(Model model
+			            ,@RequestParam int id
+			            ,@RequestParam int boardId
+			            ,@RequestParam String boardTitle
+						,@RequestParam String content
+			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		  
+		
+
+		BoardsDTO boardDto = new BoardsDTO(); //board가져오기
+		boardDto.setBoardId(boardId);
+		boardDto.setContent(content);
+		boardDto.setBoardTitle(boardTitle);
+		
+		 JSONObject json = new JSONObject();
+		 
+		 BoardsDTO data =  boardsService.getData(boardId);
+		 
+		 if(data == null) {
+			   json.put("code",   "notexist");
+			   json.put("message",   "이미 삭제되었거나 존재하지않은 데이터입니다.");
+			   return json.toJSONString();
+			 
+		 }else {
+			  boolean res = boardsService.modifyData(boardDto);
+				
+				if(res) {
+					 json.put("code",   "success");
+					 json.put("message",   "수정이 완료되었습니다.");
+					 return json.toJSONString();
+				}else {
+					 json.put("code",   "error");
+					 json.put("message",   "알수없는 에러로 게시글 수정에 실패했습니다.");
+					 return json.toJSONString();
+				}
+		 }
+	}
+	
 
 	@RequestMapping(value = "/moim/boardDetail", method = RequestMethod.GET)
 	public String boarDetail(Model model
@@ -431,7 +548,7 @@ public class MoimController {
 
 
 
-
+        
 		model.addAttribute("data",data);//boardId로 정보받아오기
 		model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 
@@ -551,7 +668,7 @@ public class MoimController {
 			    @RequestParam int bid
 				,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
-		System.out.println("여기로 넘어오나");
+		
 		   JSONObject json = new JSONObject();
 
 		   BoardsDTO data = boardsService.getData(bid);
@@ -609,7 +726,93 @@ public class MoimController {
 	}
 
 
+	
+	@PostMapping(value = "/moim/board/comment/modify", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String commentModify(Model model,
+			//@RequestParam int id
+			@RequestParam int cid
+		   ,@RequestParam String content
+		   ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
+		
+		System.out.println("댓글아이디"+cid);
+		System.out.println("댓글내용"+content);
+		
+		CommentsDTO data = commentsService.getData(cid); //댓글존재하는지
+		
+		
+	  CommentsDTO commentsDto = new CommentsDTO();
+	  //commentsDto.setMoimId(id);
+	  //commentsDto.setBoardId(bid);
+      //commentsDto.setMemberId(membersDto.getMemberId());
+	  
+	  commentsDto.setContent(content);
+	  commentsDto.setCommentId(cid);
+
+	  JSONObject json = new JSONObject();
+	  
+	  
+	  
+
+
+	  if(data == null) {
+		   json.put("code",   "notexist");
+		   json.put("message",   "이미 삭제되었거나 존재하지않은 데이터입니다.");
+		   return json.toJSONString();
+		}else  {
+		   boolean res = commentsService.modifyComment(commentsDto);//코멘트 업데이트
+	
+			    if(res) {
+			    	json.put("code",   "success");
+					json.put("message",   "게시물이 수정되었습니다.");
+					return json.toJSONString();
+			    }else {
+			    	json.put("code",   "error");
+					json.put("message",   "알 수 없는 에러가 발생했습니다.");
+					return json.toJSONString();
+			    }
+	 }
+	}
+	
+	
+
+	@GetMapping(value = "/moim/board/comment/delete", produces="application/json; charset=utf-8")
+	@ResponseBody
+	   public String CommentDelete(Model model,
+			   // @RequestParam int bid
+			    @RequestParam int cid
+				,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+	
+		   JSONObject json = new JSONObject();
+
+		   CommentsDTO data = commentsService.getData(cid); //댓글존재하는지
+		  
+
+
+		   if(data == null) {
+			       json.put("code",   "alreadyDelete");
+				   json.put("message",   "이미 삭제되었거나 존재하지 않는 댓글입니다. ");
+				   return json.toJSONString();
+				}else  {
+				boolean result = commentsService.removeComment(cid);  //코멘트 삭제
+				
+			    if(result) {
+			    	json.put("code",   "success");
+					json.put("message",   "댓글이 삭제되었습니다.");
+					return json.toJSONString();
+			    }else {
+			    	json.put("code",   "error");
+					json.put("message",   "알 수 없는 에러가 발생했습니다.");
+					return json.toJSONString();
+			    }
+			 }
+
+	 }
+
+	
+	
 
 
 

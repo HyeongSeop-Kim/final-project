@@ -42,11 +42,13 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 
 	@Override
 	public MoimParticipantsDTO selectData(int id) {
-		return null;
+	    String mapperId = String.format(mapper, "selectMoimBoss");
+	    MoimParticipantsDTO data = session.selectOne(mapperId,id);
+	    return data;
 	}
 
 	@Override
-	public MoimParticipantsDTO selectData(String s) {
+	public MoimParticipantsDTO selectData(String id) {
 		return null;
 	}
 
@@ -86,6 +88,13 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 	public boolean deleteData(MoimParticipantsDTO dto) {
 		return false;
 	}
+	
+	
+	public boolean deleteData(Map map) {
+		String mapperId = String.format(mapper, "deleteMember");
+		int result = session.delete(mapperId, map);
+        return result == 1  ? true : false;
+	} 
 
 	@Override
 	public boolean deleteData(int id) {

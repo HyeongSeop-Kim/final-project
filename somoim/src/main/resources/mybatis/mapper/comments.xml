@@ -6,7 +6,8 @@
   
     
     <select id="selectDatas" parameterType="map"  resultType="commentsDTO" >
-    SELECT BOARD_ID AS boardId
+    SELECT COMMENT_ID AS commentId
+          ,BOARD_ID AS boardId
           ,CONTENT AS content
           ,CONTENT_CREATE_DATE AS contentCreateDate
           ,MOIM_ID AS moimId
@@ -16,6 +17,19 @@
            ORDER BY CONTENT_CREATE_DATE DESC
     </select>
     
+        <select id="selectData"  resultType="commentsDTO" >
+    SELECT COMMENT_ID  AS commentId
+         ,BOARD_ID AS boardId
+         ,CONTENT AS content
+         ,CONTENT_CREATE_DATE AS contentCreateDate
+         ,MOIM_ID AS moimId
+         ,MEMBER_ID AS memberId
+     FROM BOARD_COMMENT WHERE COMMENT_ID = #{id}
+           
+    </select>
+    
+    
+    
     <insert id="insertData" parameterType="commentsDTO" >
     INSERT INTO BOARD_COMMENT VALUES (SQU_COMMENT.NEXTVAL, #{boardId}, #{content}, SYSDATE,#{moimId},#{memberId})
     </insert>
@@ -24,6 +38,18 @@
     <delete id="deleteData" parameterType="_int" >
     DELETE FROM BOARD_COMMENT WHERE BOARD_ID =#{id}
    </delete>
+   
+   
+   <delete id="deleteCommentData" parameterType="_int" >
+    DELETE FROM BOARD_COMMENT WHERE COMMENT_ID = #{id}
+   </delete>
+   
+   
+    <update id="updateCommentData"  parameterType="commentsDTO" >
+    UPDATE   BOARD_COMMENT  
+       SET   CONTENT = #{content}
+      WHERE  COMMENT_ID = #{commentId}
+   </update>
 
 </mapper>
 

@@ -73,9 +73,16 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 
 	@Override
 	public boolean updateData(BoardsDTO dto) {
+		String mapperId = String.format(mapper, "updateData");
+		int  result = session.update(mapperId,dto);
+		
+		
+		if(result == 1) {
+			return true;
+		}
 		return false;
 	}
-
+	
 	@Override
 	public boolean deleteData(BoardsDTO dto) {
 		return false;
