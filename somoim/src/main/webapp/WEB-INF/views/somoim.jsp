@@ -260,12 +260,12 @@
     <!-- // main -->
   </div>
   
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-  </script>
-  <script type="text/javascript">
-  var main_page = 1;
-  var category_id = 0;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+  let main_page = 1;
+  let category_id = 0;
 function get_moim_list(page) {
 	main_page = page;
 	let _url = "./list?page=" + page + "&page_count=" + $('#page_count').val() + "&list_search=" + $('#list_search').val() + "&category_id=" + category_id;
@@ -293,7 +293,7 @@ function get_moim_list(page) {
 			for (var i=0 ; i < res.pager.pagelist.length; i++) {
 				let add_class = '';
 					if (res.pager.c_page == res.pager.pagelist[i]) {
-						add_class = 'hover';
+						add_class = 'selected';
 					}
 					_page += '<button class="page-link '+ add_class +'" onclick="get_moim_list('+ res.pager.pagelist[i] +');">'+ res.pager.pagelist[i] +'</button>';
 					
