@@ -79,7 +79,6 @@ public class SomoimController {
 	public String moimMain(Model model, HttpSession session) {
 		List<CategorysDTO> datas = categoryService.getAll();
 		model.addAttribute("datas", datas);
-
 		return "somoim_m";
 	}
 	

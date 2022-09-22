@@ -96,7 +96,10 @@
 					</div>
 				</div>
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="01033333333">
+				<div style="display: flex; justify-content:space-between; ">
+					<input style="width: 70%" class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰번호">
+					<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="PhoneChk();">중복확인</button>
+			    </div>
 			    <div class="error-phone-msg"></div>
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
 			<div> 
@@ -119,6 +122,7 @@
 		window.close();
 	};
 	
+	
 	// 유효성 검사 : 생년월일 년
 	const birthYearEl = document.querySelector('#birth-year')
 	// option 목록 생성 여부 확인
@@ -139,7 +143,7 @@
 	});
 	
 	// 유효성 검사 : 생년월일 월
-	const birthMonthEl = document.querySelector('#birth-month')
+	let birthMonthEl = document.querySelector('#birth-month')
 	// option 목록 생성 여부 확인
 	isMonthOptionExisted = false;
 	birthMonthEl.addEventListener('focus', function () {
@@ -158,7 +162,7 @@
 	});
 	
 	// 유효성 검사 : 생년월일 일
-	const birthDayEl = document.querySelector('#birth-day')
+	let birthDayEl = document.querySelector('#birth-day')
 	// option 목록 생성 여부 확인
 	isDayOptionExisted = false;
 	birthDayEl.addEventListener('focus', function () {
@@ -231,11 +235,19 @@
 	      }
 	    }
 	  };
+	  
+	   
+	  
+	  
+	  
+	  
+	  
+	  
 	  /*** SECTION - ID ***/
 	  const idInputEl = document.querySelector('div form .info__id');
 	  const idErrorMsgEl = document.querySelector('div form  .error-id-msg')
 	  idInputEl.addEventListener('focusout', () => {
-	    const idRegExp = /^[a-zA-Z0-9]{10,20}$/ // 6~20자의 영문 소문자와 숫자
+	    const idRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
 		    if(idRegExp.test(idInputEl.value)) { // 유효성 검사 성공
 		      idErrorMsgEl.textContent = "";
 		    } else { // 유효성 검사 실패
@@ -300,7 +312,7 @@
 	  
 	  const errMsg = {
 			  id: { 
-			    invalid: "10~20자의 영문 소문자와 숫자만 사용 가능합니다",
+			    invalid: "6~20자의 영문 소문자와 숫자만 사용 가능합니다",
 			    empty: "아이디를 입력해주세요",
 			    success: "사용 가능한 아이디입니다",
 			    fail: "사용할 수 없는 아이디입니다"
@@ -341,9 +353,9 @@
 	  let pw1 = document.getElementById('pw1');
 	  let pw2 = document.getElementById('pw2');
 	  let memberName = document.getElementById('memberName');
-	  let Byear = document.getElementsByName("year");
-	  let Bmonth = document.getElementsByName("month");
-	  let Bday = document.getElementsByName("day");
+	  let Byear = document.getElementById("birth-year").value;
+	  let Bmonth = document.getElementById("birth-month").value;
+	  let Bday = document.getElementById("birth-day").value;
 	  let gender = document.getElementById('gender');
 	  let location = document.getElementById('location');
 	  let phone = document.getElementById('pnum');
@@ -373,31 +385,24 @@
 		  return false;
 	  }
 	  
-	  for(year of Byear){
-		  year.value;
-	  }
 	  
-	  if (year.value === '0') {
+	  if (Byear === '0') {
 		alert("생년월일을 입력해주세요.")
 		return false;
 		}
 	  
-	  for(month of Bmonth){
-		  month.value;
-	  }
 	  
-	  if (month.value === '0') {
+	  if (Bmonth === '0') {
 		alert("생년월일을 입력해주세요.")
 		return false;
 		}
-	  for(day of Bday){
-		  day.value;
-	  }
 	  
-	  if (day.value === '0') {
+	  
+	  if (Bday === '0') {
 		alert("생년월일을 입력해주세요.")
 		return false;
 		}
+	  
 	  
 	  if(gender.value != 'M' && gender.value != 'F' ){
 		  alert("성별을 선택해주세요");
@@ -445,7 +450,7 @@
 			alert('관심분야를 1개 이상 선택하세요.');
 			return false;
 		}
-	  
+	  alert(Bmonth);
 	  alert('회원가입이 완료되었습니다.');
 	  
 	  form.submit();
@@ -473,6 +478,28 @@
 							idresult = '2';
 						}else if(data == 0){
 							alert("사용가능한 아이디 입니다.");
+							idresult = '1';
+						}
+					}
+				})
+		    }
+	}
+	  function PhoneChk() {
+		  if(phoneInputEl.value === undefined || phoneInputEl.value.trim() === ""){
+			  phoneErrorMsgEl.textContent = errMsg.mobile
+		    }else{
+				$.ajax({
+					url: "./phoneChk",
+					method: "POST",
+				    data : {"phone" :document.getElementById('pnum').value},
+				    dataType : "json",
+				    success : function (data) {
+						if(data == 1){
+							alert("핸드폰 번호가 존재합니다. 확인해주세요");
+							idresult = '2';
+						}else if(data == 0){
+							alert("사용가능한 핸드폰번호 입니다.");
+							 $("input[name=phone]").attr("readonly",true);
 							idresult = '1';
 						}
 					}

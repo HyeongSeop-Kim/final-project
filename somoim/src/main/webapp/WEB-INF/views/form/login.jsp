@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="${path}/resources/css/styles.css">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="${path}/resources/css/styles.css">
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${path}/resources/js/components/popup.js"></script>
@@ -45,8 +45,8 @@
 			</div>
 			<div class="hr-sect">또는</div>
 			<div class="social-login">
-				<button id ="naverLogin" class="social-login__btn btn-green" onclick="location.href='/somoim/login/naver'"><img src="${path}/resources/img/logos/naver-logo.png" /><span>네이버 계정으로 로그인</span></button>
-				<button class="social-login__btn btn-white"><img src="${path}/resources/img/logos/google-logo.png" /><span>구글 계정으로 로그인</span></button>
+				<button id ="naverLogin" class="social-login__btn btn-green" onclick="location.href='${url}'"><img src="${path}/resources/img/logos/naver-logo.png" /><span>네이버 계정으로 로그인</span></button>
+				<button class="social-login__btn btn-white " ><img src="${path}/resources/img/logos/google-logo.png" /><span>구글 계정으로 로그인</span></button>
 				<button class="social-login__btn btn-yellow" onclick="location.href='/somoim/login/kakao'"><img src="${path}/resources/img/logos/kakao-logo.png" /><span>카카오톡 계정으로 로그인</span></button>
 			</div>
 		</div>
@@ -54,6 +54,5 @@
 </body>
 
 <script type="text/javascript">
-
 </script>
 </html>

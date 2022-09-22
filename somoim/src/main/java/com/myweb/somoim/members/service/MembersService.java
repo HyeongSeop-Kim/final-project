@@ -214,7 +214,10 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 		int result = dao.kakaoIdchk(membersDTO);
 		return result;
 	}
-
+	public int phoneChk(MembersDTO membersDTO) {
+		int result = dao.phonechk(membersDTO);
+		return result;
+	}
 	public HashMap<String, Object> getUserInfo (String access_Token)  {
 	    
 	    //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
@@ -249,14 +252,16 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        JsonObject births = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 	        JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 	      
-	        System.out.println(id);
 	        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-	        String birthday = births.getAsJsonObject().get("has_birthday").getAsString();
+	        String birthday = births.getAsJsonObject().get("birthday").getAsString();
 	        String email = kakao_account.getAsJsonObject().get("email").getAsString();
 	        
 	        userInfo.put("kakaoId", id);
 	        userInfo.put("nickname", nickname);
-	        userInfo.put("birthday", birthday);
+	        String month = birthday.substring(0,2);
+	        String day = birthday.substring(2,4);
+	        userInfo.put("month", month);
+	        userInfo.put("day", day);
 	        userInfo.put("email", email);
 	        
 	        
@@ -294,18 +299,18 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	    }
 	}
 
-	public MembersDTO kakaogetLogin(HashMap<String, Object> userInfo) {
+	public MembersDTO typeSelectLogin(HashMap<String, Object> userInfo) {
 		MembersDTO data = new MembersDTO();
 		
 		data.setMemberId((String) userInfo.get("email"));
 		data.setLoginType((String) userInfo.get("loginType"));
 		
-		System.out.println("#########카카오 로그인 데이터 확인합니다########## : " + data);
-		
-		data = dao.kakaoselectLogin(data);
+		data = dao.typeSelectLogin(data);
 		
 		return data;
 	}
+
+
 
 
 

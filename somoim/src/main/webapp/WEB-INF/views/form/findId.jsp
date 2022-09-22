@@ -213,13 +213,17 @@
 			    if(data.code === "noData"){
 			    	alert(data.message);
 			    	// 아이디 찾기 실패했을 때 실행
-			    	msg = "해당 아이디는 존재하지 않습니다.";
+			    	msg = "아이디를 찾을 수 없습니다.";
 			    	fn_showMessage(msg);
 			    	}else if (data.code==="success") {
 			    		alert(data.id);
 			    		msg = "아이디는 " + data.id + " 입니다.";
 				    	fn_showMessage(msg);	
-					}	    
+			    	}else if(data.code === "noType"){
+			    		alert(data.message);
+			    		msg = "해당 계정은 소셜 서비스로 가입한 계정입니다.";
+				    	fn_showMessage(msg);
+			    	}   
 			     }
 			    }) 
 			
