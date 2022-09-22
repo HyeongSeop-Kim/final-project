@@ -312,11 +312,11 @@
             <button type="button" class="btn btn-primary" onclick="joinCheck(${moimData.moimId})" >가입</button>
         </div>
       </c:when>
-      <c:otherwise>
+      <c:when test="${currentMemberCount < moimData.moimLimit}">
         <div class="margin-10 margin-top-50">
             <button type="button" class="btn btn-primary" onclick="leaveCheck(${moimData.moimId})" >탈퇴</button>
         </div>
-      </c:otherwise>
+      </c:when>
       </c:choose>
       
       

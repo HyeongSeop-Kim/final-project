@@ -121,6 +121,7 @@
 			 , PHONE = #{phone}
 			 , CATEGORY = #{category}
 			 , LOCATION_ID = #{locationId}
+		     , BOOKMARK = #{bookmark}
 		 WHERE MEMBER_ID = #{memberId}
 		   AND MEMBER_NAME =  #{memberName}
 	</update>

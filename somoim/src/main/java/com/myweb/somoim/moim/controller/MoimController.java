@@ -195,10 +195,23 @@ public class MoimController {
 							  @RequestParam String memberId
 							  //,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-
+		if(id == 0) {
+			return null;
+		}
 		JSONObject json = new JSONObject();
 
-		int res = memberService.checkBookMarkData(memberId,id);
+
+		MembersDTO membersDTO = new MembersDTO();
+		membersDTO.setMemberId(memberId);
+		MembersDTO membersData = memberService.getData(membersDTO);
+		if(membersData.getBookmark() == null){
+			membersData.setBookmark(",");
+		}
+
+		memberService.modifyData(membersData);
+		System.out.println(membersData);
+		int res = memberService.checkBookMarkData(memberId, id);
+		System.out.println(res);
 		if(res == 1) {
 			json.put("code",   "alreadybookmark");
 			json.put("message",   "이미 찜한 모임입니다.");
@@ -214,7 +227,6 @@ public class MoimController {
 				json.put("message",   "찜 되었습니다.");
 				return json.toJSONString();
 			}
-
 		}
 
 		json.put("code",   "error");
