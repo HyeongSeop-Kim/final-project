@@ -325,7 +325,7 @@
           <c:when test="${empty res && currentMemberCount < moimData.moimLimit}">
             <button type="button" class="btn--round btn--purple btn--w216" onclick="joinCheck(${moimData.moimId})">가입하기</button>
           </c:when>
-          <c:when test="{currentMemberCount < moimData.moimLimit}">
+          <c:when test="${currentMemberCount <= moimData.moimLimit}">
             <button type="button" class="btn--round btn--purple btn--w216" onclick="leaveCheck(${moimData.moimId})">탈퇴하기</button>
           </c:when>
         </c:choose>
