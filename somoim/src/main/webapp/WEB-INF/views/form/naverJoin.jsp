@@ -16,32 +16,33 @@
 </head>
 <body>
 	<header>
-	<c:if test="${empty userInfo}">
+	<c:if test="${empty NUserInfo}">
 		<div class="form-title">
 				소모임
 		</div>
 	</c:if>
-	<c:if test="${not empty userInfo}">
+	<c:if test="${not empty NUserInfo}">
 		<div class="form-title">
-				카카오 로그인을 위한 추가 정보 입력
+				네이버 로그인을 위한 추가 정보 입력
 		</div>
 	</c:if>
 	</header>
 	<section class="form-section">
 		<div class="form-container" >
-		<c:url  var="joinKakaoAddUrl" value="/kakaoAddJoin"></c:url>
-			<form class="join-form " method="post" action="${joinKakaoAddUrl}">
-			<c:if test="${empty userInfo}">
+		<c:url  var="joinnaverAddUrl" value="/socialAddJoin"></c:url>
+			<form class="join-form " method="post" action="${joinnaverAddUrl}">
+			<c:if test="${empty NUserInfo}">
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
 					<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" >
 						<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>
-				<c:if test="${not empty userInfo}">
+				<c:if test="${not empty NUserInfo}">
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
-						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${userInfo.email}" >
+						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${NUserInfo.email}" readonly >
+							<input style="display: none"  class="join-form__input info__id" name="loginType" value="${NUserInfo.loginType}" >
 							<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>	
@@ -52,38 +53,62 @@
 				<label class="join-form__label">비밀번호 재확인</label>
 				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2">
 				<div class="error-pw2-msg"></div>	
-				<c:if test="${empty userInfo}">
+				<c:if test="${empty NUserInfo}">
 				<label class="join-form__label">이름</label>
 				<input class="join-form__input" type="text" name="memberName" id ="memberName" >
 				</c:if>
-				<c:if test="${not empty userInfo}">
+				<c:if test="${not empty NUserInfo}">
 				<label class="join-form__label">이름</label>
-				<input class="join-form__input" type="text" name="memberName" id ="memberName" value="${userInfo.nickname}">
+				<input class="join-form__input" type="text" name="memberName" id ="memberName" value="${NUserInfo.name}" readonly>
 				</c:if>
 				<div class="error-name-msg"></div>
 				<label class="join-form__label">생년월일</label>
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
+					 <c:if test="${empty NUserInfo}">
 					 <select class="join-form-inline__input" id="birth-year" name="year" >
 				     	 <option value="0" >출생 연도</option>
 			    	</select>
+			    	</c:if>
+					 <c:if test="${not empty NUserInfo}">
+					 <select class="join-form-inline__input" id="birth-year" name="year"   >
+				     	 <option value="${NUserInfo.birthyear}">${NUserInfo.birthyear}</option>
+			    	</select>
+			    	</c:if>
+			    	 <c:if test="${empty NUserInfo}">
 				    <select class="join-form-inline__input" id="birth-month" name="month">
 				      <option disabled selected value="0">월</option>
 				    	</select>
 				    <select class="join-form-inline__input" id="birth-day" name="day">
 				    	  <option disabled selected value="0">일</option>
-			   	 </select>
+			   	 	</select>
+			   	 	</c:if>
+			    	 <c:if test="${not empty NUserInfo}">
+				    <select class="join-form-inline__input" id="birth-month" name="month" readonly >
+				      <option  selected value="">${NUserInfo.BMonth}</option>
+				    	</select>
+				    <select class="join-form-inline__input" id="birth-day" name="day">
+				    	  <option  selected value="">${NUserInfo.BDay}</option>
+			   	 	</select>
+			   	 	</c:if>
 			   	 </div>
 				  <div class="error-msg"></div>
 				 </div>
 				<div class="join-form-inline">
 					<div class="join-form-inline__div">
 						<label class="join-form__label">성별</label>
+						<c:if test="${empty NUserInfo}">
 						<select class="join-form__input" name="gender" id="gender">
 							<option disabled selected >성별</option>
 							<option value="M">남자</option>
 							<option value="F">여자</option>
 						</select>
+						</c:if>
+						<c:if test="${not empty NUserInfo}">
+						<select class="join-form__input" name="gender" id="gender">
+							<option disabled selected value="${NUserInfo.gender}" >${NUserInfo.gen}</option>
+						</select>
+						</c:if>
 					</div>
 					<div class="join-form-inline__div">
 						<label class="join-form__label">지역</label>
@@ -95,8 +120,14 @@
 						</select>
 					</div>
 				</div>
+				<c:if test="${empty NUserInfo}">
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="01033333333">
+				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" >
+				</c:if>
+				<c:if test="${not empty NUserInfo}">
+				<label class="join-form__label">휴대전화</label>
+				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="${NUserInfo.mobileNum}">
+				</c:if>
 			    <div class="error-phone-msg"></div>
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
 			<div> 

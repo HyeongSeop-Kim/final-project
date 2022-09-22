@@ -20,8 +20,8 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		MembersDTO result = session.selectOne(mapId, data);
 		return result;
 	}
-	public MembersDTO kakaoselectLogin(MembersDTO data) {
-		String mapId = String.format(mapper, "kakaoselectLogin");
+	public MembersDTO typeSelectLogin(MembersDTO data) {
+		String mapId = String.format(mapper, "typeSelectLogin");
 		MembersDTO result = session.selectOne(mapId, data);
 		return result;
 	}
@@ -141,8 +141,12 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 	public int kakaoIdchk(MembersDTO membersDTO) {
 		String mapId = String.format(mapper, "kakaoidChk");
 		String kakaoId = membersDTO.getMemberId();
-		System.out.println(kakaoId);
 		int result = session.selectOne(mapId,kakaoId);
+		return result;
+	}
+	public int phonechk(MembersDTO membersDTO) {
+		String mapId = String.format(mapper, "phoneChk");
+		int result = session.selectOne(mapId, membersDTO);
 		return result;
 	}
 

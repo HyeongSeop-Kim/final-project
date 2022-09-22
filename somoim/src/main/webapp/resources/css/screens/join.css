@@ -63,7 +63,7 @@
 	width: 48%;
 }
 
-.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg{
+.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg,.error-phone-msg{
 		color: red;
 	font-size: 15px;
 }

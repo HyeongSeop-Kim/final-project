@@ -53,8 +53,17 @@
 			memberId.focus();
 			return false;
 		}
+		
+		if(memberId.includes("@")){
+			alert("아이디에는 '@' 가 들어갈수 없습니다. 소셜로그인을 이용해주세요");
+			memberId.focus();
+			return false;
+		}
+		
+		
+		
 		if(memberName === undefined || memberName === ""){
-			alert("아이디를 입력해 주세요.");
+			alert("이름을 입력해 주세요.");
 			memberName.focus();
 			return false;
 		}
@@ -74,7 +83,7 @@
 		    if(data.code === "noData"){
 		    	alert(data.message);
 		    	// 아이디 찾기 실패했을 때 실행
-		    	msg = "해당 비밀번호는 존재하지 않습니다.";
+		    	msg = "해당 데이터가 존재하지 않습니다.";
 		    	fn_showMessage(msg,"error" );
 		    	}else if (data.code==="success") {
 		    		alert(data.pw);

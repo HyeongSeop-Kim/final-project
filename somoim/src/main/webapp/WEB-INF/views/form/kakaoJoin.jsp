@@ -29,7 +29,7 @@
 	</header>
 	<section class="form-section">
 		<div class="form-container" >
-		<c:url  var="joinKakaoAddUrl" value="/kakaoAddJoin"></c:url>
+		<c:url  var="joinKakaoAddUrl" value="/socialAddJoin"></c:url>
 			<form class="join-form " method="post" action="${joinKakaoAddUrl}">
 			<c:if test="${empty userInfo}">
 					<label class="join-form__label">아이디</label>
@@ -68,12 +68,22 @@
 					 <select class="join-form-inline__input" id="birth-year" name="year" >
 				     	 <option value="0" >출생 연도</option>
 			    	</select>
+		    		<c:if test="${empty userInfo}">
 				    <select class="join-form-inline__input" id="birth-month" name="month">
 				      <option disabled selected value="0">월</option>
 				    	</select>
 				    <select class="join-form-inline__input" id="birth-day" name="day">
 				    	  <option disabled selected value="0">일</option>
 			   	 </select>
+			   	 </c:if>
+		    		<c:if test="${not empty userInfo}">
+				    <select class="join-form-inline__input" id="birth-month" name="month">
+				      <option selected value="${userInfo.month}">${userInfo.month}</option>
+				    	</select>
+				    <select class="join-form-inline__input" id="birth-day" name="day">
+				    	  <option selected value="${userInfo.day}">${userInfo.day}</option>
+			   	 </select>
+			   	 </c:if>
 			   	 </div>
 				  <div class="error-msg"></div>
 				 </div>
@@ -97,8 +107,10 @@
 					</div>
 				</div>
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="01033333333">
-			    <div class="error-phone-msg"></div>
+				<div style="display: flex; justify-content:space-between; ">
+					<input style="width: 70%" class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰번호" >
+					<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="PhoneChk();">중복확인</button>
+			    </div>
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
 			<div> 
 				<c:forEach items="${categorysDatas}" var="categoryDto" >
@@ -242,7 +254,7 @@
 	  const idInputEl = document.querySelector('div form .info__id');
 	  const idErrorMsgEl = document.querySelector('div form  .error-id-msg')
 	  idInputEl.addEventListener('focusout', () => {
-	    const idRegExp = /^[a-zA-Z0-9]{10,20}$/ // 6~20자의 영문 소문자와 숫자
+	    const idRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
 		    if(idRegExp.test(idInputEl.value)) { // 유효성 검사 성공
 		      idErrorMsgEl.textContent = "";
 		    } else { // 유효성 검사 실패
@@ -309,7 +321,7 @@
 	  
 	  const errMsg = {
 			  id: { 
-			    invalid: "10~20자의 영문 소문자와 숫자만 사용 가능합니다",
+			    invalid: "6~20자의 영문 소문자와 숫자만 사용 가능합니다",
 			    empty: "아이디를 입력해주세요",
 			    success: "사용 가능한 아이디입니다",
 			    fail: "사용할 수 없는 아이디입니다"
@@ -322,6 +334,7 @@
 			  birth: "생년월일을 다시 확인해주세요",
 			  mobile: "‘-’ 제외 11자리를 입력해주세요" 
 			}
+	  
 	  
 
 	  function count_check(element) {
@@ -362,14 +375,36 @@
 				})
 		    }
 	}
+	  function PhoneChk() {
+		  if(phoneInputEl.value === undefined || phoneInputEl.value.trim() === ""){
+			  phoneErrorMsgEl.textContent = errMsg.mobile
+		    }else{
+				$.ajax({
+					url: "${path}/phoneChk",
+					method: "POST",
+				    data : {"phone" :document.getElementById('pnum').value},
+				    dataType : "json",
+				    success : function (data) {
+						if(data == 1){
+							alert("핸드폰 번호가 존재합니다. 확인해주세요");
+							idresult = '2';
+						}else if(data == 0){
+							alert("사용가능한 핸드폰번호 입니다.");
+							 $("input[name=phone]").attr("readonly",true);
+							idresult = '1';
+						}
+					}
+				})
+		    }
+	}
 	function formCheck(form) {
 	  let uid = document.getElementById('uId');
 	  let pw1 = document.getElementById('pw1');
 	  let pw2 = document.getElementById('pw2');
 	  let memberName = document.getElementById('memberName');
-	  let Byear = document.getElementsByName("year");
-	  let Bmonth = document.getElementsByName("month");
-	  let Bday = document.getElementsByName("day");
+	  let Byear = document.getElementById("birth-year").value;
+	  let Bmonth = document.getElementById("birth-month").value;
+	  let Bday = document.getElementById("birth-day").value;
 	  let gender = document.getElementById('gender');
 	  let location = document.getElementById('location');
 	  let phone = document.getElementById('pnum');
@@ -400,31 +435,22 @@
 		  return false;
 	  }
 	  
-	  for(year of Byear){
-		  year.value;
-	  }
-	  
-	  if (year.value === '0') {
-		alert("생년월일을 입력해주세요.")
-		return false;
-		}
-	  
-	  for(month of Bmonth){
-		  month.value;
-	  }
-	  
-	  if (month.value === '0') {
-		alert("생년월일을 입력해주세요.")
-		return false;
-		}
-	  for(day of Bday){
-		  day.value;
-	  }
-	  
-	  if (day.value === '0') {
-		alert("생년월일을 입력해주세요.")
-		return false;
-		}
+	  if (Byear === '0') {
+			alert("생년월일을 입력해주세요.")
+			return false;
+			}
+		  
+		  
+		  if (Bmonth === '0') {
+			alert("생년월일을 입력해주세요.")
+			return false;
+			}
+		  
+		  
+		  if (Bday === '0') {
+			alert("생년월일을 입력해주세요.")
+			return false;
+			}
 	  
 	  if(gender.value != 'M' && gender.value != 'F' ){
 		  alert("성별을 선택해주세요");
