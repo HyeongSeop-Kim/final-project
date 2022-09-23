@@ -322,25 +322,6 @@
 	font-weight: 400;
 }
 
-.dropdown__meeting {
-
-}
-
-.dropdown-btn {
-	margin: 0 0 1rem 1rem;
-	text-align: left;
-}
-
-.dropdown-btn:hover {
-	cursor: pointer;
-}
-
-.dropdown-content {
-	background-color: #eeeeee;
-	border-radius: 0.5rem;
-	padding: 0.5rem
-}
-
 /* 소모임 정보 및 멤버 ------------------------------------------------------*/
 .moim-info__span {
 	font-size: 1.4rem;

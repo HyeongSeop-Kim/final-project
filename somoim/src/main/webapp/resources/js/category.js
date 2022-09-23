@@ -1,6 +1,6 @@
 
 // 변수 선언
-const items = document.querySelectorAll(".col-4 .service-items");
+const items = document.querySelectorAll(".col-4 .icon--circle__cate");
 
 // hover 기능
 items.forEach( (item) => {
@@ -62,7 +62,7 @@ function modifyCategory(selectDatas) {  // DB 수정 확인 후 작동 하도록
 
     for(const data of selectDatas){
         const i = document.createElement('i');
-        const classList = 'icon-green service-sm-items ' + data;
+        const classList = 'icon--circle icon--circle__cate icon--circle__cate--small ' + data;
 
         i.setAttribute('class', classList);
         cate.insertBefore(i, cate.firstChild);
@@ -189,6 +189,22 @@ function printCate(cateList) {
 
         const i = document.createElement('i');
         const classList = className + 'icon--circle icon--circle__cate'
+        i.setAttribute('class', classList);
+
+        cate.insertBefore(i, cate.firstChild);
+    }
+}
+
+function printSmallCate(cateList) {
+    const cate = document.querySelector('#cate');
+    let arr = [];
+    arr = cateList.split(',');
+
+    for(const id of arr) {
+        let className = matchCate(id);
+
+        const i = document.createElement('i');
+        const classList = className + 'icon--circle icon--circle__cate icon--circle__cate--small'
         i.setAttribute('class', classList);
 
         cate.insertBefore(i, cate.firstChild);

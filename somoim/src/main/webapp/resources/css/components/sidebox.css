@@ -6,6 +6,10 @@
     margin-bottom: 2.4rem;
 }
 
+.side-box-flex {
+    display: flex;
+}
+
 .side-box-title {
     display: flex;
     justify-content: space-between;

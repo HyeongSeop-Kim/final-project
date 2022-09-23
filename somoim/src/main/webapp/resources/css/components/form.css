@@ -4,8 +4,8 @@ input::placeholder {
 	color:var(--gray);
 }
 .form-title {
-	font-size: 30px;
-	margin-top: 50px;
+	font-size: 3rem;
+	margin-top: 5rem;
 	text-align: center;
 }
 .div-line{
@@ -17,18 +17,18 @@ input::placeholder {
 	flex-basis: 100%;
 	align-items: center;
 	color: var(--gray);
-	font-size: 12px;
-	margin: 0px 45px;
+	font-size: 1.2rem;
+	margin: 0 4.5rem;
 }
 .hr-sect::before,
 .hr-sect::after {
 	content: "";
 	flex-grow: 1;
 	background: var(--gray);
-	height: 1px;
-	font-size: 0px;
-	line-height: 0px;
-	margin: 0px 16px;
+	height: 0.1rem;
+	font-size: 0;
+	line-height: 0;
+	margin: 0 1.6rem;
 }
 .btn-green {
 	background-color: var(--green);
@@ -39,6 +39,6 @@ input::placeholder {
 .btn-yellow {
 	background-color: var(--yellow);
 }
-.btn-light-gray {
-	background-color: var(--light-gray);
+.btn-light-grey {
+	background-color: var(--light-grey);
 }

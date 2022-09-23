@@ -1,39 +1,42 @@
-.col-4 .service-items {
-    width: 80px;
-    height: 80px;
-    font-size: 38px;
+.col-4 .icon--circle__cate {
     position: relative;
 }
 
-.col-4 .service-items:not(:last-child) {
-    margin-bottom: 5px;
+.col-4>.icon--circle__cate:not(:last-child) {
+    margin-bottom: 0.5rem;
 }
 
-.col-4 span {
+.col-4>span {
     display: inline-block;
-    margin-bottom: 20px;
-    font-size: 13px;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
+.col-4>.icon--circle__cate:nth-of-type(2n) {
+    background-color: #707070;
+}
+
 
 .hoverIcon, .selected{
-    border: 2px solid #0d6efd;
+    border: 0.3rem solid var(--green);
     cursor: pointer;
 }
 
 
 .check-badge {
-    background-color: #0d6efd;
-    width: 20px;
-    height: 20px;
+    background-color: var(--green);
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    top: 1px;
-    right: 1px;
+    top: 0.1rem;
+    right: 0.1rem;
     position: absolute;
     color: white;
 }
 
 .check-badge i {
-    top: 3px;
-    right: 4px;
+    top: 0.3rem;
+    right: 0.4rem;
     position: absolute;
+    font-size: 1.3rem;
 }

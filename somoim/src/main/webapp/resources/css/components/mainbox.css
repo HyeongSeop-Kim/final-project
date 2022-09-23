@@ -3,13 +3,24 @@
     justify-content: space-between;
     width: 144rem;
     margin: 8.3rem auto 0 auto;
+    padding-bottom: 8.3rem;
 }
 
-.main-box__info-board, .main-box__info-comment {
+.main-box__info-board,
+.main-box__info-comment {
     border: 1px solid var(--border-line__grey);
     border-radius: 1rem;
     background-color: #f7f7f7;
     padding: 3rem;
+    margin-bottom: 2.4rem;
+}
+
+.main-box__moim {
+    display: flex;
+    border: 1px solid var(--border-line__grey);
+    border-radius: 1rem;
+    background-color: #f7f7f7;
+    padding: 3rem 2rem;
     margin-bottom: 2.4rem;
 }
 

@@ -386,10 +386,10 @@
                   <div class="meeting-info__icon"><i class="fa-solid fa-user"></i></div>
                   <span>정원 ${meetingsData.meetingLimit}명</span>
                   <div class="dropdown__meeting">
-                    <div id="dropdownBtn" class="dropdown-btn">
+                    <div id="partDropdownBtn${status.count}" class="dropdown-btn">
                       <i class="fa-solid fa-angle-down"></i>
                     </div>
-                    <div id="dropdownContent" class="hidden dropdown-content scroll scroll-h85">
+                    <div id="partDropdownContent${status.count}" class="hidden dropdown-content scroll scroll-h85">
                       <c:if test="${not empty meetingParticipants}">
                         <c:forEach items="${meetingParticipants}" var="meetingParticipants">
                           <c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId}">
@@ -544,8 +544,9 @@
         crossorigin="anonymous"
 ></script>
 <script src="${path}/resources/js/moim.js"></script>
-<script src="${path}/resources/js/components/popup.js"></script>
 <script src="${path}/resources/js/meeting.js"></script>
+<script src="${path}/resources/js/components/popup.js"></script>
+<script src="${path}/resources/js/components/dropdown.js"></script>
 <script>
 
 </script>
