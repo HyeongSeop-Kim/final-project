@@ -43,12 +43,18 @@
 
 <script type="text/javascript">
     window.onload = function () {
-        previewImage.addEventListener("click", function (e) {
+        imgSelect.addEventListener("click", function (e) {
             moimImageSelect.click();
         });
 
         moimImageSelect.addEventListener("change", ajaxImageUpload);
 
+        imgSelect.addEventListener('mouseover', () => {  //  mouseover 시 hover 클래스 추가
+            hoverTarget.classList.add('hover__filter');
+        });
+        imgSelect.addEventListener('mouseout', () => {   //  mouseout 시 hover 클래스 삭제
+            hoverTarget.classList.remove('hover__filter');
+        });
     }
 
     function ajaxImageUpload(e) {
@@ -205,18 +211,19 @@
 <c:url var="boardUrl" value="/moim/board/">
   <c:param name="id" value="${moimData.moimId}">모임 입니다.</c:param>
 </c:url>
-<div class="logo">Somoim.</div>
-<!-- 유저정보 -->
+<div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_w.png"></div>
 <header class="header">
   <!-- info image -->
-  <form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+  <div id="hoverTarget" class="header-img">
+    <div id="imgSelect" class="img-grad-layer"></div>
     <div class="header-img">
-      <img id="previewImage"
-           class="header-img__img"
-           alt="이미지 선택"
-           src="${moimData.moimImagePath}"
-      />
-      <c:if test="${res.jobId eq 1}">
+      <form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+        <img id="previewImage"
+             class="header-img__img"
+             alt="이미지 선택"
+             src="${moimData.moimImagePath}"
+        />
+        <c:if test="${res.jobId eq 1}">
         <input id="moimImageSelect"
                class="hidden"
                type="file"
@@ -224,9 +231,10 @@
                name="moimimage"
                multiple
         />
-      </c:if>
+        </c:if>
     </div>
-  </form>
+    </form>
+  </div>
 
   <!-- 소모임 정보 -->
   <div class="header-info-box">

@@ -133,6 +133,17 @@ footer .add-btn {
   display: flex;
   height: 15rem;
   margin-bottom: 4rem;
+  position: relative;
+}
+
+.cate__grad-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 19.2rem;
+  height: 14rem;
+  z-index: 1;
+  background: linear-gradient(to left, #ffffff 25%, #ffffff 25%,  #ffffff00);
 }
 
 .main-search-add {
@@ -228,4 +239,10 @@ footer .add-btn {
   align-items: center;
   font-size: 2.5rem;
   margin-right: 1rem;
+}
+
+.add-cate-list {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 3rem;
 }

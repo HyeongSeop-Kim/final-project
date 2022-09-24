@@ -48,14 +48,6 @@ header {
     top: -4.8rem;
 }
 
-.form-section {
-	display: flex;
-	justify-content: center;
-}
-
-.form-container {
-	width: 500px;
-}
 /* css 수정 */
 .logo {
     color: white;
@@ -65,6 +57,9 @@ header {
     z-index: 10;
     width: 139.6rem;
     margin: 0 auto 0 auto;
+}
+.logo:hover {
+    cursor: pointer;
 }
 
 .hidden {
@@ -81,6 +76,11 @@ header {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+
+.hover__filter {
+    filter: brightness(80%);
+}
+
 
 /* 스크롤바 CSS */
 

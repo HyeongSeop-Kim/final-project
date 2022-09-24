@@ -18,12 +18,13 @@
 	<script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<div class="logo">Somoim.</div>
+	<div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_w.png"></div>
   <!-- 유저정보 -->
 	<header class="header">
 		<!-- info image -->
-		<div class="header-img">
-			<img id="infoImg" class="header-img__img" src="${sessionScope.loginData.infoImagePath}" accept="image/*">
+		<div id="hoverTarget" class="header-img">
+			<div id="infoImg" class="img-grad-layer"></div>
+			<img class="header-img__img" src="${sessionScope.loginData.infoImagePath}" accept="image/*">
 			<input id="infoImgSelect" class="hidden" type="file" name="uploadImg" value="이미지 선택">
 		</div>
 		<!-- 프로필 -->

@@ -28,12 +28,18 @@
 
   <script type="text/javascript">
 		window.onload = function () {
-			previewImage.addEventListener("click", function (e) {
+			imgSelect.addEventListener("click", function (e) {
 				moimImageSelect.click();
 			});
 
 			moimImageSelect.addEventListener("change", ajaxImageUpload);
 
+			imgSelect.addEventListener('mouseover', () => {  //  mouseover 시 hover 클래스 추가
+				hoverTarget.classList.add('hover__filter');
+			});
+			imgSelect.addEventListener('mouseout', () => {   //  mouseout 시 hover 클래스 삭제
+				hoverTarget.classList.remove('hover__filter');
+			});
 		}
 
 		function ajaxImageUpload(e) {
@@ -310,18 +316,20 @@
 
 
 <body>
-<div class="logo">Somoim.</div>
+<div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_w.png"></div>
 <!-- 유저정보 -->
 <header class="header">
 	<!-- info image -->
-	<form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+	<div id="hoverTarget" class="header-img">
+		<div id="imgSelect" class="img-grad-layer"></div>
 		<div class="header-img">
-			<img id="previewImage"
-					 class="header-img__img"
-					 alt="이미지 선택"
-					 src="${moimData.moimImagePath}"
-			/>
-			<c:if test="${res.jobId eq 1}">
+			<form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+				<img id="previewImage"
+						 class="header-img__img"
+						 alt="이미지 선택"
+						 src="${moimData.moimImagePath}"
+				/>
+				<c:if test="${res.jobId eq 1}">
 				<input id="moimImageSelect"
 							 class="hidden"
 							 type="file"
@@ -329,9 +337,10 @@
 							 name="moimimage"
 							 multiple
 				/>
-			</c:if>
+				</c:if>
 		</div>
-	</form>
+		</form>
+	</div>
 
 	<!-- 소모임 정보 -->
 	<div class="header-info-box">
@@ -459,12 +468,14 @@
 			<!--첫번째 게시글 박스-->
 			<div class="main-box__board">
 				<div class="board-title">
-					${data.boardTitle}
+					<span>${data.boardTitle}</span>
+					<div>
 						<c:if test="${sessionScope.loginData.memberId eq data.memberId}"> <!-- 일치한경우에만 수정,삭제 버튼을 표시한다. -->
 								<c:url var="boardModifyUrl" value="/moim/board/modify"/>
-								<button class="btn btn-sm btn-outline-dark" type="button" onclick="location.href='${boardModifyUrl}?id=${data.moimId}&boardId=${data.boardId}'" >수정</button>
-								<button class="btn btn-sm btn-outline-dark" type="button" onclick="deleteBoard(${data.boardId})">삭제</button>
+								<button class="btn--letter" type="button" onclick="location.href='${boardModifyUrl}?id=${data.moimId}&boardId=${data.boardId}'" >수정</button>
+								<button class="btn--letter" type="button" onclick="deleteBoard(${data.boardId})">삭제</button>
 						</c:if>
+					</div>
 				</div>
 				<div class="board-header">
 					<div class="board-writer-img">

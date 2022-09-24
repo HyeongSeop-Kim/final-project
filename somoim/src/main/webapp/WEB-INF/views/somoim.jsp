@@ -26,138 +26,141 @@
 </head>
 
 <body>
-<div class="logo" style="color: var(--purple)">Somoim.</div>
+<div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_p.png"></div>
 	<header>
 	</header>
 	<main class="main">
 		<section class="col-8">
 			<div class="main-box">
-				<div class="main-cate scroll-x">
-					<div class="icon__div">
-					<div id="cate_1" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="1" />
-						<i class="fa-solid fa-suitcase"></i>
-					</div>
-					<span>아웃도어/여행</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_2" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="2" />
-						<i class="fa-solid fa-person-swimming"></i>
-					</div>
-					<span>운동/스포츠</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_3" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="3" />
-						<i class="fa-solid fa-book"></i>
-					</div>
-					<span>인문학/책/글</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_4" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="4" />
-						<i class="fa-solid fa-language"></i>
-					</div>
-					<span>외국/언어</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_5" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="5" />
-						<i class="fa-solid fa-masks-theater"></i>
-					</div>
-					<span>문화/공연/축제</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_6" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="6" />
-						<i class="fa-solid fa-music"></i>
-					</div>
-					<span>음악/악기</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_7" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="7" />
-						<i class="fa-solid fa-palette"></i>
-					</div>
-					<span>공예/만들기</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_8" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="8" />
-						<i class="fa-solid fa-user-ninja"></i>
-					</div>
-					<span>댄스/무용</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_9" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="9" />
-						<i class="fa-solid fa-hands"></i>
-					</div>
-					<span>봉사활동</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_10" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="10" />
-						<i class="fa-solid fa-handshake-simple"></i>
-					</div>
-					<span>사교/인맥</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_11" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="11" />
-						<i class="fa-solid fa-car" ></i>
-					</div>
-					<span>차/오토바이</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_12" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="12" />
-						<i class="fa-brands fa-youtube"></i>
-					</div>
-					<span>사진/영상</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_13" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="13" />
-						<i class="fa-solid fa-baseball-bat-ball"></i>
-					</div>
-					<span>야구관람</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_14" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="14" />
-						<i class="fa-solid fa-gamepad"></i>
-					</div>
-					<span>게임/오락</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_15" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="15" />
-						<i class="fa-solid fa-utensils"></i>
-					</div>
-					<span>요리/체조</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_16" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="16" />
-						<i class="fa-solid fa-dog"></i>
-					</div>
-					<span>반려동물</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_17" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="17" />
-						<i class="fa-solid fa-hand-holding-heart"></i>
-					</div>
-					<span>가족/결혼</span>
-					</div>
-					<div class="icon__div">
-					<div  id="cate_18" class="icon--circle icon--circle__cate">
-						<input type="hidden"  value="18" />
-						<i class="fa-solid fa-paper-plane"></i>
-					</div>
-					<span>자유주제</span>
+				<div class="main-cate">
+					<div class="cate__grad-layer"></div>
+					<div class="main-cate scroll-x">
+						<div class="icon__div">
+						<div id="cate_1" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="1" />
+							<i class="fa-solid fa-suitcase"></i>
+						</div>
+						<span>아웃도어/여행</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_2" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="2" />
+							<i class="fa-solid fa-person-swimming"></i>
+						</div>
+						<span>운동/스포츠</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_3" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="3" />
+							<i class="fa-solid fa-book"></i>
+						</div>
+						<span>인문학/책/글</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_4" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="4" />
+							<i class="fa-solid fa-language"></i>
+						</div>
+						<span>외국/언어</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_5" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="5" />
+							<i class="fa-solid fa-masks-theater"></i>
+						</div>
+						<span>문화/공연/축제</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_6" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="6" />
+							<i class="fa-solid fa-music"></i>
+						</div>
+						<span>음악/악기</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_7" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="7" />
+							<i class="fa-solid fa-palette"></i>
+						</div>
+						<span>공예/만들기</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_8" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="8" />
+							<i class="fa-solid fa-user-ninja"></i>
+						</div>
+						<span>댄스/무용</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_9" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="9" />
+							<i class="fa-solid fa-hands"></i>
+						</div>
+						<span>봉사활동</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_10" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="10" />
+							<i class="fa-solid fa-handshake-simple"></i>
+						</div>
+						<span>사교/인맥</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_11" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="11" />
+							<i class="fa-solid fa-car" ></i>
+						</div>
+						<span>차/오토바이</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_12" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="12" />
+							<i class="fa-brands fa-youtube"></i>
+						</div>
+						<span>사진/영상</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_13" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="13" />
+							<i class="fa-solid fa-baseball-bat-ball"></i>
+						</div>
+						<span>야구관람</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_14" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="14" />
+							<i class="fa-solid fa-gamepad"></i>
+						</div>
+						<span>게임/오락</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_15" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="15" />
+							<i class="fa-solid fa-utensils"></i>
+						</div>
+						<span>요리/체조</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_16" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="16" />
+							<i class="fa-solid fa-dog"></i>
+						</div>
+						<span>반려동물</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_17" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="17" />
+							<i class="fa-solid fa-hand-holding-heart"></i>
+						</div>
+						<span>가족/결혼</span>
+						</div>
+						<div class="icon__div">
+						<div  id="cate_18" class="icon--circle icon--circle__cate">
+							<input type="hidden"  value="18" />
+							<i class="fa-solid fa-paper-plane"></i>
+						</div>
+						<span>자유주제</span>
+						</div>
 					</div>
 				</div>
 			</div>
