@@ -687,21 +687,25 @@ public class MoimController {
 	   MoimParticipantsDTO res = moimParticipantsService.getData(data);
 
 	   int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);  //현재 정원확인
-	   if(currentMemberCount >= moimData.getMoimLimit() ) { //정원수 초과할경우 정원마감모임이라고 알려주기
-		   model.addAttribute("over" , "초과");
+	   if (currentMemberCount >= moimData.getMoimLimit()) { //정원수 초과할경우 정원마감모임이라고 알려주기
+		   model.addAttribute("over", "초과");
 	   }
 
-	   int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
-	   if(bookmarkcheck == 1 ) {
-		   model.addAttribute("bookmarkcheck" , bookmarkcheck);
-	   }else if(bookmarkcheck == 3) {
-		   model.addAttribute("bookmarkcheck" , bookmarkcheck);
+	   int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(), id); //북마크체크
+	   if (bookmarkcheck == 1) {
+		   model.addAttribute("bookmarkcheck", bookmarkcheck);
+	   } else if (bookmarkcheck == 3) {
+		   model.addAttribute("bookmarkcheck", bookmarkcheck);
 	   }
 
-	   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
-	   model.addAttribute("moimData" , moimData); //모임정보
-	   model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
+	   model.addAttribute("res", res);//참가자정보확인하고 가입,작성버튼출력
+	   model.addAttribute("moimData", moimData); //모임정보
+	   model.addAttribute("moimParticipants", moimParticipants); //모임참가자 정보
 	   model.addAttribute("currentMemberCount", currentMemberCount); //현재정원수
+
+	   model.addAttribute("moimId",id);
+	   return "moim/boardadd";
+	}
    public String boardAddPage(Model model,
 			@RequestParam int id
 			,HttpSession session
