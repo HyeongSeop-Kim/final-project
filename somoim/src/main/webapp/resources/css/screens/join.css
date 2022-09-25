@@ -1,4 +1,4 @@
-@charset "UTF-8";
+e@charset "UTF-8";
 
 .join-form {
 	display: flex;
@@ -63,7 +63,7 @@
 	width: 48%;
 }
 
-.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg,.error-phone-msg{
+.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg,.error-phone-msg, .error_login{
 		color: red;
 	font-size: 15px;
 }

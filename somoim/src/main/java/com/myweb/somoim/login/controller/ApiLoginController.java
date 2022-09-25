@@ -81,12 +81,19 @@ public class ApiLoginController {
 			,@RequestParam (required = false) String memberName
 			,@RequestParam (required = false, defaultValue ="/resources/img/members/basicImg.png" ) String memberImagePath
 			,@RequestParam (required = false) String loginType) {
+		
+		
 		if (month.length() < 2) {
 			month = "0"+month;
 		}
 		if (day.length() < 2) {
 			day = "0"+day;
 		}
+		System.out.println("월 = "+ month);
+		System.out.println("일 = "+ day);
+		System.out.println(membersDTO);
+		
+		
 		String bitrhs = year+month+day;
 		
 		String imagePath = request.getContextPath() + memberImagePath;
@@ -104,7 +111,7 @@ public class ApiLoginController {
 		data.setBirth(bitrhs);
 		data.setMemberImagePath(imagePath);
 		// 카카오 로그인 컨트롤를 통한 회원가입의 loginType --> kakao
-		System.out.println(loginType);
+		System.out.println("#####" +"["+loginType+"]" +"#####");
 		data.setLoginType(loginType);
 		
 		
@@ -236,7 +243,6 @@ public class ApiLoginController {
 						   session.setAttribute("accessToken", accessToken);
 						   return "redirect:/";
 		                }
-		                System.out.println("원인이 몰까요");
 		                
 				} catch (ParseException e) {
 				 e.printStackTrace();
@@ -345,7 +351,7 @@ public class ApiLoginController {
         System.out.println("네이버 로그인 시 데이터 베이스에 id + 로그인 타입이 있다면 바로 로그인 실행");
         System.out.println(loginInfoChk);
         if (loginInfoChk != null) {
-		   session.setAttribute("loginData", loginInfoChk);
+		   session.setAttribute("NloginData", loginInfoChk);
 		   return "redirect:/";
 		}
 	return "form/naverJoin";

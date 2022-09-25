@@ -60,8 +60,6 @@
 			return false;
 		}
 		
-		
-		
 		if(memberName === undefined || memberName === ""){
 			alert("이름을 입력해 주세요.");
 			memberName.focus();

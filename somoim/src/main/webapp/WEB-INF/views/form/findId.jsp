@@ -28,13 +28,13 @@
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
 					 <select class="join-form-inline__input" id="birth-year" name="year">
-				     	 <option disabled selected value="">출생 연도</option>
+				     	 <option selected value="">출생 연도</option>
 			    	</select>
 				    <select class="join-form-inline__input" id="birth-month" name="month">
-				      <option disabled selected value="">월</option>
+				      <option selected value="">월</option>
 				    	</select>
 				    <select class="join-form-inline__input" id="birth-day" name="day">
-				    	  <option disabled selected value="">일</option>
+				    	  <option selected value="">일</option>
 			   	 </select>
 			   	 </div>
 				  <div class="error-msg"></div>
