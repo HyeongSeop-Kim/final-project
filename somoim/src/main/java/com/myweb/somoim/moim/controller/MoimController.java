@@ -202,6 +202,7 @@ public class MoimController {
 				return json.toJSONString();
 			}
 		}
+
 		json.put("code",   "error");
 		json.put("message",   "알 수 없는 오류가 발생했습니다. 다시 시도해주세요");
 		return json.toJSONString();
@@ -475,13 +476,42 @@ public class MoimController {
 			            ,@RequestParam int id
 			            ,@RequestParam int boardId
 			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+		SomoimDTO moimData = somoimService.getData(id);//모임정보
+		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+
+		MoimParticipantsDTO partData = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
+		partData.setMemberId(membersDto.getMemberId());
+		partData.setMoimId(id);
+
+		MoimParticipantsDTO res = moimParticipantsService.getData(partData);
+
+		int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);  //현재 정원확인
+		if(currentMemberCount >= moimData.getMoimLimit() ) { //정원수 초과할경우 정원마감모임이라고 알려주기
+			model.addAttribute("over" , "초과");
+		}
+
+		int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
+		if(bookmarkcheck == 1 ) {
+			model.addAttribute("bookmarkcheck" , bookmarkcheck);
+		}else if(bookmarkcheck == 3) {
+			model.addAttribute("bookmarkcheck" , bookmarkcheck);
+		}
+
+		model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
+		model.addAttribute("moimData" , moimData); //모임정보
+		model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
+		model.addAttribute("currentMemberCount", currentMemberCount); //현재정원수
+
 		BoardsDTO data =  boardsService.getData(boardId);//존재하는 게시글인지 확인
 		if(data == null) {
 			  model.addAttribute("id",id);
 			  model.addAttribute("data",data);
 		}else {
-			  model.addAttribute("data",data);
+			model.addAttribute("id",id);
+			model.addAttribute("data",data);
 		}
+
 		return "moim/boardmodify";
 	}
 
@@ -595,12 +625,21 @@ public class MoimController {
 	}
 
 	@GetMapping(value = "/moim/remove")
-	public String removeMoim(@RequestParam int id){
-		boolean removeMeetingPart = meetingParticipantsService.removeDatas(id);
-		boolean removeMeeting = meetingsService.removeData(id);
-		boolean removeMoimPart = moimParticipantsService.removeData(id);
-		boolean removeBoard = boardsService.removeBoardsData(id);
-		boolean removeMoim = somoimService.removeData(id);
+	public String removeMoim(HttpSession session, @RequestParam int id){
+		MembersDTO loginData = (MembersDTO)session.getAttribute("loginData");
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(loginData.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1) {
+			boolean removeMeetingPart = meetingParticipantsService.removeDatas(id);
+			boolean removeMeeting = meetingsService.removeData(id);
+			boolean removeMoimPart = moimParticipantsService.removeData(id);
+			boolean removeBoard = boardsService.removeBoardsData(id);
+			boolean removeMoim = somoimService.removeData(id);
+		} else {
+			return null;	// 에러페이지로
+		}
 
 		return "redirect:/";
 	}
@@ -633,6 +672,36 @@ public class MoimController {
    }
 
    @RequestMapping(value = "/moim/board/add", method = RequestMethod.GET)
+
+	public String boardAddPage(Model model
+		   ,@RequestParam int id
+		   ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+
+	   SomoimDTO moimData = somoimService.getData(id);//모임정보
+	   List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+
+	   MoimParticipantsDTO data = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
+	   data.setMemberId(membersDto.getMemberId());
+	   data.setMoimId(id);
+
+	   MoimParticipantsDTO res = moimParticipantsService.getData(data);
+
+	   int currentMemberCount = moimParticipantsService.getcurrentMemberCount(id);  //현재 정원확인
+	   if(currentMemberCount >= moimData.getMoimLimit() ) { //정원수 초과할경우 정원마감모임이라고 알려주기
+		   model.addAttribute("over" , "초과");
+	   }
+
+	   int bookmarkcheck = memberService.checkBookMarkData(membersDto.getMemberId(),id); //북마크체크
+	   if(bookmarkcheck == 1 ) {
+		   model.addAttribute("bookmarkcheck" , bookmarkcheck);
+	   }else if(bookmarkcheck == 3) {
+		   model.addAttribute("bookmarkcheck" , bookmarkcheck);
+	   }
+
+	   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
+	   model.addAttribute("moimData" , moimData); //모임정보
+	   model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
+	   model.addAttribute("currentMemberCount", currentMemberCount); //현재정원수
    public String boardAddPage(Model model,
 			@RequestParam int id
 			,HttpSession session
@@ -897,10 +966,19 @@ public class MoimController {
 	@GetMapping(value = "/moim/modJob")
 	public String modJob(HttpServletRequest request
 			,@RequestParam int id
-			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+			,@SessionAttribute("loginData") MembersDTO loginData ) {
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(loginData.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1) {
+			List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
-		request.setAttribute("moimParticipants",moimParticipants);
+			request.setAttribute("moimParticipants",moimParticipants);
+		} else {
+			return null;	// 에러페이지로
+		}
+
 		return "form/modJob";
 	}
 
@@ -915,25 +993,32 @@ public class MoimController {
 	@PostMapping(value = "/moim/addMeeting")
 	public String addMeeting(MeetingsDTO meetingsDTO
 			, HttpSession session
+			, @RequestParam int id
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		LocalDate now = LocalDate.now();
-		String year = String.valueOf(now.getYear());
-		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
-		Date date = java.sql.Date.valueOf(meetingDate);
-		int meetingId = meetingsService.getNextSeq();
-		meetingsDTO.setMeetingDate(date);
-		meetingsDTO.setMeetingId(meetingId);
+		List<MeetingParticipantsDTO> meetingParticipantsDatas = meetingParticipantsService.getDatas(id);
+		if(meetingParticipantsDatas.size()<4) {
+			LocalDate now = LocalDate.now();
+			String year = String.valueOf(now.getYear());
+			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+			Date date = java.sql.Date.valueOf(meetingDate);
+			int meetingId = meetingsService.getNextSeq();
+			meetingsDTO.setMeetingDate(date);
+			meetingsDTO.setMeetingId(meetingId);
 
-		meetingsService.addData(meetingsDTO);
+			meetingsService.addData(meetingsDTO);
 
-		MeetingParticipantsDTO meetingParticipantsDTO = new MeetingParticipantsDTO();
-		meetingParticipantsDTO.setMeetingId(meetingsDTO.getMeetingId());
-		meetingParticipantsDTO.setMoimId(meetingsDTO.getMoimId());
-		meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
+			MeetingParticipantsDTO meetingParticipantsDTO = new MeetingParticipantsDTO();
+			meetingParticipantsDTO.setMeetingId(meetingsDTO.getMeetingId());
+			meetingParticipantsDTO.setMoimId(meetingsDTO.getMoimId());
+			meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
 
-		meetingParticipantsService.addData(meetingParticipantsDTO);
-		return null;
+			meetingParticipantsService.addData(meetingParticipantsDTO);
+			return "/moim/addMeeting";
+		} else {
+			return null; // eror페이지로 이동
+		}
+
 //		boolean result = meetingsService.addData(data);
 //
 //		if (result) {

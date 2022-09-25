@@ -9,27 +9,37 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="${path}/resources/css/screens/startPage.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+				integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+				crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="${path}/resources/css/styles.css">
 <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
-<title>SOMOIM</title>
+<title>어울림</title>
 </head>
 <body>
-	<div class ="container_start">
-		<div class="header">
-			<h1 id="reload">somoim</h1>		
-		</div>
-		<section>
-			<div class="hero">
-				<h2>
-					소모임
-				</h2>
-				<p>경험할 수 없던 다양한 취미 활동을 즐겨봐!!!!!<br>소모임을 통해 자기개발과 취미생활을 시작해보세요.</p>
-				<button type="button" onclick="location.href='login'">시작하기</button>
+	<header>
+	</header>
+<main class="main">
+	<section class="start-page">
+	<div>
+		<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+	</div>
+	<div class="start-page-title">
+		<span>당신의</span>
+		<span>취미는</span>
+		<span>무엇인가요?</span>
+	</div>
+		<div>
+			<div class="start-page-btn" onclick="location.href='login'">
+				<button type="button">취미 찾으러 가기</button>
+				<div class="start-page-arrow"><i class="fa-solid fa-arrow-right"></i></div>
 			</div>
+		</div>
 	</section>
-</div>
-<div>
-</div>
+	<section class="start-page-img">
+		<img src="${path}/resources/img/logos/main_intro.png" />
+	</section>
+</main>
 </body>
 <script type="text/javascript">
 window.addEventListener("load", event => {

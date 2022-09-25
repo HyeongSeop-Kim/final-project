@@ -13,9 +13,3 @@ commentBtn.addEventListener('click', () => {
     commentBox.classList.toggle('hidden');
 })
 
-const dropdownBtn = document.querySelector('#dropdownBtn');
-const dropdownContent = document.querySelector('#dropdownContent');
-
-dropdownBtn.addEventListener('click', () => {
-    dropdownContent.classList.toggle('hidden');
-});

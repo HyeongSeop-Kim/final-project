@@ -58,3 +58,6 @@
 .btn--yellow {
     background-color: var(--yellow);
 }
+.btn--grey {
+    background-color: var(--grey);
+}

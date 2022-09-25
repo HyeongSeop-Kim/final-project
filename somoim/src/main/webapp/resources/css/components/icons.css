@@ -1,3 +1,14 @@
+.icon__div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-right: 1rem;
+}
+
+.icon__div>div {
+    margin-bottom: 1rem;
+}
+
 .icon--circle {
     border-radius: 50%;
 }
@@ -13,6 +24,12 @@
     font-size: 4rem;
 }
 
+.icon--circle__cate--small {
+    width: 7rem;
+    height: 7rem;
+    font-size: 3rem;
+}
+
 .icon--circle__member {
     width: 6rem;
     height: 6rem;
@@ -25,6 +42,9 @@
 }
 
 .icon--circle__cate:nth-child(2n) {
+    background-color: #707070;
+}
+.icon__div:nth-child(2n)>.icon--circle__cate {
     background-color: #707070;
 }
 
@@ -53,6 +73,14 @@
     height: 6rem;
     border-radius: 0.5rem;
     margin-right: 1.5rem;
+}
+
+
+.icon--square--big {
+    width:7rem;
+    height: 7rem;
+    border-radius: 1rem;
+    margin-right: 2rem;
 }
 
 .icon--square--small {

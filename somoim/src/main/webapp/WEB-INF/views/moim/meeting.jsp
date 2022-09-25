@@ -34,12 +34,18 @@
 
 <script type="text/javascript">
     window.onload = function () {
-        previewImage.addEventListener("click", function (e) {
+        imgSelect.addEventListener("click", function (e) {
             moimImageSelect.click();
         });
 
         moimImageSelect.addEventListener("change", ajaxImageUpload);
 
+        imgSelect.addEventListener('mouseover', () => {  //  mouseover 시 hover 클래스 추가
+            hoverTarget.classList.add('hover__filter');
+        });
+        imgSelect.addEventListener('mouseout', () => {   //  mouseout 시 hover 클래스 삭제
+            hoverTarget.classList.remove('hover__filter');
+        });
     }
 
     function ajaxImageUpload(e) {
@@ -198,12 +204,14 @@
 <c:url var="meetingUrl" value="/moim/meeting/">
   <c:param name="id" value="${moimData.moimId}">모임 입니다.</c:param>
 </c:url>
-<div class="logo">Somoim.</div>
+<div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_w.png"></div>
 <!-- 유저정보 -->
 <header class="header">
   <!-- info image -->
-  <form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
+  <div id="hoverTarget" class="header-img">
+    <div id="imgSelect" class="img-grad-layer"></div>
     <div class="header-img">
+  <form action="${moimUpdateImageUrl}" method="post" enctype="multipart/form-data">
         <img id="previewImage"
              class="header-img__img"
              alt="이미지 선택"
@@ -220,6 +228,7 @@
         </c:if>
     </div>
   </form>
+  </div>
 
   <!-- 소모임 정보 -->
   <div class="header-info-box">
@@ -386,10 +395,10 @@
                   <div class="meeting-info__icon"><i class="fa-solid fa-user"></i></div>
                   <span>정원 ${meetingsData.meetingLimit}명</span>
                   <div class="dropdown__meeting">
-                    <div id="dropdownBtn" class="dropdown-btn">
+                    <div id="partDropdownBtn${status.count}" class="dropdown-btn">
                       <i class="fa-solid fa-angle-down"></i>
                     </div>
-                    <div id="dropdownContent" class="hidden dropdown-content scroll scroll-h85">
+                    <div id="partDropdownContent${status.count}" class="hidden dropdown-content scroll scroll-h85">
                       <c:if test="${not empty meetingParticipants}">
                         <c:forEach items="${meetingParticipants}" var="meetingParticipants">
                           <c:if test="${meetingParticipants.meetingId eq meetingsData.meetingId}">
@@ -544,8 +553,10 @@
         crossorigin="anonymous"
 ></script>
 <script src="${path}/resources/js/moim.js"></script>
-<script src="${path}/resources/js/components/popup.js"></script>
 <script src="${path}/resources/js/meeting.js"></script>
+<script src="${path}/resources/js/info.js"></script>
+<script src="${path}/resources/js/components/popup.js"></script>
+<script src="${path}/resources/js/components/dropdown.js"></script>
 <script>
 
 </script>

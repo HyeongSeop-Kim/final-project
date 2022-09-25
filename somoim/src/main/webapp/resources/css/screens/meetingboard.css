@@ -322,25 +322,6 @@
 	font-weight: 400;
 }
 
-.dropdown__meeting {
-
-}
-
-.dropdown-btn {
-	margin: 0 0 1rem 1rem;
-	text-align: left;
-}
-
-.dropdown-btn:hover {
-	cursor: pointer;
-}
-
-.dropdown-content {
-	background-color: #eeeeee;
-	border-radius: 0.5rem;
-	padding: 0.5rem
-}
-
 /* 소모임 정보 및 멤버 ------------------------------------------------------*/
 .moim-info__span {
 	font-size: 1.4rem;
@@ -412,6 +393,8 @@
 	font-size: 3rem;
 	font-weight: 700;
 	margin-bottom: 1.5rem;
+	display: flex;
+	justify-content: space-between;
 }
 
 .board-writer-img,
@@ -494,4 +477,100 @@
 
 .comment-footer>span {
 	margin-right: 1rem;
+}
+
+/* 게시글 작성 폼 */
+.board-add-title {
+	margin-bottom: 3rem;
+	font-size: 2.4rem;
+	font-weight: 700;
+}
+
+.add-form {
+	font-size: 1.4rem;
+}
+
+.add-form__input {
+	display: block;
+	flex:1;
+	padding: 0.5rem 1rem;
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border-radius: 0.25rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.add-form__group {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	margin-bottom: 2rem;
+}
+
+.add-form__group:first-of-type {
+	margin-bottom: 3rem;
+}
+
+.add-form__group span:nth-of-type(2) {
+	background-color: transparent;
+}
+
+.add-form__group-text {
+	display: flex;
+	align-items: center;
+	padding: 0.5rem 1rem;
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #e9ecef;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+}
+
+.add-form__select {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 1rem;
+	font-size: 1.6rem;
+	border-radius: 0.3rem;
+	flex: 1;
+}
+
+.add-form__btn {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.add-form__two-group {
+	display: flex;
+}
+
+.test-group {
+	width: 100%;
+	margin-bottom: 2rem;
+}
+
+.test-group:last-of-type {
+	margin-left: 3rem;
+}
+
+.add-form__btn button {
+	margin-left: 2rem;
+}
+
+.board-add__label {
+	margin-bottom:1rem;
+	font-size: 1.6rem;
 }

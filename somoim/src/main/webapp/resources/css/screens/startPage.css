@@ -1,24 +1,58 @@
 @charset "UTF-8";
 
-/* font */
-@font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+.start-page {
+	margin-left: 3rem;
 }
 
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;;
+.start-page>div:first-of-type {
+	margin-top: 4rem;
 }
 
-.container_start{
-	width: 100%;
-	height: 100vh;
-	background: white;
+.start-page-title {
+	margin-top: 4rem;
 }
+
+.start-page-title>span {
+	display: block;
+	font-size: 6rem;
+	margin-top: 2rem;
+}
+
+.start-page-btn {
+	width: 34rem;
+	height: 7rem;
+	border-radius: 17rem;
+	background-color: var(--grey);
+	margin-top: 4rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.start-page-btn>button {
+	background-color: transparent;
+	border: none;
+	font-size: 2rem;
+	padding-left: 3rem;
+}
+
+.start-page-btn:hover {
+	cursor: pointer;
+}
+
+.start-page-arrow {
+	width: 7rem;
+	height: 7rem;
+	display: flex;
+	border-radius: 50%;
+	background-color: var(--purple);
+	color: white;
+	justify-content: center;
+	align-items: center;
+	font-size: 2.8rem;
+	font-weight: 400;
+}
+
 
 .container_start .header{
 	width: 80%;
@@ -62,8 +96,8 @@
 	cursor: pointer;
 	transition: all .4s;
 	font-family: GmarketSansMedium;
-	
-}	
+
+}
 
 .container_start .hero button:hover{
 	background-color:  darkslategray;
