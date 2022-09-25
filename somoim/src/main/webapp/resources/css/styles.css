@@ -22,6 +22,7 @@
 @import "screens/meetingboard.css";
 @import "screens/category.css";
 @import "screens/startPage.css";
+@import "screens/error.css";
 
 /* font */
 @font-face {
