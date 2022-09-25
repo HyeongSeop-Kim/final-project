@@ -215,7 +215,6 @@ public class MoimController {
 			@RequestParam String memberId
 			//,@RequestParam String test //보드 미팅 리다이렉트시 구분하기위해 넣은 값
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-	   JSONObject json = new JSONObject();
 	    JSONObject json = new JSONObject();
 	    int res = memberService.checkBookMarkData(memberId,id);
 
@@ -779,10 +778,6 @@ public class MoimController {
 
 	  commentsDto.setContent(content);
 	  commentsDto.setCommentId(cid);
-
-	  JSONObject json = new JSONObject();
-
-
 
 	  if(data == null) {
 		   json.put("code",   "notexist");
