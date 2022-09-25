@@ -83,6 +83,8 @@ public class LoginController {
 			return "redirect:/";
 		} else {
 			// 로그인 실패
+			model.addAttribute("loginError", " 아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.\n"
+												+ "입력하신 내용을 다시 확인해주세요.");
 			return home(model, session);
 		}
 	}
@@ -150,6 +152,8 @@ public class LoginController {
 	@RequestMapping(value = "idChk", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public int idChk(MembersDTO membersDTO) throws Exception {
+		
+		
 		int result = membersService.idChk(membersDTO);
 		// 아이디 중복 체크 버튼 클릭 시
 		// 아이디 중복 = 1

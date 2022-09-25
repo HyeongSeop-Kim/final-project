@@ -70,10 +70,10 @@
 			    	</select>
 		    		<c:if test="${empty userInfo}">
 				    <select class="join-form-inline__input" id="birth-month" name="month">
-				      <option disabled selected value="0">월</option>
+				      <option selected value="0">월</option>
 				    	</select>
 				    <select class="join-form-inline__input" id="birth-day" name="day">
-				    	  <option disabled selected value="0">일</option>
+				    	  <option  selected value="0">일</option>
 			   	 </select>
 			   	 </c:if>
 		    		<c:if test="${not empty userInfo}">

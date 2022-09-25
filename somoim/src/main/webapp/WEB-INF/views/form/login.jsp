@@ -33,6 +33,11 @@
 			    <span class="logging_box">
 			    	<input class="login-form__checkbox" type="checkbox" name="userCookies"  id="logging"/>
 			       	<label for="logging">로그인 상태 유지</label>
+			    <c:if test="${not empty loginError}">
+			    	<div style="text-align: initial; padding-top: 5px; initial; font-size: 14px;" class="error_login">
+			    		${loginError}
+			    	</div>
+			    </c:if>
 			    </span>
 			    <input class="login-form__btn btn-green" type="submit" value="로그인"  />
 			</form>
@@ -52,7 +57,6 @@
 		</div>
 	</section>
 </body>
-
 <script type="text/javascript">
 </script>
 </html>

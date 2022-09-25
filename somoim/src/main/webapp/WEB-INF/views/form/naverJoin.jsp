@@ -84,11 +84,11 @@
 			   	 	</select>
 			   	 	</c:if>
 			    	 <c:if test="${not empty NUserInfo}">
-				    <select class="join-form-inline__input" id="birth-month" name="month" readonly >
-				      <option  selected value="">${NUserInfo.BMonth}</option>
+				    <select class="join-form-inline__input" id="birth-month" name="month"  >
+				      <option selected value="${NUserInfo.BMonth}">${NUserInfo.BMonth}</option>
 				    	</select>
 				    <select class="join-form-inline__input" id="birth-day" name="day">
-				    	  <option  selected value="">${NUserInfo.BDay}</option>
+				    	  <option  selected value="${NUserInfo.BDay}">${NUserInfo.BDay}</option>
 			   	 	</select>
 			   	 	</c:if>
 			   	 </div>
@@ -99,14 +99,14 @@
 						<label class="join-form__label">성별</label>
 						<c:if test="${empty NUserInfo}">
 						<select class="join-form__input" name="gender" id="gender">
-							<option disabled selected >성별</option>
+							<option selected >성별</option>
 							<option value="M">남자</option>
 							<option value="F">여자</option>
 						</select>
 						</c:if>
 						<c:if test="${not empty NUserInfo}">
 						<select class="join-form__input" name="gender" id="gender">
-							<option disabled selected value="${NUserInfo.gender}" >${NUserInfo.gen}</option>
+							<option  selected value="${NUserInfo.gender}" >${NUserInfo.gen}</option>
 						</select>
 						</c:if>
 					</div>

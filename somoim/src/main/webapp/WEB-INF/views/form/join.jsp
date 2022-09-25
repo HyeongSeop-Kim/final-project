@@ -236,8 +236,15 @@
 	    }
 	  };
 	  
-	   
-	  
+	     var idresult = '3';
+	     // 아이디 중복 체크 확인 3 == 중복체크 하지 않음
+	     //					      1 == 중복체크 함 / 아이디 사용가능
+	     //					      2 == 중복체크 함 / 중복된 아이디로 사용 불가능
+		  
+	  	 var pwresult = false;
+	     // 아이디 중복 체크 확인 3 == 중복체크 하지 않음
+	     //					      1 == 중복체크 함 / 아이디 사용가능
+	     //	
 	  
 	  
 	  
@@ -250,8 +257,10 @@
 	    const idRegExp = /^[a-zA-Z0-9]{6,20}$/ // 6~20자의 영문 소문자와 숫자
 		    if(idRegExp.test(idInputEl.value)) { // 유효성 검사 성공
 		      idErrorMsgEl.textContent = "";
+		      idresult = '1'
 		    } else { // 유효성 검사 실패
 		      idErrorMsgEl.textContent = errMsg.id.invalid
+		      idresult = '4'
 		    }
 	    });
 	  
@@ -291,10 +300,12 @@
 		    if(isPwValid)
 		    pwReErrorMsgEl.style.color = "green"
 		    pwReErrorMsgEl.textContent = errMsg.pwRe.success
+		    pwresult = true
 		  }
 		  else { // 비밀번호 재입력 불일치
 		    pwReErrorMsgEl.style.color = "red"
 		    pwReErrorMsgEl.textContent = errMsg.pwRe.fail
+		    pwresult = false
 		  }
 		}
 	  
@@ -343,11 +354,7 @@
 			}
 		 }
 	
-     var idresult = '3';
-     // 아이디 중복 체크 확인 3 == 중복체크 하지 않음
-     //					      1 == 중복체크 함 / 아이디 사용가능
-     //					      2 == 중복체크 함 / 중복된 아이디로 사용 불가능
-	  
+
 	function formCheck(form) {
 	  let uid = document.getElementById('uId');
 	  let pw1 = document.getElementById('pw1');
@@ -426,7 +433,15 @@
 	  }else if(idresult == '3'){
 		  alert("아이디 중복체크를 하지 않았습니다. 확인해주세요.")
 		  return false;
+	  }else if (idresult=='4'){
+		  alert("6~20자의 영문 소문자와 숫자만 사용 가능합니다")
 	  }
+	  if(pwresult == false || isPwValid == false){
+	        alert("비밀번호를 다시 확인해주세요.")
+	        return false;
+	 }
+
+	  
 	  // 관심분야
 	  let is_checked = [];
 	  
@@ -442,7 +457,6 @@
 	  // is_checked 배열에 담김 값을 하나씩 꺼내서 item에 담음
 	  // item == true 이면, flag 변수에 담기
 	  let flag = is_checked.filter(function(item) {
-		  console.log("aaaa");
 		  return item == true;
 	  })
 
@@ -450,7 +464,6 @@
 			alert('관심분야를 1개 이상 선택하세요.');
 			return false;
 		}
-	  alert(Bmonth);
 	  alert('회원가입이 완료되었습니다.');
 	  
 	  form.submit();
@@ -466,6 +479,9 @@
 	  function findIdchk() {
 		  if(idInputEl.value === undefined || idInputEl.value.trim() === ""){
 		    	 idErrorMsgEl.textContent = errMsg.id.empty
+		  }else if (idresult == '4') {
+				alert("6~20자의 영문 소문자와 숫자만 사용 가능합니다")
+				return false;	
 		    }else{
 				$.ajax({
 					url: "./idChk",
