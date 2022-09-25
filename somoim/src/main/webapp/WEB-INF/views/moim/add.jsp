@@ -185,7 +185,7 @@
 								 	</div>
 								 	<div class="col input-group mb-3">
 				 					  	<span class="input-group-text" id="basic-addon1">정원(5~300명)</span>
-							 			 <input type="text" class="form-control" placeholder="정원수" name="moimLimit" aria-label="Username" aria-describedby="basic-addon1">
+							 			 <input type="text" class="form-control" value="5" placeholder="정원수" name="moimLimit" aria-label="Username" aria-describedby="basic-addon1">
 								 	</div>
 							 	</section>
 							 	<div class="d-grid gap-2 col-5 mx-auto">
@@ -289,6 +289,10 @@ function addData(){
 	}
 	if($('input[name="moimTitle"]').val() == null || $('input[name="moimTitle"]').val() == ""){
 		alert("모임명을 작성하세요.");
+		return;
+	}
+	if($('input[name="moimLimit"]').val() > 300 || $('input[name="moimLimit"]').val() < 5){
+		alert("모임은 정원 5~300명 사이에서만 개설할 수 있습니다.");
 		return;
 	}
 	var formData = $("#form1").serialize();

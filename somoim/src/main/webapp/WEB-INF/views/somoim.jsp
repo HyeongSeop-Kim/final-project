@@ -24,10 +24,10 @@
   <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
   <title>소모임</title>
 </head>
-
 <body>
   <div class="wrap p-3">
     <!-- header -->
+     
     <header class="container d-flex justify-content-center align-items-center rounded-3 shadow-sm bg-white">
       <h1 class="title">소모임</h1>
       
@@ -145,7 +145,6 @@
         <!-- main-menu -->
       <div class="col-md-6">
           <div class="p-4 rounded-3 shadow-sm bg-white">
-            <form class="d-flex" method="get" >
               <button id="search_btn"class="btn btn-outline-success me-2 d-flex justify-content-center align-items-center"
                 type="button">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -159,7 +158,6 @@
 					<option value="20" ${sessionScope.pageCount == 20 ? 'selected' : ''}>20 개</option>
 				</select>
 			  </div>
-            </form>
 
             <section id="m_list" class="pt-5">
 	              
