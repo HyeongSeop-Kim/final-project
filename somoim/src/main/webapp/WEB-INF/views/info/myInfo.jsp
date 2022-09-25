@@ -69,57 +69,76 @@
 				</ul>
 			</nav>
 			<div id="infoBoard" class="main-box">
-				<c:if test="${not empty boardDatas}">
-					<c:forEach items="${boardDatas}" var="boardData">
-						<div class="main-box__info-board" onclick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
-							<div class="info-board-moim-title">
-								<c:forEach items="${moimDatas}" var="moimData">
-									<c:if test="${moimData.moimId eq boardData.moimId}">
-										<img src="${moimData.moimImagePath}" class="icon--square">
-									</c:if>
-								</c:forEach>
-								<span>${boardData.moimTitle}</span>
+				<c:choose>
+					<c:when test="${not empty boardDatas}">
+						<c:forEach items="${boardDatas}" var="boardData">
+							<div class="main-box__info-board" onclick="location.href ='/somoim/moim/boardDetail?id=${boardData.moimId}&boardId=${boardData.boardId}'">
+								<div class="info-board-moim-title">
+									<c:forEach items="${moimDatas}" var="moimData">
+										<c:if test="${moimData.moimId eq boardData.moimId}">
+											<img src="${moimData.moimImagePath}" class="icon--square">
+										</c:if>
+									</c:forEach>
+									<span>${boardData.moimTitle}</span>
+								</div>
+								<div class="info-board-title">
+									<span>${boardData.boardTitle}</span>
+								</div>
+								<div class="info-board-content">
+									<span class="content-hidden">${boardData.content}</span>
+								</div>
+								<div class="info-board-footer">
+									<span>${boardData.boardCreateDate}</span>
+									<i class="fa-regular fa-message"></i>
+									<span>댓글 0</span>
+								</div>
 							</div>
-							<div class="info-board-title">
-								<span>${boardData.boardTitle}</span>
-							</div>
-							<div class="info-board-content">
-								<span class="content-hidden">${boardData.content}</span>
-							</div>
-							<div class="info-board-footer">
-								<span>${boardData.boardCreateDate}</span>
-								<i class="fa-regular fa-message"></i>
-								<span>댓글 0</span>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="main-box__info-board">
+							<div class="info-board-title" style="margin-bottom: 0">
+								작성한 글이 없습니다.
 							</div>
 						</div>
-					</c:forEach>
-				</c:if>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div id="infoComment" class="main-box hidden">
-				<c:if test="${not empty commentsDatas}">
-					<c:forEach items="${commentsDatas}" var="commentsData">
-				<div class="main-box__info-comment">
-					<div class="info-comment">
-						<span class="info-comment-content content-hidden">${commentsData.content}</span>
-						<span class="info-comment-date">${commentsData.contentCreateDate}</span>
-					</div>
-					<div class="info-comment-moim">
-						<div class="info-comment-moim__column">
-							<img src="" class="icon--square icon--square--small">
+				<c:choose>
+					<c:when test="${not empty commentsDatas}">
+						<c:forEach items="${commentsDatas}" var="commentsData">
+					<div class="main-box__info-comment">
+						<div class="info-comment">
+							<span class="info-comment-content content-hidden">${commentsData.content}</span>
+							<span class="info-comment-date">${commentsData.contentCreateDate}</span>
 						</div>
-						<c:forEach items="${boardsId}" var="boardId">
-							<c:if test="${commentsData.boardId eq boardId.boardId}">
-								<div class="info-comment-moim__column">
-									<span>모임 타이틀입니다</span>
-									<span>${boardId.boardTitle}</span>
-								</div>
-							</c:if>
-						</c:forEach>
+						<div class="info-comment-moim">
+							<div class="info-comment-moim__column">
+								<img src="" class="icon--square icon--square--small">
+							</div>
+							<c:forEach items="${boardsId}" var="boardId">
+								<c:if test="${commentsData.boardId eq boardId.boardId}">
+									<div class="info-comment-moim__column">
+										<span>모임 타이틀입니다</span>
+										<span>${boardId.boardTitle}</span>
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
 					</div>
-				</div>
-					</c:forEach>
-				</c:if>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="main-box__info-board">
+							<div class="info-board-title" style="margin-bottom: 0">
+								작성한 댓글이 없습니다.
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
+
 		</section>
 
 		<section class="col-3">

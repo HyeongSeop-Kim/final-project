@@ -383,10 +383,10 @@ $(document).ready(function() {
 	get_bmk_moim_list();
 	
 	$('.icon__div>.icon--circle__cate').on('mouseover', function() {
-		$(this).addClass('hover');
+		$(this).addClass('hoverIcon');
 	});
 	$('.icon__div>.icon--circle__cate').on('mouseout', function() {
-		$(this).removeClass('hover');
+		$(this).removeClass('hoverIcon');
 	});
 	// 카테고리 서치
 	$('.icon__div>.icon--circle__cate').on('click', function() {

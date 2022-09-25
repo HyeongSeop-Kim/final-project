@@ -673,12 +673,21 @@ public class MoimController {
 	}
 
 	@GetMapping(value = "/moim/remove")
-	public String removeMoim(@RequestParam int id){
-		boolean removeMeetingPart = meetingParticipantsService.removeDatas(id);
-		boolean removeMeeting = meetingsService.removeData(id);
-		boolean removeMoimPart = moimParticipantsService.removeData(id);
-		boolean removeBoard = boardsService.removeBoardsData(id);
-		boolean removeMoim = somoimService.removeData(id);
+	public String removeMoim(HttpSession session, @RequestParam int id){
+		MembersDTO loginData = (MembersDTO)session.getAttribute("loginData");
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(loginData.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1) {
+			boolean removeMeetingPart = meetingParticipantsService.removeDatas(id);
+			boolean removeMeeting = meetingsService.removeData(id);
+			boolean removeMoimPart = moimParticipantsService.removeData(id);
+			boolean removeBoard = boardsService.removeBoardsData(id);
+			boolean removeMoim = somoimService.removeData(id);
+		} else {
+			return null;	// 에러페이지로
+		}
 
 		return "redirect:/";
 	}
@@ -998,10 +1007,19 @@ public class MoimController {
 	@GetMapping(value = "/moim/modJob")
 	public String modJob(HttpServletRequest request
 			,@RequestParam int id
-			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+			,@SessionAttribute("loginData") MembersDTO loginData ) {
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(loginData.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1) {
+			List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
-		request.setAttribute("moimParticipants",moimParticipants);
+			request.setAttribute("moimParticipants",moimParticipants);
+		} else {
+			return null;	// 에러페이지로
+		}
+
 		return "form/modJob";
 	}
 
@@ -1016,25 +1034,32 @@ public class MoimController {
 	@PostMapping(value = "/moim/addMeeting")
 	public String addMeeting(MeetingsDTO meetingsDTO
 			, HttpSession session
+			, @RequestParam int id
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		LocalDate now = LocalDate.now();
-		String year = String.valueOf(now.getYear());
-		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
-		Date date = java.sql.Date.valueOf(meetingDate);
-		int meetingId = meetingsService.getNextSeq();
-		meetingsDTO.setMeetingDate(date);
-		meetingsDTO.setMeetingId(meetingId);
+		List<MeetingParticipantsDTO> meetingParticipantsDatas = meetingParticipantsService.getDatas(id);
+		if(meetingParticipantsDatas.size()<4) {
+			LocalDate now = LocalDate.now();
+			String year = String.valueOf(now.getYear());
+			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+			Date date = java.sql.Date.valueOf(meetingDate);
+			int meetingId = meetingsService.getNextSeq();
+			meetingsDTO.setMeetingDate(date);
+			meetingsDTO.setMeetingId(meetingId);
 
-		meetingsService.addData(meetingsDTO);
+			meetingsService.addData(meetingsDTO);
 
-		MeetingParticipantsDTO meetingParticipantsDTO = new MeetingParticipantsDTO();
-		meetingParticipantsDTO.setMeetingId(meetingsDTO.getMeetingId());
-		meetingParticipantsDTO.setMoimId(meetingsDTO.getMoimId());
-		meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
+			MeetingParticipantsDTO meetingParticipantsDTO = new MeetingParticipantsDTO();
+			meetingParticipantsDTO.setMeetingId(meetingsDTO.getMeetingId());
+			meetingParticipantsDTO.setMoimId(meetingsDTO.getMoimId());
+			meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
 
-		meetingParticipantsService.addData(meetingParticipantsDTO);
-		return null;
+			meetingParticipantsService.addData(meetingParticipantsDTO);
+			return "/moim/addMeeting";
+		} else {
+			return null; // eror페이지로 이동
+		}
+
 //		boolean result = meetingsService.addData(data);
 //
 //		if (result) {

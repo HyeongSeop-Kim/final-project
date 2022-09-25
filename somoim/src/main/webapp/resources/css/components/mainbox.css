@@ -24,6 +24,12 @@
     margin-bottom: 2.4rem;
 }
 
+.main-box__moim:hover,
+.main-box__board:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+}
+
 .main-box__info-board:hover,
 .main-box__info-comment:hover{
     filter: brightness(80%);
