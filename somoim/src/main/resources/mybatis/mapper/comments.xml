@@ -6,15 +6,19 @@
   
     
     <select id="selectDatas" parameterType="map"  resultType="commentsDTO" >
-    SELECT COMMENT_ID AS commentId
-          ,BOARD_ID AS boardId
-          ,CONTENT AS content
-          ,CONTENT_CREATE_DATE AS contentCreateDate
-          ,MOIM_ID AS moimId
-          ,MEMBER_ID AS memberId
-           FROM BOARD_COMMENT 
-           WHERE MOIM_ID = #{id} AND BOARD_ID = #{boardId}
-           ORDER BY CONTENT_CREATE_DATE DESC
+    SELECT C.COMMENT_ID AS commentId
+          ,C.BOARD_ID AS boardId
+          ,C.CONTENT AS content
+          ,C.CONTENT_CREATE_DATE AS contentCreateDate
+          ,C.MOIM_ID AS moimId
+          ,C.MEMBER_ID AS memberId
+          ,M.MEMBER_NAME AS memberName
+          ,M.MEMBER_IMAGE_PATH AS memberImagePath
+         FROM BOARD_COMMENT  C
+         JOIN MEMBERS M
+         ON M.MEMBER_ID = C.MEMBER_ID  
+        WHERE C.MOIM_ID = #{id} AND C.BOARD_ID = #{boardId}
+        ORDER BY C.CONTENT_CREATE_DATE DESC
     </select>
 
     <select id="selectWriteDatas" resultType="commentsDTO" >
@@ -39,8 +43,7 @@
            
     </select>
     
-    
-    
+
     <insert id="insertData" parameterType="commentsDTO" >
     INSERT INTO BOARD_COMMENT VALUES (SQU_COMMENT.NEXTVAL, #{boardId}, #{content}, SYSDATE,#{moimId},#{memberId})
     </insert>

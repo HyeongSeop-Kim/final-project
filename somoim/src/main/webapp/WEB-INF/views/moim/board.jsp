@@ -368,11 +368,11 @@
           </div>
           <div class="board-content">
             <input type="hidden" value="${comment.boardId}"/>
-            <p class="content-hidden">${comment.content }</p>
+            <p class="content-hidden">${comment.content}</p>
           </div>
           <div class="board-footer">
             <span><i class="fa-regular fa-message"></i></span>
-            <span>댓글 1</span>
+            <span>${comment.commentCount}</span>
           </div>
         </div>
       </c:forEach>

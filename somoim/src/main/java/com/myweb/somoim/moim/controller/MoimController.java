@@ -157,7 +157,7 @@ public class MoimController {
 
 
 	MoimParticipantsDTO BossData = moimParticipantsService.getData(id); //모임장확인
-
+  
 
 
 	if(memberAlreadyJoin) {
@@ -166,7 +166,11 @@ public class MoimController {
 			json.put("message",   "모임장은 탈퇴할 수 없습니다. 다른 멤버에게 모임장 권한을 위임하세요.");
 	        return json.toJSONString();
 		}else {
-
+			List<MeetingsDTO> datas =  meetingParticipantsService.getCheckJoinMeetingMember(map); //로그인한 멤버가 어느 정모에 가입되어 있는지 먼저확인 
+			if(datas != null) {
+				//로그인한 멤버가 가입되어있는 정모가 있다면 모든 정모에서 멤버삭제해줘야함
+				boolean res = meetingParticipantsService.removeAllMeetingjoinMember(map);
+			}
 			moimParticipantsService.removeData(map);  //탈퇴처리
 			json.put("code",   "success");
 			json.put("message",   "탈퇴 되었습니다.");
@@ -417,6 +421,14 @@ public class MoimController {
 	public String board(Model model
 			        ,@RequestParam int id
 			        ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		
+        SomoimDTO checkMoimExist =  somoimService.getData(id);
+		if(checkMoimExist == null ) {  //moimId 존재확인
+			model.addAttribute("error","존재하지않는 페이지 입니다. 다시한번 확인 해주세요");
+			return "error/notExists";
+		}
+		
+		
 
 		SomoimDTO moimData = somoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
@@ -466,14 +478,23 @@ public class MoimController {
 			            ,@RequestParam(defaultValue="1", required=false) int page
 			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
+		
+		SomoimDTO checkMoimExist =  somoimService.getData(id);
+		
+		if(checkMoimExist == null ) {  //moimId 존재확인
+			model.addAttribute("error","존재하지않는 페이지 입니다. 다시한번 확인 해주세요");
+			return "error/notExists";
+		}
+		
+		
+		
 		SomoimDTO moimData = somoimService.getData(id);//모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 
-
-		List datas = boardsService.getDatas(id); //게시글 전부 가져오기
-
-
+		//List datas = boardsService.getDatas(id); //게시글 전부 가져오기(댓글수포함해서)
+		List datas = boardsService.getBoardDatas(id); //게시글 전부 가져오기(댓글수포함해서)
+		
 		int pageCount = 5;
 
         PagingDTO paging = new PagingDTO (datas,page,pageCount);
@@ -495,10 +516,11 @@ public class MoimController {
 		}else if(bookmarkcheck == 3) {
 			model.addAttribute("bookmarkcheck" , bookmarkcheck);
 		}
+		
 
 
 		   model.addAttribute("res",res);//참가자정보확인하고 가입,작성버튼출력
-           model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
+		   model.addAttribute("paging",paging); //PagingDTO 객체 통째로 넘겨주기
 		   model.addAttribute("moimData" , moimData); //모임정보
 		   model.addAttribute("moimParticipants",moimParticipants); //모임참가자 정보
 		   model.addAttribute("currentMemberCount", currentMemberCount); //현재정원수
@@ -578,9 +600,26 @@ public class MoimController {
 			            ,@RequestParam int id
 			            ,@RequestParam int boardId
 			            ,@RequestParam(defaultValue="1", required=false) int page
-			            ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+			            ,@SessionAttribute("loginData") MembersDTO membersDto 
+			            ) {
 
 		SomoimDTO moimData = somoimService.getData(id);//모임정보
+		
+		SomoimDTO checkMoimExist =  somoimService.getData(id);
+		BoardsDTO checkBoardExist = boardsService.getBoardData(boardId); //boardId가 없는경우
+		
+		
+		if(checkMoimExist == null ) {  //moimId 존재확인
+			model.addAttribute("error","존재하지않는 페이지 입니다. 다시한번 확인 해주세요");
+			return "error/notExists";
+		}
+		
+		if(checkBoardExist == null ) {  //boardId 존재확인
+			model.addAttribute("error","존재하지않는 페이지 입니다. 다시한번 확인 해주세요");
+			return "error/notExists";
+		}
+		
+	
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
 		MoimParticipantsDTO part = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
@@ -599,10 +638,13 @@ public class MoimController {
 			model.addAttribute("bookmarkcheck" , bookmarkcheck);
 		}
 
-		BoardsDTO boardDto = new BoardsDTO(); //board가져오기
-		boardDto.setBoardId(boardId);
-		boardDto.setMoimId(id);
-		BoardsDTO data =  boardsService.getData(boardDto);
+//		BoardsDTO boardDto = new BoardsDTO(); //board가져오기
+//		boardDto.setBoardId(boardId);
+//		boardDto.setMoimId(id);
+//		BoardsDTO data =  boardsService.getData(boardDto);
+		
+		BoardsDTO data = boardsService.getBoardData(boardId);  //댓글갯수포함해서 게시글정보가져오기
+		
 
 
 		Map map = new HashMap();   //comments list가져오기
@@ -612,7 +654,7 @@ public class MoimController {
 
 		int pageCount = 5;
 
-		PagingDTO paging = new PagingDTO (datas,page,pageCount);
+		PagingDTO paging = new PagingDTO (datas,page,pageCount); //댓글 페이징하기
 
 
 		model.addAttribute("data",data);//boardId로 정보받아오기
@@ -708,12 +750,12 @@ public class MoimController {
 
 
 	@RequestMapping(value = "/moim/board/add", method = RequestMethod.POST)
-
-	public String boardAdd(Model model,
+    public String boardAdd(Model model,
 			@RequestParam int id
 			,@RequestParam String boardTitle
 			,@RequestParam String content
-			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+			,@SessionAttribute("loginData") MembersDTO membersDto
+			,HttpServletRequest request) {
 
 	  BoardsDTO boardsDto = new BoardsDTO();
 	  boardsDto.setMoimId(id);
@@ -721,6 +763,22 @@ public class MoimController {
 	  boardsDto.setContent(content);
 	  boardsDto.setMemberId(membersDto.getMemberId());
 	  boardsDto.setMemberName(membersDto.getMemberName());
+	  
+	  System.out.println(request.getContextPath());
+	  
+	  //가입한 유저인지 확인
+	    Map map = new HashMap();
+		map.put("id", id);
+		map.put("memberId", membersDto.getMemberId());
+	    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+	  
+	  if(!memberAlreadyJoin) {
+		  String url = request.getContextPath()+"/moim/board?id="+id;
+		  System.out.println(url);
+		  request.setAttribute ("msg","가입한 멤버만 해당 기능을 사용할 수 있습니다. 모임에 가입해주세요. ");
+		  request.setAttribute("url",url);
+		  return "error/alertPage";
+	   }
 
 	  boolean result = boardsService.addData(boardsDto);
 
@@ -775,7 +833,8 @@ public class MoimController {
 			@RequestParam int id
 			,@RequestParam int bid
 			,@RequestParam String content
-			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+			,@SessionAttribute("loginData") MembersDTO membersDto
+			,HttpServletRequest request ) {
 
 
 	  CommentsDTO commentsDto = new CommentsDTO();
@@ -783,6 +842,20 @@ public class MoimController {
 	  commentsDto.setBoardId(bid);
 	  commentsDto.setContent(content);
 	  commentsDto.setMemberId(membersDto.getMemberId());
+	  
+	  //가입한 유저인지 확인
+	    Map map = new HashMap();
+		map.put("id", id);
+		map.put("memberId", membersDto.getMemberId());
+	    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+	  
+	  if(!memberAlreadyJoin) {
+		  String url = request.getContextPath()+"/moim/board?id="+id;
+		  System.out.println(url);
+		  request.setAttribute ("msg","가입한 멤버만 해당 기능을 사용할 수 있습니다. 모임에 가입해주세요 ");
+		  request.setAttribute("url",url);
+		  return "error/alertPage";
+	   }
 
 
 	  boolean result = commentsService.addData(commentsDto);
@@ -800,28 +873,37 @@ public class MoimController {
 	@PostMapping(value = "/moim/board/comment/modify", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String commentModify(Model model,
-			//@RequestParam int id
-			@RequestParam int cid
+			@RequestParam int id
+		   ,@RequestParam int cid
 		   ,@RequestParam String content
-		   ,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		   ,@SessionAttribute("loginData") MembersDTO membersDto
+		   ,HttpServletRequest request) {
 
-
-		System.out.println("댓글아이디"+cid);
-		System.out.println("댓글내용"+content);
+		 JSONObject json = new JSONObject();
+		
+		//가입한 유저인지 확인
+	    Map map = new HashMap();
+		map.put("id", id);
+		map.put("memberId", membersDto.getMemberId());
+	    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+	  
+	    if(!memberAlreadyJoin) {
+			  json.put("code",   "leaveMember");
+			  json.put("message",   "가입한 멤버만 사용가능한 기능입니다. 모임에 가입해 주세요. ");
+			  return json.toJSONString();
+		   }
+		
+		
 
 		CommentsDTO data = commentsService.getData(cid); //댓글존재하는지
+		
+		
 
 
 	  CommentsDTO commentsDto = new CommentsDTO();
-	  //commentsDto.setMoimId(id);
-	  //commentsDto.setBoardId(bid);
-      //commentsDto.setMemberId(membersDto.getMemberId());
-
+	  
 	  commentsDto.setContent(content);
 	  commentsDto.setCommentId(cid);
-
-	  JSONObject json = new JSONObject();
-
 
 
 
@@ -850,18 +932,32 @@ public class MoimController {
 	@GetMapping(value = "/moim/board/comment/delete", produces="application/json; charset=utf-8")
 	@ResponseBody
 	   public String CommentDelete(Model model,
-			   // @RequestParam int bid
-			    @RequestParam int cid
-				,@SessionAttribute("loginData") MembersDTO membersDto ) {
-
+			    @RequestParam int id
+			    ,@RequestParam int cid
+				,@SessionAttribute("loginData") MembersDTO membersDto 
+		        ,HttpServletRequest request ) {
 
 		   JSONObject json = new JSONObject();
+		   
+		 //가입한 유저인지 확인
+		    Map map = new HashMap();
+			map.put("id", id);
+			map.put("memberId", membersDto.getMemberId());
+		    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+		    
+		   
+		    
+		    
+		  if(!memberAlreadyJoin) {
+			  json.put("code",   "leaveMember");
+			  json.put("message",   "가입한 멤버만 사용가능한 기능입니다. 모임에 가입해 주세요. ");
+			  return json.toJSONString();
+		   }
+
 
 		   CommentsDTO data = commentsService.getData(cid); //댓글존재하는지
-
-
-
-		   if(data == null) {
+		   
+			 if(data == null) {
 			       json.put("code",   "alreadyDelete");
 				   json.put("message",   "이미 삭제되었거나 존재하지 않는 댓글입니다. ");
 				   return json.toJSONString();

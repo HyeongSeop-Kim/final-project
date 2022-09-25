@@ -55,6 +55,9 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 		return data;
 	}
 
+	
+	
+	
 	@Override
 	public int getNextSeq() {
 		return 0;
@@ -104,4 +107,19 @@ public class BoardsDAO extends AbstractDAO<List<BoardsDTO>, BoardsDTO> {
 
 		return result > 0 ? true : false;
 	}
+
+	public List<BoardsDTO> selectBoardDatas(int id) {
+		String mapperId = String.format(mapper, "selectBoardInfoList");
+		List<BoardsDTO>  datas = session.selectList(mapperId, id);
+
+		return datas;
+	}
+	
+	public BoardsDTO selectBoardData(int id) {
+		String mapperId = String.format(mapper, "selectBoardInfo");
+		BoardsDTO  datas = session.selectOne(mapperId, id);
+
+		return datas;
+	}
+	
 }

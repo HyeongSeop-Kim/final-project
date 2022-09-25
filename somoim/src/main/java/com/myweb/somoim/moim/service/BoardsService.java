@@ -81,5 +81,17 @@ public class BoardsService extends AbstractService<List<BoardsDTO>, BoardsDTO> {
 		boolean result = dao.deleteBoardsData(id);
 		return result;
 	}
+	
+
+	public List<BoardsDTO> getBoardDatas(int id) {  //게시물정보가져오기
+		List<BoardsDTO> data = dao.selectBoardDatas(id);
+		return data;
+		
+	}
+	
+	public BoardsDTO getBoardData(int id) {
+	BoardsDTO data = dao.selectBoardData(id);
+	return data;
+	}
 
 }

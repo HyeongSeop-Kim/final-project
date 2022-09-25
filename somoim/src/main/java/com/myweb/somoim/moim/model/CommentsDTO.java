@@ -9,6 +9,8 @@ public class CommentsDTO {
 	private Date contentCreateDate;
 	private int moimId;
 	private String memberId;
+	private String memberName;
+	private String memberImagePath;
 	
 	public int getCommentId() {
 		return commentId;
@@ -46,11 +48,26 @@ public class CommentsDTO {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	public String getMemberImagePath() {
+		return memberImagePath;
+	}
+	public void setMemberImagePath(String memberImagePath) {
+		this.memberImagePath = memberImagePath;
+	}
 	@Override
 	public String toString() {
 		return "CommentsDTO [commentId=" + commentId + ", boardId=" + boardId + ", content=" + content
-				+ ", contentCreateDate=" + contentCreateDate + ", moimId=" + moimId + ", memberId=" + memberId + "]";
+				+ ", contentCreateDate=" + contentCreateDate + ", moimId=" + moimId + ", memberId=" + memberId
+				+ ", memberName=" + memberName + ", memberImagePath=" + memberImagePath + "]";
 	}
+	
 	
 
 	

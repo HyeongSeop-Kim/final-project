@@ -26,6 +26,9 @@
   <title>상세 게시판</title>
 </head>
 
+
+
+
   <script type="text/javascript">
 		window.onload = function () {
 			previewImage.addEventListener("click", function (e) {
@@ -213,11 +216,14 @@
  <script type="text/javascript">
 
 
-  function commentDelete(commentId){
+  function commentDelete(commentId,moimId){
+	  
+	  
 	  	$.ajax({
     		url: "/somoim/moim/board/comment/delete",
     		type: "get",
     		data: {
+    			id:moimId,
     			cid:commentId
     		},
     		dataType: "json",
@@ -231,7 +237,11 @@
     			}else if(data.code === "error"){
     				alert(data.message);
         			location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId}+"&boardId="+${data.boardId};
+                }else if(data.code === "leaveMember"){
+    				alert(data.message);
+        			location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId}+"&boardId="+${data.boardId};
                 }
+    			
             }
         })
     }
@@ -240,15 +250,15 @@
 
 	function changeEdit(element){
 		element.innerText="확인"; //수정버튼을 확인버튼으로 변경
-		element.nextElementSibling.remove(); //삭제버튼은 없애기
+		element.parentElement.nextElementSibling.children[0].remove(); //삭제버튼은 없애기
 
-		var value = element.parentElement.previousElementSibling.innerText; //<p>태그의 text를 value에 저장
+		var value = element.parentElement.parentElement.parentElement.children[1].innerText; //<p>태그의 text를 value에 저장
 		var textarea = document.createElement("textarea"); //<textarea>엘리먼트 생성
 		textarea.setAttribute("class","form-control");
 		textarea.value = value; //<textarea>에 기존 <p>태그에 있던 value값 넣어주기
 
-		element.parentElement.previousElementSibling.innerText=""; //<p>안에를 공백으로 하고 그안에 아래코드 삽입 (디자인이 깨지기 때문에 )
-		element.parentElement.previousElementSibling.prepend (textarea); //<p>태그안에 textarea 엘리먼트 삽입 prepend:요소내부의 시작부분에 삽입
+		element.parentElement.parentElement.parentElement.children[1].innerText=""; //<p>안에를 공백으로 하고 그안에 아래코드 삽입 (디자인이 깨지기 때문에 )
+		element.parentElement.parentElement.parentElement.children[1].prepend (textarea); //<p>태그안에 textarea 엘리먼트 삽입 prepend:요소내부의 시작부분에 삽입
 
 		element.setAttribute("onclick","commentUpdate(this);"); //클릭하면commentUpdate 기능이 동작  --> 자바스크립트로 하는 경우  --> 걍 브라우져에서 변한것만보임
 	}                                                           //commentUpdate(this) 기능이 동작  --> ajax사용 --> 서버에서 처리
@@ -256,17 +266,20 @@
 	function changeText(element){//수정이 완료되면 다시 수정,삭제 버튼이 나오게하기,  수정한댓글 그대로 출력해서 수정한것 처럼 보럼 보이게하기
 
 		 element.innerText = "수정";
-		 var cid = element.previousElementSibling.value; //hidden으로 숨겨둔 input value 값 -> comment.id값 delete버튼동장에거 id값이 사용되기때문에
-		 var value = element.parentElement.previousElementSibling.children[0].value; //<textarea>의 value값
+		 var cid = element.parentElement.parentElement.parentElement.parentElement.children[0].value; //hidden으로 숨겨둔 input value 값 -> comment.id값 delete버튼동장에거 id값이 사용되기때문에
+		 var id =  element.parentElement.parentElement.parentElement.parentElement.children[1].value; //hidden으로 숨겨둔 input value 값
+		 var value = element.parentElement.parentElement.parentElement.children[1].value; //<textarea>의 value값
+	        console.log(cid);
+	        console.log(id);
 	        console.log(value);
-	        element.parentElement.previousElementSibling.children[0].remove();//<textarea>삭제
-	        element.parentElement.previousElementSibling.innerText = value; //<p>태그에 다시 value값 넣어주기
+	        element.parentElement.parentElement.parentElement.children[1].remove();//<textarea>삭제
+	        element.parentElement.parentElement.parentElement.children[1].innerText = value; //<p>태그에 다시 value값 넣어주기
 
 	        var btnDelete = document.createElement("button");  //<button>엘리먼트 다시 생성
 	        btnDelete.innerText = "삭제"; //<button>이름변경
 	        btnDelete.setAttribute("class","btn btn-sm btn-outline-dark");
-	        btnDelete.setAttribute("onclick", "commentDelete(" + cid + ");"); // 삭제 <button> 을 누른다면 다시 commentDelete기능이 동작하게 해줌
-
+	        btnDelete.setAttribute("onclick", "commentDelete(" + cid + "," + id + ");"); // 삭제 <button> 을 누른다면 다시 commentDelete기능이 동작하게 해줌
+        
 	        element.parentElement.append(btnDelete); //마지막에 새로운 요소 추가
 
 	        element.setAttribute("onclick","changeEdit(this);"); //다시 수정버튼을 누르면 changeEdit 기능이 동작하게 해줌
@@ -275,28 +288,33 @@
 
 	function commentUpdate(element){  //댓글 수정 하는 코드
 
-		 var cid = element.previousElementSibling.value; //hidden으로 숨겨둔 input value 값 -> comment.id값
-		 var value = element.parentElement.previousElementSibling.children[0].value; //<textarea>의 value값
-	     console.log("아이디값"+cid);
-	     console.log("내용"+value);
+		 var cid = element.parentElement.parentElement.parentElement.parentElement.children[0].value; //hidden으로 숨겨둔 input value 값 -> comment.id값
+		 var id = element.parentElement.parentElement.parentElement.parentElement.children[1].value; //hidden으로 숨겨둔 input value 값 -> moim.id값
+		 var value = element.parentElement.parentElement.parentElement.children[1].children[0].value;  //<textarea>의 value값
+	    
+		 
 
 
 		$.ajax({
 			url: "/somoim/moim/board/comment/modify",
 			type: "post",
 			data: {
+				id: id,
 				cid: cid,
 				content: value
 			},
 			success: function(data) {
 				if(data.code === "success") {
 					// update시  잘못되었을때 다시 원래값으로 되돌려주기위해서 여기서 다시한번 value값다시정의
-					element.parentElement.previousElementSibling.children[0].value = value;
+					element.parentElement.parentElement.parentElement.children[1].value = value;
 					changeText(element); //댓글수정이 성공하면 changeText(element) 가 동작하도록한다.
 				}else if(data.code === "notexist"){
 					alert(data.message);
         			location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId}+"&boardId="+${data.boardId};
 				}else if(data.code === "error"){
+					alert(data.message);
+					location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId}+"&boardId="+${data.boardId};
+				}else if(data.code === "leaveMember"){
 					alert(data.message);
 					location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId}+"&boardId="+${data.boardId};
 				}
@@ -474,7 +492,7 @@
 						/>
 					</div>
 					<div class="board-writer">
-						<span>작성자 이름 넣어주세요 ${data.memberName}</span>
+						<span>${data.memberName}</span>
 						<span>${data.boardCreateDate}</span>
 					</div>
 				</div>
@@ -484,28 +502,29 @@
 				</div>
 				<div id="commentBtn" class="board-footer board-footer__detail">
 					<span><i class="fa-regular fa-message"></i></span>
-					<span>댓글 1</span>
+					<span>${data.commentCount}</span>
 				</div>
 				<div id="commentBox" class="comment-box hidden">
 					<c:forEach items="${paging.pageData}" var="comment"> <!-- 요기서부터 페이징으로 나눈 데이터 출력시켜주는 코드 -->
 						<div class="comment-info">
 							<input type="hidden" value="${comment.commentId}">
+							<input type="hidden" value="${comment.moimId}">
 							<div class="comment-writer-img">
 								<img
-										src=""
+										src="${comment.memberImagePath}"
 										class="icon--circle icon--circle__member"
 								/><!-- dto에 memberImagePath 추가하고 src 부분에 comment.memberImagePath 추가 -->
 							</div>
 							<div class="comment-content">
-								<span>${comment.memberId}</span>
+								<span>${comment.memberName}</span>
 								<span>${comment.content}</span>
 								<div class="comment-footer">
 									<span>${comment.contentCreateDate}</span>
-									<c:if test="${sessionScope.loginData.memberId eq data.memberId}"> <!-- 일치한경우에만 수정,삭제 버튼을 표시한다. -->
-										<span><button class="btn--letter" type="button" onclick="changeEdit(this);">수정</button></span>
+									<c:if test="${sessionScope.loginData.memberId eq comment.memberId}"> <!-- 일치한경우에만 수정,삭제 버튼을 표시한다. -->
+										<span><button class="btn--letter" type="button" id="testtest" onclick="changeEdit(this);">수정</button></span>
 									</c:if>
-									<c:if test="${sessionScope.loginData.memberId eq data.memberId}"> <!-- 일치한경우에만 수정,삭제 버튼을 표시한다. -->
-										<span><button class="btn--letter" type="button" onclick="commentDelete(${comment.commentId})">삭제</button></span>
+									<c:if test="${sessionScope.loginData.memberId eq comment.memberId}"> <!-- 일치한경우에만 수정,삭제 버튼을 표시한다. -->
+										<span><button class="btn--letter" type="button" onclick="commentDelete(${comment.commentId},${comment.moimId})">삭제</button></span>
 									</c:if>
 								</div>
 							</div>
@@ -700,5 +719,8 @@
 	<script src="${path}/resources/js/moim.js"></script>
 	<script src="${path}/resources/js/category.js"></script>
 	<script src="${path}/resources/js/components/popup.js"></script>
+	
+
 </body>
+
 </html>

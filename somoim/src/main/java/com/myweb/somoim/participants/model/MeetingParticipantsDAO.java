@@ -1,12 +1,14 @@
 package com.myweb.somoim.participants.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.myweb.somoim.common.abstracts.AbstractDAO;
+import com.myweb.somoim.moim.model.MeetingsDTO;
 
 @Repository
 public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipantsDTO>, MeetingParticipantsDTO> {
@@ -96,6 +98,18 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipants
 		int res = session.delete(mapperId, id);
 
 		return res > 0 ? true : false;
+	}
+
+	public List<MeetingsDTO> selectCheckJoinMeetingMember(Map map) {
+		String mapperId = String.format(mapper, "selectCheckJoinMeetingMember");
+		List<MeetingsDTO> datas = session.selectList(mapperId, map);
+        return  datas;
+	}
+
+	public boolean deleteAllMeetingjoinMember(Map map) {
+		String mapperId = String.format(mapper, "deleteAllMeetingjoinMember");
+		int res = session.delete(mapperId, map);
+        return res > 0 ? true : false;
 	}
 
 }

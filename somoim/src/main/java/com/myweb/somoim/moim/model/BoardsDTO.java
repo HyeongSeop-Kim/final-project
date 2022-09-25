@@ -14,6 +14,7 @@ public class BoardsDTO {
 	private String jobName; //추가
 	private String moimTitle;
 	private String memberImagePath;
+	private int commentCount; //추가
 
 	public String getMemberImagePath() {
 		return memberImagePath;
@@ -103,20 +104,23 @@ public class BoardsDTO {
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
 	}
+	
+	
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
 
 	@Override
 	public String toString() {
-		return "BoardsDTO{" +
-				"moimId=" + moimId +
-				", boardId=" + boardId +
-				", memberId='" + memberId + '\'' +
-				", boardTitle='" + boardTitle + '\'' +
-				", content='" + content + '\'' +
-				", boardCreateDate=" + boardCreateDate +
-				", like=" + like +
-				", memberName='" + memberName + '\'' +
-				", jobName='" + jobName + '\'' +
-				", moimTitle='" + moimTitle + '\'' +
-				'}';
+		return "BoardsDTO [moimId=" + moimId + ", boardId=" + boardId + ", memberId=" + memberId + ", boardTitle="
+				+ boardTitle + ", content=" + content + ", boardCreateDate=" + boardCreateDate + ", like=" + like
+				+ ", memberName=" + memberName + ", jobName=" + jobName + ", moimTitle=" + moimTitle
+				+ ", memberImagePath=" + memberImagePath + ", commentCount=" + commentCount + "]";
 	}
+
+
 }

@@ -28,6 +28,74 @@ WHERE B.MOIM_ID = #{id}
 ORDER BY B.BOARD_CREATE_DATE DESC
     </select>
 
+ 
+   <select id ="selectBoardInfoList" resultType="boardsDTO" parameterType="_int">
+SELECT A.BOARD_ID AS boardId
+      ,A.COUNTCOMMENT AS commentCount
+      ,A.BOARD_TITLE AS boardTitle
+      ,A.CONTENT AS content
+      ,A.BOARD_CREATE_DATE AS boardCreateDate
+      ,A."LIKE" AS "like"
+      ,A.MOIM_ID AS moimId
+      ,A.MEMBER_ID AS memberId
+      ,M.MEMBER_NAME  AS memberName
+      ,M.MEMBER_IMAGE_PATH AS memberImagePath
+FROM (SELECT T.BOARD_ID
+      ,T.COUNTCOMMENT
+      ,B.BOARD_TITLE
+      ,B.CONTENT
+      ,B.BOARD_CREATE_DATE
+      ,B."LIKE"
+      ,B.MOIM_ID
+      ,B.MEMBER_ID
+FROM (SELECT B.BOARD_ID
+      ,COUNT(C.BOARD_ID) AS COUNTCOMMENT
+FROM BOARDS B
+LEFT JOIN BOARD_COMMENT C 
+ON B.BOARD_ID =C.BOARD_ID
+WHERE B.MOIM_ID = #{id}
+GROUP BY B.BOARD_ID) T
+JOIN BOARDS B
+ON B.BOARD_ID = T.BOARD_ID) A 
+JOIN MEMBERS M 
+ON M.MEMBER_ID = A.MEMBER_ID
+ORDER BY A.BOARD_CREATE_DATE DESC
+    </select>
+    
+ <select id ="selectBoardInfo" resultType="boardsDTO" parameterType="_int">   
+    SELECT A.BOARD_ID AS boardId
+      ,A.COMMENTCOUNT  AS  commentCount
+      ,A.BOARD_TITLE AS boardTitle
+      ,A.CONTENT  AS content
+      ,A.BOARD_CREATE_DATE AS boardCreateDate
+      ,A.MOIM_ID  AS moimId
+      ,A.MEMBER_ID AS memberId
+      ,M.MEMBER_NAME  AS memberName
+      ,M.MEMBER_IMAGE_PATH AS memberImagePath
+FROM (SELECT C.BOARD_ID
+      ,C.COMMENTCOUNT
+      ,B.BOARD_TITLE
+      ,B.CONTENT
+      ,B.BOARD_CREATE_DATE
+      ,B.MOIM_ID
+      ,B.MEMBER_ID
+FROM (SELECT B.BOARD_ID 
+       ,COUNT(C.COMMENT_ID) AS commentCount
+FROM BOARDS B
+LEFT JOIN BOARD_COMMENT C
+ON B.BOARD_ID = C.BOARD_ID
+WHERE B.BOARD_ID = #{id}
+GROUP BY B.BOARD_ID) C
+JOIN BOARDS B 
+ON B.BOARD_ID = C.BOARD_ID) A
+JOIN MEMBERS M 
+ON M.MEMBER_ID = A.MEMBER_ID
+   </select>   
+    
+
+
+
+
     <select id ="selectWriteDatas" resultType="boardsDTO">
         SELECT B.BOARD_ID AS boardId
              , B.BOARD_TITLE AS boardTitle
@@ -42,6 +110,16 @@ ORDER BY B.BOARD_CREATE_DATE DESC
             ON B.MOIM_ID = M.MOIM_ID
          WHERE B.MEMBER_ID = #{id}
     </select>
+    
+     <select id ="selectCommentCount" resultType="boardsDTO">
+         SELECT  BOARD_ID AS boardId
+         ,COUNT(BOARD_ID) AS commentCount
+        FROM BOARD_COMMENT
+       WHERE MOIM_ID = #{id}
+       GROUP BY BOARD_ID
+    </select>
+    
+    
 
     <insert id="insertData" parameterType="boardsDTO" >
     INSERT INTO BOARDS VALUES (

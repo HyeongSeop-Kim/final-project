@@ -1,11 +1,13 @@
 package com.myweb.somoim.participants.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myweb.somoim.common.abstracts.AbstractService;
+import com.myweb.somoim.moim.model.MeetingsDTO;
 import com.myweb.somoim.participants.model.MeetingParticipantsDAO;
 import com.myweb.somoim.participants.model.MeetingParticipantsDTO;
 
@@ -77,6 +79,19 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 
 	public boolean removeMeetingDatas(int id) {
 		boolean result = dao.deleteMeetingDatas(id);
+		return result;
+	}
+
+
+	public List<MeetingsDTO> getCheckJoinMeetingMember(Map map) {
+		List<MeetingsDTO> datas = dao.selectCheckJoinMeetingMember(map);
+		return datas;
+		
+	}
+
+
+	public boolean removeAllMeetingjoinMember(Map map) {
+		boolean result = dao.deleteAllMeetingjoinMember(map);
 		return result;
 	}
 
