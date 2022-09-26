@@ -50,9 +50,6 @@
 			</div>
 		</div>
 
-		<div class="header-info-btn">
-			<button type="button" class="btn--round btn--w216 btn--purple" onclick="popModProfile();"><i class="fa-solid fa-pen"></i>프로필 편집</button>
-		</div>
 	</div>
 </header>
 
@@ -109,7 +106,7 @@
 			<c:choose>
 				<c:when test="${not empty commentsDatas}">
 					<c:forEach items="${commentsDatas}" var="commentsData">
-						<div class="main-box__info-comment">
+						<div class="main-box__info-comment" onclick="location.href ='/somoim/moim/boardDetail?id=${commentsData.moimId}&boardId=${commentsData.boardId}'">
 							<div class="info-comment">
 								<span class="info-comment-content content-hidden">${commentsData.content}</span>
 								<span class="info-comment-date">${commentsData.contentCreateDate}</span>

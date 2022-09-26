@@ -68,16 +68,16 @@ function popJoin(){
 function popCategory(){
     if (!category){
         let popUrl = "/somoim/category";
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        categoryClip =window.open(popUrl, '_blank', 'width=550, height=950');
         category = true;
     }
     else{
-        if(!Clip.closed && Clip){
-            Clip.focus();
+        if(!categoryClip.closed && categoryClip){
+            categoryClip.focus();
         }
         else{
             let popUrl = "/somoim/category";
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            categoryClip =window.open(popUrl, '_blank', 'width=550, height=950');
             category = true;
         }
     }
@@ -87,16 +87,16 @@ function popCategory(){
 function popModProfile(){
     if (!prof){
         let popUrl = "modProfile";
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        profClip =window.open(popUrl, '_blank', 'width=550, height=900');
         prof = true;
     }
     else{
-        if(!Clip.closed && Clip){
-            Clip.focus();
+        if(!profClip.closed && profClip){
+            profClip.focus();
         }
         else{
             let popUrl = "modProfile";
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            profClip =window.open(popUrl, '_blank', 'width=550, height=900');
             prof = true;
         }
     }
@@ -105,16 +105,16 @@ function popModProfile(){
 function popModJob(param){
     if (!modjob){
         let popUrl = "modJob?id=" + param;
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        modjobClip =window.open(popUrl, '_blank', 'width=550, height=900');
         modjob = true;
     }
     else{
-        if(!Clip.closed && Clip){
-            Clip.focus();
+        if(!modjobClip.closed && modjobClip){
+            modjobClip.focus();
         }
         else{
             let popUrl = "modJob?id=" + param;
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            modjobClip =window.open(popUrl, '_blank', 'width=550, height=900');
             modjob = true;
         }
     }
@@ -123,16 +123,16 @@ function popModJob(param){
 function popAddMeeting(param){
     if (!addmeeting){
         let popUrl = "addMeeting?id=" + param;
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        addmeetingClip =window.open(popUrl, '_blank', 'width=550, height=600');
         addmeeting = true;
     }
     else{
-        if(!Clip.closed && Clip){
-            Clip.focus();
+        if(!addmeetingClip.closed && addmeetingClip){
+            addmeetingClip.focus();
         }
         else{
             let popUrl = "addMeeting?id=" + param;
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            addmeetingClip =window.open(popUrl, '_blank', 'width=550, height=600');
             addmeeting = true;
         }
     }
@@ -141,16 +141,16 @@ function popAddMeeting(param){
 function popModMeeting(meetingId, moimId){
     if (!modmeeting){
         let popUrl = "modMeeting?meetingId=" + meetingId + "&moimId=" + moimId;
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        modmeetingClip =window.open(popUrl, '_blank', 'width=550, height=600');
         modmeeting = true;
     }
     else{
-        if(!Clip.closed && Clip){
-            Clip.focus();
+        if(!modmeetingClip.closed && modmeetingClip){
+            modmeetingClip.focus();
         }
         else{
             let popUrl = "modMeeting?meetingId=" + meetingId + "&moimId=" + moimId;
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            modmeetingClip =window.open(popUrl, '_blank', 'width=550, height=600');
             modmeeting = true;
         }
     }

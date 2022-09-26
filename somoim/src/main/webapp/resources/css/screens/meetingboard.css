@@ -74,6 +74,12 @@
 	align-items: center;
 }
 
+.space-evenly{
+	display:flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
 .psi-r{
 	position:relative;
 }
@@ -573,4 +579,61 @@
 .board-add__label {
 	margin-bottom:1rem;
 	font-size: 1.6rem;
+}
+
+/* 정모 폼 */
+
+.meeting-form {
+	display: flex;
+	flex-direction: column;
+	margin: 0 10rem;
+}
+
+.meeting-form-input {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.meeting-form-input>span {
+	margin-right: 1rem;
+}
+
+.meeting-form__input {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 0.5rem;
+	padding: 1rem 1rem;
+	font-size: 1.5rem;
+	transition: border-color 0.3s ease-in-out;
+	flex: 1;
+}
+.meeting-form__label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-size: 1.4rem;
+}
+.meeting-form-inline__input {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 0.5rem;
+	outline-style: none;
+	margin: 0 0.2rem;
+	font-size: 1.5rem;
+	padding: 1rem 1rem;
+	width: 33%;
+}
+.meeting-form__btn {
+	width: 48%;
+	font-size: 1.8rem;
+	border: none;
+	padding: 1rem 0;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	margin: 2.5rem 0;
+}
+.meeting-form__btn:last-child {
+	color: var(--white);
+}
+.meeting-form-inline {
+	display: flex;
+	justify-content: space-between;
 }

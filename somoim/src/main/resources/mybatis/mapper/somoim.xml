@@ -18,7 +18,7 @@
      	  , moimId, moimTitle, moimInfo
      	  , moimLimit, moimImagePath, categoryId
      	  , locationId, moimCreateDate, locationName 
-     	FROM 
+     	FROM
      	(SELECT ROWNUM AS RNUM, MM.* FROM (
 	        SELECT M.MOIM_ID AS moimId
 	             , M.MOIM_TITLE AS moimTitle
