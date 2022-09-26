@@ -43,8 +43,11 @@
     			}else if(data.code === "error"){
     				alert(data.message);
         			location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId} + "&boardId="+${data.boardId};
-    			}
-			  }
+    			}else if(data.code === "leaveMember"){
+					alert(data.message);
+					location.href = "/somoim/moim/boardDetail?id="+ ${data.moimId} + "&boardId="+${data.boardId};
+			     }
+				}
 			})	
 		}
 			

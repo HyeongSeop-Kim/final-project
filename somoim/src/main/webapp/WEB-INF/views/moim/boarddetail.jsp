@@ -194,12 +194,13 @@
 
 <script>
    
-  function deleteBoard(boardId){
+  function deleteBoard(boardId,moimId){
 	  	$.ajax({
     		url: "/somoim/moim/board/delete",
     		type: "get",
     		data: {
-    			bid:boardId
+    			bid:boardId,
+    			id:moimId
     		},
     		dataType: "json",
     		success: function(data){
@@ -210,6 +211,10 @@
     				alert(data.message);
     				location.href = "/somoim/moim/board?id="+ ${data.moimId};
     			}else if(data.code === "error"){
+        			alert(data.message);
+        			location.href = "/somoim/moim/board?id="+ ${data.moimId};
+    			}
+    			else if(data.code === "leaveMember"){
         			alert(data.message);
         			location.href = "/somoim/moim/board?id="+ ${data.moimId};
     			}
@@ -491,7 +496,7 @@
 						<c:if test="${sessionScope.loginData.memberId eq data.memberId}"> <!-- 일치한경우에만 수정,삭제 버튼을 표시한다. -->
 								<c:url var="boardModifyUrl" value="/moim/board/modify"/>
 								<button class="btn--letter" type="button" onclick="location.href='${boardModifyUrl}?id=${data.moimId}&boardId=${data.boardId}'" >수정</button>
-								<button class="btn--letter" type="button" onclick="deleteBoard(${data.boardId})">삭제</button>
+								<button class="btn--letter" type="button" onclick="deleteBoard(${data.boardId},${data.moimId})">삭제</button>
 						</c:if>
 					</div>
 				</div>
@@ -719,8 +724,9 @@
 		function formCheck(form){
 				if(form.content.value.trim() === "" ){ //빈값확인하기 ,비어져있으면 경고메세지 
 					alert("댓글 내용을 입력하세요");
-				}else if(form.content.value.length > 500)
-					alert("댓글은 400자까지 가능합니다.");
+				}else if(form.content.value.length > 500){
+					alert("댓글은 400내외로 가능합니다.");
+				}
 				else{
 					form.submit(); //아니면 submit하기
 				}

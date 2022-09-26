@@ -529,6 +529,21 @@ public class MoimController {
 		boardDto.setBoardTitle(boardTitle);
 
 		 JSONObject json = new JSONObject();
+		 
+		 //가입한 유저인지 확인
+		    Map map = new HashMap();
+			map.put("id", id);
+			map.put("memberId", membersDto.getMemberId());
+		    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+
+
+            if(!memberAlreadyJoin) {
+			  json.put("code",   "leaveMember");
+			  json.put("message",   "가입한 멤버만 사용가능한 기능입니다. 모임에 가입해 주세요. ");
+			  return json.toJSONString();
+		   }
+
+		 
 
 		 BoardsDTO data =  boardsService.getData(boardId);
 
@@ -756,10 +771,26 @@ public class MoimController {
 	@GetMapping(value = "/moim/board/delete", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String BoardDelete(Model model,
-			    @RequestParam int bid
+			    @RequestParam int id
+			    ,@RequestParam int bid
 				,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 	    JSONObject json = new JSONObject();
+	    
+	  //가입한 유저인지 확인
+	    Map map = new HashMap();
+		map.put("id", id);
+		map.put("memberId", membersDto.getMemberId());
+	    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+
+
+        if(!memberAlreadyJoin) {
+		  json.put("code",   "leaveMember");
+		  json.put("message",   "가입한 멤버만 사용가능한 기능입니다. 모임에 가입해 주세요. ");
+		  return json.toJSONString();
+	   }
+
+	    
 	    BoardsDTO data = boardsService.getData(bid);
 	    if(data == null) {
 		   json.put("code",   "alreadyDelete");
