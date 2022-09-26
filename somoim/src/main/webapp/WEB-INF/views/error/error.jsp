@@ -16,7 +16,7 @@
 			<div class="col-lg-6 offset-lg-3 col-12">
 				<!-- Error Inner -->
 				<div class="error-inner">
-					<h1 class="main_title">SOMOIM</h1>
+					<img src="${path}/resources/img/logos/eoulrim_logo_p.png" class="main_title">
 					<h1 class="main_icon">!</h1>
 					<strong class="title">
 					페이지를 찾을 수
@@ -30,7 +30,7 @@
 					<br>
 					입력하신 페이지 주소를 다시 한번 확인해 주세요	
 					</p>
-						<button class="home" onclick="location.href='/somoim'" type="button">소모임 홈</button>
+						<button class="home" onclick="location.href='/somoim'" type="button">어울림 홈</button>
 						<button class="back" onclick="history.back();"type="button">이전 페이지</button>
 				</div>
 			</div>
