@@ -26,6 +26,11 @@
     margin-bottom: 2.4rem;
 }
 
+.side-box-list:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+}
+
 .side-box-list__column:last-child {
     width: 16rem;
     display: flex;

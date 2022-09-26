@@ -18,7 +18,7 @@
 	<script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_w.png"></div>
+	<div class="logo"><img src="${path}/resources/img/logos/eoulrim_logo_w.png" onclick="location.href='/somoim'"></div>
   <!-- 유저정보 -->
 	<header class="header">
 		<!-- info image -->
@@ -108,7 +108,7 @@
 				<c:choose>
 					<c:when test="${not empty commentsDatas}">
 						<c:forEach items="${commentsDatas}" var="commentsData">
-					<div class="main-box__info-comment">
+					<div class="main-box__info-comment" onclick="location.href ='/somoim/moim/boardDetail?id=${commentsData.moimId}&boardId=${commentsData.boardId}'">
 						<div class="info-comment">
 							<span class="info-comment-content content-hidden">${commentsData.content}</span>
 							<span class="info-comment-date">${commentsData.contentCreateDate}</span>

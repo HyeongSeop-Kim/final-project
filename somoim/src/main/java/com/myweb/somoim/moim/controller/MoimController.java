@@ -387,15 +387,14 @@ public class MoimController {
 
 		SomoimDTO moimData = somoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
-
 		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
-
 		List<MeetingParticipantsDTO> meetingParticipants = meetingParticipantsService.getDatas(id);
 
 		MoimParticipantsDTO data = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
 		data.setMemberId(membersDto.getMemberId());
 		data.setMoimId(id);
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
+		System.out.println(moimData != null);
 		if(moimData != null) {
 			if(moimData.getMoimId() == id) {
 				CategorysDTO categorysDTO = categoryService.getData(moimData.getCategoryId());  // 카테고리 정보
@@ -529,6 +528,21 @@ public class MoimController {
 		boardDto.setBoardTitle(boardTitle);
 
 		 JSONObject json = new JSONObject();
+		 
+		 //가입한 유저인지 확인
+		    Map map = new HashMap();
+			map.put("id", id);
+			map.put("memberId", membersDto.getMemberId());
+		    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+
+
+            if(!memberAlreadyJoin) {
+			  json.put("code",   "leaveMember");
+			  json.put("message",   "가입한 멤버만 사용가능한 기능입니다. 모임에 가입해 주세요. ");
+			  return json.toJSONString();
+		   }
+
+		 
 
 		 BoardsDTO data =  boardsService.getData(boardId);
 
@@ -756,10 +770,26 @@ public class MoimController {
 	@GetMapping(value = "/moim/board/delete", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String BoardDelete(Model model,
-			    @RequestParam int bid
+			    @RequestParam int id
+			    ,@RequestParam int bid
 				,@SessionAttribute("loginData") MembersDTO membersDto ) {
 
 	    JSONObject json = new JSONObject();
+	    
+	  //가입한 유저인지 확인
+	    Map map = new HashMap();
+		map.put("id", id);
+		map.put("memberId", membersDto.getMemberId());
+	    boolean memberAlreadyJoin = moimParticipantsService.getMemberAlreadyJoin(map);
+
+
+        if(!memberAlreadyJoin) {
+		  json.put("code",   "leaveMember");
+		  json.put("message",   "가입한 멤버만 사용가능한 기능입니다. 모임에 가입해 주세요. ");
+		  return json.toJSONString();
+	   }
+
+	    
 	    BoardsDTO data = boardsService.getData(bid);
 	    if(data == null) {
 		   json.put("code",   "alreadyDelete");
@@ -990,18 +1020,29 @@ public class MoimController {
 	public String addMeeting(HttpServletRequest request
 			,@RequestParam int id
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(membersDto.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
+			List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
-		return "form/addMeeting";
+			request.setAttribute("moimParticipants",moimParticipants);
+
+			return "form/addMeeting";
+		} else {
+			return null;	// 에러페이지로
+		}
 	}
 
 	@PostMapping(value = "/moim/addMeeting")
 	public String addMeeting(MeetingsDTO meetingsDTO
 			, HttpSession session
-			, @RequestParam int id
+			, @RequestParam int moimId
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		List<MeetingParticipantsDTO> meetingParticipantsDatas = meetingParticipantsService.getDatas(id);
-		if(meetingParticipantsDatas.size()<4) {
+		List<MeetingsDTO> meetingsDatas = meetingsService.getDatas(moimId);
+		if(meetingsDatas.size()<4) {
 			LocalDate now = LocalDate.now();
 			String year = String.valueOf(now.getYear());
 			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
@@ -1022,14 +1063,6 @@ public class MoimController {
 		} else {
 			return null; // eror페이지로 이동
 		}
-
-//		boolean result = meetingsService.addData(data);
-//
-//		if (result) {
-//			return "form/join";
-//		}else {
-//			return "form/join";
-//		}
 	}
 
 	@GetMapping(value = "/moim/modMeeting")
@@ -1045,18 +1078,30 @@ public class MoimController {
 	@PostMapping(value = "/moim/modMeeting")
 	public String modMeeting(MeetingsDTO modData
 			, HttpSession session
+			, @RequestParam int id
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		LocalDate now = LocalDate.now();
-		String year = String.valueOf(now.getYear());
-		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
-		Date date = java.sql.Date.valueOf(meetingDate);
 
-		modData.setMeetingDate(date);
+		MembersDTO loginData = (MembersDTO) session.getAttribute("loginData");
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(loginData.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
 
-		boolean res = meetingsService.modifyData(modData);
+		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
+			LocalDate now = LocalDate.now();
+			String year = String.valueOf(now.getYear());
+			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+			Date date = java.sql.Date.valueOf(meetingDate);
 
-		return null;
+			modData.setMeetingDate(date);
+			System.out.println("bbb");
+			boolean res = meetingsService.modifyData(modData);
+			return "/moim/modMeeting";
+		} else {
+			System.out.println("ccc");
+			return null;	// 에러페이지로
+		}
 	}
 
 	@PostMapping(value = "/moim/ajax/modJob")
@@ -1123,8 +1168,8 @@ public class MoimController {
 		if(meetingsDTO == null) {
 			jsonObject.put("msg", "해당 정모를 찾을 수 없습니다.");
 		} else {
-			res = meetingParticipantsService.removeMeetingDatas(meetingId)
-				&& meetingsService.removeMeetingData(meetingsDTO.getMeetingId());
+			meetingParticipantsService.removeMeetingDatas(meetingId);
+			res = meetingsService.removeMeetingData(meetingsDTO.getMeetingId());
 
 			jsonObject.put("msg", "삭제가 완료되었습니다.");
 		}

@@ -187,6 +187,41 @@
 	}
 
 </script>
+
+
+<script type="text/javascript">
+
+
+	function boardAddCheck(){
+		$.ajax({
+			url: "/somoim/moim/join",
+			type: "get",
+			data: {
+				id: moimId
+			},
+			dataType: "json",
+			success: function (data) {
+				if(data.code === "alreadyJoinMember"){
+					alert(data.message);
+					location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+				}else if(data.code === "over"){
+					alert(data.message);
+					location.href = "/somoim/moim/board?id=" + ${moimData.moimId};
+				} else if (data.code === "success") {
+					alert(data.message);
+					location.href = "/somoim/moim/board?id=" + ${moimData.moimId};
+				}else if(data.code === "joinCountover"){
+					alert(data.message);
+					location.href = "/somoim/moim/board?id="+ ${moimData.moimId};
+				}
+			}
+		})
+	}
+
+</script>
+
+
+
 <body>
 <div class="logo" onclick="location.href='/somoim'"><img src="${path}/resources/img/logos/eoulrim_logo_w.png"></div>
 <!-- 유저정보 -->
@@ -343,7 +378,8 @@
 							</div>
 							<div>
 								<div class="add-form__btn">
-									<button class="btn--round btn--grey btn--w216" type="button" onclick="location.href='${boardUrl}?id=${id}'">취소</button>
+								    <c:url var="boardUrl" value="/moim/board"/>
+									<button class="btn--round btn--grey btn--w216" type="button" onclick="location.href='${boardUrl}?id=${moimData.moimId}'">취소</button>
 									<button class="btn--round btn--purple btn--w216" type="submit">작성</button> <!-- 목록으로 -->
 								</div>
 							</div>

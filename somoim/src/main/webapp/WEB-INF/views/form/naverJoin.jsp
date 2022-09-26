@@ -524,5 +524,9 @@
 	function mainPage() {
 		location.href="${path}";
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
 </script>
 </html>

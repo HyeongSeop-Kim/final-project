@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>    
@@ -460,11 +461,6 @@
 <script type="text/javascript">
   
 function addData(){
-	
-	if($('#location').val() == null || $('#location').val() == "" ) {
-		alert("지역을 선택하세요.");
-		return; 
-	}
 	if($('input[name="categoryId"]:checked').val() == null || $('input[name="categoryId"]:checked').val() == "" ){
 		alert("관심사를 선택하세요.");
 		return; 
@@ -472,6 +468,10 @@ function addData(){
 	if($('input[name="moimTitle"]').val() == null || $('input[name="moimTitle"]').val() == ""){
 		alert("모임명을 작성하세요.");
 		return;
+	}
+	if($('#location').val() == null || $('#location').val() == "" ) {
+		alert("지역을 선택하세요.");
+		return; 
 	}
 	if($('input[name="moimLimit"]').val() > 300 || $('input[name="moimLimit"]').val() < 5){
 		alert("모임은 정원 5~300명 사이에서만 개설할 수 있습니다.");
@@ -547,7 +547,7 @@ $(document).ready(function() {
 			_this.addClass('selected');	
 		} else {
 			_this.removeClass('selected');
-			category_id = 0;
+			$('input[name="categoryId"]').prop('checked',false);
 		}
 	$('.icon--circle__cate').each(function() {
 		if (_this.children('input').val() != $(this).children('input').val()) {

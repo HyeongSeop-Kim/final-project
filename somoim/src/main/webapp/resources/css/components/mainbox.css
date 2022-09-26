@@ -32,6 +32,7 @@
 
 .main-box__info-board:hover,
 .main-box__info-comment:hover{
+    cursor: pointer;
     filter: brightness(80%);
 }
 

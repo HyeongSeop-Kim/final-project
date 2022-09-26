@@ -14,11 +14,9 @@
 	<title>회원가입</title>
 </head>
 <body>
-	<header>
-		<div class="form-title">
-				소모임
-		</div>
-	</header>
+	<div class="form-logo">
+		<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+	</div>
 	<section class="form-section">
 		<div class="form-container" >
 		<c:url  var="infoModUrl" value="/infoMod"></c:url>
@@ -57,11 +55,12 @@
 					<div class="join-form-inline__div">
 						<label class="join-form__label">성별</label>
 						<select class="join-form__input" name="gender" id="gender" readonly>
-							<option disabled selected>성별</option>
-							<option value="M" <c:if test="${sessionScope.loginData.gender eq 'M'}">
-								selected</c:if>>남자</option>
-							<option value="F" <c:if test="${sessionScope.loginData.gender eq 'F'}">
-								selected</c:if>>여자</option>
+							<option value="${sessionScope.loginData.gender}" selected>
+								<c:choose>
+									<c:when test="${sessionScope.loginData.gender eq 'M'}">남자</c:when>
+									<c:when test="${sessionScope.loginData.gender eq 'F'}">여자</c:when>
+								</c:choose>
+							</option>
 						</select>
 					</div>
 					<div class="join-form-inline__div">
@@ -98,8 +97,8 @@
 					</div>
 				</c:forEach>
 			</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="수정"  >수정</button>
-				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
+				<button class="join-form__btn btn--purple" type="button"  onclick="formCheck(this.form);" value="수정"  >수정</button>
+				<button class="join-form__btn btn--grey" type="button" onclick="popClose();" >취소</button>
 			</form>
 		</div>
 	</section>

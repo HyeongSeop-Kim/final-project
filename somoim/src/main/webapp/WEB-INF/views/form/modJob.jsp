@@ -13,16 +13,14 @@
 	<title>멤버 관리</title>
 </head>
 <body>
-	<header>
-		<div class="form-title">
-			멤버 관리
-		</div>
-	</header>
+<div class="form-logo">
+	<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+</div>
 	<section class="form-section">
 		<div class="form-container">
 			<form class="mod-form" action="">
 				<c:forEach items="${moimParticipants}" var="moimParticipants">
-					<div class="partList space-between margin-10 bottom-10">
+					<div class="partList space-evenly margin-10 bottom-10">
 						<img
 								src="${moimParticipants.memberImagePath}"
 								class="rounded-circle"
@@ -52,7 +50,10 @@
 						<div id="${moimParticipants.memberId}" style="display: none"></div>
 					</div>
 				</c:forEach>
-				<button type="button" onclick="submitModJob(${param.id})">수정</button>
+				<div class="meeting-form-inline div-line">
+					<button class="btn--grey" type="button" onclick="popClose()">취소</button>
+					<button class="btn--purple" type="button" onclick="submitModJob(${param.id})">수정</button>
+				</div>
 			</form>
 		</div>
 	</section>

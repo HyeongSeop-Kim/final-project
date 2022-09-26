@@ -262,12 +262,11 @@ public class MembersService extends AbstractService<List<MembersDTO>, MembersDTO
 	        
 	        userInfo.put("kakaoId", id);
 	        userInfo.put("nickname", nickname);
-	        String month = birthday.substring(0,2);
-	        String day = birthday.substring(2,4);
-	        userInfo.put("month", month);
-	        userInfo.put("day", day);
 	        userInfo.put("email", email);
-	        
+			String month = birthday.substring(0,2);
+			String day = birthday.substring(2,4);
+			userInfo.put("month", month);
+			userInfo.put("day", day);
 	        
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block

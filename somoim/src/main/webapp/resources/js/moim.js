@@ -9,7 +9,8 @@ partList.forEach( (item) => {  // 클릭시 해당 유저정보창으로 이동
 
 const commentBtn = document.querySelector('#commentBtn');
 const commentBox = document.querySelector('#commentBox');
-commentBtn.addEventListener('click', () => {
-    commentBox.classList.toggle('hidden');
-})
-
+if(commentBtn) {
+    commentBtn.addEventListener('click', () => {
+        commentBox.classList.toggle('hidden');
+    })
+}

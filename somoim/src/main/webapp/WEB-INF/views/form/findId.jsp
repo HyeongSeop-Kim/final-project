@@ -9,31 +9,29 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
-    <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<title>아이디 찾기</title>
 </head>
 <body>
-	<header>
-		<div class="form-title">
-			아이디 찾기
-		</div>
-	</header>
+	<div class="form-logo">
+		<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+	</div>
 	<section class="form-section">
 		<div class="form-container">
-			<form class="find-form" action="">
+			<form class="find-form" action="" method="post">
 				<label class="find-form__label">이름</label>
 				<input class="find-form__input" type="text" id="findmemName" value="강승호">
 	
 				<label class="find-form__label">생년월일</label>
 				<div class="" id="info__birth">
 					<div class="join-form-flex">
-					 <select class="join-form-inline__input" id="birth-year" name="year">
+					 <select class="find-form-inline__input" id="birth-year" name="year">
 				     	 <option selected value="">출생 연도</option>
 			    	</select>
-				    <select class="join-form-inline__input" id="birth-month" name="month">
+				    <select class="find-form-inline__input" id="birth-month" name="month">
 				      <option selected value="">월</option>
 				    	</select>
-				    <select class="join-form-inline__input" id="birth-day" name="day">
+				    <select class="find-form-inline__input" id="birth-day" name="day">
 				    	  <option selected value="">일</option>
 			   	 </select>
 			   	 </div>
@@ -43,8 +41,8 @@
 				<input class="find-form__input" type="text" placeholder="핸드폰 번호" id="findmemPhone" value="01012345678">
 				<p class="success-id-msg"></p>
 				<div class="find-form-inline div-line">
-						<button class="find-form__btn btn-light-gray" type="button" onclick="popClose();">취소</button>
-						<button class="find-form__btn" type="button" value="확인" onclick="findId();">아이디 찾기</button>
+						<button class="find-form__btn btn--grey" type="button" onclick="popClose();">취소</button>
+						<button class="find-form__btn btn--purple" type="button" value="확인" onclick="findId();">아이디 찾기</button>
 				</div>
 			</form>
 		</div>

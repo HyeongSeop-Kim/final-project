@@ -13,10 +13,7 @@
 	display: inline-block;
 }
 .main_title {
-	font-size: 100px;
-	text-shadow: 3px 5px 2px #3333;
-	color: rgb(89, 76, 255);
-	font-weight: 700;
+	width:200px;
 }
 .main_icon {
 	font-size: 100px;
