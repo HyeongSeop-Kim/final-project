@@ -262,8 +262,7 @@
 							</div>
 						</div>
 						<div class="add-form__btn">
-						    <c:url var="meetingUrl" value="/moim/meeting"/>
-							<button class="btn--round btn--w216 btn--grey" type="button" onclick="location.href='${meetingUrl}?id=${somoimDto.moimId}'">취소</button>
+							<button class="btn--round btn--w216 btn--grey" type="button" onclick="list(${somoimDto.moimId});">취소</button>
 							<button class="btn--round btn--w216 btn--purple" type="button" onclick="formCheck(this.form);">수정</button>
 						</div>
 					</div>
@@ -492,6 +491,10 @@
 					$('#modify_bookmark_list').html(_html);
 				}
 			});
+		}
+
+		function list(moimId) {
+			location.href = '/somoim/moim/meeting?id=' + moimId;
 		}
 		
 		$(document).ready(function() {	

@@ -155,7 +155,7 @@ function formCheck(form, moimId) {
     function move() {
         setTimeout(() => {
             window.opener.location.href = "/somoim/moim/meeting?id=" + moimId;
-            window.close();
+            // window.close();
         }, 2);
     }
 }

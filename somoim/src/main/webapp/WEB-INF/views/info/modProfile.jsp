@@ -55,11 +55,12 @@
 					<div class="join-form-inline__div">
 						<label class="join-form__label">성별</label>
 						<select class="join-form__input" name="gender" id="gender" readonly>
-							<option disabled selected>성별</option>
-							<option value="M" <c:if test="${sessionScope.loginData.gender eq 'M'}">
-								selected</c:if>>남자</option>
-							<option value="F" <c:if test="${sessionScope.loginData.gender eq 'F'}">
-								selected</c:if>>여자</option>
+							<option value="${sessionScope.loginData.gender}" selected>
+								<c:choose>
+									<c:when test="${sessionScope.loginData.gender eq 'M'}">남자</c:when>
+									<c:when test="${sessionScope.loginData.gender eq 'F'}">여자</c:when>
+								</c:choose>
+							</option>
 						</select>
 					</div>
 					<div class="join-form-inline__div">

@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
-    <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<title>아이디 찾기</title>
 </head>
 <body>
@@ -18,7 +18,7 @@
 	</div>
 	<section class="form-section">
 		<div class="form-container">
-			<form class="find-form" action="">
+			<form class="find-form" action="" method="post">
 				<label class="find-form__label">이름</label>
 				<input class="find-form__input" type="text" id="findmemName" value="강승호">
 	

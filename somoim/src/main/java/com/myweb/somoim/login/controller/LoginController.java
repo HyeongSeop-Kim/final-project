@@ -105,23 +105,25 @@ public class LoginController {
 	@PostMapping(value = "findId", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String findId(MembersDTO data) throws Exception {
-
 		MembersDTO result = membersService.selectFindId(data);
 		JSONObject json = new JSONObject();
-
+		System.out.println(result == null);
 		if (result == null) {
+			System.out.println("a");
 			json.put("code", "noData");
 			json.put("message", "해당 데이터가 존재하지 않습니다.");
 		} else if (result != null && result.getLoginType().equals("somoim")) {
+			System.out.println("bbb");
 			json.put("code", "success");
 			json.put("id", result.getMemberId());
 		} else if (result != null) {
+			System.out.println("c");
 			if (result.getLoginType().equals("kakao") || result.getLoginType().equals("naver")) {
 				json.put("code", "noType");
 				json.put("message", "소셜 서비스로 가입한 계정입니다. 확인해주세요.");
 			}
 		}
-
+		System.out.println("bbb");
 		return json.toJSONString();
 	}
 

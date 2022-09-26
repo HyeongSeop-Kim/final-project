@@ -228,16 +228,10 @@
 							</c:if>
 						</div>
 						<div class="login-member-btn">
-							<c:if test="${empty sessionScope.loginData}">
-								<button type="button" class="btn--letter" onclick="location.href='logout'" >로그아웃</button>
-							</c:if>
 							<c:if test="${not empty sessionScope.loginData}">
 								<button type="button" class="btn--letter" onclick="location.href='logout'" >로그아웃</button>
 							</c:if>
 							<c:if test="${not empty sessionScope.userInfo}">
-								<button type="button" class="btn--letter" onclick="location.href='${path}/login/kakao/kakaoLogout'" >로그아웃</button>
-							</c:if>
-							<c:if test="${not empty sessionScope.NloginData}">
 								<button type="button" class="btn--letter" onclick="location.href='${path}/login/kakao/kakaoLogout'" >로그아웃</button>
 							</c:if>
 							<button type="button" class="btn--letter" onclick="popCategory();">관심사 변경</button>

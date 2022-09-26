@@ -120,8 +120,8 @@
 					</div>
 				</c:forEach>
 			</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
-				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
+				<button class="join-form__btn btn--purple" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
+				<button class="join-form__btn btn--grey" type="button" onclick="mainPage();" >취소</button>
 			</form>
 		</div>
 	</section>
@@ -517,6 +517,9 @@
 	  
 	  form.submit();
 }
+	function mainPage() {
+		location.href="${path}";
+	}
 
 </script>
 </html>

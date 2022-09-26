@@ -387,15 +387,14 @@ public class MoimController {
 
 		SomoimDTO moimData = somoimService.getData(id); //모임정보
 		List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
-
 		List<MeetingsDTO> meetingsData = meetingsService.getDatas(id);//정모정보
-
 		List<MeetingParticipantsDTO> meetingParticipants = meetingParticipantsService.getDatas(id);
 
 		MoimParticipantsDTO data = new MoimParticipantsDTO();//로그인한유저가 참가자인지 확인
 		data.setMemberId(membersDto.getMemberId());
 		data.setMoimId(id);
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
+		System.out.println(moimData != null);
 		if(moimData != null) {
 			if(moimData.getMoimId() == id) {
 				CategorysDTO categorysDTO = categoryService.getData(moimData.getCategoryId());  // 카테고리 정보
@@ -1042,9 +1041,7 @@ public class MoimController {
 			, @RequestParam int moimId
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		System.out.println(moimId);
 		List<MeetingsDTO> meetingsDatas = meetingsService.getDatas(moimId);
-		System.out.println("aa");
 		if(meetingsDatas.size()<4) {
 			LocalDate now = LocalDate.now();
 			String year = String.valueOf(now.getYear());
@@ -1084,11 +1081,13 @@ public class MoimController {
 			, @RequestParam int id
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
+
 		MembersDTO loginData = (MembersDTO) session.getAttribute("loginData");
 		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
 		moimParticipantsDTO.setMemberId(loginData.getMemberId());
 		moimParticipantsDTO.setMoimId(id);
 		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+
 		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
 			LocalDate now = LocalDate.now();
 			String year = String.valueOf(now.getYear());
@@ -1096,10 +1095,11 @@ public class MoimController {
 			Date date = java.sql.Date.valueOf(meetingDate);
 
 			modData.setMeetingDate(date);
-
+			System.out.println("bbb");
 			boolean res = meetingsService.modifyData(modData);
 			return "/moim/modMeeting";
 		} else {
+			System.out.println("ccc");
 			return null;	// 에러페이지로
 		}
 	}
