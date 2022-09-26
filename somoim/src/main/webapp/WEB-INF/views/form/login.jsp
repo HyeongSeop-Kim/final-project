@@ -42,7 +42,7 @@
 			    	<input class="login-form__checkbox" type="checkbox" name="userCookies"  id="logging"/>
 			       	<label for="logging">로그인 상태 유지</label>
 			    <c:if test="${not empty loginError}">
-			    	<div style="text-align: initial; padding-top: 5px; initial; font-size: 14px;" class="error_login">
+			    	<div class="error_login">
 			    		${loginError}
 			    	</div>
 			    </c:if>

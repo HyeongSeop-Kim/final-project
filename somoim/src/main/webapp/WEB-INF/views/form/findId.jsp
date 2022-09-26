@@ -44,7 +44,7 @@
 				<p class="success-id-msg"></p>
 				<div class="find-form-inline div-line">
 						<button class="find-form__btn btn-light-gray" type="button" onclick="popClose();">취소</button>
-						<button class="find-form__btn btn-green" type="button" value="확인" onclick="findId();">아이디 찾기</button>
+						<button class="find-form__btn" type="button" value="확인" onclick="findId();">아이디 찾기</button>
 				</div>
 			</form>
 		</div>
@@ -190,15 +190,15 @@
 				memberName.focus();
 				return false;
 			}
-			if(birthYearEl ==="" || birthMonthEl==="" || birthDayEl ===""){
+			if(birthYearEl.value ==="" || birthMonthEl.value ==="" || birthDayEl.value ===""){
 				alert("생년월일을 선택해 주세요");
-				return false;s
+				return false;
 			}
 			
 			if(phone === undefined || phone === ""){
 				alert("전화번호를 입력해 주세요.");
 				phone.focus();
-				return false;s
+				return false;
 			}
 			
 			// 아이디 찾기 버튼 클릭 횟수

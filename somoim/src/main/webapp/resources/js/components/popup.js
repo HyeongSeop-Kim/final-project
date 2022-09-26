@@ -3,24 +3,24 @@ let prof;
 let modjob;
 let addmeeting;
 let modmeeting;
-var id;
-var pw;
-var join;
+let id;
+let pw;
+let join;
 
 // 아이디 찾기 팝업
 function popId(){
     if (!id){       //최초 클릭이면 팝업을 띄운다
         let popUrl = "findId";
-        Clip =window.open(popUrl, '_blank', 'width=500, height=600, location=no');
+        idClip =window.open(popUrl, '_blank', 'width=500, height=600, resizable=no, location=no');
         id = true;
     }
     else{           //최초 클릭이 아니면
-        if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-            Clip.focus();
+        if(!idClip.closed && idClip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
+            idClip.focus();
         }
         else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
             let popUrl = "findId";
-            Clip =window.open(popUrl, '_blank', 'width=500, height=600');
+            idClip =window.open(popUrl, '_blank', 'width=500, height=600');
             id = true;
         }
     }
@@ -30,16 +30,16 @@ function popId(){
 function popPw(){
     if (!pw){       //최초 클릭이면 팝업을 띄운다
         let popUrl = "findPw";
-        Clip =window.open(popUrl, '_blank', 'width=500, height=600 ');
+        pwClip =window.open(popUrl, '_blank', 'width=500, height=600 ');
         pw = true;
     }
     else{           //최초 클릭이 아니면
-        if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-            Clip.focus();
+        if(!pwClip.closed && pwClip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
+            pwClip.focus();
         }
         else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
             let popUrl = "findPw";
-            Clip =window.open(popUrl, '_blank', 'width=500, height=600');
+            pwClip =window.open(popUrl, '_blank', 'width=500, height=600');
             pw = true;
         }
     }
@@ -49,16 +49,16 @@ function popPw(){
 function popJoin(){
     if (!join){       //최초 클릭이면 팝업을 띄운다
         let popUrl = "join";
-        Clip =window.open(popUrl, '_blank', 'width=550, height=920');
+        joinClip =window.open(popUrl, '_blank', 'width=550, height=920');
         join = true;
     }
     else{           //최초 클릭이 아니면
-        if(!Clip.closed && Clip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
-            Clip.focus();
+        if(!joinClip.closed && joinClip){          //팝업창 존재 여부를 확인하여 팝업창이 이미 떠 있으면 포커스
+            joinClip.focus();
         }
         else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
             let popUrl = "join";
-            Clip =window.open(popUrl, '_blank', 'width=550, height=920');
+            joinClip =window.open(popUrl, '_blank', 'width=550, height=920');
             join = true;
         }
     }

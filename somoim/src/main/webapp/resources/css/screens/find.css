@@ -42,7 +42,8 @@
 }
 .find-form__btn:last-child {
 	color: var(--white);
-}
+	background-color: var(--purple);
+	}
 .find-form-inline {
 	display: flex;
 	justify-content: space-between;

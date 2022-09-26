@@ -41,6 +41,14 @@
 	display: inline;
 }
 
+.error_login{
+	font-size: 1.8rem;
+	color: red;
+	text-align: justify;
+    width: 71%;
+}
+
+
 .link-row {	
 	color: #999999;
 	font-size: 1.2rem;
