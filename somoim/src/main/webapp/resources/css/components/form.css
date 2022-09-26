@@ -9,6 +9,9 @@
 .form-container {
 	width: 80rem;
 }
+.div-container {
+	width: 80%;
+}
 
 input::placeholder {
 	color:var(--grey);

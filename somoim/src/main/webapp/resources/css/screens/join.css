@@ -12,8 +12,10 @@ e@charset "UTF-8";
 	border-radius: 0.5rem;
 	padding: 0.8rem 1rem;
 	font-size: 1.6rem;
-	margin-bottom: 0.5rem;
+	margin: 0rem 0.8rem 0.5rem 0rem;
 	transition: border-color 0.3s ease-in-out;
+	width: 95%;
+	
 }
 .join-form__label {
 	color: var(--gray);
@@ -29,7 +31,12 @@ e@charset "UTF-8";
 	padding: 1rem 0;
 	cursor: pointer;
 	border-radius: 0.5rem;
-	margin: 1rem 0;
+	margin: 0px 0px 5px 0px;
+    padding: 0px 0px 0px 0px;
+    width: 48%;
+}
+._chk{
+	background-color: var(--purple);
 }
 .join-form-inline {
 	display: flex;
@@ -63,8 +70,19 @@ e@charset "UTF-8";
 	width: 48%;
 }
 
-.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg,.error-phone-msg, .error_login{
-		color: red;
+.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg,.error-phone-msg{
+	color: red;
 	font-size: 1.5rem;
 }
-
+.last_btn{
+	display: flex;
+	justify-content: space-between;
+}
+.last_btn > .join-form__btn{
+	padding: 1rem;
+	margin: 2.5rem 0 ;
+	
+}
+.last_btn > .join-form__btn:last-child {
+	color: black;
+}
