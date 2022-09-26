@@ -49,8 +49,6 @@ public class LoginController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-		// https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
-		// redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("### 일반 로그인 + 네이버 로그인 버튼을 사용하기 위해 Model에 데이터 값을 할당하여 보내준다#### ");
 		// 네이버 로그인을 위한 정보가 담긴 주소
 		model.addAttribute("url", naverAuthUrl);
@@ -184,7 +182,8 @@ public class LoginController {
 	public String addJoin(MembersDTO membersDTO, HttpServletRequest request,
 			@RequestParam(required = false) String year, @RequestParam(required = false) String month,
 			@RequestParam(required = false) String day, @RequestParam(required = false) String memberName,
-			@RequestParam(required = false, defaultValue = "/resources/img/members/basicImg.png") String memberImagePath) {
+			@RequestParam(required = false, defaultValue = "/resources/img/members/basicImg.png") String memberImagePath,
+			@RequestParam(required = false, defaultValue = "/resources/img/members/bakImg.png") String infoImagePath) {
 
 		if (month.length() < 2) {
 			month = "0" + month;
