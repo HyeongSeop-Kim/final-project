@@ -43,16 +43,19 @@ $(document).ready( ()=> {
 const meetingArr = [-1, -1]
 const meetingErrorMsgEl =
     document.querySelector('#info__meeting .error-msg')
+if(meetingMonthEl){
+    meetingMonthEl.addEventListener('change', () => {
+        meetingArr[0] = meetingMonthEl.value
+        checkMeetingValid(meetingArr)
+    });
+}
 
-meetingMonthEl.addEventListener('change', () => {
-    meetingArr[0] = meetingMonthEl.value
-    checkMeetingValid(meetingArr)
-});
-
-meetingDayEl.addEventListener('change', () => {
-    meetingArr[1] = meetingDayEl.value
-    checkMeetingValid(meetingArr)
-});
+if(meetingDayEl) {
+    meetingDayEl.addEventListener('change', () => {
+        meetingArr[1] = meetingDayEl.value
+        checkMeetingValid(meetingArr)
+    });
+}
 
 /* 유효한 날짜인지 여부 확인 (윤년/평년) */
 function checkMeetingValid(meetingArr) {
@@ -145,7 +148,6 @@ function formCheck(form, moimId) {
     }
 
     alert('정모가 등록되었습니다.');
-
     form.submit();
 
     move();
@@ -197,3 +199,15 @@ function removeMeeting(moimId, meetingId) {
         }
     });
 }
+
+function meetingCntChk() {
+
+
+    if($('.main-box__meeting').length >= 3) {
+        $('#meetingBtn').empty();
+    }
+}
+
+$(document).ready( () => {
+    meetingCntChk();
+})

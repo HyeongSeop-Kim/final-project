@@ -8,25 +8,22 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="${path}/resources/css/styles.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 	 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+	<link rel="stylesheet" href="${path}/resources/css/styles.css">
      <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<title>회원가입</title>
 </head>
 <body>
-	<header>
-	<c:if test="${empty userInfo}">
-		<div class="form-title">
-				소모임
-		</div>
-	</c:if>
+
+	<div class="form-logo">
+		<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+	</div>
 	<c:if test="${not empty userInfo}">
 		<div class="form-title">
 				카카오 로그인을 위한 추가 정보 입력
 		</div>
 	</c:if>
-	</header>
 	<section class="form-section">
 		<div class="form-container" >
 		<c:url  var="joinAddUrl" value="/addJoin"></c:url>
@@ -35,14 +32,14 @@
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
 					<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId">
-						<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
+						<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn--green" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>
 				<c:if test="${not empty userInfo}">
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
 						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${userInfo.email}">
-							<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
+							<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn--green"  type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>	
 				<div class="error-id-msg"></div>
@@ -98,7 +95,7 @@
 				<label class="join-form__label">휴대전화</label>
 				<div style="display: flex; justify-content:space-between; ">
 					<input style="width: 70%" class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰번호">
-					<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="PhoneChk();">중복확인</button>
+					<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn--green" type="button" onclick="PhoneChk();">중복확인</button>
 			    </div>
 			    <div class="error-phone-msg"></div>
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
@@ -110,8 +107,8 @@
 					</div>
 				</c:forEach>
 			</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
-				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
+				<button class="join-form__btn btn--purple" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
+				<button class="join-form__btn btn--grey" type="button" onclick="popClose();" >취소</button>
 			</form>
 		</div>
 	</section>

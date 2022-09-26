@@ -14,39 +14,39 @@
        SELECT SQU_MOIM.NEXTVAL FROM DUAL
    </select>
    <select id="selectAll" resultType="somoimDTO" parameterType="Map">
-     
-     SELECT RNUM
-     	  , moimId, moimTitle, moimInfo
-     	  , moimLimit, moimImagePath, categoryId
-     	  , locationId, moimCreateDate, locationName 
-     	FROM(
-	        SELECT ROWNUM AS RNUM
-	        	 , M.MOIM_ID AS moimId
-	             , M.MOIM_TITLE AS moimTitle
-	             , M.MOIM_INFO AS moimInfo
-	             , M.MOIM_LIMIT AS moimLimit
-	             , M.MOIM_IMAGE_PATH AS moimImagePath
-	             , M.CATEGORY_ID AS categoryId
-	             , M.LOCATION_ID AS locationId
-	             , M.MOIM_CREATE_DATE AS moimCreateDate
-	             , L.LOCATION_NAME AS locationName
-	        FROM (SELECT *
-	        		FROM MOIM
-	        	 ORDER BY MOIM_CREATE_DATE DESC) M
-	             LEFT JOIN LOCATIONS L
-	             ON M.LOCATION_ID = L.LOCATION_ID
-			WHERE 1 = 1
-	             <if test=' search_title != "" '>
-	              AND UPPER(M.MOIM_TITLE) like UPPER('%'||#{search_title}||'%')
-	             </if>
-	              <if test=' category_id > 0 '>
-	              AND  M.CATEGORY_ID = #{category_id}
-	             </if>
-	       	AND
-	       	<![CDATA[ ROWNUM <= #{num_end}]]>
-            )
+
+       SELECT RNUM
+       , moimId, moimTitle, moimInfo
+       , moimLimit, moimImagePath, categoryId
+       , locationId, moimCreateDate, locationName
+       FROM
+       (SELECT ROWNUM AS RNUM, MM.* FROM (
+       SELECT M.MOIM_ID AS moimId
+       , M.MOIM_TITLE AS moimTitle
+       , M.MOIM_INFO AS moimInfo
+       , M.MOIM_LIMIT AS moimLimit
+       , M.MOIM_IMAGE_PATH AS moimImagePath
+       , M.CATEGORY_ID AS categoryId
+       , M.LOCATION_ID AS locationId
+       , M.MOIM_CREATE_DATE AS moimCreateDate
+       , L.LOCATION_NAME AS locationName
+       FROM  MOIM M
+       LEFT JOIN LOCATIONS L
+       ON M.LOCATION_ID = L.LOCATION_ID
+       WHERE 1 = 1
+       <if test=' search_title != "" '>
+           AND UPPER(MOIM_TITLE) like UPPER('%'||#{search_title}||'%')
+       </if>
+       <if test=' category_id > 0 '>
+           AND  CATEGORY_ID = #{category_id}
+       </if>
+       ORDER BY MOIM_CREATE_DATE DESC) MM
+       WHERE 1 = 1
+       AND
+       <![CDATA[ ROWNUM <= #{num_end}]]>
+       )
        WHERE
-       	<![CDATA[RNUM >= #{num_start}]]>
+       <![CDATA[RNUM >= #{num_start}]]>
   </select>
 
   <select id ="selectAllCnt" resultType="_int">

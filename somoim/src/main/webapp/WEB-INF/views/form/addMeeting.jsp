@@ -16,53 +16,44 @@
 	<title>정모 개설</title>
 </head>
 <body>
-	<header>
-		<div class="form-title">
-				정모 개설
-		</div>
-	</header>
+<div class="form-logo">
+	<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+</div>
 	<section class="form-section">
 		<div class="form-container" >
 		<c:url  var="meetingAddUrl" value="/moim/addMeeting"></c:url>
-			<form class="join-form " method="post" action="${meetingAddUrl}">
+			<form class="meeting-form" method="POST" action="${meetingAddUrl}">
 				<input id="moimId" name="moimId" style="display: none" value="${param.id}">
-				<div>
-					<span class="material-icons"
-									style="font-size:14px; color: gray;">favorite</span>
-					<input class="join-form__input info__title" type="text" id="meetingTitle" name="meetingTitle" placeholder="정모 이름">
+				<div class="meeting-form-input">
+					<span class="material-icons">favorite</span>
+					<input class="meeting-form__input info__title" type="text" id="meetingTitle" name="meetingTitle" placeholder="정모 이름">
 				</div>
-				<div>
-					<div class="" id="info__date">
-						<div class="join-form-flex">
-							<span class="material-icons"
-										style="font-size:14px; color: gray;">date_range</span>
-							<select class="join-form-inline__input" id="meetingMonth" name="month">
+					<div class="meeting-form-input" id="info__date">
+							<span class="material-icons">date_range</span>
+							<select class="meeting-form-inline__input" id="meetingMonth" name="month">
 								<option disabled selected>월</option>
 								</select>
-							<select class="join-form-inline__input" id="meetingDay" name="day">
+							<select class="meeting-form-inline__input" id="meetingDay" name="day">
 									<option disabled selected>일</option>
 						  </select>
-							<input class="join-form-inline__input" type="text" id="meetingTime" name="meetingTime" placeholder="정모 시간"/>
-						 </div>
-					 </div>
+							<input class="meeting-form-inline__input" type="text" id="meetingTime" name="meetingTime" placeholder="정모 시간"/>
+					</div>
+				<div class="meeting-form-input">
+					<span class="material-icons">room</span>
+					<input class="meeting-form__input" type="text" id="meetingPlace" name="meetingPlace" placeholder="정모 장소">
 				</div>
-				<div>
-					<span class="material-icons"
-								style="font-size:14px; color: gray;">room</span>
-					<input class="join-form__input" type="text" id="meetingPlace" name="meetingPlace" placeholder="정모 장소">
+				<div class="meeting-form-input">
+					<span class="material-icons">money</span>
+					<input class="meeting-form__input" type="text" id="meetingPrice" name="meetingPrice" placeholder="정모 지참금">
 				</div>
-				<div>
-					<span class="material-icons"
-								style="font-size:14px; color: gray;">money</span>
-					<input class="join-form__input" type="text" id="meetingPrice" name="meetingPrice" placeholder="정모 지참금">
+				<div class="meeting-form-input">
+					<span class="material-icons">groups</span>
+					<input class="meeting-form__input" type="text" id="meetingLimit" name="meetingLimit" placeholder="정원 (5 ~ 50명)">
 				</div>
-				<div>
-					<span class="material-icons"
-								 style="font-size:14px; color: gray;">groups</span>
-					<input class="join-form__input" type="text" id="meetingLimit" name="meetingLimit" placeholder="정원 (5 ~ 50명)">
+				<div class="meeting-form-inline div-line">
+					<button class="meeting-form__btn btn---grey" type="button" onclick="popClose();" >취소</button>
+					<button class="meeting-form__btn btn--purple" type="button"  onclick="formCheck(this.form, ${param.id});">정모만들기</button>
 				</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form, ${param.id});">정모 만들기</button>
-				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
 			</form>
 		</div>
 	</section>

@@ -16,24 +16,22 @@
 	.success-id-msg > p {padding: 3px 0;}
 </style>
 <body>
-	<header>
-		<div class="form-title">
-			패스워드 찾기
-		</div>
-	</header>
+<div class="form-logo">
+	<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+</div>
 	<section class="form-section">
 		<div class="form-container">
 			<form class="find-form" action="">
-				<label class="join-form__label" >아이디</label>
-				<input class="join-form__input" type="text" id="findmemId">
+				<label class="find-form__label" >아이디</label>
+				<input class="find-form__input" type="text" id="findmemId">
 				<label class="find-form__label">이름</label>
 				<input class="find-form__input" type="text" id="findmemName">
 				<label class="find-form__label">휴대전화</label>
 				<input class="find-form__input" type="text" id="findmemPhone" placeholder="핸드폰 번호">
 				<div class="success-id-msg"></div>
 				<div class="find-form-inline div-line">
-					<button class="find-form__btn btn-light-gray" type="button" onclick="popClose();">취소</button>
-					<button class="find-form__btn btn-green" type="button" value="확인" onclick="findPw();">비밀번호 찾기</button>
+					<button class="find-form__btn btn--grey" type="button" onclick="popClose();">취소</button>
+					<button class="find-form__btn btn--purple" type="button" value="확인" onclick="findPw();">비밀번호 찾기</button>
 				</div>
 			</form>
 		</div>

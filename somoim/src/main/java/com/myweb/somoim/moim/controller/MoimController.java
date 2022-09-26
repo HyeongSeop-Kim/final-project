@@ -990,18 +990,31 @@ public class MoimController {
 	public String addMeeting(HttpServletRequest request
 			,@RequestParam int id
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(membersDto.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
+			List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
-		return "form/addMeeting";
+			request.setAttribute("moimParticipants",moimParticipants);
+
+			return "form/addMeeting";
+		} else {
+			return null;	// 에러페이지로
+		}
 	}
 
 	@PostMapping(value = "/moim/addMeeting")
 	public String addMeeting(MeetingsDTO meetingsDTO
 			, HttpSession session
-			, @RequestParam int id
+			, @RequestParam int moimId
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		List<MeetingParticipantsDTO> meetingParticipantsDatas = meetingParticipantsService.getDatas(id);
-		if(meetingParticipantsDatas.size()<4) {
+		System.out.println(moimId);
+		List<MeetingsDTO> meetingsDatas = meetingsService.getDatas(moimId);
+		System.out.println("aa");
+		if(meetingsDatas.size()<4) {
 			LocalDate now = LocalDate.now();
 			String year = String.valueOf(now.getYear());
 			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
@@ -1022,14 +1035,6 @@ public class MoimController {
 		} else {
 			return null; // eror페이지로 이동
 		}
-
-//		boolean result = meetingsService.addData(data);
-//
-//		if (result) {
-//			return "form/join";
-//		}else {
-//			return "form/join";
-//		}
 	}
 
 	@GetMapping(value = "/moim/modMeeting")
@@ -1045,18 +1050,27 @@ public class MoimController {
 	@PostMapping(value = "/moim/modMeeting")
 	public String modMeeting(MeetingsDTO modData
 			, HttpSession session
+			, @RequestParam int id
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
-		LocalDate now = LocalDate.now();
-		String year = String.valueOf(now.getYear());
-		String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
-		Date date = java.sql.Date.valueOf(meetingDate);
+		MembersDTO loginData = (MembersDTO) session.getAttribute("loginData");
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMemberId(loginData.getMemberId());
+		moimParticipantsDTO.setMoimId(id);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
+			LocalDate now = LocalDate.now();
+			String year = String.valueOf(now.getYear());
+			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
+			Date date = java.sql.Date.valueOf(meetingDate);
 
-		modData.setMeetingDate(date);
+			modData.setMeetingDate(date);
 
-		boolean res = meetingsService.modifyData(modData);
-
-		return null;
+			boolean res = meetingsService.modifyData(modData);
+			return "/moim/modMeeting";
+		} else {
+			return null;	// 에러페이지로
+		}
 	}
 
 	@PostMapping(value = "/moim/ajax/modJob")
@@ -1123,8 +1137,8 @@ public class MoimController {
 		if(meetingsDTO == null) {
 			jsonObject.put("msg", "해당 정모를 찾을 수 없습니다.");
 		} else {
-			res = meetingParticipantsService.removeMeetingDatas(meetingId)
-				&& meetingsService.removeMeetingData(meetingsDTO.getMeetingId());
+			meetingParticipantsService.removeMeetingDatas(meetingId);
+			res = meetingsService.removeMeetingData(meetingsDTO.getMeetingId());
 
 			jsonObject.put("msg", "삭제가 완료되었습니다.");
 		}

@@ -1,4 +1,4 @@
-e@charset "UTF-8";
+@charset "UTF-8";
 
 .join-form {
 	display: flex;
@@ -8,7 +8,6 @@ e@charset "UTF-8";
 
 .join-form__input {
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	color: var(--gray);
 	border-radius: 0.5rem;
 	padding: 0.8rem 1rem;
 	font-size: 1.6rem;
@@ -16,14 +15,12 @@ e@charset "UTF-8";
 	transition: border-color 0.3s ease-in-out;
 }
 .join-form__label {
-	color: var(--gray);
 	font-size: 1.4rem;
 	font-weight: bold;
 	display: block;
 	margin-bottom: 0.5rem;
 }
 .join-form__btn {
-	color: var(--white);
 	font-size: 1.8rem;
 	border: none;
 	padding: 1rem 0;
@@ -44,6 +41,7 @@ e@charset "UTF-8";
 	display: inline-block;
 	width: 49%;
 	margin-bottom: 0.2rem;
+	font-size: 1.4rem;
 }
 
 
@@ -53,8 +51,8 @@ e@charset "UTF-8";
 	outline-style: none;
 	margin: 0 0.2rem;
 	padding: 1rem 1rem;
+	font-size: 1.6rem;
 	width: 33%;
-	color: var(--gray);
 	margin-bottom: 0.5rem;
 }
 .join-form-inline__div {

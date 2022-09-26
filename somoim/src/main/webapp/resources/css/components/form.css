@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 .form-section {
 	display: flex;
 	justify-content: center;
@@ -10,8 +9,14 @@
 	width: 80rem;
 }
 
+.form-logo {
+	display: flex;
+	justify-content: center;
+	margin : 5rem auto 6rem auto;
+}
+
 input::placeholder {
-	color:var(--grey);
+	color: #999999;
 }
 .form-title {
 	font-size: 3rem;

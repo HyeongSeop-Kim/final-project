@@ -14,11 +14,9 @@
 	<title>회원가입</title>
 </head>
 <body>
-	<header>
-		<div class="form-title">
-				소모임
-		</div>
-	</header>
+	<div class="form-logo">
+		<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
+	</div>
 	<section class="form-section">
 		<div class="form-container" >
 		<c:url  var="infoModUrl" value="/infoMod"></c:url>
@@ -98,8 +96,8 @@
 					</div>
 				</c:forEach>
 			</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="수정"  >수정</button>
-				<button class="join-form__btn btn-light-gray" type="button" onclick="popClose();" >취소</button>
+				<button class="join-form__btn btn--purple" type="button"  onclick="formCheck(this.form);" value="수정"  >수정</button>
+				<button class="join-form__btn btn--grey" type="button" onclick="popClose();" >취소</button>
 			</form>
 		</div>
 	</section>

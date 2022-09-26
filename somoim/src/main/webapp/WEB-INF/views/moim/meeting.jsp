@@ -425,7 +425,7 @@
         </c:forEach>
       </c:if>
       <c:if test="${res.jobId eq 1 || res.jobId eq 2}">
-        <div class="meeting-btn">
+        <div id="meetingBtn" class="meeting-btn">
           <button type="button" class="btn--round btn--w100p btn--purple" onclick="popAddMeeting(${param.id});">
             <i class="fa-solid fa-plus"></i> 정모 만들기
           </button>

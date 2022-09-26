@@ -11,7 +11,7 @@ var join;
 function popId(){
     if (!id){       //최초 클릭이면 팝업을 띄운다
         let popUrl = "findId";
-        Clip =window.open(popUrl, '_blank', 'width=500, height=600, location=no');
+        Clip =window.open(popUrl, '_blank', 'width=500, height=550, location=no');
         id = true;
     }
     else{           //최초 클릭이 아니면
@@ -20,7 +20,7 @@ function popId(){
         }
         else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
             let popUrl = "findId";
-            Clip =window.open(popUrl, '_blank', 'width=500, height=600');
+            Clip =window.open(popUrl, '_blank', 'width=500, height=550');
             id = true;
         }
     }
@@ -30,7 +30,7 @@ function popId(){
 function popPw(){
     if (!pw){       //최초 클릭이면 팝업을 띄운다
         let popUrl = "findPw";
-        Clip =window.open(popUrl, '_blank', 'width=500, height=600 ');
+        Clip =window.open(popUrl, '_blank', 'width=500, height=550 ');
         pw = true;
     }
     else{           //최초 클릭이 아니면
@@ -39,7 +39,7 @@ function popPw(){
         }
         else{                                    //없으면 팝업을 다시 띄울 수 있게 한다
             let popUrl = "findPw";
-            Clip =window.open(popUrl, '_blank', 'width=500, height=600');
+            Clip =window.open(popUrl, '_blank', 'width=500, height=550');
             pw = true;
         }
     }
@@ -68,7 +68,7 @@ function popJoin(){
 function popCategory(){
     if (!category){
         let popUrl = "/somoim/category";
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        Clip =window.open(popUrl, '_blank', 'width=550, height=950');
         category = true;
     }
     else{
@@ -77,7 +77,7 @@ function popCategory(){
         }
         else{
             let popUrl = "/somoim/category";
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            Clip =window.open(popUrl, '_blank', 'width=550, height=950');
             category = true;
         }
     }
@@ -123,7 +123,7 @@ function popModJob(param){
 function popAddMeeting(param){
     if (!addmeeting){
         let popUrl = "addMeeting?id=" + param;
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        Clip =window.open(popUrl, '_blank', 'width=550, height=600');
         addmeeting = true;
     }
     else{
@@ -132,7 +132,7 @@ function popAddMeeting(param){
         }
         else{
             let popUrl = "addMeeting?id=" + param;
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            Clip =window.open(popUrl, '_blank', 'width=550, height=600');
             addmeeting = true;
         }
     }
@@ -141,7 +141,7 @@ function popAddMeeting(param){
 function popModMeeting(meetingId, moimId){
     if (!modmeeting){
         let popUrl = "modMeeting?meetingId=" + meetingId + "&moimId=" + moimId;
-        Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+        Clip =window.open(popUrl, '_blank', 'width=550, height=600');
         modmeeting = true;
     }
     else{
@@ -150,7 +150,7 @@ function popModMeeting(meetingId, moimId){
         }
         else{
             let popUrl = "modMeeting?meetingId=" + meetingId + "&moimId=" + moimId;
-            Clip =window.open(popUrl, '_blank', 'width=550, height=900');
+            Clip =window.open(popUrl, '_blank', 'width=550, height=600');
             modmeeting = true;
         }
     }
