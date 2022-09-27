@@ -113,16 +113,12 @@
 							</div>
 							<div class="info-comment-moim">
 								<div class="info-comment-moim__column">
-									<img src="" class="icon--square icon--square--small">
+									<img src="${commentsData.moimImagePath}" class="icon--square icon--square--small">
 								</div>
-								<c:forEach items="${boardsId}" var="boardId">
-									<c:if test="${commentsData.boardId eq boardId.boardId}">
 										<div class="info-comment-moim__column">
-											<span>모임 타이틀입니다</span>
-											<span>${boardId.boardTitle}</span>
+											<span>${commentsData.moimTitle}</span>
+											<span>${commentsData.boardTitle}</span>
 										</div>
-									</c:if>
-								</c:forEach>
 							</div>
 						</div>
 					</c:forEach>

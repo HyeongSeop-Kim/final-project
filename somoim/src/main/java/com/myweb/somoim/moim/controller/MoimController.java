@@ -8,9 +8,7 @@ import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
-import oracle.jdbc.proxy.annotation.Post;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -394,7 +392,7 @@ public class MoimController {
 		data.setMemberId(membersDto.getMemberId());
 		data.setMoimId(id);
 		MoimParticipantsDTO res = moimParticipantsService.getData(data);
-		System.out.println(moimData != null);
+
 		if(moimData != null) {
 			if(moimData.getMoimId() == id) {
 				CategorysDTO categorysDTO = categoryService.getData(moimData.getCategoryId());  // 카테고리 정보
@@ -652,7 +650,7 @@ public class MoimController {
 			boolean removeBoard = boardsService.removeBoardsData(id);
 			boolean removeMoim = somoimService.removeData(id);
 		} else {
-			return null;	// 에러페이지로
+			return "/error/errorPage";	// 에러페이지로
 		}
 
 		return "redirect:/";
@@ -1010,7 +1008,7 @@ public class MoimController {
 
 			request.setAttribute("moimParticipants",moimParticipants);
 		} else {
-			return null;	// 에러페이지로
+			return "/error/errorPage";	// 에러페이지로
 		}
 
 		return "form/modJob";
@@ -1020,29 +1018,37 @@ public class MoimController {
 	public String addMeeting(HttpServletRequest request
 			,@RequestParam int id
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
-		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
-		moimParticipantsDTO.setMemberId(membersDto.getMemberId());
-		moimParticipantsDTO.setMoimId(id);
-		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
-		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
-			List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
+		List<MeetingsDTO> meetingsDatas = meetingsService.getDatas(id);
+		if(meetingsDatas.size()<3) {
 
-			request.setAttribute("moimParticipants",moimParticipants);
+			MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+			moimParticipantsDTO.setMemberId(membersDto.getMemberId());
+			moimParticipantsDTO.setMoimId(id);
+			MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+			if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
+				List<MoimParticipantsDTO> moimParticipants = moimParticipantsService.getDatas(id); //참가자정보
 
-			return "form/addMeeting";
+				request.setAttribute("moimParticipants",moimParticipants);
+
+				return "form/addMeeting";
+			} else {
+				return "/error/errorPage";
+			}
 		} else {
-			return null;	// 에러페이지로
+			request.setAttribute("errMsg", "정모는 최대 3개만 만들 수 있습니다.");
+			return "form/addMeeting";
 		}
 	}
 
 	@PostMapping(value = "/moim/addMeeting")
 	public String addMeeting(MeetingsDTO meetingsDTO
+			, HttpServletRequest request
 			, HttpSession session
 			, @RequestParam int moimId
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
 		List<MeetingsDTO> meetingsDatas = meetingsService.getDatas(moimId);
-		if(meetingsDatas.size()<4) {
+		if(meetingsDatas.size()<3) {
 			LocalDate now = LocalDate.now();
 			String year = String.valueOf(now.getYear());
 			String meetingDate = year + "-" + String.format("%02d", Integer.parseInt(month)) + "-" + String.format("%02d", Integer.parseInt(day));
@@ -1059,10 +1065,10 @@ public class MoimController {
 			meetingParticipantsDTO.setMemberId(((MembersDTO)session.getAttribute("loginData")).getMemberId());
 
 			meetingParticipantsService.addData(meetingParticipantsDTO);
-			return "/moim/addMeeting";
 		} else {
-			return null; // eror페이지로 이동
+			request.setAttribute("errMsg", "정모는 최대 3개만 만들 수 있습니다.");
 		}
+			return "form/addMeeting";
 	}
 
 	@GetMapping(value = "/moim/modMeeting")
@@ -1070,6 +1076,8 @@ public class MoimController {
 			,@RequestParam int meetingId
 			,@SessionAttribute("loginData") MembersDTO membersDto ) {
 		MeetingsDTO meetingData = meetingsService.getData(meetingId);
+		int partCnt = meetingParticipantsService.getPartCnt(meetingId);
+		model.addAttribute("partCnt", partCnt);
 		model.addAttribute("meetingData", meetingData);
 
 		return "form/modMeeting";
@@ -1078,14 +1086,14 @@ public class MoimController {
 	@PostMapping(value = "/moim/modMeeting")
 	public String modMeeting(MeetingsDTO modData
 			, HttpSession session
-			, @RequestParam int id
+			, @RequestParam int meetingId
 			, @RequestParam (required = false) String month
 			, @RequestParam (required = false) String day) {
 
 		MembersDTO loginData = (MembersDTO) session.getAttribute("loginData");
 		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
 		moimParticipantsDTO.setMemberId(loginData.getMemberId());
-		moimParticipantsDTO.setMoimId(id);
+		moimParticipantsDTO.setMoimId(modData.getMoimId());
 		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
 
 		if(moimParticipantsData.getJobId() == 1 || moimParticipantsData.getJobId() == 2) {
@@ -1095,11 +1103,9 @@ public class MoimController {
 			Date date = java.sql.Date.valueOf(meetingDate);
 
 			modData.setMeetingDate(date);
-			System.out.println("bbb");
 			boolean res = meetingsService.modifyData(modData);
 			return "/moim/modMeeting";
 		} else {
-			System.out.println("ccc");
 			return null;	// 에러페이지로
 		}
 	}
@@ -1136,6 +1142,22 @@ public class MoimController {
 		int meetingId = Integer.parseInt(param.get("meetingId").toString());
 		JSONObject jsonObject = new JSONObject();
 		boolean res = false;
+
+		MoimParticipantsDTO moimParticipantsDTO = new MoimParticipantsDTO();
+		moimParticipantsDTO.setMoimId(moimId);
+		moimParticipantsDTO.setMemberId(memberId);
+		MoimParticipantsDTO moimParticipantsData = moimParticipantsService.getData(moimParticipantsDTO);
+		if(moimParticipantsData == null) {
+			jsonObject.put("msg", "모임 멤버만 참가할 수 있습니다.");
+			return jsonObject.toJSONString();
+		}
+		int partCnt = meetingParticipantsService.getPartCnt(meetingId);
+
+		MeetingsDTO meetingsDTO = meetingsService.getData(meetingId);
+		if(partCnt >= meetingsDTO.getMeetingLimit()) {
+			jsonObject.put("msg", "정원이 전부 찼습니다.");
+			return jsonObject.toJSONString();
+		}
 
 		MeetingParticipantsDTO meetingParticipantsData = new MeetingParticipantsDTO();
 		meetingParticipantsData.setMoimId(moimId);

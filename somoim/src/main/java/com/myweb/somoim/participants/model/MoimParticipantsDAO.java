@@ -56,7 +56,6 @@ public class MoimParticipantsDAO extends AbstractDAO<List<MoimParticipantsDTO>, 
 	public MoimParticipantsDTO selectData(MoimParticipantsDTO dto) {
 		String mapperId = String.format(mapper, "selectData");
 		MoimParticipantsDTO data = session.selectOne(mapperId,dto);
-		
 		return data;
 	}
 

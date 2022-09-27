@@ -22,14 +22,21 @@
     </select>
 
     <select id="selectWriteDatas" resultType="commentsDTO" >
-        SELECT BOARD_ID AS boardId
-             ,CONTENT AS content
-             ,CONTENT_CREATE_DATE AS contentCreateDate
-             ,MOIM_ID AS moimId
-             ,MEMBER_ID AS memberId
-        FROM BOARD_COMMENT
-        WHERE MEMBER_ID = #{id}
-        ORDER BY CONTENT_CREATE_DATE DESC
+        SELECT B.BOARD_ID AS boardId
+             ,B.CONTENT AS content
+             ,B.CONTENT_CREATE_DATE AS contentCreateDate
+             ,B.MOIM_ID AS moimId
+             ,B.MEMBER_ID AS memberId
+             ,A.BOARD_TITLE AS boardTitle
+             ,M.MOIM_TITLE AS moimTitle
+             ,M.MOIM_IMAGE_PATH AS moimImagePath
+        FROM BOARD_COMMENT B
+                 RIGHT JOIN BOARDS A
+                            ON B.BOARD_ID = A.BOARD_ID
+                 RIGHT JOIN MOIM M
+                            ON B.MOIM_ID = M.MOIM_ID
+        WHERE B.MEMBER_ID = #{id}
+        ORDER BY B.CONTENT_CREATE_DATE DESC
     </select>
     
         <select id="selectData"  resultType="commentsDTO" >

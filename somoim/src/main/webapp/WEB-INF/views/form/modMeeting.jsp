@@ -23,6 +23,7 @@
 		<div class="form-container" >
 		<c:url  var="meetingModUrl" value="/moim/modMeeting"></c:url>
 			<form class="meeting-form " method="POST" action="${meetingModUrl}">
+				<input id="moimId" name="moimId" style="display: none" value="${param.moimId}">
 				<input id="meetingId" name="meetingId" style="display: none" value="${param.meetingId}">
 				<div class="meeting-form-input">
 					<span class="material-icons">favorite</span>
@@ -52,12 +53,13 @@
 				</div>
 				<div class="meeting-form-inline div-line">
 					<button class="meeting-form__btn btn--grey" type="button" onclick="popClose();" >취소</button>
-					<button class="meeting-form__btn btn--purple" type="submit"  onclick="formCheck(this.form, ${param.moimId});">정모수정</button>
+					<button class="meeting-form__btn btn--purple" type="button"  onclick="modFormCheck(this.form, ${param.moimId}, ${partCnt});">정모수정</button>
 				</div>
 			</form>
 		</div>
 	</section>
 </body>
+
 <script src="${path}/resources/js/meeting.js"></script>
 <script src="${path}/resources/js/components/popup.js"></script>
 </html>

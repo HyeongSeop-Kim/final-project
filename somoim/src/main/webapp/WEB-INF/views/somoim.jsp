@@ -33,8 +33,8 @@
 		<section class="col-8">
 			<div class="main-box">
 				<div class="main-cate">
-					<div class="cate__grad-layer"></div>
-					<div class="main-cate scroll-x">
+					<div id="gradLayer" class="cate__grad-layer"></div>
+					<div id="mainCate" class="main-cate scroll-x">
 						<div class="icon__div">
 						<div id="cate_1" class="icon--circle icon--circle__cate">
 							<input type="hidden"  value="1" />
@@ -278,6 +278,26 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
   </script>
   <script type="text/javascript">
+
+		$('#mainCate').on('scroll', function() {
+			if($('#mainCate').scrollLeft() >= 810) {
+				$('#gradLayer').css('opacity', '0.8');
+			} else if($('#mainCate').scrollLeft() >= 820) {
+				$('#gradLayer').css('opacity', '0.6');
+			} else if($('#mainCate').scrollLeft() >= 830) {
+				$('#gradLayer').css('opacity', '0.4');
+			} else if($('#mainCate').scrollLeft() >= 840) {
+				$('#gradLayer').css('opacity', '0.2');
+			} else {
+				$('#gradLayer').css('opacity', '1');
+			}
+			if($(this).scrollLeft() + $(this).innerWidth() >= $(this)[0].scrollWidth) {
+				$('#gradLayer').removeClass('cate__grad-layer');
+			} else {
+				$('#gradLayer').addClass('cate__grad-layer');
+			}
+		})
+
   let main_page = 1;
   let category_id = 0;
 function get_moim_list(page) {

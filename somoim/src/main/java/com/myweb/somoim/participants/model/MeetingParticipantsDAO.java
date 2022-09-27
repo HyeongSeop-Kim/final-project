@@ -55,6 +55,13 @@ public class MeetingParticipantsDAO extends AbstractDAO<List<MeetingParticipants
 		return data;
 	}
 
+	public int selectPartCnt(int meetingId) {
+		String mapperId = String.format(mapper, "selectPartCnt");
+		int res = session.selectOne(mapperId, meetingId);
+
+		return res;
+	}
+
 	@Override
 	public int getNextSeq() {
 		return 0;
