@@ -28,9 +28,9 @@
 			<input id="infoImgSelect" class="hidden" type="file" name="uploadImg" value="이미지 선택">
 		</div>
 		<!-- 프로필 -->
-		<div class="header-info-box">
+		<div  class="header-info-box">
 			<!-- 프로필 이미지 -->
-			<div class="header-info-img">
+			<div id="hoverTarget_profile" class="header-info-img">
 				<img id="profImg" class="header-info-img__img icon--circle"  src="${sessionScope.loginData.memberImagePath}" accept="image/*">
 				<input id="profImgInput" class="hidden" type="file" name="uploadImg" value="이미지 선택">
 			</div>

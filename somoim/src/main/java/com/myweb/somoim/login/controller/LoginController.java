@@ -198,7 +198,11 @@ public class LoginController {
 		String bitrhs = year + month + day;
 
 		String imagePath = request.getContextPath() + memberImagePath;
+		String infoImgPath = request.getContextPath() + infoImagePath;
 
+		System.out.println("프로필 패스:" + imagePath);
+		System.out.println("배경 패스:" + infoImgPath);
+		
 		MembersDTO data = new MembersDTO();
 
 		data.setMemberId(membersDTO.getMemberId());
@@ -212,6 +216,7 @@ public class LoginController {
 		data.setLocationId(membersDTO.getLocationId());
 		data.setBirth(bitrhs);
 		data.setMemberImagePath(imagePath);
+		data.setInfoImagePath(infoImgPath);
 		// 일반 로그인 컨트롤를 통한 회원가입의 loginType --> somoim
 		data.setLoginType("somoim");
 

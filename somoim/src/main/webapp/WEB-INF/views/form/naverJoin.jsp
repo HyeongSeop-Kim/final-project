@@ -9,41 +9,35 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-	 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
      <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<title>회원가입</title>
 </head>
 <body>
-	<header>
-	<c:if test="${empty NUserInfo}">
-		<div class="form-title">
-				소모임
-		</div>
-	</c:if>
+<header></header>
+<main class="main">
 	<c:if test="${not empty NUserInfo}">
-		<div class="form-title">
-				네이버 로그인을 위한 추가 정보 입력
+		<section class="social-page">
+		<div>
+			<img src="${path}/resources/img/logos/eoulrim_logo_p.png">
 		</div>
+		<div class="start-page-title">
+			<span>네이버 로그인</span>
+			<span>추가정보를</span>
+			<span>입력해주세요 :)</span>
+		</div>
+	</section>
 	</c:if>
-	</header>
-	<section class="form-section">
-		<div class="form-container" >
+	
+	<section class="social-join-form join-page"">
+		<div class="join-container" >
 		<c:url  var="joinnaverAddUrl" value="/socialAddJoin"></c:url>
 			<form class="join-form " method="post" action="${joinnaverAddUrl}">
-			<c:if test="${empty NUserInfo}">
-					<label class="join-form__label">아이디</label>
-					<div style="display: flex; justify-content:space-between; ">
-					<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" >
-						<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
-					</div>
-				</c:if>
 				<c:if test="${not empty NUserInfo}">
 					<label class="join-form__label">아이디</label>
 					<div style="display: flex; justify-content:space-between; ">
-						<input style="width: 70%" class="join-form__input info__id" type="text" name="memberId" id="uId" value="${NUserInfo.email}" readonly >
+						<input  class="join-form__input info__id" type="text" name="memberId" id="uId" value="${NUserInfo.email}" readonly >
 							<input style="display: none"  class="join-form__input info__id" name="loginType" value="${NUserInfo.loginType}" >
-							<button style="margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; width: 28%" class="join-form__btn btn-green" type="button" onclick="findIdchk();">중복확인</button>
+							<button class="join-chk-btn" type="button" onclick="findIdchk();">중복확인</button>
 					</div>
 				</c:if>	
 				<div class="error-id-msg"></div>
@@ -97,22 +91,15 @@
 				<div class="join-form-inline">
 					<div class="join-form-inline__div">
 						<label class="join-form__label">성별</label>
-						<c:if test="${empty NUserInfo}">
-						<select class="join-form__input" name="gender" id="gender">
-							<option selected >성별</option>
-							<option value="M">남자</option>
-							<option value="F">여자</option>
-						</select>
-						</c:if>
 						<c:if test="${not empty NUserInfo}">
-						<select class="join-form__input" name="gender" id="gender">
+						<select class="join-form__input" name="gender" id="gender" style="width: 100%">
 							<option  selected value="${NUserInfo.gender}" >${NUserInfo.gen}</option>
 						</select>
 						</c:if>
 					</div>
 					<div class="join-form-inline__div">
 						<label class="join-form__label">지역</label>
-						<select class="join-form__input" name="LocationId" id="location">
+						<select class="join-form__input" name="LocationId" id="location" style="width: 100%">
 							<option disabled selected>지역</option>
 								<c:forEach items="${locDatas}" var="locDto">
 									<option value="${locDto.locationId}">${locDto.locationName}</option>
@@ -120,13 +107,12 @@
 						</select>
 					</div>
 				</div>
-				<c:if test="${empty NUserInfo}">
-				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" >
-				</c:if>
 				<c:if test="${not empty NUserInfo}">
 				<label class="join-form__label">휴대전화</label>
-				<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="${NUserInfo.mobileNum}">
+				<div style="display: flex; justify-content:space-between; ">
+					<input class="join-form__input info__phone" type="text" name="phone" id="pnum" placeholder="핸드폰 번호" value="${NUserInfo.mobileNum}">
+					<button class="join-chk-btn" type="button" onclick="PhoneChk();">중복확인</button>
+				</div>
 				</c:if>
 			    <div class="error-phone-msg"></div>
 			<label class="join-form__label" for="checkbox"> 관심분야 </label>
@@ -138,11 +124,12 @@
 					</div>
 				</c:forEach>
 			</div>
-				<button class="join-form__btn btn-green" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
+				<button class="join-form__btn btn--purple" type="button"  onclick="formCheck(this.form);" value="회원가입"  >회원가입</button>
 				<button class="join-form__btn btn-light-gray" type="button" onclick="mainPage();">취소</button>
 			</form>
 		</div>
 	</section>
+	</main>
 </body>
 <script type="text/javascript">
 	// 팝업창 닫기 
@@ -392,6 +379,28 @@
 				})
 		    }
 	}
+	  function PhoneChk() {
+		  if(phoneInputEl.value === undefined || phoneInputEl.value.trim() === ""){
+			  phoneErrorMsgEl.textContent = errMsg.mobile
+		    }else{
+				$.ajax({
+					url: "${path}/phoneChk",
+					method: "POST",
+				    data : {"phone" :document.getElementById('pnum').value},
+				    dataType : "json",
+				    success : function (data) {
+						if(data == 1){
+							alert("핸드폰 번호가 존재합니다. 확인해주세요");
+							idresult = '2';
+						}else if(data == 0){
+							alert("사용가능한 핸드폰번호 입니다.");
+							 $("input[name=phone]").attr("readonly",true);
+							idresult = '1';
+						}
+					}
+				})
+		    }
+	}
 	function formCheck(form) {
 	  let uid = document.getElementById('uId');
 	  let pw1 = document.getElementById('pw1');
@@ -524,9 +533,5 @@
 	function mainPage() {
 		location.href="${path}";
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/main
 </script>
 </html>

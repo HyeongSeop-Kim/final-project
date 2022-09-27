@@ -28,9 +28,7 @@
 	padding: 1rem 0;
 	cursor: pointer;
 	border-radius: 0.5rem;
-	margin: 0px 0px 5px 0px;
-    padding: 0px 0px 0px 0px;
-    width: 48%;
+	margin: 5px 0px 5px 0px;
 }
 ._chk{
 	background-color: var(--purple);
@@ -48,7 +46,6 @@
 	display: inline-block;
 	width: 49%;
 	margin-bottom: 0.2rem;
-	font-size: 1.4rem;
 }
 
 
@@ -68,7 +65,7 @@
 	width: 48%;
 }
 
-.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-name-msg,.error-phone-msg{
+.error-id-msg,.error-pw1-msg,.error-pw2-msg,.error-oldPw-msg,.error-name-msg,.error-phone-msg{
 	color: red;
 	font-size: 1.5rem;
 }
@@ -84,3 +81,8 @@
 .last_btn > .join-form__btn:last-child {
 	color: black;
 }
+
+.checked{
+	display: none;
+}
+

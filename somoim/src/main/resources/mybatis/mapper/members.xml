@@ -27,8 +27,9 @@
 		, CATEGORY 
 		, LOCATION_ID
 		, MEMBER_IMAGE_PATH
+		, INFO_IMAGE_PATH
 		, LOGIN_TYPE)
-     VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category}, #{locationId}, #{memberImagePath}, #{loginType})
+     VALUES( #{memberId},#{memberName},#{password}, #{gender}, #{birth}, #{phone},#{category}, #{locationId}, #{memberImagePath},#{infoImagePath}, #{loginType})
 	</insert>
 	
 	<select id="selectLogin" parameterType="memberDto" resultType="memberDto">
@@ -121,7 +122,14 @@
 			 , PHONE = #{phone}
 			 , CATEGORY = #{category}
 			 , LOCATION_ID = #{locationId}
-		     , BOOKMARK = #{bookmark}
+		 WHERE MEMBER_ID = #{memberId}
+		   AND MEMBER_NAME =  #{memberName}
+	</update>
+	<update id="basicupdateData" parameterType="memberDto">
+		UPDATE MEMBERS
+		   SET PHONE = #{phone}
+			 , CATEGORY = #{category}
+			 , LOCATION_ID = #{locationId}
 		 WHERE MEMBER_ID = #{memberId}
 		   AND MEMBER_NAME =  #{memberName}
 	</update>
