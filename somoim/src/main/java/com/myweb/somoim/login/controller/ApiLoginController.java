@@ -140,7 +140,7 @@ public class ApiLoginController {
 		UriComponents kakaoAuthUri = UriComponentsBuilder.newInstance()
 				.scheme("https").host("kauth.kakao.com").path("/oauth/authoize")
 				.queryParam("client_id","9e97acd24d70a166f8d300fad1b72ab7" )
-				.queryParam("redirect_uri", "http://localhost/somoim/login/kakao/auth_code")
+				.queryParam("redirect_uri", "http://localhost:8080/somoim/login/kakao/auth_code")
 				.queryParam("response_type", "code").build();
 		
 		RestTemplate rest = new RestTemplate();
@@ -189,7 +189,7 @@ public class ApiLoginController {
 				MultiValueMap<String, String> param = new LinkedMultiValueMap<String, String>();
 				param.add("grant_type", "authorization_code");
 				param.add("client_id","9e97acd24d70a166f8d300fad1b72ab7" );
-				param.add("redirect_uri", "http://localhost/somoim/login/kakao/auth_code");
+				param.add("redirect_uri", "http://localhost:8080/somoim/login/kakao/auth_code");
 				param.add("code",code);
 				
 				

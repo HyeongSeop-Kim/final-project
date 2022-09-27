@@ -18,7 +18,7 @@ package com.myweb.somoim.login.controller;
 	//state: 애플리케이션이 생성한 상태 토큰
 	private final static String CLIENT_ID = "5ekGeZD6fZeanHE4nB88";
 	private final static String CLIENT_SECRET = "fGm7H8lIYW";
-	private final static String REDIRECT_URI = "http://localhost/somoim/login/naver/callback";
+	private final static String REDIRECT_URI = "http://localhost:8080/somoim/login/naver/callback";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL */
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
