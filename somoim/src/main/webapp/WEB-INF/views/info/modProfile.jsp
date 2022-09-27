@@ -9,8 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
-	  								<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-   								 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+	  					
 	<title>회원가입</title>
 </head>
 <body>
@@ -24,12 +23,15 @@
 				<label class="join-form__label ">아이디</label>
 				<input class="join-form__input info__id" type="text" name="memberId" id="uId" value="${sessionScope.loginData.memberId}"readonly>
 				<div class="error-id-msg"></div>
-				<label class="join-form__label">비밀번호</label>
-				<input class="join-form__input info__pw1" type="password" name="password" id="pw1" value="${sessionScope.loginData.password}"readonly>
-				<div class="error-pw1-msg"></div>
-				<label class="join-form__label">비밀번호 재확인</label>
-				<input class="join-form__input info__pw2" type="password" name="password2" id="pw2" value="${sessionScope.loginData.password}"readonly>
-				<div class="error-pw2-msg"></div>	
+				<div class="checked" id="div-display">
+					<label class="join-form__label">새 비밀번호</label>
+					<input class="join-form__input info__pw1" type="password" name="password" id="pw1" >
+					<div class="error-pw1-msg"></div>
+					<label class="join-form__label">새 비밀번호 확인</label>
+					<input class="join-form__input info__pw2" type="password" name="password2" id="pw2" >
+					<div class="error-pw2-msg"></div>	
+				</div>
+					<button class="join-form__btn btn--purple" type="button" onclick="pwModCilck();">비밀번호 수정</button>
 				<label class="join-form__label">이름</label>
 				<input class="join-form__input" type="text" name="memberName" id ="memberName" value="${sessionScope.loginData.memberName}"readonly>
 				<div class="error-name-msg"></div>
@@ -110,6 +112,7 @@
 		let pwVal = "", pwReVal = "", isPwValid = false
 		const pwInputEl = document.querySelector('div form .info__pw1')
 		const pwErrorMsgEl = document.querySelector('div form .error-pw1-msg')
+		const oldPwErrorMsgEl = document.querySelector('div form .error-oldPw-msg')
 		pwInputEl.addEventListener('change', () => {
 		  const pwRegExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
 		  pwVal = pwInputEl.value
@@ -201,25 +204,24 @@
 		  uid.focus();
 		  return false;
 	  }
-	  if(pw1.value === undefined || pw1.value.trim() === ""){
-		  alert("비밀번호를 입력해주세요.");
-		  pw1.focus();
-		  return false;
-	  }
 	  
-	  if(pw2.value === undefined || pw2.value.trim() === ""){
-		  alert("비밀번호를 입력해주세요.");
-		  pw2.focus();
-		  return false;
-	  }
+		  if(pw1.value === undefined || pw1.value.trim() === ""){
+			  alert("비밀번호를 입력해주세요.");
+			  pw1.focus();
+			  return false;
+		  }
+		  
+		  if(pw2.value === undefined || pw2.value.trim() === ""){
+			  alert("비밀번호를 입력해주세요.");
+			  pw2.focus();
+			  return false;
+		  }
 	  
-	  
-	  if(memberName.value === undefined || memberName.value.trim() === ""){
-		  alert("이름을 입력해주세요.");
-		  memberName.focus();
-		  return false;
-	  }
-	  
+		  if(memberName.value === undefined || memberName.value.trim() === ""){
+			  alert("이름을 입력해주세요.");
+			  memberName.focus();
+			  return false;
+		  }
 	  if(gender.value != 'M' && gender.value != 'F' ){
 		  alert("성별을 선택해주세요");
 		  gender.focus();
@@ -273,9 +275,12 @@
 	}
 		  
 	  }
-	  
 	
-	  
+	function pwModCilck() {
+	isPwMod = true;
+	var element = document.getElementById("div-display");
+    element.classList.toggle("checked");
+}
 	  
 </script>
 </html>

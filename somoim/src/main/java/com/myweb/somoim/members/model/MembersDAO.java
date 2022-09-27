@@ -88,6 +88,11 @@ public class MembersDAO extends AbstractDAO<List<MembersDTO>, MembersDTO> {
 		int res = session.insert(mapId, data);
 		return res == 1 ? true : false;
 	}
+	public boolean basicUpdateData(MembersDTO data) {
+		String mapId = String.format(mapper, "basicupdateData");
+		int res = session.insert(mapId, data);
+		return res == 1 ? true : false;
+	}
 
 	public boolean updateCate(MembersDTO dto) {
 		String mapId = String.format(mapper, "updateCate");

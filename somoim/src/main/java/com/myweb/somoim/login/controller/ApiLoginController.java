@@ -351,8 +351,8 @@ public class ApiLoginController {
         System.out.println("네이버 로그인 시 데이터 베이스에 id + 로그인 타입이 있다면 바로 로그인 실행");
         System.out.println(loginInfoChk);
         if (loginInfoChk != null) {
-			session.setAttribute("loginData", loginInfoChk);
-			return "redirect:/";
+		   session.setAttribute("loginData", loginInfoChk);
+		   return "redirect:/";
 		}
 	return "form/naverJoin";
 	}

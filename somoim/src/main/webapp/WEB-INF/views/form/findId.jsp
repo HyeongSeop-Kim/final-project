@@ -203,7 +203,7 @@
 			let count = 0;
 			
 			$.ajax({
-				url: "./findId",
+				url: "findId",
 				method: "POST",
 			    data : sendData = {"memberName" : memberName, "birth" : birth, "phone" : phone },
 			    dataType : "json",
@@ -224,8 +224,6 @@
 			    	}   
 			     }
 			    }) 
-			
-			
 			function fn_showMessage(msg) {
 				
 				// 아이디 찾기가 한 번 실행되면 count가 1이됨.
@@ -243,9 +241,7 @@
 				
 				// fn_showMessage() 실행되면 무조건 count 1씩 증가
 				count++;
-				
 			}
-		
 		}
 </script>
 

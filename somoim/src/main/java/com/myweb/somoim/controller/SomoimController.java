@@ -185,32 +185,64 @@ public class SomoimController {
 			,@RequestParam (required = false) String year
 			,@RequestParam (required = false) String month
 			,@RequestParam (required = false) String day
-			,@RequestParam (required = false) String memberName) {
+			,@RequestParam (required = false) String memberName
+			,@RequestParam (required = false) String oldpassword) {
 		String bitrhs = year+month+day;
+		
+		System.out.println("###DTO 데이터 확인### = " + membersDTO);
+		System.out.println(membersDTO.getPassword() == "");
+		
+		// 비밀번호 변경 없이 (빈값) 프로필 편집 하는 기능 
+		if (membersDTO.getPassword() == "") {
+			
+			membersDTO.setBirth(bitrhs);
 
-		membersDTO.setBirth(bitrhs);
+			MembersDTO data = new MembersDTO();
+			data.setMemberId(membersDTO.getMemberId());
+			data.setMemberName(membersDTO.getMemberName());
+			data.setGender(membersDTO.getGender());
+			data.setBirth(membersDTO.getBirth());
+			data.setPhone(membersDTO.getPhone());
+			data.setCategory(membersDTO.getCategory());
+			data.setLocationId(membersDTO.getLocationId());
 
-		MembersDTO data = new MembersDTO();
-		data.setMemberId(membersDTO.getMemberId());
-		data.setMemberName(membersDTO.getMemberName());
-		data.setPassword(membersDTO.getPassword());
-		data.setGender(membersDTO.getGender());
-		data.setBirth(membersDTO.getBirth());
-		data.setPhone(membersDTO.getPhone());
-		data.setCategory(membersDTO.getCategory());
-		data.setLocationId(membersDTO.getLocationId());
+			System.out.println("*********************"+data);
+			
+			boolean basicResult = membersService.basicmodifyData(data);
+			
+			if (basicResult) {
+				MembersDTO loginData = membersService.getData((MembersDTO) session.getAttribute("loginData"));
+				session.setAttribute("loginData", loginData);
+				return "info/myInfo";
+			}else {
+				return "info/myInfo";
+			}
+			
+		}else { //비밀번호를 포함 하여 변경 하는 경우
+			membersDTO.setBirth(bitrhs);
 
-		boolean result = membersService.modifyData(data);
-
-		if (result) {
-			MembersDTO loginData = membersService.getData((MembersDTO) session.getAttribute("loginData"));
-			session.setAttribute("loginData", loginData);
-			return "info/myInfo";
-		}else {
-			return "info/myInfo";
+			MembersDTO data = new MembersDTO();
+			data.setMemberId(membersDTO.getMemberId());
+			data.setMemberName(membersDTO.getMemberName());
+			data.setPassword(membersDTO.getPassword());
+			data.setGender(membersDTO.getGender());
+			data.setBirth(membersDTO.getBirth());
+			data.setPhone(membersDTO.getPhone());
+			data.setCategory(membersDTO.getCategory());
+			data.setLocationId(membersDTO.getLocationId());
+			
+			boolean result = membersService.modifyData(data);
+			
+			if (result) {
+				MembersDTO loginData = membersService.getData((MembersDTO) session.getAttribute("loginData"));
+				session.setAttribute("loginData", loginData);
+				return "info/myInfo";
+			}else {
+				return "info/myInfo";
+			}
 		}
 	}
-
+	
 	@GetMapping(value = "/info/modProfile")
 	public String modProfile(Model model){
 		List<LocationsDTO> locDatas = locationsService.getAll();

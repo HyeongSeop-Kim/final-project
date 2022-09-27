@@ -24,6 +24,7 @@
 @import "screens/category.css";
 @import "screens/startPage.css";
 @import "screens/error.css";
+@import "screens/moreinfo.css";
 
 /* font */
 @font-face {
@@ -56,7 +57,9 @@ header {
     font-size: 3.2rem;
     top: 10rem;
     z-index: 10;
-    width: 139.6rem;
+    /*width: 139.6rem;*/
+    display: inline-block;
+    left: 7.5em;
     margin: 0 auto 0 auto;
 }
 .logo:hover {

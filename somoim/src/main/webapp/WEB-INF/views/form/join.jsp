@@ -9,7 +9,6 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/resources/css/styles.css">
-
      <script type="text/javascript" src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<title>회원가입</title>
 </head>
@@ -24,7 +23,7 @@
 		</div>
 	</c:if>
 	<section class="form-section">
-		<div class="form-container" >
+		<div class="join-container" >
 		<c:url  var="joinAddUrl" value="/addJoin"></c:url>
 			<form class="join-form " method="post" action="${joinAddUrl}">
 			<c:if test="${empty userInfo}">
