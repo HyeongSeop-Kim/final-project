@@ -52,12 +52,24 @@
 				</div>
 				<div class="meeting-form-inline div-line">
 					<button class="meeting-form__btn btn---grey" type="button" onclick="popClose();" >취소</button>
-					<button class="meeting-form__btn btn--purple" type="button"  onclick="formCheck(this.form, ${param.id});">정모만들기</button>
+					<button class="meeting-form__btn btn--purple" type="button"  onclick="addFormCheck(this.form, ${param.id});">정모만들기</button>
 				</div>
 			</form>
 		</div>
 	</section>
 </body>
+<script>
+	const chkErr = ${not empty errMsg};
+	const errMsg = '${errMsg}';
+
+	$(document).ready( () => {
+		if(chkErr) {
+			alert(errMsg);
+			window.opener.location.href = "/somoim/moim/meeting?id=" + ${param.id};
+			popClose();
+		}
+	});
+</script>
 <script src="${path}/resources/js/meeting.js"></script>
 <script src="${path}/resources/js/components/popup.js"></script>
 </html>

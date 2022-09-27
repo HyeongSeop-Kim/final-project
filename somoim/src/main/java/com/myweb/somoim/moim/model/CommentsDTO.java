@@ -11,7 +11,34 @@ public class CommentsDTO {
 	private String memberId;
 	private String memberName;
 	private String memberImagePath;
-	
+	private String moimImagePath;
+	private String moimTitle;
+	private String boardTitle;
+
+	public String getMoimImagePath() {
+		return moimImagePath;
+	}
+
+	public void setMoimImagePath(String moimImagePath) {
+		this.moimImagePath = moimImagePath;
+	}
+
+	public String getMoimTitle() {
+		return moimTitle;
+	}
+
+	public void setMoimTitle(String moimTitle) {
+		this.moimTitle = moimTitle;
+	}
+
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
+	}
+
 	public int getCommentId() {
 		return commentId;
 	}

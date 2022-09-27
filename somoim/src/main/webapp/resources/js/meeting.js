@@ -1,3 +1,4 @@
+
 // 유효성 검사 : 월
 const meetingMonthEl = document.querySelector('#meetingMonth');
 // 유효성 검사 : 일
@@ -95,7 +96,7 @@ function checkMeetingValid(meetingArr) {
     }
 };
 
-function formCheck(form, moimId) {
+function addFormCheck(form, moimId) {
     let meetingTitle = document.getElementById('meetingTitle');
     let meetingMonth = document.getElementsByName("month");
     let meetingDay = document.getElementsByName("day");
@@ -147,15 +148,86 @@ function formCheck(form, moimId) {
         return false;
     }
 
-    alert('정모가 등록되었습니다.');
     form.submit();
-
+    alert("정모가 개설되었습니다.");
     move();
 
     function move() {
         setTimeout(() => {
             window.opener.location.href = "/somoim/moim/meeting?id=" + moimId;
-            // window.close();
+            window.close();
+        }, 2);
+    }
+}
+
+function modFormCheck(form, moimId, partCnt) {
+    let meetingTitle = document.getElementById('meetingTitle');
+    let meetingMonth = document.getElementsByName("month");
+    let meetingDay = document.getElementsByName("day");
+    let meetingTime = document.getElementById("meetingTime");
+    let meetingPlace = document.getElementById('meetingPlace');
+    let meetingPrice = document.getElementById('meetingPrice');
+    let meetingLimit = document.getElementById('meetingLimit');
+
+    if (meetingTitle.value === undefined || meetingTitle.value.trim() === "") {
+        alert("정모 이름을 입력해주세요.");
+        meetingTitle.focus();
+        return false;
+    }
+    for (month of meetingMonth) {
+        month.value;
+    }
+
+    if (month.value.trim() === "") {
+        alert("정모 날짜를 입력해주세요.")
+        return false;
+    }
+    for (day of meetingDay) {
+        day.value;
+    }
+
+    if (day.value.trim() === "" || day.value.trim() === "일") {
+        alert("정모 날짜를 입력해주세요.")
+        return false;
+    }
+
+    if (meetingTime.value === undefined || meetingTime.value.trim() === "") {
+        alert("정모 시간을 입력해주세요.");
+        meetingTime.focus();
+        return false;
+    }
+    if (meetingPlace.value === undefined || meetingPlace.value.trim() === "") {
+        alert("정모 장소를 입력해주세요.");
+        meetingPlace.focus();
+        return false;
+    }
+    if (meetingPrice.value === undefined || meetingPrice.value.trim() === "") {
+        alert("정모 지참금을 입력해주세요.");
+        meetingPrice.focus();
+        return false;
+    }
+    if (meetingLimit.value === undefined || meetingLimit.value.trim() === "") {
+        alert("정원을 입력해주세요.");
+        meetingLimit.focus();
+        return false;
+    }
+
+    if(meetingLimit.value < partCnt) {
+        alert("현재 인원보다 적은 인원을 정원으로 설정할 수 없습니다.");
+        meetingLimit.focus();
+        return false;
+    }
+
+        form.submit();
+        console.log("테스트");
+        alert('정모가 수정되었습니다.');
+
+        move();
+
+    function move() {
+        setTimeout(() => {
+            window.opener.location.href = "/somoim/moim/meeting?id=" + moimId;
+            window.close();
         }, 2);
     }
 }

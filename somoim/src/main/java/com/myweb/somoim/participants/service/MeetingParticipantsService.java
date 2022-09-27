@@ -50,6 +50,11 @@ public class MeetingParticipantsService extends AbstractService<List<MeetingPart
 		return data;
 	}
 
+	public int getPartCnt(int meetingId) {
+		int res = dao.selectPartCnt(meetingId);
+		return res;
+	}
+
 	@Override
 	public boolean addData(MeetingParticipantsDTO dto) {
 		boolean result = dao.insertData(dto);

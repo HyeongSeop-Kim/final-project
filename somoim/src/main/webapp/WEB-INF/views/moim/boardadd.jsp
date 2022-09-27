@@ -370,7 +370,7 @@
 							</div>
 							<div class="add-form__group">
 								<span class="add-form__group-text" id="basic-addon1">게시글 제목</span>
-								<input type="text" class="add-form__input" placeholder="게시글 제목" name="boardTitle" aria-label="Username" aria-describedby="basic-addon1">
+								<input id="boardTitle" type="text" class="add-form__input" placeholder="게시글 제목" name="boardTitle" aria-label="Username" aria-describedby="basic-addon1">
 							</div>
 							<div class="add-form__group">
 								<span class="add-form__group-text">게시글 내용</span>
@@ -380,7 +380,7 @@
 								<div class="add-form__btn">
 								    <c:url var="boardUrl" value="/moim/board"/>
 									<button class="btn--round btn--grey btn--w216" type="button" onclick="location.href='${boardUrl}?id=${moimData.moimId}'">취소</button>
-									<button class="btn--round btn--purple btn--w216" type="submit">작성</button> <!-- 목록으로 -->
+									<button class="btn--round btn--purple btn--w216" type="button" onclick="titleChk(this.form);">작성</button> <!-- 목록으로 -->
 								</div>
 							</div>
 						</div>
@@ -480,6 +480,16 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
   </script>
   <script type="text/javascript">
+		function titleChk(form) {
+			if(form.boardTitle.value.trim() === "" ){ //빈값확인하기 ,비어져있으면 경고메세지
+				alert("게시글 제목을 입력하세요");
+			}else if(form.content.value.length > 650){
+				alert("게시글 내용이 너무 깁니다");
+			}	else{
+				form.submit(); //아니면 submit하기
+			}
+
+		}
 		function addData(){
 			var formData = $("#form1").serialize();
 			$.ajax({

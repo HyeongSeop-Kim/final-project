@@ -49,7 +49,6 @@ public class MoimParticipantsService extends AbstractService<List<MoimParticipan
 	@Override
 	public MoimParticipantsDTO getData(MoimParticipantsDTO dto) {
 		MoimParticipantsDTO data = dao.selectData(dto);
-		
 		return data;
 	}
 
