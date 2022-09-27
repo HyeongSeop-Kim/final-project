@@ -58,3 +58,10 @@
     padding: 3rem;
     margin-bottom: 2.4rem;
 }
+
+.main-box__board_detail {
+    border: 1px solid var(--border-line__grey);
+    border-radius: 1rem;
+    padding: 3rem;
+    margin-bottom: 2.4rem;
+}

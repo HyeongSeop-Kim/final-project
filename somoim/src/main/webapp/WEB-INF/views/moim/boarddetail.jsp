@@ -489,7 +489,7 @@
 		</nav>
 		<div class="main-box">
 			<!--첫번째 게시글 박스-->
-			<div class="main-box__board">
+			<div class="main-box__board_detail">
 				<div class="board-title">
 					<span>${data.boardTitle}</span>
 					<div>
